@@ -128,7 +128,7 @@ for (const nome of (existsSync(pastaCasos) ? readdirSync(pastaCasos) : []).filte
     JSON.stringify(achou) === JSON.stringify(cols) ? passou(`${nome}: colunas após ${depois}: ${cols.join(', ')}`) : falhou(`${nome}: colunas após ${depois} = ${achou.join(', ')}`);
   }
   for (const l of caso.linhas) {
-    const row = linhas.find(x => String(x.numero_item) === l.numero_item);
+    const chave = caso.chave || 'numero_item', row = linhas.find(x => String(x[chave]) === l.numero_item);
     if (!row) { falhou(`${nome}: item ${l.numero_item} não encontrado`); continue; }
     const dif = Object.entries(l.esperado).filter(([k, e]) => {
       const v = row[k];

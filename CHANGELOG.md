@@ -5,6 +5,14 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V64 — 2026-10-11
+
+- **Simples Nacional sem permissão de crédito (CSOSN 102)**: o item não gera crédito de ICMS nem de IPI, então não há base a validar. Nas abas **ICMS** e **IPI**, todas as colunas de validação ficam "VALIDADO (Simples Nacional — CSOSN 102, sem permissão de crédito: não gera crédito de ICMS e IPI)" e nenhum valor é recalculado (base correta, valor correto = 0; colunas calculadas = VALIDADO).
+- Antes: a aba ICMS já validava o CSOSN 102, mas a aba IPI recalculava o IPI (ex.: NÃO VALIDADO com valor correto de R$ 100,00) e o item ia para as Inconsistências do Dashboard e da apresentação.
+- CSOSN 101 (com permissão de crédito) e os demais CSOSN seguem as regras anteriores.
+- Casos de teste `tests/casos/v64-simples-csosn-102-icms` e `-ipi` (o executor de casos aceita `chave`, para abas sem `numero_item`).
+  `src/js/modulos/25-v64-simples-csosn-102.js`
+
 ## V63 — 2026-10-11
 
 - **Aba ICMS — correção da fórmula da V62** nas operações internas (CFOP 1xxx/5xxx) e interestaduais (CFOP 2xxx/6xxx): base do ICMS = valor dos produtos − desconto + frete + seguro + outras despesas, com a redução do `pRedBC`: base = (produtos − desconto + frete + seguro + outras despesas) × (1 − % redução). O IPI continua fora.

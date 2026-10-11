@@ -1,0 +1,30 @@
+{
+  "descricao": "V64 — CSOSN 102 (Simples Nacional sem crédito): ICMS e IPI sempre VALIDADO e sem valor recalculado; CSOSN 101 como controle",
+  "arquivo": "v64-simples-csosn-102.xml",
+  "funcao": "linhasIpi",
+  "linhas": [
+    {
+      "numero_item": "1",
+      "esperado": {
+        "validacao_cst_ipi": "^VALIDADO .Simples Nacional",
+        "validacao_ipi": "^VALIDADO .Simples Nacional.*CSOSN 102",
+        "valor_correto_ipi": 0
+      }
+    },
+    {
+      "numero_item": "2",
+      "esperado": {
+        "validacao_ipi": "^VALIDADO .Simples Nacional",
+        "valor_correto_ipi": 0
+      }
+    },
+    {
+      "numero_item": "3",
+      "esperado": {
+        "validacao_ipi": "^VALIDADO$",
+        "valor_correto_ipi": 0
+      }
+    }
+  ],
+  "chave": "codigo_item"
+}

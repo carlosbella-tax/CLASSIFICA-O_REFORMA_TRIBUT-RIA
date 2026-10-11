@@ -1,0 +1,32 @@
+{
+  "descricao": "V64 — CSOSN 102: aba ICMS com validações VALIDADO e nada recalculado",
+  "arquivo": "v64-simples-csosn-102.xml",
+  "funcao": "linhasIcms",
+  "linhas": [
+    {
+      "numero_item": "1",
+      "esperado": {
+        "validacao_icms": "^VALIDADO .Simples Nacional.*CSOSN 102",
+        "validacao_base_icms": "^VALIDADO .Simples Nacional",
+        "base_correta_icms": 0,
+        "valor_correto_icms": 0,
+        "base_icms_calculada": "VALIDADO"
+      }
+    },
+    {
+      "numero_item": "2",
+      "esperado": {
+        "validacao_icms": "^VALIDADO .Simples Nacional",
+        "base_correta_icms": 0,
+        "valor_correto_icms": 0
+      }
+    },
+    {
+      "numero_item": "3",
+      "esperado": {
+        "validacao_icms": "^VALIDADO$",
+        "validacao_base_icms": "^VALIDADO$"
+      }
+    }
+  ]
+}

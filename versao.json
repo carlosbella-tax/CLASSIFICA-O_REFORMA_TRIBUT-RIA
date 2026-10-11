@@ -1,5 +1,5 @@
 {
-  "versao": 63,
+  "versao": 64,
   "data": "2026-10-11",
-  "descricao": "Aba ICMS: base do ICMS nas operações internas e interestaduais = produtos − desconto + frete + seguro + outras despesas, com a redução do pRedBC (corrige a fórmula da V62)"
+  "descricao": "Simples Nacional sem permissão de crédito (CSOSN 102): abas ICMS e IPI com todas as validações como VALIDADO e nenhum valor recalculado (não gera crédito de ICMS e IPI)"
 }
