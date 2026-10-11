@@ -5,6 +5,14 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V63 — 2026-10-11
+
+- **Aba ICMS — correção da fórmula da V62** nas operações internas (CFOP 1xxx/5xxx) e interestaduais (CFOP 2xxx/6xxx): base do ICMS = valor dos produtos − desconto + frete + seguro + outras despesas, com a redução do `pRedBC`: base = (produtos − desconto + frete + seguro + outras despesas) × (1 − % redução). O IPI continua fora.
+- O ICMS segue calculado e validado sobre essa base, com margem de R$ 0,02. Importação (CFOP 3xxx) continua com as regras da V59/V60/V61.
+- Efeito nos XMLs de teste: nenhuma mudança de status; NF 123 passa a ter base correta de R$ 10.600,00 (continua NÃO VALIDADO).
+- Caso de teste novo `tests/casos/v63-base-desconto-outras` e caso da V62 atualizado para a fórmula nova.
+  `src/js/modulos/24-v62-icms-base-interna-interestadual.js` (comentário V63)
+
 ## V62 — 2026-10-11
 
 - **Aba ICMS — operações internas (CFOP 1xxx/5xxx) e interestaduais (CFOP 2xxx/6xxx)**: base do ICMS = valor dos produtos + frete + seguro, com a redução do `pRedBC`: base = (produtos + frete + seguro) × (1 − % redução). Outras despesas, desconto e IPI não entram nesta base.

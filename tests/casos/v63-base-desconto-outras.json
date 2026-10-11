@@ -1,0 +1,32 @@
+{
+  "descricao": "V63 — base = produtos − desconto + frete + seguro + outras despesas, com a redução do pRedBC",
+  "arquivo": "v63-base-desconto-outras.xml",
+  "funcao": "linhasIcms",
+  "linhas": [
+    {
+      "numero_item": "1",
+      "esperado": {
+        "validacao_base_icms": "^VALIDADO.*1.000,00.*desconto.*50,00.*frete.*30,00.*seguro.*10,00.*outras despesas.*20,00.*= R.*1.010,00",
+        "base_correta_icms": 0,
+        "validacao_icms": "^VALIDADO"
+      }
+    },
+    {
+      "numero_item": "2",
+      "esperado": {
+        "validacao_base_icms": "^VALIDADO.*2.000,00.*51,11%.*977,80",
+        "base_correta_icms": 0,
+        "validacao_icms": "^VALIDADO"
+      }
+    },
+    {
+      "numero_item": "3",
+      "esperado": {
+        "validacao_base_icms": "^NÃO VALIDADO",
+        "base_correta_icms": 900,
+        "validacao_icms": "^NÃO VALIDADO",
+        "valor_correto_icms": 162
+      }
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "versao": 62,
+  "versao": 63,
   "data": "2026-10-11",
-  "descricao": "Aba ICMS: operações internas e interestaduais (CFOP 1xxx, 2xxx, 5xxx, 6xxx): base do ICMS = produtos + frete + seguro, com a redução do pRedBC; cálculo e validação do ICMS sobre essa base"
+  "descricao": "Aba ICMS: base do ICMS nas operações internas e interestaduais = produtos − desconto + frete + seguro + outras despesas, com a redução do pRedBC (corrige a fórmula da V62)"
 }
