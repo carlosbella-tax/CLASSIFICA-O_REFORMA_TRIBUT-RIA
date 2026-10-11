@@ -24,6 +24,8 @@ pkg.version = `${versao}.0.0`;
 writeFileSync(join(raiz, 'package.json'), JSON.stringify(pkg, null, 2) + '\n');
 const cl = join(raiz, 'CHANGELOG.md');
 const txt = readFileSync(cl, 'utf8');
-const marca = '<!-- novas versões abaixo desta linha -->\n';
-writeFileSync(cl, txt.replace(marca, `${marca}\n## V${versao} — ${data}\n\n- ${descricao}\n`));
+// aceita fim de linha \n ou \r\n e grava sempre com \n
+const marca = /<!-- novas versões abaixo desta linha -->\r?\n/;
+if (!marca.test(txt)) { console.error('Marcador "<!-- novas versões abaixo desta linha -->" não encontrado no CHANGELOG.md'); process.exit(1); }
+writeFileSync(cl, txt.replace(/\r\n/g, '\n').replace(marca, m => `<!-- novas versões abaixo desta linha -->\n\n## V${versao} — ${data}\n\n- ${descricao}\n`));
 console.log(`Versão ${versao} aberta. Edite os fontes em src/, rode npm test e depois npm run drive.`);

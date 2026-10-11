@@ -5,6 +5,17 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V61 — 2026-10-11
+
+- **Aba ICMS — colunas novas**: `reducao_base_icms` (% de redução da base, tag `pRedBC` do XML), antes de `base_icms_xml`, e `origem_icms` (tag `orig`, com a descrição: 0 - Nacional, 1 - Estrangeira — importação direta etc.), antes de `cst_icms`.
+- **Redução aplicada na base do ICMS em todas as regras**: base reduzida = base cheia × (1 − % redução). O ICMS é calculado e validado sobre a base reduzida.
+  - CFOP 3101, 3102 e 3556 (V60): (produtos + frete + seguro + desconto + outras despesas + II + IPI) × (1 − % redução), margem de R$ 0,03.
+  - Demais CFOP 3xxx (V59): (VA + II + IPI + PIS + COFINS + despesas aduaneiras, com ou sem o ICMS por dentro) × (1 − % redução).
+  - Demais operações: a redução já era aplicada desde a V14; agora o texto da validação mostra a conta (base cheia × (1 − %) = base).
+- Casos de teste: `tests/casos/v61-reducao-saida` (CST 20, 51,11%) e `v61-reducao-importacao` (3102 e 3556 com 51,11%).
+- Ferramenta: `nova-versao` aceita CHANGELOG com fim de linha do Windows (a V61 não tinha sido registrada por isso).
+  `src/js/modulos/23-v61-icms-reducao-base.js`
+
 ## V60 — 2026-10-11
 
 - **Aba ICMS — colunas novas** logo após `valor_total_produtos`: `valor_frete`, `valor_seguro`, `valor_desconto`, `valor_outras_despesas`, `valor_ii` (II – valor) e `valor_ipi`. Valem para a tela, o filtro, o Excel e a impressão.

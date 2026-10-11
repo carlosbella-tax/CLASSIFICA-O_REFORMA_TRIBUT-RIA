@@ -37,6 +37,7 @@
     "src/js/modulos/20-v58-pis-cofins-simples-nacional.js",
     "src/js/modulos/21-v59-icms-importacao-cfop-3xxx.js",
     "src/js/modulos/22-v60-icms-colunas-importacao.js",
+    "src/js/modulos/23-v61-icms-reducao-base.js",
     "src/js/modulos/99-fechamento.js",
     "src/90-rodape.html"
   ]

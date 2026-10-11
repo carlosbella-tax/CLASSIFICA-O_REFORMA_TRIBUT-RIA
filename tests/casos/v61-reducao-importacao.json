@@ -1,0 +1,29 @@
+{
+  "descricao": "V61 — redução de base (pRedBC 51,11%) nos CFOP 3102 e 3556 (regra da V60 × fator de redução, margem R$ 0,03)",
+  "arquivo": "v61-reducao-importacao.xml",
+  "funcao": "linhasIcms",
+  "linhas": [
+    {
+      "numero_item": "1",
+      "esperado": {
+        "cfop_xml": "3102",
+        "origem_icms": "^1 - Estrangeira",
+        "reducao_base_icms": 51.11,
+        "validacao_base_icms": "^VALIDADO.*6.000,00.*51,11%.*2.933,40",
+        "base_correta_icms": 0,
+        "validacao_icms": "^VALIDADO",
+        "valor_correto_icms": 0
+      }
+    },
+    {
+      "numero_item": "2",
+      "esperado": {
+        "cfop_xml": "3556",
+        "validacao_base_icms": "^NÃO VALIDADO",
+        "base_correta_icms": 1095.14,
+        "validacao_icms": "^NÃO VALIDADO",
+        "valor_correto_icms": 197.13
+      }
+    }
+  ]
+}
