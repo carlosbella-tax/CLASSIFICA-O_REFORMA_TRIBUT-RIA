@@ -121,13 +121,24 @@ console.log('\n[5] Casos de regra (tests/casos)');
 const pastaCasos = join(raiz, 'tests/casos');
 for (const nome of (existsSync(pastaCasos) ? readdirSync(pastaCasos) : []).filter(n => n.endsWith('.json')).sort()) {
   const caso = JSON.parse(readFileSync(join(pastaCasos, nome), 'utf8'));
-  const { w: wc, erros: ec } = await abrirDiagnostico([join(pastaCasos, caso.arquivo)]);
-  const linhas = wc.eval(caso.funcao + '()');
+  const arqs = (caso.arquivos || [caso.arquivo]).map(a => join(pastaCasos, a));
+  const { w: wc, erros: ec, abrirAba: abaC } = await abrirDiagnostico(arqs, { campos: caso.campos || {} });
+  const linhas = caso.funcao ? wc.eval(caso.funcao + '()') : [];
+  // conferências de texto no Dashboard: [{seletor, sub?, contem: [...], nao_contem: [...]}]
+  for (const c of caso.dashboard || []) {
+    await abaC('dashboard');
+    if (c.sub) { const b = wc.document.querySelector('[data-dsub="' + c.sub + '"]'); if (b) { b.click(); await new Promise(r => setTimeout(r, 50)); } }
+    const el = wc.document.querySelector(c.seletor), tx = el ? el.textContent.replace(/\s+/g, ' ') : '';
+    const faltam = (c.contem || []).filter(s => !tx.includes(s)), sobram = (c.nao_contem || []).filter(s => tx.includes(s));
+    if (!el) falhou(`${nome}: ${c.seletor} não encontrado no Dashboard`);
+    else if (faltam.length || sobram.length) falhou(`${nome}: ${c.seletor}${faltam.length ? ' — faltou: ' + faltam.join(' | ') : ''}${sobram.length ? ' — não deveria ter: ' + sobram.join(' | ') : ''}`);
+    else passou(`${nome}: Dashboard ${c.seletor}${c.sub ? ' (' + c.sub + ')' : ''} (${(c.contem || []).length + (c.nao_contem || []).length} conferências)`);
+  }
   for (const [depois, cols] of Object.entries(caso.colunas_apos || {})) {
     const ks = Object.keys(linhas[0] || {}), i = ks.indexOf(depois), achou = ks.slice(i + 1, i + 1 + cols.length);
     JSON.stringify(achou) === JSON.stringify(cols) ? passou(`${nome}: colunas após ${depois}: ${cols.join(', ')}`) : falhou(`${nome}: colunas após ${depois} = ${achou.join(', ')}`);
   }
-  for (const l of caso.linhas) {
+  for (const l of caso.linhas || []) {
     const chave = caso.chave || 'numero_item', row = linhas.find(x => String(x[chave]) === l.numero_item);
     if (!row) { falhou(`${nome}: item ${l.numero_item} não encontrado`); continue; }
     const dif = Object.entries(l.esperado).filter(([k, e]) => {

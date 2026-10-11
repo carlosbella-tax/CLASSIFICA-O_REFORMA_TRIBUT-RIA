@@ -2,7 +2,7 @@
 
 Lê XML de NF-e, CT-e, NFS-e e eventos (arquivos, pasta inteira, TXT com XML), valida ICMS, ICMS ST, IPI, PIS/COFINS e IBS/CBS (LC 214/2025), mostra o Dashboard por imposto e gera Excel, PDF e a apresentação em PowerPoint. O entregável é **um único arquivo HTML** que roda offline no navegador.
 
-Versão atual: **V64** (ver [CHANGELOG.md](CHANGELOG.md)). Regras de trabalho do agente: [AGENTS.md](AGENTS.md).
+Versão atual: **V65** (ver [CHANGELOG.md](CHANGELOG.md)). Regras de trabalho do agente: [AGENTS.md](AGENTS.md).
 
 ## Comandos
 
@@ -29,7 +29,7 @@ node tests/testar.mjs --atualizar             # grava nova referência (só depo
 | Sintaxe | cada um dos 4 blocos `<script>` compila |
 | Versão | selo VERSÃO N do cabeçalho = `versao.json` |
 | Identidade | na V59, o build é idêntico byte a byte ao arquivo recebido (`_arquivo_original/`) |
-| Casos de regra | `tests/casos/*.json`: XML + resultado esperado por item (ex.: V60 importação 3101/3102/3556) |
+| Casos de regra | `tests/casos/*.json`: XML(s), campos do cabeçalho, resultado esperado por item e conferências no Dashboard (ex.: V60 importação 3101/3102/3556) |
 | Funcional | carrega os 9 XMLs de `tests/fixtures` no navegador simulado, processa (6 documentos, 105 itens) e compara o conteúdo de cada aba (Itens, ICMS, ICMS ST, IPI, PIS/COFINS, IBS/CBS, Eventos, Dashboard, Apresentação, Observações) com `tests/referencia.json`, incluindo contagem de VALIDADO / NÃO VALIDADO |
 
 ## Mapa dos arquivos (ordem de montagem)
@@ -75,6 +75,7 @@ Os arquivos são concatenados exatamente na ordem de `src/manifest.json`. Os mó
 | `src/js/modulos/23-v61-icms-reducao-base.js` | 6 KB | módulo V61 (origem e % de redução da base do ICMS em todas as regras) |
 | `src/js/modulos/24-v62-icms-base-interna-interestadual.js` | 3 KB | módulo V62/V63 (base do ICMS nas operações internas e interestaduais: produtos − desconto + frete + seguro + outras despesas, com redução) |
 | `src/js/modulos/25-v64-simples-csosn-102.js` | 2 KB | módulo V64 (CSOSN 102: ICMS e IPI sempre VALIDADO, sem recálculo) |
+| `src/js/modulos/26-v65-lucro-presumido-pis-cofins.js` | 3 KB | módulo V65 (Lucro Presumido: PIS/COFINS sem inconsistências das entradas e apuração só pelas saídas) |
 | `src/js/modulos/99-fechamento.js` | 0 KB | fecha a função principal e desenha a tela — módulos novos entram antes dele |
 
 ## Origem

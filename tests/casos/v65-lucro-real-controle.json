@@ -1,0 +1,38 @@
+{
+  "arquivos": [
+    "v65-presumido-saida.xml",
+    "v65-presumido-entrada.xml"
+  ],
+  "descricao": "V65 — controle: em Lucro Real nada muda (inconsistências das entradas e Entradas (−) Saídas continuam)",
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91",
+    "regimeEmpresa": "Lucro Real"
+  },
+  "dashboard": [
+    {
+      "seletor": "#dashInconsist",
+      "contem": [
+        "Entradas 4",
+        "Base do PIS"
+      ]
+    },
+    {
+      "seletor": "#dashPisRows",
+      "contem": [
+        "Entradas (−) Saídas"
+      ],
+      "nao_contem": [
+        "informativo",
+        "A recolher"
+      ]
+    },
+    {
+      "seletor": "#dsec-pis .saldo",
+      "sub": "impostos",
+      "contem": [
+        "SALDO (Entradas − Saídas)",
+        "27,67"
+      ]
+    }
+  ]
+}

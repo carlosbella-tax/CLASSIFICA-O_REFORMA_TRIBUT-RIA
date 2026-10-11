@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nfeProc xmlns="http://www.portalfiscal.inf.br/nfe" versao="4.00"><NFe><infNFe Id="NFe35261000000000000353550010000006521000006509" versao="4.00">
+<ide><cUF>35</cUF><natOp>Teste V65</natOp><mod>55</mod><serie>1</serie><nNF>652</nNF><dhEmi>2026-10-11T10:00:00-03:00</dhEmi><tpNF>1</tpNF><idDest>1</idDest><tpAmb>2</tpAmb><finNFe>1</finNFe><indFinal>0</indFinal><indPres>0</indPres></ide>
+<emit><CNPJ>00000000000353</CNPJ><xNome>FORNECEDOR LUCRO REAL LTDA</xNome><IE>111111111111</IE><CRT>3</CRT></emit>
+<dest><CNPJ>00000000000191</CNPJ><xNome>EMPRESA LUCRO PRESUMIDO LTDA</xNome></dest>
+<det nItem="1"><prod><cProd>1</cProd><cEAN>SEM GTIN</cEAN><xProd>PRODUTO V65</xProd><NCM>84145990</NCM><CFOP>5102</CFOP><uCom>UN</uCom><qCom>1.0000</qCom><vUnCom>2000.00</vUnCom><vProd>2000.00</vProd><indTot>1</indTot></prod><imposto><ICMS><ICMS00><orig>0</orig><CST>00</CST><modBC>3</modBC><vBC>2000.00</vBC><pICMS>18.00</pICMS><vICMS>360.00</vICMS></ICMS00></ICMS><PIS><PISAliq><CST>01</CST><vBC>2000.00</vBC><pPIS>1.65</pPIS><vPIS>33.00</vPIS></PISAliq></PIS><COFINS><COFINSAliq><CST>01</CST><vBC>2000.00</vBC><pCOFINS>7.60</pCOFINS><vCOFINS>152.00</vCOFINS></COFINSAliq></COFINS></imposto></det>
+</infNFe></NFe></nfeProc>

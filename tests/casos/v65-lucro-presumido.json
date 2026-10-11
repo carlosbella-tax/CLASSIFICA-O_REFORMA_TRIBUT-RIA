@@ -1,0 +1,49 @@
+{
+  "arquivos": [
+    "v65-presumido-saida.xml",
+    "v65-presumido-entrada.xml"
+  ],
+  "descricao": "V65 — Lucro Presumido: sem inconsistências de PIS/COFINS das entradas; apuração de PIS/COFINS somente pelas saídas",
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91",
+    "regimeEmpresa": "Lucro Presumido"
+  },
+  "dashboard": [
+    {
+      "seletor": "#dashInconsist",
+      "contem": [
+        "Nenhuma inconsistência"
+      ],
+      "nao_contem": [
+        "Base do PIS",
+        "Base da COFINS"
+      ]
+    },
+    {
+      "seletor": "#dashPisRows",
+      "contem": [
+        "Entradas (informativo)",
+        "A recolher — somente saídas (Lucro Presumido)"
+      ],
+      "nao_contem": [
+        "Entradas (−) Saídas"
+      ]
+    },
+    {
+      "seletor": "#dsec-pis .saldo",
+      "sub": "impostos",
+      "contem": [
+        "A RECOLHER — somente saídas",
+        "5,33"
+      ]
+    },
+    {
+      "seletor": "#dsec-cofins .saldo",
+      "sub": "impostos",
+      "contem": [
+        "A RECOLHER — somente saídas",
+        "24,60"
+      ]
+    }
+  ]
+}

@@ -40,6 +40,7 @@
     "src/js/modulos/23-v61-icms-reducao-base.js",
     "src/js/modulos/24-v62-icms-base-interna-interestadual.js",
     "src/js/modulos/25-v64-simples-csosn-102.js",
+    "src/js/modulos/26-v65-lucro-presumido-pis-cofins.js",
     "src/js/modulos/99-fechamento.js",
     "src/90-rodape.html"
   ]

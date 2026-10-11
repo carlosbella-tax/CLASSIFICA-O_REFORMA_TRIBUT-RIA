@@ -1,5 +1,5 @@
 {
-  "versao": 64,
+  "versao": 65,
   "data": "2026-10-11",
-  "descricao": "Simples Nacional sem permissão de crédito (CSOSN 102): abas ICMS e IPI com todas as validações como VALIDADO e nenhum valor recalculado (não gera crédito de ICMS e IPI)"
+  "descricao": "Lucro Presumido: PIS/COFINS cumulativo sem crédito das entradas — Dashboard sem inconsistências de PIS/COFINS das entradas e apuração de PIS/COFINS somente pelas saídas (entradas apenas informativas)"
 }

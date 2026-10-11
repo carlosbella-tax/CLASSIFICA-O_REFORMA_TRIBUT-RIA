@@ -5,6 +5,16 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V65 — 2026-10-11
+
+Vale quando o regime tributário do cabeçalho é **Lucro Presumido** (PIS e COFINS no regime cumulativo, 0,65% e 3% sobre a receita bruta, sem crédito das compras):
+- **Dashboard › Inconsistências encontradas — detalhamento** (resumo por tipo e itens não validados) e **slides de observações da apresentação**: nenhuma inconsistência de PIS/COFINS das notas de **entrada**. As de saída continuam.
+- **Quadro PIS/COFINS do Resumo geral**: as entradas continuam aparecendo como "Entradas (informativo)"; a linha "Entradas (−) Saídas" passa a ser **"A recolher — somente saídas (Lucro Presumido)"**, com a base e os valores de PIS e COFINS só das saídas, e uma nota explicando o regime.
+- **Entradas e Saídas por imposto › PIS e COFINS**: o cartão "SALDO (Entradas − Saídas)" passa a **"A RECOLHER — somente saídas"**.
+- Lucro Real, Simples Nacional e regime não informado: nada muda.
+- O executor de casos aceita várias notas (`arquivos`), campos do cabeçalho (`campos`) e conferências no Dashboard (`dashboard`). Casos `v65-lucro-presumido` e `v65-lucro-real-controle`.
+  `src/js/modulos/26-v65-lucro-presumido-pis-cofins.js`
+
 ## V64 — 2026-10-11
 
 - **Simples Nacional sem permissão de crédito (CSOSN 102)**: o item não gera crédito de ICMS nem de IPI, então não há base a validar. Nas abas **ICMS** e **IPI**, todas as colunas de validação ficam "VALIDADO (Simples Nacional — CSOSN 102, sem permissão de crédito: não gera crédito de ICMS e IPI)" e nenhum valor é recalculado (base correta, valor correto = 0; colunas calculadas = VALIDADO).
