@@ -1,0 +1,42 @@
+{
+  "descricao": "V68 — Base de IBS/CBS NÃO VALIDADO com a diferença (base do XML − base calculada) logo após o parêntese",
+  "arquivo": "v68-diferenca-base-ibs-cbs.xml",
+  "funcao": "linhasIbsCbsTabela",
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91"
+  },
+  "linhas": [
+    {
+      "numero_item": "1",
+      "esperado": {
+        "validacao_base_ibs_cbs": "^NÃO VALIDADO .base de IBS/CBS calculada: R.*287,51. diferença: R.*12,49$",
+        "base_correta_ibs_cbs": 287.51
+      }
+    },
+    {
+      "numero_item": "2",
+      "esperado": {
+        "validacao_base_ibs_cbs": "^VALIDADO$"
+      }
+    },
+    {
+      "numero_item": "3",
+      "esperado": {
+        "validacao_base_ibs_cbs": "^NÃO VALIDADO .base de IBS/CBS calculada: R.*500,00. diferença: -R.*49,75$",
+        "base_correta_ibs_cbs": 500
+      }
+    }
+  ],
+  "dashboard": [
+    {
+      "seletor": "#dashInconsist",
+      "contem": [
+        "calculada: R$ 287,51 — diferença: R$ 12,49",
+        "calculada: R$ 500,00 — diferença: -R$ 49,75"
+      ],
+      "nao_contem": [
+        "287,51) diferença"
+      ]
+    }
+  ]
+}

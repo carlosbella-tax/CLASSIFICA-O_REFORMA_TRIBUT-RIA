@@ -5,6 +5,13 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V68 — 2026-10-11
+
+- **Base de IBS/CBS (`validacao_base_ibs_cbs`)**: no NÃO VALIDADO, a diferença aparece logo após o parêntese — ex.: "NÃO VALIDADO (base de IBS/CBS calculada: R$ 287,51) diferença: R$ 12,49". Diferença = base do XML − base calculada (negativa quando o XML traz base menor, ex.: "-R$ 49,75").
+- Vale na aba Base de IBS/CBS, no Excel e nas inconsistências do Dashboard/apresentação (lá o motivo fica "base de IBS/CBS calculada: R$ 287,51 — diferença: R$ 12,49").
+- Caso de teste `tests/casos/v68-diferenca-base-ibs-cbs` (XML R$ 300,00 × calculada R$ 287,51; base igual; XML R$ 450,25 × calculada R$ 500,00).
+  `src/js/modulos/29-v68-diferenca-base-ibs-cbs.js`
+
 ## V67 — 2026-10-11
 
 - **Base abaixo de R$ 0,05 e XML sem valor do imposto = VALIDADO** (valor irrelevante), sem nenhum valor recalculado (base correta e valor correto = 0). Vale para **PIS, COFINS, ICMS, IPI e IBS/CBS**, nas abas, no Dashboard (inconsistências) e na apresentação.

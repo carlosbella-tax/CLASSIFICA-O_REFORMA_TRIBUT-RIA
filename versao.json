@@ -1,5 +1,5 @@
 {
-  "versao": 67,
+  "versao": 68,
   "data": "2026-10-11",
-  "descricao": "Base abaixo de R$ 0,05 sem valor do imposto no XML = VALIDADO (valor irrelevante), sem recálculo, em PIS, COFINS, ICMS, IPI e IBS/CBS"
+  "descricao": "Base de IBS/CBS: no NÃO VALIDADO, mostrar a diferença (base do XML − base calculada) logo após o parêntese"
 }
