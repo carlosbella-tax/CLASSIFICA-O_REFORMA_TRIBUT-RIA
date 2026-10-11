@@ -1,0 +1,268 @@
+# Histórico de versões — Diagnóstico Operações Fiscais
+
+Convenção: a versão é o número do selo **VERSÃO N** no cabeçalho do sistema e o nome do arquivo gerado (`DIAGNOSTICO_VN.html`).
+Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza selo, `versao.json`, `package.json` e esta lista).
+
+<!-- novas versões abaixo desta linha -->
+
+## V59 — 2026-10-11 — base trazida para o G4 OS
+
+- ICMS na importação (CFOP 3xxx): base = valor aduaneiro + II + IPI + PIS + COFINS + despesas aduaneiras, com o ICMS por dentro.
+- Projeto decomposto em `src/` (módulos por versão), com build que remonta o arquivo único idêntico byte a byte ao `DIAGNOSTICO_V59.html` recebido (sha256 `9087863b…13a8b`) e teste funcional com XMLs reais.
+
+---
+
+## Histórico anterior (reconstruído dos comentários `Vxx` do código-fonte)
+
+Cada item indica o arquivo em `src/` onde a regra está hoje. Versões sem comentário no código (V1–V9, V11, V12, V16, V22, V27, V36, V44, V48, V51) não deixaram registro no fonte.
+
+### V59
+
+- ICMS na importação (CFOP 3xxx): base = valor aduaneiro + II + IPI + PIS + COFINS + despesas aduaneiras (com o ICMS "por dentro")  
+  `src/js/modulos/21-v59-icms-importacao-cfop-3xxx.js`
+
+### V58
+
+- PIS/COFINS no Simples Nacional, valor correto a partir da base correta e "NÃO VALIDADO" no lugar de "INCORRETO" em todo o sistema  
+  `src/js/modulos/20-v58-pis-cofins-simples-nacional.js`
+
+### V57
+
+- Aba ICMS: base_icms_calculada mostra "VALIDADO" quando a base do XML confere  
+  `src/js/modulos/19-v56-pis-cofins-cst-nao.js`
+
+### V56
+
+- PIS/COFINS: CST não validada torna a base INCORRETA, com a base correta = valor total dos produtos − ICMS; NCM 4818.10.00 (papel higiênico)  
+  `src/js/modulos/19-v56-pis-cofins-cst-nao.js`
+
+### V55
+
+- Base de IBS/CBS: componentes da base em colunas e nova fórmula Base = valor dos produtos/serviço + frete + seguro + juros + multa + outras despesas + desconto condicional + IS − desconto incondicional − ICMS − ISS − PIS − COFINS  
+  `src/js/modulos/18-v55-base-ibs-cbs-componentes.js`
+
+### V54
+
+- IPI (CST × valor), IBS/CBS: CST 410/620, CST candidato do NCM e base pela regra do Art. 12 da LC 214/2025.  
+  `src/js/modulos/17-v54-ipi-cst-valor-ibs.js`
+
+### V53
+
+- Inconsistências: coleta única de tudo que não foi validado, detalhamento no Dashboard e slides de Observações na apresentação.  
+  `src/js/modulos/16-v53-inconsistencias-coleta-unica-tudo.js`
+
+### V52
+
+- PIS/COFINS na importação e CST de entrada (Informativo Tax Advice) Lei 10.865/2004 · Leis 10.637/2002 e 10.833/2003 · Lei 14.973/2024  
+  `src/js/modulos/15-v52-pis-cofins-importacao-cst.js`
+
+### V50
+
+- Aba APRESENTAÇÃO: monta o PowerPoint (modelo Tax Advice) com os dados do Dashboard da empresa analisada.  
+  `src/js/modulos/14-v50-aba-apresentacao-monta-powerpoint.js`
+
+### V49
+
+- Cabeçalho da impressão com os dados da empresa (nome, CNPJ, regime, período, UFs), a aba impressa e a data/hora.  
+  `src/js/modulos/13-v49-cabecalho-impressao-com-dados.js`
+
+### V47
+
+- largura útil com folga (A4/Carta paisagem, margens padrão do navegador)  
+  `src/js/modulos/12-v46-impressao-pdf-todas-linhas.js`
+
+### V46
+
+- Impressão/PDF: todas as linhas da aba aberta, fonte menor e tabelas reduzidas para caber na largura da página (A4 paisagem).  
+  `src/js/modulos/12-v46-impressao-pdf-todas-linhas.js`
+
+### V45
+
+- IBS e CBS não validados — separado em ENTRADAS e SAÍDAS  
+  `src/js/modulos/10-v42-regime-tributario-opsimpnac-crt.js`
+- Simples Nacional — separado em ENTRADAS e SAÍDAS  
+  `src/js/modulos/10-v42-regime-tributario-opsimpnac-crt.js`
+- Exportar cada aba em Excel e salvar/importar o diagnóstico completo  
+  `src/js/modulos/11-v45-exportar-cada-aba-excel.js`
+
+### V43
+
+- margem de R$ 0,02  
+  `src/js/modulos/01-v14-carga-ilimitada-xml-arquivos.js`
+
+### V42
+
+- if (k === 'item_det_prod_vDesc'){ o.DESCONTO = brl(num(r[k])); continue; }  
+  `src/js/modulos/05-v18-layout-aba-itens-colunas.js`
+- Regime tributário (opSimpNac / CRT), resumo do Simples Nacional e resumo de IBS/CBS não validados no Dashboard.  
+  `src/js/modulos/10-v42-regime-tributario-opsimpnac-crt.js`
+
+### V41
+
+- validação NCM × cClassTrib pela aba "TIPI - Base Completa" (colunas A/B → F, G, H, I de cada NCM)  
+  `src/js/modulos/09-v39-base-ibs-cbs-validada.js`
+
+### V40
+
+- CST diferente de 01/02 (tributadas pela alíquota básica/diferenciada) e sem base no XML → VALIDADO (não há base de PIS/COFINS)  
+  `src/js/modulos/01-v14-carga-ilimitada-xml-arquivos.js`
+
+### V39
+
+- Base de IBS/CBS validada pela planilha REFORMA TRIBUTÁRIA (TIPI - Base Completa × Correlação Capítulo x Anexo × cClassTrib Oficial)  
+  `src/js/modulos/09-v39-base-ibs-cbs-validada.js`
+
+### V38
+
+- base de PIS/COFINS — CST não tributado (04 a 09, 70 a 75) ou por quantidade (03) não é calculado; demais: valor da operação − ICMS destacado, aceitando arredondamento de até R$ 0,10  
+  `src/js/modulos/01-v14-carga-ilimitada-xml-arquivos.js`
+- Lei 14.592/2023 (art. 1º, § 2º das Leis 10.637 e 10.833) — base = valor da operação − ICMS destacado na nota  
+  `src/js/modulos/01-v14-carga-ilimitada-xml-arquivos.js`
+
+### V37
+
+- sem base no XML → só CST 00 fica NÃO VALIDADO; qualquer outra CST fica VALIDADO  
+  `src/js/modulos/01-v14-carga-ilimitada-xml-arquivos.js`
+
+### V35
+
+- base zerada no XML → VALIDADO se a CST não é tributada; INCORRETO se a CST é tributada (00, 10, 20, 51, 70, 90)  
+  `src/js/modulos/01-v14-carga-ilimitada-xml-arquivos.js`
+- Base de IBS/CBS: % de redução de alíquota, validação do cClassTrib (LC 214/2025) e anexo/artigo; base validada quando há redução.  
+  `src/js/modulos/08-v35-base-ibs-cbs-reducao.js`
+
+### V34
+
+- filtros das colunas: a lista de valores considera os outros filtros já aplicados (como no Excel) e uma faixa mostra os filtros ativos, com opção de remover um a um ou todos.  
+  `src/js/modulos/07-v34-filtros-das-colunas-lista.js`
+
+### V33
+
+- Resumo geral do Dashboard: ICMS RESUMO, ICMS ST sem alíquota, IPI e PIS/COFINS com uma linha por alíquota, IBS/CBS por CFOP e alíquota com ENTRADAS e SAÍDAS lado a lado.  
+  `src/js/modulos/04-v33-resumo-geral-dashboard-icms.js`
+
+### V32
+
+- tipo_operacao editável (ENTRADAS / SAÍDAS / automático pelo CNPJ)  
+  `src/js/modulos/01-v14-carga-ilimitada-xml-arquivos.js`
+- troca manual do tipo de operação — aplicada a todos os itens da mesma nota  
+  `src/js/modulos/06-v25-desempenho-indice-por-tag.js`
+
+### V31
+
+- classificação conforme as planilhas CST_DE_ICMS, CST_PIS_E_COFINS e CST_DE_IPI  
+  `src/js/modulos/01-v14-carga-ilimitada-xml-arquivos.js`
+- CST não tributado — não calcula, sempre VALIDADO  
+  `src/js/modulos/01-v14-carga-ilimitada-xml-arquivos.js`
+- quadro por imposto (padrão ICMS) — resumo por CFOP e alíquota; ENTRADAS e SAÍDAS em listas lado a lado, sem linhas vazias  
+  `src/js/modulos/03-v17-cfop-entradas-convertido-com.js`
+- filtro das colunas — campo de pesquisa estável, "Selecionar todos" sobre os resultados e aplicar com Enter  
+  `src/js/modulos/06-v25-desempenho-indice-por-tag.js`
+
+### V30
+
+- planilha CFOP_DE_SUBSTITUIÇÃO_TRIBUTARIA.xlsx  
+  `src/js/modulos/01-v14-carga-ilimitada-xml-arquivos.js`
+- barra Consultar removida também do Dashboard  
+  `src/js/modulos/02-v15-filtros-consulta-por-aba.js`
+- contagem da aba ICMS ST pelos CFOP de substituição tributária  
+  `src/js/modulos/06-v25-desempenho-indice-por-tag.js`
+
+### V29
+
+- CST do ICMS e CSOSN conforme a planilha CFOP.xlsx (aba CST ICMS)  
+  `src/js/base/auxiliares-v25-v29.js`
+- CST que não gera imposto → o XML deve vir sem base/valor; CST tributado → o XML deve trazer valor  
+  `src/js/modulos/01-v14-carga-ilimitada-xml-arquivos.js`
+
+### V28
+
+- alíquota exibida sempre como consta no XML  
+  `src/js/base/auxiliares-v25-v29.js`
+- validação do IPI = Base × Alíquota (ou Qtd × Valor por unidade); se INCORRETO, mostra o valor correto  
+  `src/js/modulos/02-v15-filtros-consulta-por-aba.js`
+
+### V26
+
+- o filtro ▾ das colunas usa as linhas exibidas na aba (inclui tipo_operacao e as colunas montadas)  
+  `src/js/modulos/02-v15-filtros-consulta-por-aba.js`
+- barra Consultar removida das abas de listas  
+  `src/js/modulos/02-v15-filtros-consulta-por-aba.js`
+- tipo_operacao como coluna comum, com filtro ▾ igual a arquivo_origem  
+  `src/js/modulos/05-v18-layout-aba-itens-colunas.js`
+
+### V25
+
+- leitura de XML mais rápida (mesmo resultado da V13, sem cópias de listas)  
+  `src/js/base/auxiliares-v25-v29.js`
+- Resumo geral — Base, Alíquota e Valor de cada imposto, por movimento (sem quebra por CST)  
+  `src/js/modulos/03-v17-cfop-entradas-convertido-com.js`
+- linha da aba Itens montada uma vez por item  
+  `src/js/modulos/05-v18-layout-aba-itens-colunas.js`
+- desempenho: índice por tag em cada item, detecção de grupos em cache, renderização só da aba aberta e campos do cabeçalho sem travar.  
+  `src/js/modulos/06-v25-desempenho-indice-por-tag.js`
+
+### V24
+
+- Resumo geral — Base, CST, Alíquota e Valor de cada imposto (Entradas e Saídas)  
+  `src/js/modulos/03-v17-cfop-entradas-convertido-com.js`
+
+### V23
+
+- linha fiscal única que alimenta as abas ICMS e Base de PIS/COFINS  
+  `src/js/modulos/01-v14-carga-ilimitada-xml-arquivos.js`
+- ICMS ST só quando o XML traz as tags de valor de ST  
+  `src/js/modulos/05-v18-layout-aba-itens-colunas.js`
+
+### V21
+
+- bloco de IBS/CBS (base, CST e cClassTrib são comuns aos dois tributos no grupo IBSCBS do XML)  
+  `src/js/modulos/05-v18-layout-aba-itens-colunas.js`
+
+### V20
+
+- campo sem informação no XML aparece com 0 (nunca vazio)  
+  `src/js/modulos/05-v18-layout-aba-itens-colunas.js`
+
+### V19
+
+- bloco de IPI logo após o ICMS ST  
+  `src/js/modulos/05-v18-layout-aba-itens-colunas.js`
+
+### V18
+
+- Layout da aba Itens (colunas removidas, renomeadas e blocos de ICMS, ICMS ST e PIS/COFINS com CST e descrição).  
+  `src/js/modulos/05-v18-layout-aba-itens-colunas.js`
+- a V13 juntava todas as chaves num só texto e "PRED...CST" (redução de BC + CST do PIS) virava ICMS ST por engano.  
+  `src/js/modulos/05-v18-layout-aba-itens-colunas.js`
+
+### V17
+
+- CFOP de ENTRADAS convertido (5→1, 6→2, 7→3) com descrição da tabela CFOP.xlsx, e Dashboard com uma aba por imposto (Entradas × Saídas).  
+  `src/js/modulos/03-v17-cfop-entradas-convertido-com.js`
+
+### V15
+
+- Filtros de consulta por aba: CNPJ (emitente/destinatário), operação, CFOP, NCM e CST, com seleção múltipla e opção "Todos".  
+  `src/js/modulos/02-v15-filtros-consulta-por-aba.js`
+
+### V14
+
+- funções auxiliares do Excel que estavam ausentes na V13 (o download falhava com "xe is not defined").  
+  `src/js/base/auxiliares-v25-v29.js`
+- Carga ilimitada de XML (arquivos + pasta + arrastar pastas), aba PROCESSAR que inicia o processamento, paginação para exibir TODOS os itens, correções de cálculo e dashboard de validações.  
+  `src/js/modulos/01-v14-carga-ilimitada-xml-arquivos.js`
+
+### V13
+
+- Importação de XML salvo como TXT e visões fiscais específicas  
+  `src/js/base/v13-importacao-xml-txt.js`
+- "IMPOSTO" contém "ST", o que zerava todo o ICMS próprio. Agora o filtro é pela tag final.  
+  `src/js/modulos/01-v14-carga-ilimitada-xml-arquivos.js`
+- a base esperada de PIS/COFINS usava a função valorIcms em vez do valor → sempre "INCORRETO".  
+  `src/js/modulos/01-v14-carga-ilimitada-xml-arquivos.js`
+
+### V10
+
+- grupos fiscais são identificados pela presença de tags, não pelo valor  
+  `src/js/base/leitura-xml-e-telas.js`

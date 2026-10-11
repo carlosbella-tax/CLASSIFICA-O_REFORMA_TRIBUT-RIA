@@ -1,0 +1,102 @@
+{
+  "versao": 59,
+  "arquivos": [
+    "35260243061654000480550010000929731211237179.XML",
+    "CTEOS_simples_transporte_pessoas.xml",
+    "NFE_12itens_arredondamento_IBSCBS.xml",
+    "NFE_44itens_ordem_diferente.xml",
+    "NFE_FCPST_40itens.xml",
+    "NFE_art12_planilha.xml",
+    "XML_teste_PIS_COFINS_duas_aliquotas.xml",
+    "XML_teste_PIS_CST06.xml",
+    "XML_teste_item_CST200_pRedAliq60.xml"
+  ],
+  "contagens": {
+    "docs": 6,
+    "itens": 105,
+    "eventos": 0,
+    "erros": 3
+  },
+  "abas": {
+    "items": {
+      "sha": "300c4d1a1a23d406",
+      "caracteres": 122424,
+      "linhas_tabela": 100,
+      "validado": 0,
+      "nao_validado": 0,
+      "incorreto": 0
+    },
+    "icms": {
+      "sha": "4908111b8fbd0229",
+      "caracteres": 37876,
+      "linhas_tabela": 100,
+      "validado": 300,
+      "nao_validado": 1,
+      "incorreto": 0
+    },
+    "icmsst": {
+      "sha": "83dddf40eb4eaef3",
+      "caracteres": 16795,
+      "linhas_tabela": 34,
+      "validado": 0,
+      "nao_validado": 1,
+      "incorreto": 0
+    },
+    "ipi": {
+      "sha": "df2cc6a9ec72f9fb",
+      "caracteres": 21418,
+      "linhas_tabela": 60,
+      "validado": 120,
+      "nao_validado": 1,
+      "incorreto": 0
+    },
+    "piscofins": {
+      "sha": "5dde021f5ae22757",
+      "caracteres": 57323,
+      "linhas_tabela": 100,
+      "validado": 552,
+      "nao_validado": 49,
+      "incorreto": 0
+    },
+    "ibscbs": {
+      "sha": "8fd4599c213c5ff9",
+      "caracteres": 96927,
+      "linhas_tabela": 100,
+      "validado": 595,
+      "nao_validado": 6,
+      "incorreto": 0
+    },
+    "events": {
+      "sha": "0f573bc53427da7d",
+      "caracteres": 612,
+      "linhas_tabela": 1,
+      "validado": 1,
+      "nao_validado": 0,
+      "incorreto": 1
+    },
+    "dashboard": {
+      "sha": "3bff6327f643391a",
+      "caracteres": 17984,
+      "linhas_tabela": 165,
+      "validado": 0,
+      "nao_validado": 2,
+      "incorreto": 0
+    },
+    "apresentacao": {
+      "sha": "f9bc337e738d41d8",
+      "caracteres": 2296,
+      "linhas_tabela": 0,
+      "validado": 0,
+      "nao_validado": 2,
+      "incorreto": 0
+    },
+    "observacoes": {
+      "sha": "e40838bced29060e",
+      "caracteres": 7317,
+      "linhas_tabela": 24,
+      "validado": 1,
+      "nao_validado": 1,
+      "incorreto": 0
+    }
+  }
+}

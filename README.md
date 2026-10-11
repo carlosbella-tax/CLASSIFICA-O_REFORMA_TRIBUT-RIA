@@ -1,0 +1,76 @@
+# Diagnóstico Operações Fiscais — Tax Advice
+
+Lê XML de NF-e, CT-e, NFS-e e eventos (arquivos, pasta inteira, TXT com XML), valida ICMS, ICMS ST, IPI, PIS/COFINS e IBS/CBS (LC 214/2025), mostra o Dashboard por imposto e gera Excel, PDF e a apresentação em PowerPoint. O entregável é **um único arquivo HTML** que roda offline no navegador.
+
+Versão atual: **V59** (ver [CHANGELOG.md](CHANGELOG.md)). Regras de trabalho do agente: [AGENTS.md](AGENTS.md).
+
+## Comandos
+
+```bash
+npm install                                   # uma vez (jsdom, para os testes)
+npm run build                                 # gera dist/DIAGNOSTICO_V{versão}.html
+npm test                                      # build + sintaxe + versão + teste funcional com XMLs reais
+npm run nova-versao -- 60 "descrição"         # abre a próxima versão (selo, versao.json, CHANGELOG)
+npm run drive                                 # build + cópia para a pasta do dia no Google Drive
+node tests/testar.mjs --atualizar             # grava nova referência (só depois de conferir as diferenças)
+```
+
+## Fluxo de uma atualização
+
+1. `npm run nova-versao -- N "o que muda"`
+2. Editar em `src/` (regra nova → módulo novo em `src/js/modulos/` e inclusão no `src/manifest.json`)
+3. `npm test` → conferir as abas que mudaram; se for o esperado, `node tests/testar.mjs --atualizar`
+4. `npm run drive` e commit `vN: descrição` + tag `vN`
+
+## Testes
+
+| Bloco | O que garante |
+|---|---|
+| Sintaxe | cada um dos 4 blocos `<script>` compila |
+| Versão | selo VERSÃO N do cabeçalho = `versao.json` |
+| Identidade | na V59, o build é idêntico byte a byte ao arquivo recebido (`_arquivo_original/`) |
+| Funcional | carrega os 9 XMLs de `tests/fixtures` no navegador simulado, processa (6 documentos, 105 itens) e compara o conteúdo de cada aba (Itens, ICMS, ICMS ST, IPI, PIS/COFINS, IBS/CBS, Eventos, Dashboard, Apresentação, Observações) com `tests/referencia.json`, incluindo contagem de VALIDADO / NÃO VALIDADO |
+
+## Mapa dos arquivos (ordem de montagem)
+
+Os arquivos são concatenados exatamente na ordem de `src/manifest.json`. Os módulos `src/js/modulos/` ficam dentro de uma única função `(function(){ … })()` que começa em `01-v14` e fecha em `21-v59`; a numeração é a ordem de carga (a V33, por exemplo, roda antes da V18).
+
+| Arquivo | Tamanho | Conteúdo |
+|---|---|---|
+| `src/00-cabecalho.html` | 0 KB | doctype, head e título |
+| `src/css/estilo.css` | 43 KB | todo o CSS (tela e impressão) |
+| `src/10-corpo.html` | 17 KB | marcação das abas, cabeçalho (empresa, CNPJ, regime, período) e selo VERSÃO |
+| `src/js/dados/cfop-cst-icms.js` | 44 KB | tabela CFOP, CST de ICMS, cfopDesc/cstDesc |
+| `src/js/dados/icms-st-exclusoes.js` | 36 KB | NCMs excluídos do ICMS ST |
+| `src/js/dados/tipi-2026.js` | 1.743 KB | TIPI 2026 completa (1.7 MB) e tipiNcm |
+| `src/js/base/leitura-xml-e-telas.js` | 44 KB | estado global, leitura de NF-e/CT-e/NFS-e/eventos, formatação, filtros, Excel, abas fiscais (V10) |
+| `src/js/base/v13-importacao-xml-txt.js` | 5 KB | V13: XML salvo como TXT |
+| `src/vendor/pptxgenjs-4.0.1.bundle.js` | 450 KB | biblioteca PptxGenJS 4.0.1 (não editar) |
+| `src/js/apresentacao/gerador-pptx.js` | 30 KB | montagem dos slides (modelo Tax Advice) |
+| `src/js/apresentacao/imagens-pptx.js` | 103 KB | logos e fundo da apresentação em base64 |
+| `src/js/base/auxiliares-v25-v29.js` | 6 KB | CST ICMS/CSOSN, alíquota exibida, leitura XML rápida, auxiliares do Excel |
+| `src/js/modulos/01-v14-carga-ilimitada-xml-arquivos.js` | 40 KB | módulo V14 (IIFE principal) |
+| `src/js/modulos/02-v15-filtros-consulta-por-aba.js` | 17 KB | módulo V15 (IIFE principal) |
+| `src/js/modulos/03-v17-cfop-entradas-convertido-com.js` | 59 KB | módulo V17 (IIFE principal) |
+| `src/js/modulos/04-v33-resumo-geral-dashboard-icms.js` | 10 KB | módulo V33 (IIFE principal) |
+| `src/js/modulos/05-v18-layout-aba-itens-colunas.js` | 15 KB | módulo V18 (IIFE principal) |
+| `src/js/modulos/06-v25-desempenho-indice-por-tag.js` | 13 KB | módulo V25 (IIFE principal) |
+| `src/js/modulos/07-v34-filtros-das-colunas-lista.js` | 3 KB | módulo V34 (IIFE principal) |
+| `src/js/modulos/08-v35-base-ibs-cbs-reducao.js` | 18 KB | módulo V35 (IIFE principal) |
+| `src/js/modulos/09-v39-base-ibs-cbs-validada.js` | 630 KB | módulo V39 (IIFE principal) |
+| `src/js/modulos/10-v42-regime-tributario-opsimpnac-crt.js` | 13 KB | módulo V42 (IIFE principal) |
+| `src/js/modulos/11-v45-exportar-cada-aba-excel.js` | 12 KB | módulo V45 (IIFE principal) |
+| `src/js/modulos/12-v46-impressao-pdf-todas-linhas.js` | 3 KB | módulo V46 (IIFE principal) |
+| `src/js/modulos/13-v49-cabecalho-impressao-com-dados.js` | 2 KB | módulo V49 (IIFE principal) |
+| `src/js/modulos/14-v50-aba-apresentacao-monta-powerpoint.js` | 14 KB | módulo V50 (IIFE principal) |
+| `src/js/modulos/15-v52-pis-cofins-importacao-cst.js` | 14 KB | módulo V52 (IIFE principal) |
+| `src/js/modulos/16-v53-inconsistencias-coleta-unica-tudo.js` | 10 KB | módulo V53 (IIFE principal) |
+| `src/js/modulos/17-v54-ipi-cst-valor-ibs.js` | 165 KB | módulo V54 (IIFE principal) |
+| `src/js/modulos/18-v55-base-ibs-cbs-componentes.js` | 4 KB | módulo V55 (IIFE principal) |
+| `src/js/modulos/19-v56-pis-cofins-cst-nao.js` | 3 KB | módulo V56 (IIFE principal) |
+| `src/js/modulos/20-v58-pis-cofins-simples-nacional.js` | 3 KB | módulo V58 (IIFE principal) |
+| `src/js/modulos/21-v59-icms-importacao-cfop-3xxx.js` | 3 KB | módulo V59 (IIFE principal) |
+
+## Origem
+
+Arquivo único `DIAGNOSTICO_V59.html` (3.657.037 bytes, sha256 `9087863b78b95980462191ae3cfa2266e1d9585d0535ef9c63abf12824a13a8b`), preservado em `_arquivo_original/`. Versões anteriores (V4 a V49) estão no Drive em `0025- REFORMA TRIBUTARIA/00 - PAINEL AUTOMATICO/MOTOR DE CALCLULO/`.
