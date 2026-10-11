@@ -5,6 +5,15 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V69 — 2026-10-11
+
+- **Margem única de R$ 0,05 em todas as abas** (ICMS, IPI, PIS, COFINS e IBS/CBS): diferença de até R$ 0,05, para mais ou para menos, entre o XML e o valor/base calculado = **VALIDADO**, sem recálculo (base correta e valor correto = 0). Texto: "VALIDADO (diferença de R$ 0,04, dentro da margem de R$ 0,05)".
+- Substitui as margens anteriores de R$ 0,02 (operações comuns) e R$ 0,03 (CFOP 3101/3102/3556).
+- Se a base fica validada pela margem, o valor do imposto é conferido sobre a base do XML (base × alíquota do XML), também com R$ 0,05.
+- Validações de CST, cClassTrib e crédito por CFOP (que não comparam valores) não mudam.
+- Nos XMLs reais de teste, nenhuma mudança de status. Casos ajustados: `v60` item 4 (diferença de R$ 0,04 passa a VALIDADO) e `v67` item 3 (R$ 0,05). Caso novo `v69-margem-005` (R$ 0,05 = VALIDADO; R$ 0,06 = NÃO VALIDADO, na base do ICMS e no valor do PIS).
+  `src/js/modulos/30-v69-margem-005.js`
+
 ## V68 — 2026-10-11
 
 - **Base de IBS/CBS (`validacao_base_ibs_cbs`)**: no NÃO VALIDADO, a diferença aparece logo após o parêntese — ex.: "NÃO VALIDADO (base de IBS/CBS calculada: R$ 287,51) diferença: R$ 12,49". Diferença = base do XML − base calculada (negativa quando o XML traz base menor, ex.: "-R$ 49,75").

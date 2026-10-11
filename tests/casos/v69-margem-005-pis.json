@@ -1,0 +1,20 @@
+{
+  "descricao": "V69 — margem única de R$ 0,05: diferença de R$ 0,05 = VALIDADO; R$ 0,06 = NÃO VALIDADO",
+  "arquivo": "v69-margem-005.xml",
+  "funcao": "linhasPisCofins",
+  "linhas": [
+    {
+      "numero_item": "3",
+      "esperado": {
+        "validacao_valor_pis": "^VALIDADO .diferença de R.*dentro da margem de R.*0,05",
+        "valor_correto_pis": 0
+      }
+    },
+    {
+      "numero_item": "4",
+      "esperado": {
+        "validacao_valor_pis": "^NÃO VALIDADO"
+      }
+    }
+  ]
+}

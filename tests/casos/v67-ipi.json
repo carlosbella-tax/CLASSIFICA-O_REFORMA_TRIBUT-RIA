@@ -1,5 +1,5 @@
 {
-  "descricao": "V67 — base abaixo de R$ 0,05 sem valor no XML = VALIDADO (item 1, R$ 0,04); itens de R$ 10,00 e R$ 0,05 seguem NÃO VALIDADO",
+  "descricao": "V67 — base abaixo de R$ 0,05 sem valor no XML = VALIDADO (item 1, R$ 0,04); itens de R$ 10,00 e R$ 0,05 seguem NÃO VALIDADO [V69: margem única de R$ 0,05]",
   "arquivo": "v67-base-abaixo-005.xml",
   "funcao": "linhasIpi",
   "chave": "codigo_item",
@@ -22,8 +22,8 @@
     {
       "numero_item": "3",
       "esperado": {
-        "validacao_ipi": "^NÃO VALIDADO",
-        "valor_correto_ipi": 0.01
+        "validacao_ipi": "^VALIDADO .diferença de R.*dentro da margem de R.*0,05",
+        "valor_correto_ipi": 0
       }
     }
   ]

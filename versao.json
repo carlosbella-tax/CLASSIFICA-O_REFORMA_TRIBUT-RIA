@@ -1,5 +1,5 @@
 {
-  "versao": 68,
+  "versao": 69,
   "data": "2026-10-11",
-  "descricao": "Base de IBS/CBS: no NÃO VALIDADO, mostrar a diferença (base do XML − base calculada) logo após o parêntese"
+  "descricao": "Margem única de R$ 0,05: diferença de até R$ 0,05 entre o XML e o valor/base calculado = VALIDADO, sem recálculo, em ICMS, IPI, PIS, COFINS e IBS/CBS"
 }

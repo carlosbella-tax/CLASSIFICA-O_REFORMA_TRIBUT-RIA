@@ -1,16 +1,61 @@
 {
-  "descricao": "V60 — CFOP 3101/3102/3556: base do ICMS = produtos + frete + seguro + desconto + outras despesas + II + IPI; margem de R$ 0,03",
+  "descricao": "V60 — CFOP 3101/3102/3556: base do ICMS = produtos + frete + seguro + desconto + outras despesas + II + IPI; margem de R$ 0,03 [V69: margem única de R$ 0,05]",
   "arquivo": "v60-importacao-3101-3102-3556.xml",
   "funcao": "linhasIcms",
-  "colunas_apos": { "valor_total_produtos": ["valor_frete", "valor_seguro", "valor_desconto", "valor_outras_despesas", "valor_ii", "valor_ipi"] },
+  "colunas_apos": {
+    "valor_total_produtos": [
+      "valor_frete",
+      "valor_seguro",
+      "valor_desconto",
+      "valor_outras_despesas",
+      "valor_ii",
+      "valor_ipi"
+    ]
+  },
   "linhas": [
-    { "numero_item": "1", "esperado": { "cfop_xml": "3101", "valor_frete": 300, "valor_seguro": 100, "valor_outras_despesas": 200, "valor_ii": 1200, "valor_ipi": 500,
-      "validacao_base_icms": "^VALIDADO", "base_correta_icms": 0, "validacao_icms": "^VALIDADO", "valor_correto_icms": 0 } },
-    { "numero_item": "2", "esperado": { "cfop_xml": "3102", "valor_desconto": 10,
-      "validacao_base_icms": "^VALIDADO", "base_correta_icms": 0, "validacao_icms": "^VALIDADO" } },
-    { "numero_item": "3", "esperado": { "cfop_xml": "3556",
-      "validacao_base_icms": "^NÃO VALIDADO", "base_correta_icms": 2340, "validacao_icms": "^NÃO VALIDADO", "valor_correto_icms": 421.2 } },
-    { "numero_item": "4", "esperado": { "cfop_xml": "3102",
-      "validacao_base_icms": "^NÃO VALIDADO", "base_correta_icms": 1000, "validacao_icms": "^VALIDADO" } }
+    {
+      "numero_item": "1",
+      "esperado": {
+        "cfop_xml": "3101",
+        "valor_frete": 300,
+        "valor_seguro": 100,
+        "valor_outras_despesas": 200,
+        "valor_ii": 1200,
+        "valor_ipi": 500,
+        "validacao_base_icms": "^VALIDADO",
+        "base_correta_icms": 0,
+        "validacao_icms": "^VALIDADO",
+        "valor_correto_icms": 0
+      }
+    },
+    {
+      "numero_item": "2",
+      "esperado": {
+        "cfop_xml": "3102",
+        "valor_desconto": 10,
+        "validacao_base_icms": "^VALIDADO",
+        "base_correta_icms": 0,
+        "validacao_icms": "^VALIDADO"
+      }
+    },
+    {
+      "numero_item": "3",
+      "esperado": {
+        "cfop_xml": "3556",
+        "validacao_base_icms": "^NÃO VALIDADO",
+        "base_correta_icms": 2340,
+        "validacao_icms": "^NÃO VALIDADO",
+        "valor_correto_icms": 421.2
+      }
+    },
+    {
+      "numero_item": "4",
+      "esperado": {
+        "cfop_xml": "3102",
+        "validacao_base_icms": "^VALIDADO .diferença de R.*dentro da margem de R.*0,05",
+        "base_correta_icms": 0,
+        "validacao_icms": "^VALIDADO"
+      }
+    }
   ]
 }

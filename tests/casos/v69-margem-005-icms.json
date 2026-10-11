@@ -1,0 +1,22 @@
+{
+  "descricao": "V69 — margem única de R$ 0,05: diferença de R$ 0,05 = VALIDADO; R$ 0,06 = NÃO VALIDADO",
+  "arquivo": "v69-margem-005.xml",
+  "funcao": "linhasIcms",
+  "linhas": [
+    {
+      "numero_item": "1",
+      "esperado": {
+        "validacao_base_icms": "^VALIDADO .diferença de R.*dentro da margem de R.*0,05",
+        "base_correta_icms": 0,
+        "validacao_icms": "^VALIDADO"
+      }
+    },
+    {
+      "numero_item": "2",
+      "esperado": {
+        "validacao_base_icms": "^NÃO VALIDADO",
+        "base_correta_icms": 1000
+      }
+    }
+  ]
+}
