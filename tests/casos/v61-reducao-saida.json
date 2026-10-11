@@ -16,7 +16,7 @@
       "esperado": {
         "reducao_base_icms": 51.11,
         "origem_icms": "^0 - Nacional",
-        "validacao_base_icms": "^VALIDADO.*base cheia.*1.000,00.*51,11%.*488,90",
+        "validacao_base_icms": "^VALIDADO.*1.000,00.*51,11%.*488,90",
         "base_correta_icms": 0,
         "validacao_icms": "^VALIDADO"
       }
@@ -25,7 +25,7 @@
       "numero_item": "2",
       "esperado": {
         "reducao_base_icms": 51.11,
-        "validacao_base_icms": "^NÃO VALIDADO.*redução",
+        "validacao_base_icms": "^NÃO VALIDADO.*51,11%.*488,90",
         "base_correta_icms": 488.9
       }
     }

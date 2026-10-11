@@ -2,7 +2,7 @@
 
 Lê XML de NF-e, CT-e, NFS-e e eventos (arquivos, pasta inteira, TXT com XML), valida ICMS, ICMS ST, IPI, PIS/COFINS e IBS/CBS (LC 214/2025), mostra o Dashboard por imposto e gera Excel, PDF e a apresentação em PowerPoint. O entregável é **um único arquivo HTML** que roda offline no navegador.
 
-Versão atual: **V61** (ver [CHANGELOG.md](CHANGELOG.md)). Regras de trabalho do agente: [AGENTS.md](AGENTS.md).
+Versão atual: **V62** (ver [CHANGELOG.md](CHANGELOG.md)). Regras de trabalho do agente: [AGENTS.md](AGENTS.md).
 
 ## Comandos
 
@@ -73,6 +73,7 @@ Os arquivos são concatenados exatamente na ordem de `src/manifest.json`. Os mó
 | `src/js/modulos/21-v59-icms-importacao-cfop-3xxx.js` | 3 KB | módulo V59 (IIFE principal) |
 | `src/js/modulos/22-v60-icms-colunas-importacao.js` | 4 KB | módulo V60 (colunas da aba ICMS e base nos CFOP 3101/3102/3556) |
 | `src/js/modulos/23-v61-icms-reducao-base.js` | 6 KB | módulo V61 (origem e % de redução da base do ICMS em todas as regras) |
+| `src/js/modulos/24-v62-icms-base-interna-interestadual.js` | 3 KB | módulo V62 (base do ICMS nas operações internas e interestaduais: produtos + frete + seguro, com redução) |
 | `src/js/modulos/99-fechamento.js` | 0 KB | fecha a função principal e desenha a tela — módulos novos entram antes dele |
 
 ## Origem

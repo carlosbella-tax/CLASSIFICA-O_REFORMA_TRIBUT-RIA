@@ -5,6 +5,15 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V62 — 2026-10-11
+
+- **Aba ICMS — operações internas (CFOP 1xxx/5xxx) e interestaduais (CFOP 2xxx/6xxx)**: base do ICMS = valor dos produtos + frete + seguro, com a redução do `pRedBC`: base = (produtos + frete + seguro) × (1 − % redução). Outras despesas, desconto e IPI não entram nesta base.
+- O ICMS é calculado e validado sobre essa base (base do XML quando validada; senão, a base correta), com margem de R$ 0,02. Diferimento (CST 51), CST sem ICMS e XML sem base seguem a regra anterior.
+- Importação (CFOP 3xxx) continua com as regras da V59/V60/V61.
+- Efeito nos XMLs de teste: 1 mudança de status em 104 linhas — NF 123 (base XML R$ 10.000,00, correta R$ 10.400,00): o valor do ICMS passa a NÃO VALIDADO (correto R$ 1.872,00).
+- Caso de teste `tests/casos/v62-base-interna-interestadual` (interna com outras despesas, interestadual com redução de 51,11%, XML com IPI na base, XML com desconto deduzido).
+  `src/js/modulos/24-v62-icms-base-interna-interestadual.js`
+
 ## V61 — 2026-10-11
 
 - **Aba ICMS — colunas novas**: `reducao_base_icms` (% de redução da base, tag `pRedBC` do XML), antes de `base_icms_xml`, e `origem_icms` (tag `orig`, com a descrição: 0 - Nacional, 1 - Estrangeira — importação direta etc.), antes de `cst_icms`.

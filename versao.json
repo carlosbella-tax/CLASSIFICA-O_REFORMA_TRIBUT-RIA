@@ -1,5 +1,5 @@
 {
-  "versao": 61,
+  "versao": 62,
   "data": "2026-10-11",
-  "descricao": "Aba ICMS: colunas de origem da mercadoria e % de redução da base (pRedBC); redução aplicada na base do ICMS em todas as regras, inclusive importação, com cálculo e validação do ICMS sobre a base reduzida"
+  "descricao": "Aba ICMS: operações internas e interestaduais (CFOP 1xxx, 2xxx, 5xxx, 6xxx): base do ICMS = produtos + frete + seguro, com a redução do pRedBC; cálculo e validação do ICMS sobre essa base"
 }

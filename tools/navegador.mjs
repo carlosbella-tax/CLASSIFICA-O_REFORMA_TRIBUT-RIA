@@ -8,8 +8,8 @@ import { JSDOM, VirtualConsole } from 'jsdom';
 const raiz = join(dirname(fileURLToPath(import.meta.url)), '..');
 const esperar = ms => new Promise(r => setTimeout(r, ms));
 
-export async function abrirDiagnostico(caminhos, { campos = {} } = {}) {
-  const { versao } = JSON.parse(readFileSync(join(raiz, 'versao.json'), 'utf8'));
+export async function abrirDiagnostico(caminhos, { campos = {}, versao: v } = {}) {
+  const versao = v || JSON.parse(readFileSync(join(raiz, 'versao.json'), 'utf8')).versao;
   const html = readFileSync(join(raiz, 'dist', `DIAGNOSTICO_V${versao}.html`), 'utf8');
   const erros = [];
   const vc = new VirtualConsole();

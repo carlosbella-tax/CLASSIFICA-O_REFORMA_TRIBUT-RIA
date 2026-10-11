@@ -1,0 +1,42 @@
+{
+  "descricao": "V62 — operações internas e interestaduais: base = produtos + frete + seguro, com a redução do pRedBC; margem R$ 0,02",
+  "arquivo": "v62-base-interna-interestadual.xml",
+  "funcao": "linhasIcms",
+  "linhas": [
+    {
+      "numero_item": "1",
+      "esperado": {
+        "validacao_base_icms": "^VALIDADO.*operação interna.*1.060,00",
+        "base_correta_icms": 0,
+        "validacao_icms": "^VALIDADO"
+      }
+    },
+    {
+      "numero_item": "2",
+      "esperado": {
+        "reducao_base_icms": 51.11,
+        "validacao_base_icms": "^VALIDADO.*operação interestadual.*2.100,00.*51,11%.*1.026,69",
+        "base_correta_icms": 0,
+        "validacao_icms": "^VALIDADO"
+      }
+    },
+    {
+      "numero_item": "3",
+      "esperado": {
+        "validacao_base_icms": "^NÃO VALIDADO",
+        "base_correta_icms": 1000,
+        "validacao_icms": "^NÃO VALIDADO",
+        "valor_correto_icms": 180
+      }
+    },
+    {
+      "numero_item": "4",
+      "esperado": {
+        "validacao_base_icms": "^NÃO VALIDADO",
+        "base_correta_icms": 1000,
+        "validacao_icms": "^NÃO VALIDADO",
+        "valor_correto_icms": 120
+      }
+    }
+  ]
+}
