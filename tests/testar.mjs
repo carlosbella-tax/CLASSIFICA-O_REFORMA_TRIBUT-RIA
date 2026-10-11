@@ -10,6 +10,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import vm from 'node:vm';
 import { JSDOM, VirtualConsole } from 'jsdom';
+import { abrirDiagnostico } from '../tools/navegador.mjs';
 
 const raiz = join(dirname(fileURLToPath(import.meta.url)), '..');
 const atualizar = process.argv.includes('--atualizar');
@@ -114,5 +115,31 @@ if (atualizar || !existsSync(refArq)) {
   if (falhas) console.log('\n  Se as mudanças forem as esperadas para esta versão, grave a nova referência: node tests/testar.mjs --atualizar');
 }
 w.close();
+
+// 5) casos de regra — cada tests/casos/*.json descreve um XML e o resultado esperado por item
+console.log('\n[5] Casos de regra (tests/casos)');
+const pastaCasos = join(raiz, 'tests/casos');
+for (const nome of (existsSync(pastaCasos) ? readdirSync(pastaCasos) : []).filter(n => n.endsWith('.json')).sort()) {
+  const caso = JSON.parse(readFileSync(join(pastaCasos, nome), 'utf8'));
+  const { w: wc, erros: ec } = await abrirDiagnostico([join(pastaCasos, caso.arquivo)]);
+  const linhas = wc.eval(caso.funcao + '()');
+  for (const [depois, cols] of Object.entries(caso.colunas_apos || {})) {
+    const ks = Object.keys(linhas[0] || {}), i = ks.indexOf(depois), achou = ks.slice(i + 1, i + 1 + cols.length);
+    JSON.stringify(achou) === JSON.stringify(cols) ? passou(`${nome}: colunas após ${depois}: ${cols.join(', ')}`) : falhou(`${nome}: colunas após ${depois} = ${achou.join(', ')}`);
+  }
+  for (const l of caso.linhas) {
+    const row = linhas.find(x => String(x.numero_item) === l.numero_item);
+    if (!row) { falhou(`${nome}: item ${l.numero_item} não encontrado`); continue; }
+    const dif = Object.entries(l.esperado).filter(([k, e]) => {
+      const v = row[k];
+      if (typeof e === 'string' && e.startsWith('^')) return !new RegExp(e).test(String(v));
+      if (typeof e === 'number') return Math.abs(Number(v) - e) > 0.005;
+      return String(v) !== String(e);
+    }).map(([k, e]) => `${k}: esperado ${e}, veio ${row[k]}`);
+    dif.length ? falhou(`${nome}: item ${l.numero_item} — ${dif.join(' | ')}`) : passou(`${nome}: item ${l.numero_item} (${Object.keys(l.esperado).length} campos conferidos)`);
+  }
+  if (ec.length) falhou(`${nome}: erros de JavaScript: ${[...new Set(ec)].slice(0, 3).join(' | ')}`);
+  wc.close();
+}
 console.log(`\n${ok} OK, ${falhas} falha(s)`);
 process.exit(falhas ? 1 : 0);

@@ -1,5 +1,5 @@
 {
-  "versao": 59,
+  "versao": 60,
   "data": "2026-10-11",
-  "descricao": "ICMS na importação (CFOP 3xxx): base = valor aduaneiro + II + IPI + PIS + COFINS + despesas aduaneiras, com o ICMS por dentro"
+  "descricao": "Aba ICMS: colunas de frete, seguro, desconto, outras despesas, II e IPI após o valor total do item; CFOP 3101, 3102 e 3556: base do ICMS = produtos + frete + seguro + desconto + outras despesas + II + IPI, com tolerância de R$ 0,03"
 }

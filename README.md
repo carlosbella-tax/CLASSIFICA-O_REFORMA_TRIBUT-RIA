@@ -2,7 +2,7 @@
 
 Lê XML de NF-e, CT-e, NFS-e e eventos (arquivos, pasta inteira, TXT com XML), valida ICMS, ICMS ST, IPI, PIS/COFINS e IBS/CBS (LC 214/2025), mostra o Dashboard por imposto e gera Excel, PDF e a apresentação em PowerPoint. O entregável é **um único arquivo HTML** que roda offline no navegador.
 
-Versão atual: **V59** (ver [CHANGELOG.md](CHANGELOG.md)). Regras de trabalho do agente: [AGENTS.md](AGENTS.md).
+Versão atual: **V60** (ver [CHANGELOG.md](CHANGELOG.md)). Regras de trabalho do agente: [AGENTS.md](AGENTS.md).
 
 ## Comandos
 
@@ -29,11 +29,12 @@ node tests/testar.mjs --atualizar             # grava nova referência (só depo
 | Sintaxe | cada um dos 4 blocos `<script>` compila |
 | Versão | selo VERSÃO N do cabeçalho = `versao.json` |
 | Identidade | na V59, o build é idêntico byte a byte ao arquivo recebido (`_arquivo_original/`) |
+| Casos de regra | `tests/casos/*.json`: XML + resultado esperado por item (ex.: V60 importação 3101/3102/3556) |
 | Funcional | carrega os 9 XMLs de `tests/fixtures` no navegador simulado, processa (6 documentos, 105 itens) e compara o conteúdo de cada aba (Itens, ICMS, ICMS ST, IPI, PIS/COFINS, IBS/CBS, Eventos, Dashboard, Apresentação, Observações) com `tests/referencia.json`, incluindo contagem de VALIDADO / NÃO VALIDADO |
 
 ## Mapa dos arquivos (ordem de montagem)
 
-Os arquivos são concatenados exatamente na ordem de `src/manifest.json`. Os módulos `src/js/modulos/` ficam dentro de uma única função `(function(){ … })()` que começa em `01-v14` e fecha em `21-v59`; a numeração é a ordem de carga (a V33, por exemplo, roda antes da V18).
+Os arquivos são concatenados exatamente na ordem de `src/manifest.json`. Os módulos `src/js/modulos/` ficam dentro de uma única função `(function(){ … })()` que começa em `01-v14` e fecha em `99-fechamento.js`; a numeração é a ordem de carga (a V33, por exemplo, roda antes da V18).
 
 | Arquivo | Tamanho | Conteúdo |
 |---|---|---|
@@ -70,6 +71,8 @@ Os arquivos são concatenados exatamente na ordem de `src/manifest.json`. Os mó
 | `src/js/modulos/19-v56-pis-cofins-cst-nao.js` | 3 KB | módulo V56 (IIFE principal) |
 | `src/js/modulos/20-v58-pis-cofins-simples-nacional.js` | 3 KB | módulo V58 (IIFE principal) |
 | `src/js/modulos/21-v59-icms-importacao-cfop-3xxx.js` | 3 KB | módulo V59 (IIFE principal) |
+| `src/js/modulos/22-v60-icms-colunas-importacao.js` | 4 KB | módulo V60 (colunas da aba ICMS e base nos CFOP 3101/3102/3556) |
+| `src/js/modulos/99-fechamento.js` | 0 KB | fecha a função principal e desenha a tela — módulos novos entram antes dele |
 
 ## Origem
 

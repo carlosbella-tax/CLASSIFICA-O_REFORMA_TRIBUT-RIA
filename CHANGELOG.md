@@ -5,6 +5,15 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V60 — 2026-10-11
+
+- **Aba ICMS — colunas novas** logo após `valor_total_produtos`: `valor_frete`, `valor_seguro`, `valor_desconto`, `valor_outras_despesas`, `valor_ii` (II – valor) e `valor_ipi`. Valem para a tela, o filtro, o Excel e a impressão.
+- **CFOP 3101, 3102 e 3556 — base do ICMS** = valor total dos produtos + frete + seguro + desconto + outras despesas + II + IPI. Diferença de até R$ 0,03 para mais ou para menos = VALIDADO; acima disso, NÃO VALIDADO com a base correta.
+- **Valor do ICMS nesses CFOP** = base × alíquota do XML (a base do XML quando validada; senão, a base correta), também com margem de R$ 0,03.
+- Os demais CFOP 3xxx continuam com a regra da V59. Itens sem base no XML ou com CST sem ICMS seguem a regra anterior (V37).
+- Projeto: fechamento da função principal separado em `src/js/modulos/99-fechamento.js`; teste de casos de regra em `tests/casos/` (NF-e de importação com 4 itens).
+  `src/js/modulos/22-v60-icms-colunas-importacao.js`
+
 ## V59 — 2026-10-11 — base trazida para o G4 OS
 
 - ICMS na importação (CFOP 3xxx): base = valor aduaneiro + II + IPI + PIS + COFINS + despesas aduaneiras, com o ICMS por dentro.

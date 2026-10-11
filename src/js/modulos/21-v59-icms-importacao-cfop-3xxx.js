@@ -33,6 +33,3 @@
   OBS_VAL.validacao_base_icms = 'Base = produto + frete + seguro + outras − desconto, com a redução quando houver. XML sem base só é inconsistente na CST 00. Na importação (CFOP 3xxx): valor aduaneiro + II + IPI + PIS + COFINS + despesas aduaneiras, com o ICMS por dentro.';
   OBS_VAL.validacao_base_pis = OBS_VAL.validacao_base_cofins = OBS_VAL.validacao_base_pis + ' Com ICMS-ST (CST 60) ou Simples Nacional, a base é o valor total dos produtos.';
 
-  desenharBarras();
-  resetPainel(); atualizarSelecao();
-})();
