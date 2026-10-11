@@ -2,7 +2,7 @@
 
 Lê XML de NF-e, CT-e, NFS-e e eventos (arquivos, pasta inteira, TXT com XML), valida ICMS, ICMS ST, IPI, PIS/COFINS e IBS/CBS (LC 214/2025), mostra o Dashboard por imposto e gera Excel, PDF e a apresentação em PowerPoint. O entregável é **um único arquivo HTML** que roda offline no navegador.
 
-Versão atual: **V66** (ver [CHANGELOG.md](CHANGELOG.md)). Regras de trabalho do agente: [AGENTS.md](AGENTS.md).
+Versão atual: **V67** (ver [CHANGELOG.md](CHANGELOG.md)). Regras de trabalho do agente: [AGENTS.md](AGENTS.md).
 
 ## Comandos
 
@@ -77,6 +77,7 @@ Os arquivos são concatenados exatamente na ordem de `src/manifest.json`. Os mó
 | `src/js/modulos/25-v64-simples-csosn-102.js` | 2 KB | módulo V64 (CSOSN 102: ICMS e IPI sempre VALIDADO, sem recálculo) |
 | `src/js/modulos/26-v65-lucro-presumido-pis-cofins.js` | 3 KB | módulo V65 (Lucro Presumido: PIS/COFINS sem inconsistências das entradas e apuração só pelas saídas) |
 | `src/js/modulos/27-v66-apresentacao-lucro-presumido.js` | 1 KB | módulo V66 (informa o Lucro Presumido à apresentação; regra no gerador-pptx.js) |
+| `src/js/modulos/28-v67-base-abaixo-005.js` | 4 KB | módulo V67 (base abaixo de R$ 0,05 sem valor no XML = VALIDADO em PIS, COFINS, ICMS, IPI e IBS/CBS) |
 | `src/js/modulos/99-fechamento.js` | 0 KB | fecha a função principal e desenha a tela — módulos novos entram antes dele |
 
 ## Origem

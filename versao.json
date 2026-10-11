@@ -1,5 +1,5 @@
 {
-  "versao": 66,
+  "versao": 67,
   "data": "2026-10-11",
-  "descricao": "Apresentação (Lucro Presumido): PIS e COFINS mostram as entradas só como informação; saldo e valor a recolher somente pelas saídas, sem deduzir as entradas (slides de PIS/COFINS, Saldo por imposto e Resumo)"
+  "descricao": "Base abaixo de R$ 0,05 sem valor do imposto no XML = VALIDADO (valor irrelevante), sem recálculo, em PIS, COFINS, ICMS, IPI e IBS/CBS"
 }

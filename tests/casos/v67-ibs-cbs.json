@@ -1,0 +1,29 @@
+{
+  "descricao": "V67 — base abaixo de R$ 0,05 sem valor no XML = VALIDADO (item 1, R$ 0,04); itens de R$ 10,00 e R$ 0,05 seguem NÃO VALIDADO",
+  "arquivo": "v67-base-abaixo-005.xml",
+  "funcao": "linhasIbsCbsTabela",
+  "linhas": [
+    {
+      "numero_item": "1",
+      "esperado": {
+        "validacao_cst_ibs_cbs": "^VALIDADO .base de IBS/CBS",
+        "validacao_base_ibs_cbs": "^VALIDADO .base de IBS/CBS",
+        "base_correta_ibs_cbs": 0
+      }
+    },
+    {
+      "numero_item": "2",
+      "esperado": {
+        "validacao_base_ibs_cbs": "^NÃO VALIDADO",
+        "base_correta_ibs_cbs": 10
+      }
+    },
+    {
+      "numero_item": "3",
+      "esperado": {
+        "validacao_base_ibs_cbs": "^NÃO VALIDADO",
+        "base_correta_ibs_cbs": 0.05
+      }
+    }
+  ]
+}

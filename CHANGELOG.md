@@ -5,6 +5,14 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V67 — 2026-10-11
+
+- **Base abaixo de R$ 0,05 e XML sem valor do imposto = VALIDADO** (valor irrelevante), sem nenhum valor recalculado (base correta e valor correto = 0). Vale para **PIS, COFINS, ICMS, IPI e IBS/CBS**, nas abas, no Dashboard (inconsistências) e na apresentação.
+- A base considerada é a maior entre a base do XML e a base correta calculada; no IPI sem base no XML, o valor do produto. Exatamente R$ 0,05 ou mais continua com a regra normal.
+- Só muda validações que estavam NÃO VALIDADO; o que já estava VALIDADO fica igual. Texto: "VALIDADO (base de PIS de R$ 0,04, abaixo de R$ 0,05, e sem valor no XML — valor irrelevante)".
+- Nos XMLs de teste existentes, nenhuma mudança de status. Casos `tests/casos/v67-*` (item de R$ 0,04 validado nos 5 impostos; itens de R$ 10,00 e R$ 0,05 seguem NÃO VALIDADO).
+  `src/js/modulos/28-v67-base-abaixo-005.js`
+
 ## V66 — 2026-10-11
 
 Apresentação em PowerPoint quando o regime é **Lucro Presumido** (PIS e COFINS cumulativos, sem crédito das entradas):

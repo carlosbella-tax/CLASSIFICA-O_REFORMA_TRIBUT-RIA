@@ -1,0 +1,35 @@
+{
+  "descricao": "V67 — base abaixo de R$ 0,05 sem valor no XML = VALIDADO (item 1, R$ 0,04); itens de R$ 10,00 e R$ 0,05 seguem NÃO VALIDADO",
+  "arquivo": "v67-base-abaixo-005.xml",
+  "funcao": "linhasPisCofins",
+  "linhas": [
+    {
+      "numero_item": "1",
+      "esperado": {
+        "validacao_cst_pis": "^VALIDADO .base de PIS",
+        "validacao_base_pis": "^VALIDADO .base de PIS",
+        "validacao_valor_pis": "^VALIDADO .base de PIS",
+        "base_correta_pis": 0,
+        "valor_correto_pis": 0,
+        "validacao_base_cofins": "^VALIDADO .base de COFINS",
+        "validacao_valor_cofins": "^VALIDADO .base de COFINS",
+        "base_correta_cofins": 0
+      }
+    },
+    {
+      "numero_item": "2",
+      "esperado": {
+        "validacao_base_pis": "^NÃO VALIDADO",
+        "base_correta_pis": 10,
+        "validacao_base_cofins": "^NÃO VALIDADO"
+      }
+    },
+    {
+      "numero_item": "3",
+      "esperado": {
+        "validacao_base_pis": "^NÃO VALIDADO",
+        "base_correta_pis": 0.05
+      }
+    }
+  ]
+}
