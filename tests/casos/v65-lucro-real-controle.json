@@ -34,5 +34,31 @@
         "27,67"
       ]
     }
+  ],
+  "apresentacao": [
+    {
+      "slide": "PIS E COFINS",
+      "contem": [
+        "Saldo (E − S) ¦ R$ 27,67",
+        "Saldo (E − S) ¦ R$ 127,40"
+      ],
+      "nao_contem": [
+        "informativo",
+        "A recolher"
+      ]
+    },
+    {
+      "slide": "SALDO POR IMPOSTO",
+      "contem": [
+        "PIS | R$ 33,00 | R$ 5,33 | R$ 27,67",
+        "Total | R$ 545,00 | R$ 209,93 | R$ 335,07"
+      ]
+    },
+    {
+      "slide": "RESUMO",
+      "contem": [
+        "SALDO (ENTRADAS − SAÍDAS) ¦ R$ 335,07"
+      ]
+    }
   ]
 }

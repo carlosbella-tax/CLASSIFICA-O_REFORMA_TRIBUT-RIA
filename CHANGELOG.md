@@ -5,6 +5,16 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V66 — 2026-10-11
+
+Apresentação em PowerPoint quando o regime é **Lucro Presumido** (PIS e COFINS cumulativos, sem crédito das entradas):
+- **Slide "PIS e COFINS"**: cada painel mostra "Entradas (informativo)", "Saídas" e **"A recolher (saídas)"** = somente o valor das saídas (antes: "Saldo (E − S)"). O rodapé do slide explica que as entradas não são deduzidas.
+- **Slide "Saldo por imposto"**: PIS e COFINS (marcados com *) continuam mostrando as entradas, mas o saldo é só o das saídas (−saídas); o total do saldo também deixa de deduzir as entradas de PIS/COFINS. Nota explicativa no rodapé.
+- **Slide "Resumo"**: o cartão de saldo passa a "SALDO (SEM PIS/COFINS DAS ENTRADAS)", e o título do slide usa esse saldo.
+- Lucro Real, Simples Nacional e regime não informado: nada muda.
+- Testes: os casos `v65-lucro-presumido` e `v65-lucro-real-controle` passam a conferir os slides (o executor de casos aceita `apresentacao`).
+  `src/js/apresentacao/gerador-pptx.js` (comentário V66) e `src/js/modulos/27-v66-apresentacao-lucro-presumido.js`
+
 ## V65 — 2026-10-11
 
 Vale quando o regime tributário do cabeçalho é **Lucro Presumido** (PIS e COFINS no regime cumulativo, 0,65% e 3% sobre a receita bruta, sem crédito das compras):

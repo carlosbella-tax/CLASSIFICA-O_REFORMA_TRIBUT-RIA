@@ -3,7 +3,7 @@
     "v65-presumido-saida.xml",
     "v65-presumido-entrada.xml"
   ],
-  "descricao": "V65 — Lucro Presumido: sem inconsistências de PIS/COFINS das entradas; apuração de PIS/COFINS somente pelas saídas",
+  "descricao": "V65 — Lucro Presumido: sem inconsistências de PIS/COFINS das entradas; apuração de PIS/COFINS somente pelas saídas; apresentação (V66): PIS/COFINS das entradas só informativos, saldo somente pelas saídas",
   "campos": {
     "cnpjEmpresa": "00.000.000/0001-91",
     "regimeEmpresa": "Lucro Presumido"
@@ -43,6 +43,34 @@
       "contem": [
         "A RECOLHER — somente saídas",
         "24,60"
+      ]
+    }
+  ],
+  "apresentacao": [
+    {
+      "slide": "PIS E COFINS",
+      "contem": [
+        "Entradas (informativo)",
+        "A recolher (saídas) ¦ R$ 5,33",
+        "A recolher (saídas) ¦ R$ 24,60",
+        "não são deduzidas"
+      ],
+      "nao_contem": [
+        "Saldo (E − S)"
+      ]
+    },
+    {
+      "slide": "SALDO POR IMPOSTO",
+      "contem": [
+        "PIS * | R$ 33,00 | R$ 5,33 | −R$ 5,33",
+        "COFINS * | R$ 152,00 | R$ 24,60 | −R$ 24,60",
+        "Total | R$ 545,00 | R$ 209,93 | R$ 150,07"
+      ]
+    },
+    {
+      "slide": "RESUMO",
+      "contem": [
+        "SALDO (SEM PIS/COFINS DAS ENTRADAS) ¦ R$ 150,07"
       ]
     }
   ]

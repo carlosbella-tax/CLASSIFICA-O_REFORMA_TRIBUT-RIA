@@ -59,7 +59,9 @@ function montarApresentacaoPptx(PptxGenJS, D, IMG){
   }
 
   /* ---------- 2. Resumo ---------- */
-  const totE = D.imp.reduce((a, x) => a + x.E, 0), totS = D.imp.reduce((a, x) => a + x.S, 0), saldo = totE - totS;
+  // V66 — Lucro Presumido: PIS e COFINS das entradas são só informativos (não deduzem das saídas)
+  const LP = !!D.lucroPresumido, semCredito = x => LP && (x.nome === 'PIS' || x.nome === 'COFINS'), entradaSaldo = x => semCredito(x) ? 0 : x.E;
+  const totE = D.imp.reduce((a, x) => a + x.E, 0), totS = D.imp.reduce((a, x) => a + x.S, 0), saldo = D.imp.reduce((a, x) => a + entradaSaldo(x), 0) - totS;
   {
     const tit = Math.abs(saldo) < 0.005 ? 'Entradas e saídas destacaram o mesmo valor de tributos'
       : saldo < 0 ? 'As saídas destacaram ' + curto(-saldo) + ' a mais de tributos do que as entradas'
@@ -70,7 +72,7 @@ function montarApresentacaoPptx(PptxGenJS, D, IMG){
       txt(s, v2, {x: x + 0.25, y: 3.36, w: w - 0.5, h: 0.59, fontSize: 14, color: C.cinza}); };
     k(0.6, 3.75, 'TRIBUTOS NAS ENTRADAS', C.verde, curto(totE), brl(totE));
     k(4.49, 3.75, 'TRIBUTOS NAS SAÍDAS', C.verm, curto(totS), brl(totS));
-    k(8.38, 4.35, 'SALDO (ENTRADAS − SAÍDAS)', C.navy, curto(saldo), brl(saldo));
+    k(8.38, 4.35, LP ? 'SALDO (SEM PIS/COFINS DAS ENTRADAS)' : 'SALDO (ENTRADAS − SAÍDAS)', C.navy, curto(saldo), brl(saldo));
     card(s, 0.6, 4.4, 5.92, 2.25);
     txt(s, 'BASE ANALISADA', {x: 0.85, y: 4.6, w: 5.42, h: 0.3, fontSize: 13, bold: true, color: C.azul, charSpacing: 1.5});
     txt(s, int(D.docs) + ' documentos', {x: 0.85, y: 4.98, w: 5.42, h: 0.75, fontSize: 34, bold: true, color: C.navy, fit: 'shrink'});
@@ -107,15 +109,16 @@ function montarApresentacaoPptx(PptxGenJS, D, IMG){
 
   /* ---------- 4. Saldo por imposto ---------- */
   {
-    const nS = D.imp.filter(x => x.S > x.E + 0.005).length;
+    const nS = D.imp.filter(x => x.S > entradaSaldo(x) + 0.005).length;
     const ext = ['nenhum', 'um', 'dois', 'três', 'quatro', 'cinco', 'seis', 'sete'];
     const s = base('SALDO POR IMPOSTO', nS ? 'Em ' + ext[nS] + ' dos sete tributos, as saídas superam as entradas' : 'Em todos os tributos, as entradas superam ou igualam as saídas');
     const linhas = [[cab('Imposto'), cab('Entradas', 'right'), cab('Saídas', 'right'), cab('Saldo (E − S)', 'right')]];
-    for (const x of D.imp){ const sd = x.E - x.S;
-      linhas.push([cel(x.nome, {bold: true}), cel(brl(x.E), {color: C.verde, align: 'right'}), cel(brl(x.S), {color: C.verm, align: 'right'}), cel(brl(sd), {bold: true, color: neg(sd) ? C.verm : C.verde, align: 'right'})]); }
+    for (const x of D.imp){ const sd = entradaSaldo(x) - x.S;
+      linhas.push([cel(x.nome + (semCredito(x) ? ' *' : ''), {bold: true}), cel(brl(x.E), {color: C.verde, align: 'right'}), cel(brl(x.S), {color: C.verm, align: 'right'}), cel(brl(sd), {bold: true, color: neg(sd) ? C.verm : C.verde, align: 'right'})]); }
     linhas.push([cel('Total', {bold: true, fill: {color: C.total}}), cel(brl(totE), {bold: true, color: C.verde, align: 'right', fill: {color: C.total}}), cel(brl(totS), {bold: true, color: C.verm, align: 'right', fill: {color: C.total}}), cel(brl(saldo), {bold: true, color: neg(saldo) ? C.verm : C.verde, align: 'right', fill: {color: C.total}})]);
     tabela(s, linhas, {x: 0.6, y: 1.9, w: 12.13, colW: [2.9, 3.1, 3.1, 3.03], rowH: 0.5, fontSize: 17});
-    txt(s, 'Saldo = Entradas − Saídas. Saldo negativo significa que as saídas destacaram mais imposto do que as entradas.', {x: 0.6, y: 6.5, w: 12.13, h: 0.4, fontSize: 14, color: C.cinza});
+    txt(s, 'Saldo = Entradas − Saídas. Saldo negativo significa que as saídas destacaram mais imposto do que as entradas.'
+      + (LP ? ' * Lucro Presumido: PIS e COFINS sem crédito — as entradas são informativas e o saldo é somente o valor das saídas.' : ''), {x: 0.6, y: 6.5, w: 12.13, h: LP ? 0.55 : 0.4, fontSize: LP ? 12 : 14, color: C.cinza, fit: 'shrink'});
   }
 
   /* ---------- 5. ICMS por alíquota ---------- */
@@ -187,12 +190,14 @@ function montarApresentacaoPptx(PptxGenJS, D, IMG){
     const aS = D.pc.aliqS.length ? 'nas saídas, alíquotas de ' + D.pc.aliqS.map(aliqTxt).join(' e ') : 'sem PIS/COFINS nas saídas';
     const s = base('PIS E COFINS', 'PIS e COFINS: ' + aS);
     const painel = (x, nome, o) => { card(s, x, 1.9, 5.9, 3.75); txt(s, nome, {x: x + 0.3, y: 2.1, w: 5.3, h: 0.5, fontSize: 24, bold: true, color: C.azul});
-      [['Entradas', o.E, C.verde], ['Saídas', o.S, C.verm], ['Saldo (E − S)', o.E - o.S, C.navy]].forEach(([r, v, c], i) => {
-        txt(s, r, {x: x + 0.3, y: 2.8 + i * 0.93, w: 2.1, h: 0.6, fontSize: 16, color: C.cinza, valign: 'middle'});
+      (LP ? [['Entradas (informativo)', o.E, C.cinza], ['Saídas', o.S, C.verm], ['A recolher (saídas)', o.S, C.navy]]
+          : [['Entradas', o.E, C.verde], ['Saídas', o.S, C.verm], ['Saldo (E − S)', o.E - o.S, C.navy]]).forEach(([r, v, c], i) => {
+        txt(s, r, {x: x + 0.3, y: 2.8 + i * 0.93, w: 2.1, h: 0.6, fontSize: 16, color: C.cinza, valign: 'middle', fit: 'shrink'});
         txt(s, brl(v), {x: x + 2.3, y: 2.8 + i * 0.93, w: 3.3, h: 0.6, fontSize: 26, bold: true, color: c, align: 'right', valign: 'middle', fit: 'shrink'}); }); };
     painel(0.6, 'PIS', pis); painel(6.83, 'COFINS', cof);
     card(s, 0.6, 5.9, 12.13, 0.95);
-    txt(s, D.pc.aliqS.length ? 'Nas entradas, ' + pct(D.pc.shareE) + ' do valor de PIS e COFINS também está nas alíquotas de ' + D.pc.aliqS.map(aliqTxt).join(' e ') + '.' : 'Nas entradas, PIS de ' + brl(pis.E) + ' e COFINS de ' + brl(cof.E) + '.',
+    txt(s, LP ? 'Lucro Presumido (regime cumulativo): as entradas aparecem só como informação — PIS de ' + brl(pis.E) + ' e COFINS de ' + brl(cof.E) + ' — e não são deduzidas. O valor a recolher é somente o das saídas.'
+      : D.pc.aliqS.length ? 'Nas entradas, ' + pct(D.pc.shareE) + ' do valor de PIS e COFINS também está nas alíquotas de ' + D.pc.aliqS.map(aliqTxt).join(' e ') + '.' : 'Nas entradas, PIS de ' + brl(pis.E) + ' e COFINS de ' + brl(cof.E) + '.',
       {x: 0.9, y: 5.9, w: 11.53, h: 0.95, fontSize: 17, color: C.navy, valign: 'middle'});
   }
 

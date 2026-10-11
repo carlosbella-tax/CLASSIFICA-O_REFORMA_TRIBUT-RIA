@@ -1,5 +1,5 @@
 {
-  "versao": 65,
+  "versao": 66,
   "data": "2026-10-11",
-  "descricao": "Lucro Presumido: PIS/COFINS cumulativo sem crédito das entradas — Dashboard sem inconsistências de PIS/COFINS das entradas e apuração de PIS/COFINS somente pelas saídas (entradas apenas informativas)"
+  "descricao": "Apresentação (Lucro Presumido): PIS e COFINS mostram as entradas só como informação; saldo e valor a recolher somente pelas saídas, sem deduzir as entradas (slides de PIS/COFINS, Saldo por imposto e Resumo)"
 }

@@ -134,6 +134,22 @@ for (const nome of (existsSync(pastaCasos) ? readdirSync(pastaCasos) : []).filte
     else if (faltam.length || sobram.length) falhou(`${nome}: ${c.seletor}${faltam.length ? ' — faltou: ' + faltam.join(' | ') : ''}${sobram.length ? ' — não deveria ter: ' + sobram.join(' | ') : ''}`);
     else passou(`${nome}: Dashboard ${c.seletor}${c.sub ? ' (' + c.sub + ')' : ''} (${(c.contem || []).length + (c.nao_contem || []).length} conferências)`);
   }
+  // conferências de texto nos slides da apresentação: [{slide (título do topo), contem: [...], nao_contem: [...]}]
+  if ((caso.apresentacao || []).length) {
+    const orig = wc.montarApresentacaoPptx; let pres = null;
+    wc.montarApresentacaoPptx = (...a) => (pres = orig(...a));
+    await abaC('apresentacao');
+    wc.montarApresentacaoPptx = orig;
+    const tx = o => o.arrTabRows ? o.arrTabRows.map(r => r.map(c => c.text).join(' | ')).join(' // ') : Array.isArray(o.text) ? o.text.map(t => t.text).join('') : (o.text || '');
+    const slides = pres ? pres._slides.map(s => s._slideObjects.map(tx).filter(Boolean)) : [];
+    for (const c of caso.apresentacao) {
+      const s = slides.find(x => x[0] === c.slide), t = s ? s.join(' ¦ ') : '';
+      const faltam = (c.contem || []).filter(v => !t.includes(v)), sobram = (c.nao_contem || []).filter(v => t.includes(v));
+      if (!s) falhou(`${nome}: slide "${c.slide}" não encontrado na apresentação`);
+      else if (faltam.length || sobram.length) falhou(`${nome}: slide ${c.slide}${faltam.length ? ' — faltou: ' + faltam.join(' | ') : ''}${sobram.length ? ' — não deveria ter: ' + sobram.join(' | ') : ''}`);
+      else passou(`${nome}: slide ${c.slide} (${(c.contem || []).length + (c.nao_contem || []).length} conferências)`);
+    }
+  }
   for (const [depois, cols] of Object.entries(caso.colunas_apos || {})) {
     const ks = Object.keys(linhas[0] || {}), i = ks.indexOf(depois), achou = ks.slice(i + 1, i + 1 + cols.length);
     JSON.stringify(achou) === JSON.stringify(cols) ? passou(`${nome}: colunas após ${depois}: ${cols.join(', ')}`) : falhou(`${nome}: colunas após ${depois} = ${achou.join(', ')}`);
