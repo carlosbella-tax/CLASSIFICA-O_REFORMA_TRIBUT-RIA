@@ -1,0 +1,42 @@
+{
+  "descricao": "V85 — aba ICMS: regime_tributario após nome_emitente; Simples Nacional sem frete no XML com observação 'Valor do frete não destacado no XML'",
+  "arquivos": [
+    "v85-simples-frete.xml",
+    "v60-importacao-3101-3102-3556.xml"
+  ],
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91"
+  },
+  "funcao": "(() => linhasIcms().map(r => Object.assign(r, {chave_item: r.numero_nota_fiscal + '-' + r.numero_item})))",
+  "chave": "chave_item",
+  "colunas_apos": {
+    "nome_emitente": [
+      "regime_tributario",
+      "nome_destinatario"
+    ]
+  },
+  "linhas": [
+    {
+      "numero_item": "850-1",
+      "esperado": {
+        "regime_tributario": "^3 — Optante - ME / EPP",
+        "observacao": "^Valor do frete não destacado no XML$"
+      }
+    },
+    {
+      "numero_item": "850-2",
+      "esperado": {
+        "valor_frete": 30,
+        "observacao": "^$"
+      }
+    },
+    {
+      "numero_item": "600-4",
+      "esperado": {
+        "regime_tributario": "^1 — Não Optante",
+        "valor_frete": 0,
+        "observacao": "^$"
+      }
+    }
+  ]
+}

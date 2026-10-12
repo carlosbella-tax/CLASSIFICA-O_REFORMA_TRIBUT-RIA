@@ -1,5 +1,5 @@
 {
-  "versao": 84,
+  "versao": 85,
   "data": "2026-10-12",
-  "descricao": "Base de IBS/CBS: tributação integral (CST 000) em NCM com cClassTrib candidato — todas as validações VALIDADO, sem cálculo, e observação 'Analisar cClassTrib'"
+  "descricao": "Aba ICMS: coluna regime_tributario após nome_emitente; Simples Nacional sem frete no XML recebe a observação 'Valor do frete não destacado no XML'"
 }

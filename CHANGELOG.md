@@ -5,6 +5,13 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V85 — 2026-10-12
+
+- **Aba ICMS — coluna `regime_tributario`** logo após `nome_emitente`, com a mesma informação da aba Itens (opSimpNac ou CRT do emitente; ex.: "3 — Optante - ME / EPP (… ) (pelo CRT 1)", "1 — Não Optante (Lucro Presumido ou Lucro Real)").
+- **Simples Nacional sem frete no XML**: quando o regime é Simples Nacional (códigos 2 MEI, 3 ME/EPP e 4 pendente de homologação) e o item não traz `vFrete`, a coluna `observacao` vem preenchida com **"Valor do frete não destacado no XML"** (o texto digitado pelo usuário substitui o padrão). Item do Simples com frete destacado e demais regimes: observação em branco.
+- Caso `tests/casos/v85-icms-regime-frete-simples`.
+  `src/js/modulos/43-v85-icms-regime-frete-simples.js`
+
 ## V84 — 2026-10-12
 
 - **Base de IBS/CBS — tributação integral em NCM com cClassTrib candidato** (CST 000 no XML e o NCM com candidato de benefício, ex.: 000001 × 200033 / 200034): não é inconsistência. `validacao_ncm_cclasstrib`, `validacao_cclasstrib`, `validacao_cst_ibs_cbs`, `validacao_base_ibs_cbs`, `validacao_ibs` e `validacao_cbs` ficam **VALIDADO** (verde) — "VALIDADO (tributação integral — o NCM tem cClassTrib candidato …; analisar cClassTrib)" —, nada é recalculado (`base_correta_ibs_cbs`, `valor_correto_ibs` e `valor_correto_cbs` = 0) e a coluna `observacao` vem preenchida com **"Analisar cClassTrib"** (o texto digitado pelo usuário substitui o padrão).
