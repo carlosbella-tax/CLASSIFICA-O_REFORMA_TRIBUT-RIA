@@ -5,6 +5,14 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V84 — 2026-10-12
+
+- **Base de IBS/CBS — tributação integral em NCM com cClassTrib candidato** (CST 000 no XML e o NCM com candidato de benefício, ex.: 000001 × 200033 / 200034): não é inconsistência. `validacao_ncm_cclasstrib`, `validacao_cclasstrib`, `validacao_cst_ibs_cbs`, `validacao_base_ibs_cbs`, `validacao_ibs` e `validacao_cbs` ficam **VALIDADO** (verde) — "VALIDADO (tributação integral — o NCM tem cClassTrib candidato …; analisar cClassTrib)" —, nada é recalculado (`base_correta_ibs_cbs`, `valor_correto_ibs` e `valor_correto_cbs` = 0) e a coluna `observacao` vem preenchida com **"Analisar cClassTrib"** (o texto digitado pelo usuário substitui o padrão).
+- Ajusta a V83: cClassTrib de benefício diferente do candidato (ex.: 200014 × 200033) continua NÃO VALIDADO.
+- Efeito nos XMLs reais de teste: os 5 itens de 2 notas marcados na V83 voltam a VALIDADO (inclusive o `validacao_cst_ibs_cbs`, que já era NÃO VALIDADO pelo CST candidato 200) e saem das inconsistências, com "Analisar cClassTrib" na observação.
+- Casos `v83-cclasstrib-candidato` (ajustado) e `v84-tributacao-integral`.
+  `src/js/modulos/42-v84-tributacao-integral-analisar.js`
+
 ## V83 — 2026-10-12
 
 - **Base de IBS/CBS — cClassTrib fora do candidato do NCM**: quando o cClassTrib do XML não está entre os códigos de `cclasstrib_candidato_capitulo`, as colunas `validacao_cclasstrib` e `validacao_ncm_cclasstrib` ficam **NÃO VALIDADO** — ex.: "NÃO VALIDADO (cClassTrib 000001 do XML diverge do cClassTrib candidato para o NCM 21069090: 200033 / 200034)". Antes ficavam VALIDADO com o aviso "confirme se o item tem benefício".

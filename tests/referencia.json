@@ -1,5 +1,5 @@
 {
-  "versao": 83,
+  "versao": 84,
   "arquivos": [
     "35260243061654000480550010000929731211237179.XML",
     "CTEOS_simples_transporte_pessoas.xml",
@@ -59,11 +59,11 @@
       "incorreto": 0
     },
     "ibscbs": {
-      "sha": "d443c3a40daf49d4",
-      "caracteres": 98873,
+      "sha": "17ac5330cb4aa143",
+      "caracteres": 100436,
       "linhas_tabela": 100,
-      "validado": 585,
-      "nao_validado": 16,
+      "validado": 600,
+      "nao_validado": 1,
       "incorreto": 0
     },
     "events": {
@@ -75,19 +75,19 @@
       "incorreto": 1
     },
     "dashboard": {
-      "sha": "132c33a0ac6aad7f",
-      "caracteres": 28439,
-      "linhas_tabela": 179,
+      "sha": "ef3f60fcb387960f",
+      "caracteres": 23606,
+      "linhas_tabela": 157,
       "validado": 11,
-      "nao_validado": 4,
+      "nao_validado": 1,
       "incorreto": 0
     },
     "apresentacao": {
-      "sha": "2b39e805fc1d9307",
-      "caracteres": 2454,
+      "sha": "611fe1bf05fd889b",
+      "caracteres": 2268,
       "linhas_tabela": 0,
       "validado": 0,
-      "nao_validado": 3,
+      "nao_validado": 2,
       "incorreto": 0
     },
     "observacoes": {
