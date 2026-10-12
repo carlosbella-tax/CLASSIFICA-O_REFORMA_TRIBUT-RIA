@@ -1,5 +1,5 @@
 {
-  "versao": 73,
+  "versao": 74,
   "data": "2026-10-12",
-  "descricao": "Aba Base de IBS/CBS: valor_total_produtos logo após ncm"
+  "descricao": "Aba Base de IBS/CBS: cclasstrib e cst_ibs_cbs logo após valor_imposto_seletivo_is"
 }

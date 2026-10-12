@@ -49,6 +49,7 @@
     "src/js/modulos/32-v71-observacao-icms-filtro-eventos.js",
     "src/js/modulos/33-v72-dashboard-quadro-eventos.js",
     "src/js/modulos/34-v73-ibs-valor-produtos-apos-ncm.js",
+    "src/js/modulos/35-v74-ibs-cst-cclasstrib-apos-is.js",
     "src/js/modulos/99-fechamento.js",
     "src/90-rodape.html"
   ]

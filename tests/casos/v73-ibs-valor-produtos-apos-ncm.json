@@ -1,13 +1,12 @@
 {
-  "descricao": "V73 — aba Base de IBS/CBS: valor_total_produtos logo após ncm",
+  "descricao": "V73 — aba Base de IBS/CBS: valor_total_produtos logo após ncm [V74: cst_ibs_cbs saiu daqui]",
   "arquivos": [
     "v68-diferenca-base-ibs-cbs.xml"
   ],
   "funcao": "linhasIbsCbsTabela",
   "colunas_apos": {
     "ncm": [
-      "valor_total_produtos",
-      "cst_ibs_cbs"
+      "valor_total_produtos"
     ]
   },
   "linhas": [

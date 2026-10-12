@@ -1,0 +1,28 @@
+{
+  "descricao": "V74 — aba Base de IBS/CBS: cclasstrib e cst_ibs_cbs logo após valor_imposto_seletivo_is",
+  "arquivos": [
+    "v68-diferenca-base-ibs-cbs.xml"
+  ],
+  "funcao": "linhasIbsCbsTabela",
+  "colunas_apos": {
+    "valor_imposto_seletivo_is": [
+      "cclasstrib",
+      "cst_ibs_cbs",
+      "base_ibs_cbs_xml"
+    ],
+    "ncm": [
+      "valor_total_produtos",
+      "descricao_cst_ibs_cbs"
+    ]
+  },
+  "linhas": [
+    {
+      "numero_item": "1",
+      "esperado": {
+        "cclasstrib": "000001",
+        "cst_ibs_cbs": "000",
+        "validacao_base_ibs_cbs": "^NÃO VALIDADO"
+      }
+    }
+  ]
+}

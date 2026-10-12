@@ -5,6 +5,12 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V74 — 2026-10-12
+
+- **Aba Base de IBS/CBS**: as colunas `cclasstrib` e `cst_ibs_cbs` passam a ficar logo após `valor_imposto_seletivo_is` (fim dos componentes da base), antes de `base_ibs_cbs_xml`. `descricao_cst_ibs_cbs` e `percentual_reducao_aliquota` continuam onde estavam (após `valor_total_produtos`). Só muda a ordem; valores e validações iguais. Vale para a tela, o filtro, o Excel e a impressão.
+- Caso `tests/casos/v74-ibs-cst-cclasstrib-apos-is`; caso da V73 ajustado.
+  `src/js/modulos/35-v74-ibs-cst-cclasstrib-apos-is.js`
+
 ## V73 — 2026-10-12
 
 - **Aba Base de IBS/CBS**: a coluna `valor_total_produtos` (valor total dos produtos do item) passa a ficar logo após `ncm` (antes ficava depois de `cclasstrib`). Mesmo valor; vale para a tela, o filtro, o Excel e a impressão.
