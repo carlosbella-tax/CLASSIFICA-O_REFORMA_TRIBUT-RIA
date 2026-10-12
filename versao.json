@@ -1,5 +1,5 @@
 {
-  "versao": 86,
+  "versao": 87,
   "data": "2026-10-12",
-  "descricao": "Observações automáticas: PIS/COFINS CST 01 sem valor (ICMS tributado integralmente / Simples não tributado); IBS/CBS base sem dedução de PIS/COFINS; cClassTrib divergente do candidato = VALIDADO com 'Analisar cClassTrib'; bonificação divergente em vermelho com 'Bonificação CST 410 cClassTrib 410999'"
+  "descricao": "Eventos das notas fiscais: Dashboard só com o resumo (totais e tabela por tpEvento/descEvento), sem Notas com evento; apresentação com o mesmo resumo"
 }

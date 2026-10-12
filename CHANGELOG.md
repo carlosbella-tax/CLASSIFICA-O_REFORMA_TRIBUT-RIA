@@ -5,6 +5,13 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V87 — 2026-10-12
+
+- **Dashboard › quadro "Eventos das notas fiscais"** (ao lado de Montante por imposto): passa a mostrar somente o resumo — totais (eventos, notas, entradas × saídas, cancelamentos) e a tabela por `tpEvento` e `descEvento` com entradas e saídas. A lista "Notas com evento" foi retirada; o detalhamento por nota continua na aba Eventos do Dashboard (botão "Ver todos os eventos").
+- **Apresentação — slide "Eventos das notas fiscais"**: traz o mesmo resumo (cartões de eventos, notas, entradas · saídas e cancelamentos, e a tabela por tpEvento/descEvento com entradas, saídas e total), no lugar das listas de notas.
+- Casos `v70-eventos-dashboard` e `v72-quadro-eventos-dashboard` ajustados.
+  `src/js/modulos/33-v72-dashboard-quadro-eventos.js`, `31-v70-eventos-nfe.js` e `src/js/apresentacao/gerador-pptx.js` (comentários V87)
+
 ## V86 — 2026-10-12
 
 Observações automáticas na coluna `observacao` (o texto digitado pelo usuário sempre substitui o padrão; mais de um padrão no mesmo item é unido por " | "):

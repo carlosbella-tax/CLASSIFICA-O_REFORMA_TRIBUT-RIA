@@ -69,6 +69,11 @@
   dadosApresentacao = function(){
     const D = semCanceladasV70(dadosApresentacaoV69), ev = eventosV70().lista;
     D.eventos = {E: ev.filter(x => x.mv !== 'SAÍDAS'), S: ev.filter(x => x.mv === 'SAÍDAS'), total: ev.length, canc: ev.filter(x => x.canc).length};
+    // V87: resumo por tipo de evento (o mesmo do quadro do Dashboard)
+    const tipos = new Map;
+    for (const x of ev){ const k = x.tp + '|' + x.desc, tt = tipos.get(k) || {tp: x.tp, desc: x.desc, E: 0, S: 0, canc: x.canc}; tt[x.mv === 'SAÍDAS' ? 'S' : 'E']++; tipos.set(k, tt); }
+    D.eventos.tipos = [...tipos.values()].sort((a, b) => (b.E + b.S) - (a.E + a.S));
+    D.eventos.notas = new Set(ev.map(x => x.chave)).size;
     return D;
   };
   // Excel completo: abas de impostos sem as canceladas; aba Itens com todos os itens

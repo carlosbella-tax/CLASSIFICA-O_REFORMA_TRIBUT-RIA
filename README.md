@@ -2,7 +2,7 @@
 
 Lê XML de NF-e, CT-e, NFS-e e eventos (arquivos, pasta inteira, TXT com XML), valida ICMS, ICMS ST, IPI, PIS/COFINS e IBS/CBS (LC 214/2025), mostra o Dashboard por imposto e gera Excel, PDF e a apresentação em PowerPoint. O entregável é **um único arquivo HTML** que roda offline no navegador.
 
-Versão atual: **V86** (ver [CHANGELOG.md](CHANGELOG.md)). Regras de trabalho do agente: [AGENTS.md](AGENTS.md).
+Versão atual: **V87** (ver [CHANGELOG.md](CHANGELOG.md)). Regras de trabalho do agente: [AGENTS.md](AGENTS.md).
 
 ## Comandos
 

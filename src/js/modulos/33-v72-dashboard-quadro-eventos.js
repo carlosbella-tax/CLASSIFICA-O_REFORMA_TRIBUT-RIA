@@ -4,6 +4,8 @@
      descEvento (entradas × saídas) e a lista dos eventos com a nota de
      origem e o efeito no diagnóstico. O detalhamento completo continua na
      aba Eventos do Dashboard.
+     V87 — o quadro mostra somente o resumo (totais e tabela por tpEvento e
+     descEvento); a lista "Notas com evento" foi retirada.
      ===================================================================== */
   const MAX_V72 = 12;
   function quadroEventosV72(){
@@ -18,12 +20,7 @@
       + '<table class="dash-detail-table v72-ev"><thead><tr><th style="width:16%">tpEvento</th><th>descEvento</th><th style="width:15%">Entradas</th><th style="width:15%">Saídas</th></tr></thead><tbody>'
       + [...tipos.values()].sort((a, b) => (b.E + b.S) - (a.E + a.S)).map(t => '<tr><td><b>' + esc(t.tp) + '</b></td><td' + (t.canc ? ' style="color:var(--warn);font-weight:700"' : '') + '>' + esc(t.desc) + '</td><td>' + fmtInt(t.E) + '</td><td>' + fmtInt(t.S) + '</td></tr>').join('')
       + '</tbody></table>'
-      + '<h4 class="v42-sub">Notas com evento</h4><table class="dash-detail-table v72-ev"><thead><tr><th style="width:17%">Movimento</th><th style="width:12%">NF</th><th>Evento</th><th style="width:31%">Efeito</th></tr></thead><tbody>'
-      + ord.slice(0, MAX_V72).map(x => '<tr' + (x.mv === 'SAÍDAS' ? ' class="v35-sai"' : '') + '><td><span class="v24-mov ' + (x.mv === 'SAÍDAS' ? 'sai' : 'ent') + '">' + x.mv + '</span></td><td><b>' + esc(x.nf) + '</b></td><td>'
-          + esc(x.tp + ' - ' + x.desc) + '<br><small>' + esc((x.mv === 'SAÍDAS' ? x.destinatario : x.emitente) || (x.carregada ? '' : 'Nota não carregada')) + (x.carregada && x.valor ? ' · ' + brl(x.valor) : '') + '</small></td><td'
-          + (x.canc ? ' style="color:var(--warn);font-weight:700">Cancelada — fora das abas de impostos' : x.cancNaoHomologado ? '>Cancelamento não homologado' : '>Informativo') + '</td></tr>').join('')
-      + '</tbody></table>'
-      + (ev.length > MAX_V72 ? '<p class="subtle">Exibidos ' + MAX_V72 + ' de ' + fmtInt(ev.length) + ' eventos.</p>' : '')
+      // V87: somente o resumo — a lista "Notas com evento" saiu do quadro (detalhe completo na aba Eventos)
       + '<p style="margin:8px 0 0"><button type="button" class="secondary" data-v72-eventos>Ver todos os eventos (aba Eventos)</button></p>';
     return h;
   }

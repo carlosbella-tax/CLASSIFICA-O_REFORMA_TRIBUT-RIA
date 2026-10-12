@@ -274,21 +274,20 @@ function montarApresentacaoPptx(PptxGenJS, D, IMG){
       {x: 0.9, y: 5.95, w: 11.53, h: 0.9, fontSize: 16, color: C.navy, valign: 'middle'});
   }
 
-  /* ---------- V70 — Eventos das notas fiscais (entradas × saídas) ---------- */
+  /* ---------- V70/V87 — Eventos das notas fiscais: resumo por tipo (o mesmo do Dashboard) ---------- */
   if (D.eventos && D.eventos.total){
-    const EV = D.eventos, max = 7;
+    const EV = D.eventos, nE = EV.E.length, nS = EV.S.length, tipos = EV.tipos || [], max = 9;
     const s = base('EVENTOS DAS NOTAS FISCAIS', int(EV.total) + ' evento' + (EV.total > 1 ? 's' : '') + (EV.canc ? ', ' + int(EV.canc) + ' cancelamento' + (EV.canc > 1 ? 's' : '') + ' fora da apuração' : ', nenhum cancelamento'));
-    const lado = (x, rot, cor, lista, parte) => {
-      txt(s, rot + ' · ' + int(lista.length) + ' evento' + (lista.length === 1 ? '' : 's'), {x, y: 1.9, w: 5.9, h: 0.35, fontSize: 15, bold: true, color: cor});
-      const linhas = [[cab('NF'), cab(parte), cab('Evento'), cab('Efeito')]];
-      for (const e of lista.slice(0, max)) linhas.push([cel(e.nf || '—', {bold: true, fontSize: 10.5}), cel(((parte === 'Emitente' ? e.emitente : e.destinatario) || (e.carregada ? '—' : 'Nota não carregada')).slice(0, 34), {fontSize: 10}),
-        cel(e.tp + ' · ' + e.desc.slice(0, 32), {fontSize: 10, bold: e.canc, color: e.canc ? C.verm : C.navy}), cel(e.canc ? 'Cancelada — fora dos impostos' : e.cancNaoHomologado ? 'Cancelamento não homologado' : 'Informativo', {fontSize: 10, color: e.canc ? C.verm : C.cinza})]);
-      if (lista.length === 0) linhas.push([cel('—', {fontSize: 10}), cel('Nenhum evento', {fontSize: 10, color: C.cinza}), cel('', {}), cel('', {})]);
-      tabela(s, linhas, {x, y: 2.35, w: 5.9, colW: [0.75, 1.85, 1.95, 1.35], fontSize: 10, rowH: 0.42, autoPage: false});
-      if (lista.length > max) txt(s, '+ ' + int(lista.length - max) + ' evento(s) — detalhamento no Dashboard, aba Eventos.', {x, y: 6.15, w: 5.9, h: 0.3, fontSize: 11, color: C.cinza});
-    };
-    lado(0.6, 'ENTRADAS', C.verde, EV.E, 'Emitente'); lado(6.83, 'SAÍDAS', C.verm, EV.S, 'Destinatário');
-    txt(s, 'Notas canceladas ficam fora dos valores de ICMS, IPI, PIS, COFINS e IBS/CBS desta apresentação. Demais eventos são informativos.', {x: 0.6, y: 6.5, w: 12.13, h: 0.4, fontSize: 12, color: C.cinza, fit: 'shrink'});
+    const kp = (x, rot, v, cor) => { card(s, x, 1.9, 2.85, 1.25); txt(s, rot, {x: x + 0.2, y: 2.0, w: 2.45, h: 0.3, fontSize: 11.5, bold: true, color: cor, charSpacing: 1});
+      txt(s, String(v), {x: x + 0.2, y: 2.35, w: 2.45, h: 0.7, fontSize: 30, bold: true, color: C.navy}); };
+    kp(0.6, 'EVENTOS', int(EV.total), C.azul); kp(3.69, 'NOTAS', int(EV.notas || 0), C.azul); kp(6.78, 'ENTRADAS · SAÍDAS', int(nE) + ' · ' + int(nS), C.azul); kp(9.87, 'CANCELAMENTOS', int(EV.canc), C.verm);
+    const linhas = [[cab('tpEvento'), cab('descEvento'), cab('Entradas', 'right'), cab('Saídas', 'right'), cab('Total', 'right')]];
+    for (const tt of tipos.slice(0, max)) linhas.push([cel(tt.tp, {bold: true}), cel(tt.desc.slice(0, 60), {color: tt.canc ? C.verm : C.navy, bold: tt.canc}),
+      cel(int(tt.E), {align: 'right'}), cel(int(tt.S), {align: 'right'}), cel(int(tt.E + tt.S), {bold: true, align: 'right'})]);
+    linhas.push([cel('Total', {bold: true, fill: {color: C.total}}), cel('', {fill: {color: C.total}}), cel(int(nE), {bold: true, align: 'right', fill: {color: C.total}}),
+      cel(int(nS), {bold: true, align: 'right', fill: {color: C.total}}), cel(int(EV.total), {bold: true, align: 'right', fill: {color: C.total}})]);
+    tabela(s, linhas, {x: 0.6, y: 3.4, w: 12.13, colW: [1.6, 6.03, 1.5, 1.5, 1.5], fontSize: 13, rowH: 0.36, autoPage: false});
+    txt(s, 'Notas canceladas ficam fora dos valores de ICMS, IPI, PIS, COFINS e IBS/CBS desta apresentação. Demais eventos são informativos.', {x: 0.6, y: 6.55, w: 12.13, h: 0.35, fontSize: 12, color: C.cinza, fit: 'shrink'});
   }
 
   /* ---------- Observações: somente o que não foi validado ---------- */

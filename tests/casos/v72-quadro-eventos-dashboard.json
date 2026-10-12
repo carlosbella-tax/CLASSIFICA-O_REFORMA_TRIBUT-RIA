@@ -1,5 +1,5 @@
 {
-  "descricao": "V72 — Dashboard: quadro Eventos das notas fiscais ao lado de Montante por imposto",
+  "descricao": "V72 — Dashboard: quadro Eventos das notas fiscais ao lado de Montante por imposto [V87: só o resumo, sem Notas com evento]",
   "arquivos": [
     "v65-presumido-saida.xml",
     "v65-presumido-entrada.xml",
@@ -20,9 +20,12 @@
         "2 cancelamento(s)",
         "110111Cancelamento01",
         "110110Carta de Correcao10",
-        "651110111 - CancelamentoCLIENTE LTDA · R$ 1.000,00Cancelada — fora das abas de impostos",
-        "652110110 - Carta de CorrecaoFORNECEDOR LUCRO REAL LTDA · R$ 2.000,00Informativo",
-        "Ver todos os eventos"
+        "110112Cancelamento por substituicao01"
+      ],
+      "nao_contem": [
+        "Notas com evento",
+        "CLIENTE LTDA",
+        "R$ 1.000,00"
       ]
     }
   ],

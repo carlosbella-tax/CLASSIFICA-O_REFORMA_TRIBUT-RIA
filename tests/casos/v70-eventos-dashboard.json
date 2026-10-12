@@ -10,7 +10,7 @@
     "cnpjEmpresa": "00.000.000/0001-91",
     "empresa": "EMPRESA V70"
   },
-  "descricao": "V70 — Dashboard: aba Eventos (entradas × saídas) e quadros de impostos sem a nota cancelada; apresentação com slide de eventos",
+  "descricao": "V70 — Dashboard: aba Eventos (entradas × saídas) e quadros de impostos sem a nota cancelada; apresentação com slide de eventos [V87: slide com o resumo por tipo]",
   "dashboard": [
     {
       "seletor": "#dashSubnav",
@@ -45,10 +45,14 @@
       "slide": "EVENTOS DAS NOTAS FISCAIS",
       "contem": [
         "3 eventos, 2 cancelamentos fora da apuração",
-        "ENTRADAS · 1 evento",
-        "652 | FORNECEDOR LUCRO REAL LTDA | 110110 · Carta de Correcao | Informativo",
-        "SAÍDAS · 2 eventos",
-        "651 | CLIENTE LTDA | 110111 · Cancelamento | Cancelada — fora dos impostos"
+        "EVENTOS ¦ 3",
+        "NOTAS ¦ 3",
+        "ENTRADAS · SAÍDAS ¦ 1 · 2",
+        "CANCELAMENTOS ¦ 2",
+        "110111 | Cancelamento | 0 | 1 | 1",
+        "110110 | Carta de Correcao | 1 | 0 | 1",
+        "110112 | Cancelamento por substituicao | 0 | 1 | 1",
+        "Total |  | 1 | 2 | 3"
       ]
     },
     {
