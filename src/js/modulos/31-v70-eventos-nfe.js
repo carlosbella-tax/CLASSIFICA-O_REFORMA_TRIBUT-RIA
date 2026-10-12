@@ -14,12 +14,14 @@
   const ehCancelamentoV70 = e => String(e.tipo_evento || '').trim() === '110111' || /cancelamento/i.test(String(e.descricao_evento || ''));
   const homologadoV70 = e => { const c = String(e.status_evento || '').trim(); return !c || STATUS_OK_V70.has(c); };
   let cacheEvV70 = {ref: null, n: -1, val: null};
+  let itensTodosV70 = null;   // V72: lista completa enquanto state.items está sem as canceladas
   function eventosV70(){
     const evs = state.events || [];
-    if (cacheEvV70.ref === evs && cacheEvV70.n === evs.length && cacheEvV70.itens === state.items) return cacheEvV70.val;
+    const itensBase = itensTodosV70 || state.items;
+    if (cacheEvV70.ref === evs && cacheEvV70.n === evs.length && cacheEvV70.itens === itensBase) return cacheEvV70.val;
     const porChave = new Map, canceladas = new Set;
     const itemDaChave = new Map, somaItens = new Map;
-    for (const r of state.items) if (r.chave_documento){ if (!itemDaChave.has(r.chave_documento)) itemDaChave.set(r.chave_documento, r); somaItens.set(r.chave_documento, (somaItens.get(r.chave_documento) || 0) + num(r.valor_item)); }
+    for (const r of itensBase) if (r.chave_documento){ if (!itemDaChave.has(r.chave_documento)) itemDaChave.set(r.chave_documento, r); somaItens.set(r.chave_documento, (somaItens.get(r.chave_documento) || 0) + num(r.valor_item)); }
     const docDaChave = new Map; for (const d of state.docs || []) if (d.tipo_documento !== 'Evento NF-e' && d.chave_documento && !docDaChave.has(d.chave_documento)) docDaChave.set(d.chave_documento, d);
     const cnpjEmp = String(($('cnpjEmpresa') || {}).value || '').replace(/\D/g, '');
     const lista = evs.map(e => {
@@ -39,7 +41,7 @@
       if (chave){ const a = porChave.get(chave) || []; a.push(x); porChave.set(chave, a); }
       return x;
     });
-    cacheEvV70 = {ref: evs, n: evs.length, itens: state.items, val: {lista, porChave, canceladas}};
+    cacheEvV70 = {ref: evs, n: evs.length, itens: itensBase, val: {lista, porChave, canceladas}};
     return cacheEvV70.val;
   }
   const semCanceladosV70 = itens => { const c = eventosV70().canceladas; return c.size ? itens.filter(r => !c.has(r.chave_documento)) : itens; };
@@ -47,8 +49,8 @@
   function semCanceladasV70(fn){
     const todos = state.items, filtrados = semCanceladosV70(todos);
     if (filtrados === todos) return fn();
-    state.items = filtrados;
-    try { return fn(); } finally { state.items = todos; }
+    const antTodos = itensTodosV70; itensTodosV70 = antTodos || todos; state.items = filtrados;
+    try { return fn(); } finally { state.items = todos; itensTodosV70 = antTodos; }
   }
 
   // abas de impostos e Dashboard: sem as notas canceladas (a aba Itens e a aba Eventos ficam com tudo)

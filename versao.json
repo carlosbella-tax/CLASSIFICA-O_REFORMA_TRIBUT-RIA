@@ -1,5 +1,5 @@
 {
-  "versao": 71,
+  "versao": 72,
   "data": "2026-10-12",
-  "descricao": "Aba ICMS: coluna observacao editável após base_correta_icms (salva com o diagnóstico e no Excel); aba Itens: filtro de observacao_evento por evento individual"
+  "descricao": "Dashboard: quadro Eventos das notas fiscais ao lado de Montante por imposto (totais, resumo por tpEvento/descEvento e lista dos eventos); valor da nota cancelada no quadro de eventos"
 }

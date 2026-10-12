@@ -5,6 +5,13 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V72 — 2026-10-12
+
+- **Dashboard › Resumo geral — quadro "Eventos das notas fiscais"** ao lado de "Montante por imposto": total de eventos e de notas, entradas × saídas, cancelamentos; resumo por `tpEvento` e `descEvento` (entradas e saídas); lista das notas com evento (movimento, NF, evento, emitente/destinatário, valor da nota e efeito — cancelada ou informativo), até 12 linhas, com o botão "Ver todos os eventos" que abre a aba Eventos. Sem XML de evento, o quadro informa que nenhum evento foi carregado.
+- Correção da V70: dentro do Dashboard, a nota cancelada aparecia com valor R$ 0,00 no quadro de eventos (os itens dela já estavam fora da lista); agora o valor vem da lista completa.
+- Caso `tests/casos/v72-quadro-eventos-dashboard` (conteúdo do quadro e posição logo após Montante por imposto).
+  `src/js/modulos/33-v72-dashboard-quadro-eventos.js` e `31-v70-eventos-nfe.js` (comentário V72)
+
 ## V71 — 2026-10-12
 
 - **Aba ICMS — coluna `observacao`** logo após `base_correta_icms`, com campo para digitar. O texto fica guardado por item (chave da nota + número do item), continua ao trocar de aba ou redesenhar, vai para o Excel (aba e diagnóstico completo) e é salvo e reimportado com o arquivo `.diagnostico`. Enter confirma.

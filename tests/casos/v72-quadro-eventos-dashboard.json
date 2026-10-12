@@ -1,0 +1,37 @@
+{
+  "descricao": "V72 — Dashboard: quadro Eventos das notas fiscais ao lado de Montante por imposto",
+  "arquivos": [
+    "v65-presumido-saida.xml",
+    "v65-presumido-entrada.xml",
+    "v70-evento-cancelamento-saida.xml",
+    "v70-evento-carta-correcao-entrada.xml",
+    "v70-evento-cancel-substituicao-nao-carregada.xml"
+  ],
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91"
+  },
+  "funcao": "(() => { document.querySelector('.tab[data-tab=\"dashboard\"]').click(); const g = [...document.querySelectorAll('#dashboard .dash-tax-grid > .dashboard-card')]; const i = g.findIndex(c => c.id === 'dashEventosResumo'); return [{numero_item: 'posicao', anterior: (g[i - 1].querySelector('h3') || {}).textContent}]; })",
+  "dashboard": [
+    {
+      "seletor": "#dashEventosResumo",
+      "contem": [
+        "Eventos das notas fiscais",
+        "3 evento(s) em 3 nota(s)",
+        "2 cancelamento(s)",
+        "110111Cancelamento01",
+        "110110Carta de Correcao10",
+        "651110111 - CancelamentoCLIENTE LTDA · R$ 1.000,00Cancelada — fora das abas de impostos",
+        "652110110 - Carta de CorrecaoFORNECEDOR LUCRO REAL LTDA · R$ 2.000,00Informativo",
+        "Ver todos os eventos"
+      ]
+    }
+  ],
+  "linhas": [
+    {
+      "numero_item": "posicao",
+      "esperado": {
+        "anterior": "^Montante por imposto$"
+      }
+    }
+  ]
+}
