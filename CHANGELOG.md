@@ -5,6 +5,14 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V78 — 2026-10-12
+
+- **Base de IBS/CBS — CFOP 6911 (remessa de amostra grátis)**: o item deve vir com **CST 410** e **cClassTrib 410999**; CST 410 não tem base nem valor de IBS/CBS. Cada validação aponta o que estiver diferente: CST ("o XML traz CST 000"), cClassTrib ("o XML traz cClassTrib 000001"), base e valores destacados (NÃO VALIDADO, com a diferença; o correto é zero). Com tudo certo, todas as validações ficam "VALIDADO (CFOP 6911 — amostra grátis …)". A validação NCM × cClassTrib não se aplica (não depende do NCM).
+- Nas entradas, vale pelo CFOP original do XML (6911). Os demais CFOP não mudam.
+- Antes, um item 6911 com CST 000 e IBS/CBS destacados, ou com cClassTrib diferente de 410999, passava como VALIDADO.
+- Caso `tests/casos/v78-cfop-6911-amostra-gratis`.
+  `src/js/modulos/38-v78-cfop-6911-amostra-gratis.js`
+
 ## V77 — 2026-10-12
 
 - **Coluna `valor_icms_difal`** (ICMS devido à UF de destino: `vICMSUFDest` + `vICMSUFRemet`) logo após `valor_icms_xml` nas abas **ICMS** e **Base de PIS/COFINS**. Na aba Base de IBS/CBS ela já fica após `valor_icms` (V76, junto com `valor_fcp_difal`).

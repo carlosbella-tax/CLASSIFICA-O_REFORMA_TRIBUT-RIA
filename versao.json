@@ -1,5 +1,5 @@
 {
-  "versao": 77,
+  "versao": 78,
   "data": "2026-10-12",
-  "descricao": "ICMS DIFAL: coluna valor_icms_difal nas abas ICMS e PIS/COFINS após valor_icms_xml; base de PIS/COFINS sem o ICMS DIFAL"
+  "descricao": "Base de IBS/CBS: CFOP 6911 (amostra grátis) deve ter CST 410 e cClassTrib 410999, sem base e sem valor de IBS/CBS"
 }

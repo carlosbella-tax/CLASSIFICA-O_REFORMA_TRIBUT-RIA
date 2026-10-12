@@ -1,0 +1,48 @@
+{
+  "descricao": "V78 — CFOP 6911 (amostra grátis): CST 410, cClassTrib 410999, sem base e sem IBS/CBS; item 6102 de controle sem mudança",
+  "arquivo": "v78-cfop-6911-amostra-gratis.xml",
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91"
+  },
+  "funcao": "linhasIbsCbsTabela",
+  "linhas": [
+    {
+      "numero_item": "1",
+      "esperado": {
+        "validacao_cst_ibs_cbs": "^VALIDADO .CFOP 6911",
+        "validacao_cclasstrib": "^VALIDADO .CFOP 6911",
+        "validacao_base_ibs_cbs": "^VALIDADO .CFOP 6911",
+        "validacao_ibs": "^VALIDADO .CFOP 6911",
+        "validacao_cbs": "^VALIDADO .CFOP 6911"
+      }
+    },
+    {
+      "numero_item": "2",
+      "esperado": {
+        "validacao_cst_ibs_cbs": "^NÃO VALIDADO.*CST 000",
+        "validacao_cclasstrib": "^NÃO VALIDADO.*cClassTrib 000001",
+        "validacao_base_ibs_cbs": "^NÃO VALIDADO.*diferença: R.*100,00$",
+        "validacao_ibs": "^NÃO VALIDADO",
+        "validacao_cbs": "^NÃO VALIDADO.*0,90",
+        "base_correta_ibs_cbs": 0,
+        "valor_correto_cbs": 0
+      }
+    },
+    {
+      "numero_item": "3",
+      "esperado": {
+        "validacao_cst_ibs_cbs": "^VALIDADO .CFOP 6911",
+        "validacao_cclasstrib": "^NÃO VALIDADO.*cClassTrib 410001",
+        "validacao_base_ibs_cbs": "^VALIDADO .CFOP 6911"
+      }
+    },
+    {
+      "numero_item": "4",
+      "esperado": {
+        "validacao_cst_ibs_cbs": "^VALIDADO$",
+        "validacao_cclasstrib": "^VALIDADO$",
+        "validacao_base_ibs_cbs": "^VALIDADO$"
+      }
+    }
+  ]
+}
