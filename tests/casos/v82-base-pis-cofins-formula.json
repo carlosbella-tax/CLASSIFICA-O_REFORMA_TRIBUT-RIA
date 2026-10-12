@@ -1,0 +1,43 @@
+{
+  "descricao": "V82 — base de PIS/COFINS = vProd + vFrete + vSeg + vOutro − vDesc − vICMS − vICMSUFDest",
+  "arquivo": "v82-base-pis-cofins-formula.xml",
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91"
+  },
+  "funcao": "linhasPisCofins",
+  "linhas": [
+    {
+      "numero_item": "1",
+      "esperado": {
+        "validacao_base_pis": "^VALIDADO",
+        "base_correta_pis": 0,
+        "validacao_valor_pis": "^VALIDADO",
+        "validacao_base_cofins": "^VALIDADO"
+      }
+    },
+    {
+      "numero_item": "2",
+      "esperado": {
+        "validacao_base_pis": "^NÃO VALIDADO .base de PIS = vProd.*vFrete.*vSeg.*vOutro.*vDesc.*vICMS.*vICMSUFDest.*861,00. diferença: -R.*50,00$",
+        "base_correta_pis": 861,
+        "valor_correto_pis": 14.21,
+        "base_correta_cofins": 861,
+        "valor_correto_cofins": 65.44
+      }
+    },
+    {
+      "numero_item": "3",
+      "esperado": {
+        "validacao_base_pis": "^NÃO VALIDADO .*1.050,00",
+        "base_correta_pis": 1050
+      }
+    },
+    {
+      "numero_item": "4",
+      "esperado": {
+        "validacao_base_pis": "^VALIDADO",
+        "base_correta_pis": 0
+      }
+    }
+  ]
+}

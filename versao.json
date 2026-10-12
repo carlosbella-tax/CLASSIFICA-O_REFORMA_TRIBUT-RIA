@@ -1,5 +1,5 @@
 {
-  "versao": 81,
+  "versao": 82,
   "data": "2026-10-12",
-  "descricao": "Filtro da coluna observacao (ICMS, IPI, PIS/COFINS e IBS/CBS): opção (sem observação) para selecionar também os itens sem texto"
+  "descricao": "Base de PIS/COFINS única: vProd + vFrete + vSeg + vOutro − vDesc − vICMS − vICMSUFDest (exceto importação), com as validações de base e valor"
 }

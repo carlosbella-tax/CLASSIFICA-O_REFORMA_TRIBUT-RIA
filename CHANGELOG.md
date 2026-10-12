@@ -5,6 +5,14 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V82 — 2026-10-12
+
+- **Regra única da base de PIS/COFINS**: Base = vProd + vFrete + vSeg + vOutro − vDesc − vICMS − vICMSUFDest, para as CST 01, 02 e 50–56 (nas 50–56, quando o XML traz base), margem de R$ 0,05. O texto do NÃO VALIDADO mostra a conta completa e a diferença; o PIS e a COFINS são conferidos sobre a base do XML (validada) ou sobre a base correta.
+- Substitui as variações anteriores: aceitar "valor dos produtos − ICMS" sem frete/seguro/outras (V38/V56); "valor total dos produtos" no Simples Nacional e no ICMS-ST (V58); DIFAL só quando houvesse (V77). Agora tudo segue a mesma fórmula — ex.: Simples com frete passa a exigir o frete na base.
+- Continuam com as regras próprias: importação (CFOP 3xxx, valor aduaneiro), CST não tributada (04–09, 70–75), CST 03 (por quantidade) e base abaixo de R$ 0,05 sem valor (VALIDADO).
+- Nos XMLs reais de teste, nenhuma mudança de status. Caso `tests/casos/v82-base-pis-cofins-formula` (base correta; XML sem frete/despesas; Simples com frete; CST 06).
+  `src/js/modulos/40-v82-base-pis-cofins-formula.js`
+
 ## V81 — 2026-10-12
 
 - **Filtro ▾ da coluna `observacao`** (abas ICMS, IPI, Base de PIS/COFINS e Base de IBS/CBS): a lista passa a trazer também **"(sem observação)"**, para selecionar os itens sem texto. Antes, só apareciam os textos digitados e não dava para filtrar (ou manter) os itens em branco.

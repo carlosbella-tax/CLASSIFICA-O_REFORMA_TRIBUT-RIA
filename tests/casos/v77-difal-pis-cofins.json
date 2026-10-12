@@ -1,5 +1,5 @@
 {
-  "descricao": "V77 — base de PIS/COFINS sem o ICMS DIFAL; coluna valor_icms_difal após valor_icms_xml",
+  "descricao": "V77 — base de PIS/COFINS sem o ICMS DIFAL; coluna valor_icms_difal após valor_icms_xml [V82: texto da fórmula única]",
   "funcao": "linhasPisCofins",
   "colunas_apos": {
     "valor_icms_xml": [
@@ -12,7 +12,7 @@
       "numero_item": "1",
       "esperado": {
         "valor_icms_difal": 60,
-        "validacao_base_pis": "^VALIDADO .*ICMS DIFAL",
+        "validacao_base_pis": "^VALIDADO",
         "base_correta_pis": 0,
         "validacao_valor_pis": "^VALIDADO",
         "validacao_base_cofins": "^VALIDADO",
@@ -22,7 +22,7 @@
     {
       "numero_item": "2",
       "esperado": {
-        "validacao_base_pis": "^NÃO VALIDADO .*ICMS DIFAL: R.*820,00. diferença: R.*60,00$",
+        "validacao_base_pis": "^NÃO VALIDADO .*vICMSUFDest R.*60,00 = R.*820,00. diferença: R.*60,00$",
         "base_correta_pis": 820,
         "valor_correto_pis": 13.53,
         "validacao_base_cofins": "^NÃO VALIDADO",
