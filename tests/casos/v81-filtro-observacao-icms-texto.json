@@ -1,0 +1,20 @@
+{
+  "descricao": "V81 — filtro da coluna observacao (icms): Conferir",
+  "arquivos": [
+    "v60-importacao-3101-3102-3556.xml"
+  ],
+  "chave": "numero_item",
+  "funcao": "(() => { filtrosTabelas.__obsUsuarioIcms = {'35261000000000000191550010000006001000006009|2': 'Conferir'}; filtrosTabelas['icms'] = {observacao: [\"Conferir\"]}; const r = filtrarLinhas(linhasIcms(), 'icms'); delete filtrosTabelas['icms'].observacao; return r; })",
+  "linhas": [
+    {
+      "numero_item": "2",
+      "esperado": {
+        "observacao": "^Conferir$"
+      }
+    }
+  ],
+  "ausentes": [
+    "1",
+    "3"
+  ]
+}

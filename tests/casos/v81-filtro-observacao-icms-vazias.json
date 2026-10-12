@@ -1,0 +1,25 @@
+{
+  "descricao": "V81 — filtro da coluna observacao (icms): (sem observação)",
+  "arquivos": [
+    "v60-importacao-3101-3102-3556.xml"
+  ],
+  "chave": "numero_item",
+  "funcao": "(() => { filtrosTabelas.__obsUsuarioIcms = {'35261000000000000191550010000006001000006009|2': 'Conferir'}; filtrosTabelas['icms'] = {observacao: [\"(sem observação)\"]}; const r = filtrarLinhas(linhasIcms(), 'icms'); delete filtrosTabelas['icms'].observacao; return r; })",
+  "linhas": [
+    {
+      "numero_item": "1",
+      "esperado": {
+        "observacao": "^$"
+      }
+    },
+    {
+      "numero_item": "3",
+      "esperado": {
+        "observacao": "^$"
+      }
+    }
+  ],
+  "ausentes": [
+    "2"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "descricao": "V81 — filtro da coluna observacao (ibscbs): (sem observação)",
+  "arquivos": [
+    "v68-diferenca-base-ibs-cbs.xml"
+  ],
+  "chave": "numero_item",
+  "funcao": "(() => { filtrosTabelas.__obsUsuarioIbsCbs = {'35261000000000000191550010000006801000006809|2': 'Conferir'}; filtrosTabelas['ibsCbs'] = {observacao: [\"(sem observação)\"]}; const r = filtrarLinhas(linhasIbsCbsTabela(), 'ibsCbs'); delete filtrosTabelas['ibsCbs'].observacao; return r; })",
+  "linhas": [
+    {
+      "numero_item": "1",
+      "esperado": {
+        "observacao": "^$"
+      }
+    },
+    {
+      "numero_item": "3",
+      "esperado": {
+        "observacao": "^$"
+      }
+    }
+  ],
+  "ausentes": [
+    "2"
+  ]
+}

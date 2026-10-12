@@ -5,6 +5,12 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V81 — 2026-10-12
+
+- **Filtro ▾ da coluna `observacao`** (abas ICMS, IPI, Base de PIS/COFINS e Base de IBS/CBS): a lista passa a trazer também **"(sem observação)"**, para selecionar os itens sem texto. Antes, só apareciam os textos digitados e não dava para filtrar (ou manter) os itens em branco.
+- Casos `tests/casos/v81-filtro-observacao-*` (só sem observação; só com texto).
+  `src/js/modulos/39-v81-filtro-observacao-vazia.js`
+
 ## V80 — 2026-10-12
 
 Base de IBS/CBS — operações com **CST 410** (imunidade e não incidência), sem base e sem IBS/CBS, com o cClassTrib conferido pelo CFOP do XML:

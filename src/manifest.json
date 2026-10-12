@@ -53,6 +53,7 @@
     "src/js/modulos/36-v76-ibs-sem-difal.js",
     "src/js/modulos/37-v77-difal-icms-pis-cofins.js",
     "src/js/modulos/38-v78-cfop-6911-amostra-gratis.js",
+    "src/js/modulos/39-v81-filtro-observacao-vazia.js",
     "src/js/modulos/99-fechamento.js",
     "src/90-rodape.html"
   ]

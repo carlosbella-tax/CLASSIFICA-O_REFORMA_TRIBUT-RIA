@@ -1,0 +1,20 @@
+{
+  "descricao": "V81 — filtro da coluna observacao (ibscbs): Conferir",
+  "arquivos": [
+    "v68-diferenca-base-ibs-cbs.xml"
+  ],
+  "chave": "numero_item",
+  "funcao": "(() => { filtrosTabelas.__obsUsuarioIbsCbs = {'35261000000000000191550010000006801000006809|2': 'Conferir'}; filtrosTabelas['ibsCbs'] = {observacao: [\"Conferir\"]}; const r = filtrarLinhas(linhasIbsCbsTabela(), 'ibsCbs'); delete filtrosTabelas['ibsCbs'].observacao; return r; })",
+  "linhas": [
+    {
+      "numero_item": "2",
+      "esperado": {
+        "observacao": "^Conferir$"
+      }
+    }
+  ],
+  "ausentes": [
+    "1",
+    "3"
+  ]
+}
