@@ -1,5 +1,5 @@
 {
-  "versao": 88,
+  "versao": 89,
   "data": "2026-10-12",
-  "descricao": "ICMS: base reduzida NÃO VALIDADA com a diferença e observação 'Erro de cálculo de arredondamento'; IBS/CBS: diferença = IBS + CBS com observação 'Cálculo errado excluindo o valor de IBS e CBS'; Dashboard: eventos sem detalhe por nota"
+  "descricao": "NFS-e em XML (padrão nacional e ABRASF) e PDF; coluna tipo_de_documento na aba Itens; aba ISS antes do ICMS; resumo das notas de serviço no Dashboard e na apresentação"
 }

@@ -2,7 +2,7 @@
 
 Lê XML de NF-e, CT-e, NFS-e e eventos (arquivos, pasta inteira, TXT com XML), valida ICMS, ICMS ST, IPI, PIS/COFINS e IBS/CBS (LC 214/2025), mostra o Dashboard por imposto e gera Excel, PDF e a apresentação em PowerPoint. O entregável é **um único arquivo HTML** que roda offline no navegador.
 
-Versão atual: **V88** (ver [CHANGELOG.md](CHANGELOG.md)). Regras de trabalho do agente: [AGENTS.md](AGENTS.md).
+Versão atual: **V89** (ver [CHANGELOG.md](CHANGELOG.md)). Regras de trabalho do agente: [AGENTS.md](AGENTS.md).
 
 ## Comandos
 
@@ -47,6 +47,9 @@ Os arquivos são concatenados exatamente na ordem de `src/manifest.json`. Os mó
 | `src/js/base/leitura-xml-e-telas.js` | 44 KB | estado global, leitura de NF-e/CT-e/NFS-e/eventos, formatação, filtros, Excel, abas fiscais (V10) |
 | `src/js/base/v13-importacao-xml-txt.js` | 5 KB | V13: XML salvo como TXT |
 | `src/vendor/pptxgenjs-4.0.1.bundle.js` | 450 KB | biblioteca PptxGenJS 4.0.1 (não editar) |
+| `src/vendor/pdfjs-complementos.js` | 1 KB | V89: Promise.allSettled quando a página não tiver (exigido pelo pdf.js) |
+| `src/vendor/pdfjs-3.11.174.min.js` e `.worker.min.js` | 1.380 KB | pdf.js 3.11.174 embutido para ler PDF offline (não editar) |
+| `src/vendor/motor-nfse.js` | 60 KB | leitor de NFS-e (XML/PDF) do Motor de Cálculo — gerado por `tools/portar-nfse-motor.mjs` (não editar) |
 | `src/js/apresentacao/gerador-pptx.js` | 30 KB | montagem dos slides (modelo Tax Advice) |
 | `src/js/apresentacao/imagens-pptx.js` | 103 KB | logos e fundo da apresentação em base64 |
 | `src/js/base/auxiliares-v25-v29.js` | 6 KB | CST ICMS/CSOSN, alíquota exibida, leitura XML rápida, auxiliares do Excel |
@@ -95,6 +98,7 @@ Os arquivos são concatenados exatamente na ordem de `src/manifest.json`. Os mó
 | `src/js/modulos/43-v85-icms-regime-frete-simples.js` | 2 KB | módulo V85 (regime tributário na aba ICMS; observação de frete não destacado no Simples Nacional) |
 | `src/js/modulos/44-v86-observacoes-automaticas.js` | 4 KB | módulo V86 (observações automáticas em PIS/COFINS e IBS/CBS; cClassTrib divergente = VALIDADO com "Analisar cClassTrib"; bonificação divergente) |
 | `src/js/modulos/45-v88-obs-arredondamento-ibs.js` | 2 KB | módulo V88 (observações de arredondamento no ICMS reduzido e de base de IBS/CBS sem o próprio IBS/CBS) |
+| `src/js/modulos/46-v89-nfse-xml-pdf-iss.js` | 24 KB | módulo V89 (NFS-e em XML e PDF, tipo_de_documento na aba Itens, aba ISS, quadro no Dashboard e slide) |
 | `src/js/modulos/99-fechamento.js` | 0 KB | fecha a função principal e desenha a tela — módulos novos entram antes dele |
 
 ## Origem

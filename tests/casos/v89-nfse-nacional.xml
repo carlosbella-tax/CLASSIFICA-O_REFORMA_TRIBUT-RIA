@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NFSe xmlns="http://www.sped.fazenda.gov.br/nfse" versao="1.00"><infNFSe Id="NFS35503082200000000019100000000000012326100000000001">
+<xLocEmi>São Paulo</xLocEmi><xLocPrestacao>São Paulo</xLocPrestacao><nNFSe>123</nNFSe><cLocIncid>3550308</cLocIncid><xLocIncid>São Paulo</xLocIncid>
+<xTribNac>Análise e desenvolvimento de sistemas.</xTribNac><verAplic>1.00</verAplic><ambGer>2</ambGer><tpEmis>1</tpEmis><procEmi>1</procEmi><cStat>100</cStat><dhProc>2026-10-05T10:00:05-03:00</dhProc><nDFSe>987</nDFSe>
+<emit><CNPJ>00000000000191</CNPJ><IM>12345</IM><xNome>EMPRESA PRESTADORA TESTE LTDA</xNome><enderNac><xLgr>Rua A</xLgr><nro>10</nro><xBairro>Centro</xBairro><cMun>3550308</cMun><UF>SP</UF><CEP>01001000</CEP></enderNac></emit>
+<valores><vCalcDR>0.00</vCalcDR><vBC>9500.00</vBC><pAliqAplic>2.00</pAliqAplic><vISSQN>190.00</vISSQN><vTotalRet>385.00</vTotalRet><vLiq>9615.00</vLiq></valores>
+<IBSCBS><cLocalidadeIncid>3550308</cLocalidadeIncid><xLocalidadeIncid>São Paulo</xLocalidadeIncid><valores><vBC>9310.00</vBC><uf><pIBSUF>0.10</pIBSUF><pAliqEfetUF>0.10</pAliqEfetUF></uf><mun><pIBSMun>0.00</pIBSMun><pAliqEfetMun>0.00</pAliqEfetMun></mun><fed><pCBS>0.90</pCBS><pAliqEfetCBS>0.90</pAliqEfetCBS></fed></valores>
+<totCIBS><vTotNF>10093.10</vTotNF><gIBS><vIBSTot>9.31</vIBSTot><gIBSUFTot><vIBSUF>9.31</vIBSUF></gIBSUFTot><gIBSMunTot><vIBSMun>0.00</vIBSMun></gIBSMunTot></gIBS><gCBS><vCBS>83.79</vCBS></gCBS></totCIBS></IBSCBS>
+<DPS versao="1.00"><infDPS Id="DPS355030820000000000191000010000000000000123"><tpAmb>2</tpAmb><dhEmi>2026-10-05T09:58:00-03:00</dhEmi><verAplic>1.0</verAplic><serie>1</serie><nDPS>123</nDPS><dCompet>2026-10-05</dCompet><tpEmit>1</tpEmit><cLocEmi>3550308</cLocEmi>
+<prest><CNPJ>00000000000191</CNPJ><regTrib><opSimpNac>1</opSimpNac><regEspTrib>0</regEspTrib></regTrib></prest>
+<toma><CNPJ>00000000000272</CNPJ><xNome>CLIENTE TOMADOR LTDA</xNome><end><endNac><cMun>3304557</cMun><CEP>20000000</CEP></endNac><xLgr>Av B</xLgr><nro>200</nro><xBairro>Centro</xBairro></end></toma>
+<serv><locPrest><cLocPrestacao>3550308</cLocPrestacao></locPrest><cServ><cTribNac>010101</cTribNac><cTribMun>001</cTribMun><xDescServ>Desenvolvimento de software sob encomenda</xDescServ><cNBS>115021000</cNBS></cServ></serv>
+<valores><vServPrest><vServ>10000.00</vServ></vServPrest><vDedRed><vDR>500.00</vDR></vDedRed><trib><tribMun><tribISSQN>1</tribISSQN><tpRetISSQN>2</tpRetISSQN><pAliq>2.00</pAliq></tribMun><tribFed><vRetCP>110.00</vRetCP><vRetIRRF>150.00</vRetIRRF><vRetCSLL>100.00</vRetCSLL></tribFed><totTrib><indTotTrib>0</indTotTrib></totTrib></trib></valores>
+<IBSCBS><finNFSe>0</finNFSe><indFinal>0</indFinal><cIndOp>100301</cIndOp><valores><trib><gIBSCBS><CST>000</CST><cClassTrib>000001</cClassTrib></gIBSCBS></trib></valores></IBSCBS>
+</infDPS></DPS></infNFSe></NFSe>

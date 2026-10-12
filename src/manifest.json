@@ -11,6 +11,13 @@
     "src/js/base/v13-importacao-xml-txt.js",
     "src/30-separador.html",
     "src/vendor/pptxgenjs-4.0.1.bundle.js",
+    "src/36-separador-pdfjs.html",
+    "src/vendor/pdfjs-complementos.js",
+    "src/vendor/pdfjs-3.11.174.min.js",
+    "src/37-separador-pdfjs-worker.html",
+    "src/vendor/pdfjs-3.11.174.worker.min.js",
+    "src/38-separador-motor-nfse.html",
+    "src/vendor/motor-nfse.js",
     "src/40-separador.html",
     "src/js/apresentacao/gerador-pptx.js",
     "src/js/apresentacao/imagens-pptx.js",
@@ -60,6 +67,7 @@
     "src/js/modulos/43-v85-icms-regime-frete-simples.js",
     "src/js/modulos/44-v86-observacoes-automaticas.js",
     "src/js/modulos/45-v88-obs-arredondamento-ibs.js",
+    "src/js/modulos/46-v89-nfse-xml-pdf-iss.js",
     "src/js/modulos/99-fechamento.js",
     "src/90-rodape.html"
   ]

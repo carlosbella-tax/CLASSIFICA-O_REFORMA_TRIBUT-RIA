@@ -1,0 +1,33 @@
+{
+  "descricao": "V89 — aba Itens: tipo_de_documento logo antes de arquivo_origem (NF-e modelo 55 ou NFS-e)",
+  "arquivos": [
+    "v88-arredondamento-ibs.xml",
+    "v89-nfse-nacional.xml",
+    "NFSE_723_Cachoeirinha_padrao_nacional.pdf"
+  ],
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91"
+  },
+  "funcao": "linhasItensComIcms",
+  "chave": "arquivo_origem",
+  "linhas": [
+    {
+      "numero_item": "v88-arredondamento-ibs.xml",
+      "esperado": {
+        "tipo_de_documento": "NF-e (modelo 55)"
+      }
+    },
+    {
+      "numero_item": "v89-nfse-nacional.xml",
+      "esperado": {
+        "tipo_de_documento": "^NFS-e$"
+      }
+    },
+    {
+      "numero_item": "NFSE_723_Cachoeirinha_padrao_nacional.pdf",
+      "esperado": {
+        "tipo_de_documento": "NFS-e (PDF)"
+      }
+    }
+  ]
+}

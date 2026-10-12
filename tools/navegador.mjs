@@ -17,7 +17,7 @@ export async function abrirDiagnostico(caminhos, { campos = {}, versao: v } = {}
   const dom = new JSDOM(html, {
     runScripts: 'dangerously', pretendToBeVisual: true, virtualConsole: vc, url: 'file:///diagnostico.html',
     beforeParse(win) {
-      win.TextEncoder = TextEncoder; win.TextDecoder = TextDecoder;
+      win.TextEncoder = TextEncoder; win.TextDecoder = TextDecoder; win.structuredClone = structuredClone; win.ReadableStream = ReadableStream; win.WritableStream = WritableStream;   // navegadores atuais têm; o jsdom não (pdf.js usa)
       if (!win.Blob.prototype.arrayBuffer) win.Blob.prototype.arrayBuffer = function () {
         return new Promise((ok, erro) => { const r = new win.FileReader(); r.onload = () => ok(r.result); r.onerror = () => erro(r.error); r.readAsArrayBuffer(this); });
       };

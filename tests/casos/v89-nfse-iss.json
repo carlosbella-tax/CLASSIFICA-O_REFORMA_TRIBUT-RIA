@@ -1,0 +1,157 @@
+{
+  "descricao": "V89 — NFS-e em XML (padrão nacional e ABRASF) e PDF: aba ISS com os dados da nota; quadro no Dashboard e slide na apresentação",
+  "arquivos": [
+    "v89-nfse-nacional.xml",
+    "v89-nfse-abrasf.xml",
+    "NFSE_723_Cachoeirinha_padrao_nacional.pdf",
+    "NFSE_NFSE_3346.pdf",
+    "HOMEFIN_NF_2001_-_Contratos_emitidos_fev_2026_nfe.pdf"
+  ],
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91",
+    "empresa": "EMPRESA V89"
+  },
+  "funcao": "linhasIss",
+  "chave": "numero_nota",
+  "colunas_apos": {
+    "tipo_operacao": [
+      "tipo_de_documento",
+      "numero_nota",
+      "data_emissao",
+      "nome_emitente",
+      "nome_destinatario",
+      "municipio_emitente",
+      "municipio_destinatario",
+      "codigo_servico",
+      "nbs",
+      "valor_servico",
+      "deducao",
+      "aliquota_iss",
+      "base_iss",
+      "valor_iss",
+      "iss_retido",
+      "base_inss",
+      "aliquota_inss",
+      "valor_inss",
+      "valor_ir",
+      "aliquota_ir",
+      "valor_csll",
+      "aliquota_csll",
+      "base_ibs",
+      "base_cbs",
+      "cst_ibs_cbs",
+      "cclasstrib",
+      "aliquota_ibs",
+      "aliquota_cbs",
+      "valor_ibs_estadual",
+      "valor_ibs_municipal",
+      "valor_cbs"
+    ]
+  },
+  "linhas": [
+    {
+      "numero_item": "123",
+      "esperado": {
+        "tipo_operacao": "SAÍDAS",
+        "tipo_de_documento": "^NFS-e$",
+        "nome_emitente": "EMPRESA PRESTADORA TESTE LTDA",
+        "municipio_emitente": "São Paulo",
+        "nbs": "115021000",
+        "valor_servico": 10000,
+        "deducao": 500,
+        "aliquota_iss": 2,
+        "base_iss": 9500,
+        "valor_iss": 190,
+        "iss_retido": "SIM",
+        "base_inss": 10000,
+        "aliquota_inss": 1.1,
+        "valor_inss": 110,
+        "valor_ir": 150,
+        "aliquota_ir": 1.5,
+        "valor_csll": 100,
+        "aliquota_csll": 1,
+        "base_ibs": 9310,
+        "base_cbs": 9310,
+        "cst_ibs_cbs": "000",
+        "cclasstrib": "000001",
+        "aliquota_ibs": 0.1,
+        "aliquota_cbs": 0.9,
+        "valor_ibs_estadual": 9.31,
+        "valor_cbs": 83.79
+      }
+    },
+    {
+      "numero_item": "456",
+      "esperado": {
+        "tipo_operacao": "ENTRADAS",
+        "tipo_de_documento": "^NFS-e$",
+        "codigo_servico": "17.01 / 170100",
+        "aliquota_iss": 5,
+        "base_iss": 2000,
+        "valor_iss": 100,
+        "iss_retido": "SIM",
+        "valor_ir": 30,
+        "aliquota_ir": 1.5
+      }
+    },
+    {
+      "numero_item": "723",
+      "esperado": {
+        "tipo_de_documento": "NFS-e (PDF)",
+        "nome_emitente": "EIDT CIRIEX COMERCIO E INDUSTRIA DE SISTEMAS DE ELEVACAO LTDA",
+        "valor_servico": 1187.5,
+        "aliquota_iss": 2.5,
+        "valor_iss": 29.69,
+        "iss_retido": "NÃO",
+        "base_ibs": 1157.81,
+        "valor_cbs": 10.42
+      }
+    },
+    {
+      "numero_item": "3.346/NFSE",
+      "esperado": {
+        "tipo_de_documento": "NFS-e (PDF)",
+        "nome_emitente": "SCHWING EQUIPAMENTOS INDUSTRIAIS LTDA",
+        "nome_destinatario": "J3 INCORPORACAO ENGENHARIA E CONST",
+        "municipio_destinatario": "MACEIO - AL",
+        "valor_servico": 5975.32,
+        "valor_iss": 119.51
+      }
+    },
+    {
+      "numero_item": "0000002001",
+      "esperado": {
+        "tipo_de_documento": "NFS-e (PDF)",
+        "municipio_emitente": "Osasco",
+        "valor_servico": 258720,
+        "deducao": 123360,
+        "base_iss": 135360,
+        "valor_iss": 2707.2
+      }
+    }
+  ],
+  "dashboard": [
+    {
+      "seletor": "#dashServicos",
+      "contem": [
+        "Notas de serviço (NFS-e)",
+        "5 nota(s) de serviço",
+        "Entradas 4",
+        "Saídas 1",
+        "Valor dos serviços",
+        "ISS retido"
+      ]
+    }
+  ],
+  "apresentacao": [
+    {
+      "slide": "NOTAS DE SERVIÇO (NFS-e)",
+      "contem": [
+        "5 notas de serviço",
+        "Valor dos serviços",
+        "ISS retido",
+        "IBS municipal"
+      ]
+    }
+  ]
+}

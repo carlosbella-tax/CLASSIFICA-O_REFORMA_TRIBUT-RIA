@@ -12,6 +12,7 @@
   "colunas_apos": {
     "tipo_operacao": [
       "observacao_evento",
+      "tipo_de_documento",
       "arquivo_origem"
     ]
   },

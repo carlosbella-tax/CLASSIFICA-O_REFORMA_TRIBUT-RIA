@@ -121,6 +121,16 @@ function montarApresentacaoPptx(PptxGenJS, D, IMG){
       + (LP ? ' * Lucro Presumido: PIS e COFINS sem crédito — as entradas são informativas e o saldo é somente o valor das saídas.' : ''), {x: 0.6, y: 6.5, w: 12.13, h: LP ? 0.55 : 0.4, fontSize: LP ? 12 : 14, color: C.cinza, fit: 'shrink'});
   }
 
+  /* ---------- 4b. Notas de serviço (NFS-e) — V89: só quando houver NFS-e ---------- */
+  if (D.servicos && D.servicos.T && D.servicos.T.n){
+    const R = D.servicos, campos = R.campos || [];
+    const s = base('NOTAS DE SERVIÇO (NFS-e)', int(R.T.n) + (R.T.n > 1 ? ' notas de serviço somam ' : ' nota de serviço soma ') + curto(R.T.valor_servico) + ', com ' + curto(R.T.valor_iss) + ' de ISS');
+    const linhas = [[cab('Campo'), cab('Entradas (' + int(R.E.n) + ')', 'right'), cab('Saídas (' + int(R.S.n) + ')', 'right'), cab('Total', 'right')]];
+    for (const [k, t] of campos) linhas.push([cel(t, {bold: true}), cel(brl(R.E[k]), {color: C.verde, align: 'right'}), cel(brl(R.S[k]), {color: C.verm, align: 'right'}), cel(brl(R.T[k]), {bold: true, align: 'right', fill: {color: C.total}})]);
+    tabela(s, linhas, {x: 0.6, y: 1.9, w: 12.13, colW: [3.4, 2.91, 2.91, 2.91], rowH: 0.38, fontSize: 13});
+    txt(s, 'NFS-e lidas do XML (padrão nacional ou ABRASF) ou do PDF. ISS retido = ISS das notas com retenção pelo tomador. Detalhe por nota na aba ISS.', {x: 0.6, y: 6.55, w: 12.13, h: 0.4, fontSize: 12.5, color: C.cinza, fit: 'shrink'});
+  }
+
   /* ---------- 5. ICMS por alíquota ---------- */
   {
     const E = D.icmsAliq.E, S = D.icmsAliq.S, tE = E.reduce((a, x) => a + x[1], 0), tS = S.reduce((a, x) => a + x[1], 0);

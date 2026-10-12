@@ -5,6 +5,17 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V89 — 2026-10-12
+
+- **Carga de arquivos aceita XML e PDF.** O PDF de NFS-e é lido no próprio navegador, sem internet: pdf.js 3.11.174 embutido + leitor de NFS-e do Motor de Cálculo (DANFSe nacional v2.0 e layouts municipais), portado por `tools/portar-nfse-motor.mjs` (Motor 37989db). PDF de NF-e (DANFE) ou de CT-e (DACTE) não é lido (use o XML); PDF digitalizado como imagem ou que não seja nota de serviço vira erro de leitura com o motivo.
+- **XML de NFS-e**: padrão nacional (infNFSe/DPS) e ABRASF (InfNfse/CompNfse).
+- **Aba Itens**: coluna `tipo_de_documento` logo antes de `arquivo_origem` — NF-e (modelo 55), NFC-e (modelo 65), CT-e (modelo 57), NFS-e ou NFS-e (PDF).
+- **Aba ISS (nova, antes da aba ICMS)**: número da nota, data de emissão, emitente, destinatário, municípios do emitente e do destinatário, código do serviço, NBS, valor do serviço, dedução, alíquota/base/valor de ISS, ISS retido (SIM/NÃO), base/alíquota/valor de INSS, valor/alíquota de IR/IRRF e de CSLL, base de IBS e de CBS, CST IBS/CBS, cClassTrib, alíquotas de IBS e de CBS, IBS estadual, IBS municipal e CBS. Alíquotas de INSS, IR e CSLL calculadas sobre o valor do serviço quando a nota traz só o valor retido. Filtros por coluna e exportação em Excel.
+- **Dashboard**: quadro "Notas de serviço (NFS-e)" antes do ICMS, com Entradas/Saídas/Total.
+- **Apresentação**: slide "NOTAS DE SERVIÇO (NFS-e)" depois do Saldo por imposto (só quando há NFS-e).
+- Casos `tests/casos/v89-nfse-iss` (2 XMLs + 3 PDFs reais) e `v89-tipo-documento-itens`; casos V70/V73 ajustados à nova coluna.
+  `src/js/modulos/46-v89-nfse-xml-pdf-iss.js`, `src/vendor/` (pdf.js, motor-nfse.js) e `src/js/apresentacao/gerador-pptx.js` (slide 4b)
+
 ## V88 — 2026-10-12
 
 - **Aba ICMS — base com redução (pRedBC) NÃO VALIDADA**: o texto da validação passa a mostrar a diferença em relação à base do XML (ex.: "… × (1 − 33,33%) = R$ 6.667,00) diferença: -R$ 0,33") e a coluna `observacao` recebe **"Erro de cálculo de arredondamento"**.
