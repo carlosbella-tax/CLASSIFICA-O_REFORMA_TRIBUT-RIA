@@ -1,0 +1,19 @@
+{
+  "descricao": "Carta de Correção (formato SEFAZ): a nota continua na aba ICMS",
+  "arquivos": [
+    "v60-importacao-3101-3102-3556.xml",
+    "v73-cce-formato-sefaz.xml"
+  ],
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91"
+  },
+  "funcao": "linhasIcms",
+  "linhas": [
+    {
+      "numero_item": "1",
+      "esperado": {
+        "cfop_xml": "3101"
+      }
+    }
+  ]
+}

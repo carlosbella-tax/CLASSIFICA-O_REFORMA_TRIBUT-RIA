@@ -1,0 +1,44 @@
+{
+  "descricao": "Carta de Correção no formato real da SEFAZ (assinatura, xCorrecao, xCondUso, retEvento cStat 135): aba Itens mostra 110110 - Carta de Correcao em observacao_evento e a nota segue nas abas de impostos",
+  "arquivos": [
+    "v60-importacao-3101-3102-3556.xml",
+    "v73-cce-formato-sefaz.xml"
+  ],
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91"
+  },
+  "funcao": "linhasItensComIcms",
+  "chave": "numero_item",
+  "colunas_apos": {
+    "tipo_operacao": [
+      "observacao_evento",
+      "arquivo_origem"
+    ]
+  },
+  "linhas": [
+    {
+      "numero_item": "1",
+      "esperado": {
+        "observacao_evento": "^110110 - Carta de Correcao$"
+      }
+    },
+    {
+      "numero_item": "2",
+      "esperado": {
+        "observacao_evento": "^110110 - Carta de Correcao$"
+      }
+    },
+    {
+      "numero_item": "3",
+      "esperado": {
+        "observacao_evento": "^110110 - Carta de Correcao$"
+      }
+    },
+    {
+      "numero_item": "4",
+      "esperado": {
+        "observacao_evento": "^110110 - Carta de Correcao$"
+      }
+    }
+  ]
+}
