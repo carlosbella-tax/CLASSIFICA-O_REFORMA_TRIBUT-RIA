@@ -5,6 +5,14 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V77 — 2026-10-12
+
+- **Coluna `valor_icms_difal`** (ICMS devido à UF de destino: `vICMSUFDest` + `vICMSUFRemet`) logo após `valor_icms_xml` nas abas **ICMS** e **Base de PIS/COFINS**. Na aba Base de IBS/CBS ela já fica após `valor_icms` (V76, junto com `valor_fcp_difal`).
+- **Base de PIS/COFINS sem o ICMS DIFAL**: base = valor da operação − ICMS destacado − ICMS DIFAL (aceita também valor dos produtos − ICMS − DIFAL), margem de R$ 0,05. Base NÃO VALIDADA mostra a base correta e a diferença; o PIS e a COFINS são conferidos sobre a base do XML (quando validada) ou sobre a base correta. Vale para CST 01, 02 e 50–56; Simples Nacional e importação seguem as regras próprias.
+- **Base de IBS/CBS**: o DIFAL (e o FCP do DIFAL) continua excluído (V76).
+- Nos XMLs reais de teste, nenhuma mudança de status (não têm DIFAL). Casos `tests/casos/v77-*`.
+  `src/js/modulos/37-v77-difal-icms-pis-cofins.js`
+
 ## V76 — 2026-10-12
 
 - **Base de IBS/CBS sem o ICMS DIFAL**: o ICMS devido à UF de destino (`vICMSUFDest`, mais `vICMSUFRemet` quando houver) e o FCP do DIFAL (`vFCPUFDest`) passam a ser excluídos da base calculada (NT 2025.002). Base = produtos + frete + seguro + juros + multa + outras despesas + desconto condicional + IS − desconto incondicional − ICMS − ICMS DIFAL − FCP do DIFAL − ISS − PIS − COFINS.

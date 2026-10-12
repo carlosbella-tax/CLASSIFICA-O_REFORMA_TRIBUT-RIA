@@ -1,0 +1,24 @@
+{
+  "descricao": "V77 — aba Base de IBS/CBS: DIFAL após valor_icms e fora da base (1.000 − ICMS 120 − DIFAL 60 − FCP DIFAL 20 − PIS 13,53 − COFINS 62,32 = 724,15)",
+  "funcao": "linhasIbsCbsTabela",
+  "colunas_apos": {
+    "valor_icms": [
+      "valor_icms_difal"
+    ]
+  },
+  "linhas": [
+    {
+      "numero_item": "1",
+      "esperado": {
+        "valor_icms_difal": 60,
+        "valor_fcp_difal": 20,
+        "base_correta_ibs_cbs": 724.15
+      }
+    }
+  ],
+  "arquivo": "v77-difal-pis-cofins.xml",
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91",
+    "regimeEmpresa": "Lucro Real"
+  }
+}

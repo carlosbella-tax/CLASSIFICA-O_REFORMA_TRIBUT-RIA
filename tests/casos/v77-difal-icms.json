@@ -1,0 +1,28 @@
+{
+  "descricao": "V77 — aba ICMS: valor_icms_difal após valor_icms_xml",
+  "funcao": "linhasIcms",
+  "colunas_apos": {
+    "valor_icms_xml": [
+      "valor_icms_difal"
+    ]
+  },
+  "linhas": [
+    {
+      "numero_item": "1",
+      "esperado": {
+        "valor_icms_difal": 60
+      }
+    },
+    {
+      "numero_item": "3",
+      "esperado": {
+        "valor_icms_difal": 0
+      }
+    }
+  ],
+  "arquivo": "v77-difal-pis-cofins.xml",
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91",
+    "regimeEmpresa": "Lucro Real"
+  }
+}

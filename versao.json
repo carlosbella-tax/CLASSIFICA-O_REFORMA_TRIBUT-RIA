@@ -1,5 +1,5 @@
 {
-  "versao": 76,
+  "versao": 77,
   "data": "2026-10-12",
-  "descricao": "Base de IBS/CBS: ICMS DIFAL (vICMSUFDest) e FCP do DIFAL (vFCPUFDest) excluídos da base, com colunas próprias; validação refeita"
+  "descricao": "ICMS DIFAL: coluna valor_icms_difal nas abas ICMS e PIS/COFINS após valor_icms_xml; base de PIS/COFINS sem o ICMS DIFAL"
 }

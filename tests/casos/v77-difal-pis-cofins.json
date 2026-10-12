@@ -1,0 +1,47 @@
+{
+  "descricao": "V77 — base de PIS/COFINS sem o ICMS DIFAL; coluna valor_icms_difal após valor_icms_xml",
+  "funcao": "linhasPisCofins",
+  "colunas_apos": {
+    "valor_icms_xml": [
+      "valor_icms_difal",
+      "base_pis_xml"
+    ]
+  },
+  "linhas": [
+    {
+      "numero_item": "1",
+      "esperado": {
+        "valor_icms_difal": 60,
+        "validacao_base_pis": "^VALIDADO .*ICMS DIFAL",
+        "base_correta_pis": 0,
+        "validacao_valor_pis": "^VALIDADO",
+        "validacao_base_cofins": "^VALIDADO",
+        "validacao_valor_cofins": "^VALIDADO"
+      }
+    },
+    {
+      "numero_item": "2",
+      "esperado": {
+        "validacao_base_pis": "^NÃO VALIDADO .*ICMS DIFAL: R.*820,00. diferença: R.*60,00$",
+        "base_correta_pis": 820,
+        "valor_correto_pis": 13.53,
+        "validacao_base_cofins": "^NÃO VALIDADO",
+        "base_correta_cofins": 820,
+        "valor_correto_cofins": 62.32
+      }
+    },
+    {
+      "numero_item": "3",
+      "esperado": {
+        "valor_icms_difal": 0,
+        "validacao_base_pis": "^VALIDADO$",
+        "validacao_base_cofins": "^VALIDADO$"
+      }
+    }
+  ],
+  "arquivo": "v77-difal-pis-cofins.xml",
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91",
+    "regimeEmpresa": "Lucro Real"
+  }
+}
