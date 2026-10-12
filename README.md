@@ -2,7 +2,7 @@
 
 Lê XML de NF-e, CT-e, NFS-e e eventos (arquivos, pasta inteira, TXT com XML), valida ICMS, ICMS ST, IPI, PIS/COFINS e IBS/CBS (LC 214/2025), mostra o Dashboard por imposto e gera Excel, PDF e a apresentação em PowerPoint. O entregável é **um único arquivo HTML** que roda offline no navegador.
 
-Versão atual: **V74** (ver [CHANGELOG.md](CHANGELOG.md)). Regras de trabalho do agente: [AGENTS.md](AGENTS.md).
+Versão atual: **V75** (ver [CHANGELOG.md](CHANGELOG.md)). Regras de trabalho do agente: [AGENTS.md](AGENTS.md).
 
 ## Comandos
 
@@ -81,7 +81,7 @@ Os arquivos são concatenados exatamente na ordem de `src/manifest.json`. Os mó
 | `src/js/modulos/29-v68-diferenca-base-ibs-cbs.js` | 1 KB | módulo V68 (diferença da base de IBS/CBS no NÃO VALIDADO) |
 | `src/js/modulos/30-v69-margem-005.js` | 3 KB | módulo V69 (margem única de R$ 0,05 em todas as validações de valor e base) |
 | `src/js/modulos/31-v70-eventos-nfe.js` | 13 KB | módulo V70 (eventos de NF-e: cancelamento fora das abas de impostos, observação na aba Itens, aba Eventos no Dashboard, slide de eventos) |
-| `src/js/modulos/32-v71-observacao-icms-filtro-eventos.js` | 5 KB | módulo V71 (observação editável na aba ICMS; filtro de observacao_evento por evento) |
+| `src/js/modulos/32-v71-observacao-icms-filtro-eventos.js` | 5 KB | módulo V71/V75 (observação editável nas abas ICMS, IPI, PIS/COFINS e IBS/CBS; filtro de observacao_evento por evento) |
 | `src/js/modulos/33-v72-dashboard-quadro-eventos.js` | 4 KB | módulo V72 (quadro de eventos ao lado de Montante por imposto) |
 | `src/js/modulos/34-v73-ibs-valor-produtos-apos-ncm.js` | 1 KB | módulo V73 (valor total dos produtos logo após o NCM na aba Base de IBS/CBS) |
 | `src/js/modulos/35-v74-ibs-cst-cclasstrib-apos-is.js` | 1 KB | módulo V74 (cclasstrib e cst_ibs_cbs após valor_imposto_seletivo_is na aba Base de IBS/CBS) |

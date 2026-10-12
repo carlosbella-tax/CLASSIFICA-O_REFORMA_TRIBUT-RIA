@@ -1,0 +1,28 @@
+{
+  "descricao": "V75 — aba ibscbs: coluna observacao como última coluna, com o texto do usuário (mapa próprio da aba)",
+  "arquivos": [
+    "v68-diferenca-base-ibs-cbs.xml"
+  ],
+  "funcao": "(() => { filtrosTabelas.__obsUsuarioIbsCbs = {'35261000000000000191550010000006801000006809|2': 'Obs ibscbs'}; const L = linhasIbsCbsTabela(); return L.concat([{numero_item: 'ultima', ultima: Object.keys(L[0]).pop()}]); })",
+  "chave": "numero_item",
+  "linhas": [
+    {
+      "numero_item": "2",
+      "esperado": {
+        "observacao": "^Obs ibscbs$"
+      }
+    },
+    {
+      "numero_item": "1",
+      "esperado": {
+        "observacao": "^$"
+      }
+    },
+    {
+      "numero_item": "ultima",
+      "esperado": {
+        "ultima": "^observacao$"
+      }
+    }
+  ]
+}

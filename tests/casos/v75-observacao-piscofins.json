@@ -1,0 +1,28 @@
+{
+  "descricao": "V75 — aba piscofins: coluna observacao como última coluna, com o texto do usuário (mapa próprio da aba)",
+  "arquivos": [
+    "v60-importacao-3101-3102-3556.xml"
+  ],
+  "funcao": "(() => { filtrosTabelas.__obsUsuarioPisCofins = {'35261000000000000191550010000006001000006009|2': 'Obs piscofins'}; const L = linhasPisCofins(); return L.concat([{numero_item: 'ultima', ultima: Object.keys(L[0]).pop()}]); })",
+  "chave": "numero_item",
+  "linhas": [
+    {
+      "numero_item": "2",
+      "esperado": {
+        "observacao": "^Obs piscofins$"
+      }
+    },
+    {
+      "numero_item": "1",
+      "esperado": {
+        "observacao": "^$"
+      }
+    },
+    {
+      "numero_item": "ultima",
+      "esperado": {
+        "ultima": "^observacao$"
+      }
+    }
+  ]
+}

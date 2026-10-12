@@ -1,5 +1,5 @@
 {
-  "versao": 74,
+  "versao": 75,
   "data": "2026-10-12",
-  "descricao": "Aba Base de IBS/CBS: cclasstrib e cst_ibs_cbs logo após valor_imposto_seletivo_is"
+  "descricao": "Abas IPI, Base de PIS/COFINS e Base de IBS/CBS: coluna observacao editável como última coluna, como na aba ICMS (salva com o diagnóstico e no Excel)"
 }

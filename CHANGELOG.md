@@ -5,6 +5,13 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V75 — 2026-10-12
+
+- **Abas IPI, Base de PIS/COFINS e Base de IBS/CBS — coluna `observacao`** como última coluna, com campo para digitar, igual à aba ICMS (V71). Cada aba tem as suas observações, guardadas por item (chave da nota + número do item); continuam ao trocar de aba, vão para o Excel e são salvas/importadas com o arquivo `.diagnostico`. Enter confirma.
+- Aba ICMS sem mudança (observação após `base_correta_icms`); diagnósticos salvos na V71–V74 abrem com as observações de ICMS.
+- Casos `tests/casos/v75-observacao-*` (texto do usuário e posição como última coluna).
+  `src/js/modulos/32-v71-observacao-icms-filtro-eventos.js` (comentário V75)
+
 ## V74 — 2026-10-12
 
 - **Aba Base de IBS/CBS**: as colunas `cclasstrib` e `cst_ibs_cbs` passam a ficar logo após `valor_imposto_seletivo_is` (fim dos componentes da base), antes de `base_ibs_cbs_xml`. `descricao_cst_ibs_cbs` e `percentual_reducao_aliquota` continuam onde estavam (após `valor_total_produtos`). Só muda a ordem; valores e validações iguais. Vale para a tela, o filtro, o Excel e a impressão.

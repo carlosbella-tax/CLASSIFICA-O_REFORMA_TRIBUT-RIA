@@ -1,0 +1,28 @@
+{
+  "descricao": "V75 — aba ipi: coluna observacao como última coluna, com o texto do usuário (mapa próprio da aba)",
+  "arquivos": [
+    "v60-importacao-3101-3102-3556.xml"
+  ],
+  "funcao": "(() => { filtrosTabelas.__obsUsuarioIpi = {'35261000000000000191550010000006001000006009|2': 'Obs ipi'}; const L = linhasIpi(); return L.concat([{codigo_item: 'ultima', ultima: Object.keys(L[0]).pop()}]); })",
+  "chave": "codigo_item",
+  "linhas": [
+    {
+      "numero_item": "2",
+      "esperado": {
+        "observacao": "^Obs ipi$"
+      }
+    },
+    {
+      "numero_item": "1",
+      "esperado": {
+        "observacao": "^$"
+      }
+    },
+    {
+      "numero_item": "ultima",
+      "esperado": {
+        "ultima": "^observacao$"
+      }
+    }
+  ]
+}
