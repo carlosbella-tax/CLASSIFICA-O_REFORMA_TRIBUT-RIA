@@ -1,0 +1,79 @@
+{
+  "descricao": "V90 — IPI incluso na base de ICMS: coluna uso_e_consumo = USO E CONSUMO e base = produtos + IPI (só neste caso); mesma coluna nas demais abas",
+  "arquivo": "v90-uso-consumo.xml",
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91"
+  },
+  "funcao": "(() => linhasIcms().map(r => Object.assign(r, {k: 'icms-' + r.numero_item})).concat(linhasIpi().map(r => Object.assign(r, {k: 'ipi-' + r.__src.numero_item}))).concat(linhasPisCofins().map(r => Object.assign(r, {k: 'pis-' + r.numero_item}))).concat(linhasIbsCbsTabela().map(r => Object.assign(r, {k: 'ibs-' + r.numero_item}))))",
+  "chave": "k",
+  "linhas": [
+    {
+      "numero_item": "icms-1",
+      "esperado": {
+        "uso_e_consumo": "USO E CONSUMO",
+        "validacao_base_icms": "^VALIDADO .uso e consumo — IPI incluso na base de ICMS, CFOP 5102: produtos R.*1.000,00 \\+ IPI R.*100,00 = R.*1.100,00.$",
+        "validacao_icms": "^VALIDADO$"
+      }
+    },
+    {
+      "numero_item": "icms-2",
+      "esperado": {
+        "uso_e_consumo": "USO E CONSUMO",
+        "validacao_base_icms": "^NÃO VALIDADO .base deve ser R.*1.100,00 — uso e consumo.* diferença: R.*50,00$",
+        "base_correta_icms": 1100,
+        "validacao_icms": "^NÃO VALIDADO .ICMS deve ser R.*1.100,00 × 18,00% = R.*198,00.$"
+      }
+    },
+    {
+      "numero_item": "icms-3",
+      "esperado": {
+        "uso_e_consumo": "^$",
+        "validacao_base_icms": "^VALIDADO .operação interna"
+      }
+    },
+    {
+      "numero_item": "icms-4",
+      "esperado": {
+        "uso_e_consumo": "USO E CONSUMO",
+        "validacao_base_icms": "^VALIDADO .uso e consumo.*= R.*1.100,00 × .1 − 50,00%. = R.*550,00.$",
+        "observacao": "^$"
+      }
+    },
+    {
+      "numero_item": "ipi-1",
+      "esperado": {
+        "uso_e_consumo": "USO E CONSUMO"
+      }
+    },
+    {
+      "numero_item": "ipi-3",
+      "esperado": {
+        "uso_e_consumo": "^$"
+      }
+    },
+    {
+      "numero_item": "pis-2",
+      "esperado": {
+        "uso_e_consumo": "USO E CONSUMO"
+      }
+    },
+    {
+      "numero_item": "pis-3",
+      "esperado": {
+        "uso_e_consumo": "^$"
+      }
+    },
+    {
+      "numero_item": "ibs-4",
+      "esperado": {
+        "uso_e_consumo": "USO E CONSUMO"
+      }
+    },
+    {
+      "numero_item": "ibs-3",
+      "esperado": {
+        "uso_e_consumo": "^$"
+      }
+    }
+  ]
+}

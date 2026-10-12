@@ -24,11 +24,13 @@
     {
       "numero_item": "3",
       "esperado": {
-        "validacao_base_icms": "^NÃO VALIDADO",
-        "base_correta_icms": 1000,
-        "validacao_icms": "^NÃO VALIDADO",
-        "valor_correto_icms": 180
-      }
+        "uso_e_consumo": "USO E CONSUMO",
+        "validacao_base_icms": "^VALIDADO .uso e consumo",
+        "base_correta_icms": 0,
+        "validacao_icms": "^VALIDADO$",
+        "valor_correto_icms": 0
+      },
+      "nota": "V90: IPI incluso na base de ICMS = USO E CONSUMO, base = produtos + IPI (antes: NÃO VALIDADO)"
     },
     {
       "numero_item": "4",

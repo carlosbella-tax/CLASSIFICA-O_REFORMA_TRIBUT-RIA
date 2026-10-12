@@ -1,0 +1,13 @@
+{
+  "descricao": "V90 — coluna uso_e_consumo logo depois de cfop_xml nas abas ICMS, IPI, PIS/COFINS e IBS/CBS e depois de cfop no ICMS ST",
+  "arquivo": "v90-uso-consumo.xml",
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91"
+  },
+  "funcao": "linhasIcms",
+  "colunas_apos": {
+    "cfop_xml": [
+      "uso_e_consumo"
+    ]
+  }
+}

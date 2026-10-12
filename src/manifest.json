@@ -68,6 +68,7 @@
     "src/js/modulos/44-v86-observacoes-automaticas.js",
     "src/js/modulos/45-v88-obs-arredondamento-ibs.js",
     "src/js/modulos/46-v89-nfse-xml-pdf-iss.js",
+    "src/js/modulos/47-v90-ipi-base-uso-consumo.js",
     "src/js/modulos/99-fechamento.js",
     "src/90-rodape.html"
   ]

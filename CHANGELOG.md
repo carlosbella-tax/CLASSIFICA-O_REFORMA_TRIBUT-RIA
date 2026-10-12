@@ -5,6 +5,14 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V90 — 2026-10-12
+
+- **Aba ICMS — IPI incluso na base de ICMS = USO E CONSUMO**: quando a base de ICMS do XML inclui o valor do IPI (CFOP 1xxx, 2xxx, 5xxx, 6xxx com IPI destacado), o item recebe a nova coluna `uso_e_consumo` = **"USO E CONSUMO"** e, somente neste caso, a base é validada por **produtos + IPI** (com a redução do pRedBC, quando houver); o ICMS é recalculado sobre essa base (margem R$ 0,05). NÃO VALIDADO mostra a base correta e a "diferença:".
+- Reconhecimento: base do XML = produtos + IPI, ou produtos − desconto + frete + seguro + outras + IPI, e diferente da base sem o IPI. Nos demais itens a regra da V62/V63 continua (IPI fora da base).
+- **Demais abas de impostos** (ICMS ST, IPI, Base de PIS/COFINS, Base de IBS/CBS): a mesma coluna `uso_e_consumo`, logo depois de `cfop_xml` (no ICMS ST, depois de `cfop`), com filtro.
+- Casos `tests/casos/v90-uso-consumo` e `v90-uso-consumo-coluna`; item 3 do caso V62 (IPI somado na base) passa a ser USO E CONSUMO validado.
+  `src/js/modulos/47-v90-ipi-base-uso-consumo.js`
+
 ## V89 — 2026-10-12
 
 - **Carga de arquivos aceita XML e PDF.** O PDF de NFS-e é lido no próprio navegador, sem internet: pdf.js 3.11.174 embutido + leitor de NFS-e do Motor de Cálculo (DANFSe nacional v2.0 e layouts municipais), portado por `tools/portar-nfse-motor.mjs` (Motor 37989db). PDF de NF-e (DANFE) ou de CT-e (DACTE) não é lido (use o XML); PDF digitalizado como imagem ou que não seja nota de serviço vira erro de leitura com o motivo.

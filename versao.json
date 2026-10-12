@@ -1,5 +1,5 @@
 {
-  "versao": 89,
+  "versao": 90,
   "data": "2026-10-12",
-  "descricao": "NFS-e em XML (padrão nacional e ABRASF) e PDF; coluna tipo_de_documento na aba Itens; aba ISS antes do ICMS; resumo das notas de serviço no Dashboard e na apresentação"
+  "descricao": "ICMS: IPI incluso na base de ICMS → campo USO E CONSUMO e base = produtos + IPI; mesma informação nas demais abas de impostos"
 }

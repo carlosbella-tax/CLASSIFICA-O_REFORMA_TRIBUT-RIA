@@ -1,5 +1,5 @@
 {
-  "versao": 89,
+  "versao": 90,
   "arquivos": [
     "35260243061654000480550010000929731211237179.XML",
     "CTEOS_simples_transporte_pessoas.xml",
@@ -35,40 +35,40 @@
       "incorreto": 0
     },
     "icms": {
-      "sha": "f828b6c88ae07e8a",
-      "caracteres": 59484,
+      "sha": "5bb8d50011d88be2",
+      "caracteres": 59498,
       "linhas_tabela": 100,
       "validado": 300,
       "nao_validado": 1,
       "incorreto": 0
     },
     "icmsst": {
-      "sha": "83dddf40eb4eaef3",
-      "caracteres": 16795,
+      "sha": "f91741219f176222",
+      "caracteres": 16809,
       "linhas_tabela": 34,
       "validado": 0,
       "nao_validado": 1,
       "incorreto": 0
     },
     "ipi": {
-      "sha": "c46a6b4301260655",
-      "caracteres": 21429,
+      "sha": "5adde1003727c52b",
+      "caracteres": 21443,
       "linhas_tabela": 60,
       "validado": 120,
       "nao_validado": 1,
       "incorreto": 0
     },
     "piscofins": {
-      "sha": "ed819dfdcffbfce1",
-      "caracteres": 61351,
+      "sha": "25f8850e1778c6f4",
+      "caracteres": 61365,
       "linhas_tabela": 100,
       "validado": 552,
       "nao_validado": 49,
       "incorreto": 0
     },
     "ibscbs": {
-      "sha": "17ac5330cb4aa143",
-      "caracteres": 100436,
+      "sha": "5be049aa30feb32d",
+      "caracteres": 100450,
       "linhas_tabela": 100,
       "validado": 600,
       "nao_validado": 1,
@@ -83,8 +83,8 @@
       "incorreto": 1
     },
     "dashboard": {
-      "sha": "d69265c4a94f2d21",
-      "caracteres": 23758,
+      "sha": "2f5acdc1671f72f4",
+      "caracteres": 23887,
       "linhas_tabela": 157,
       "validado": 11,
       "nao_validado": 1,
