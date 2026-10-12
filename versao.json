@@ -1,5 +1,5 @@
 {
-  "versao": 72,
+  "versao": 73,
   "data": "2026-10-12",
-  "descricao": "Dashboard: quadro Eventos das notas fiscais ao lado de Montante por imposto (totais, resumo por tpEvento/descEvento e lista dos eventos); valor da nota cancelada no quadro de eventos"
+  "descricao": "Aba Base de IBS/CBS: valor_total_produtos logo após ncm"
 }

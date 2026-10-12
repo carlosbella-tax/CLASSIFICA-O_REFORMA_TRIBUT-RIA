@@ -1,0 +1,27 @@
+{
+  "descricao": "V73 — aba Base de IBS/CBS: valor_total_produtos logo após ncm",
+  "arquivos": [
+    "v68-diferenca-base-ibs-cbs.xml"
+  ],
+  "funcao": "linhasIbsCbsTabela",
+  "colunas_apos": {
+    "ncm": [
+      "valor_total_produtos",
+      "cst_ibs_cbs"
+    ]
+  },
+  "linhas": [
+    {
+      "numero_item": "1",
+      "esperado": {
+        "valor_total_produtos": 287.51
+      }
+    },
+    {
+      "numero_item": "3",
+      "esperado": {
+        "valor_total_produtos": 500
+      }
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "name": "diagnostico-operacoes-fiscais",
-  "version": "72.0.0",
+  "version": "73.0.0",
   "private": true,
   "description": "Diagnóstico Operações Fiscais (Tax Advice) — leitura de XML de NF-e/CT-e/NFS-e, validações de ICMS, ICMS ST, IPI, PIS/COFINS, IBS/CBS e apresentação em PowerPoint",
   "type": "module",

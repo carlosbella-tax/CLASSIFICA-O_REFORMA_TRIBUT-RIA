@@ -5,6 +5,12 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V73 — 2026-10-12
+
+- **Aba Base de IBS/CBS**: a coluna `valor_total_produtos` (valor total dos produtos do item) passa a ficar logo após `ncm` (antes ficava depois de `cclasstrib`). Mesmo valor; vale para a tela, o filtro, o Excel e a impressão.
+- Caso `tests/casos/v73-ibs-valor-produtos-apos-ncm`.
+  `src/js/modulos/34-v73-ibs-valor-produtos-apos-ncm.js`
+
 ## V72 — 2026-10-12
 
 - **Dashboard › Resumo geral — quadro "Eventos das notas fiscais"** ao lado de "Montante por imposto": total de eventos e de notas, entradas × saídas, cancelamentos; resumo por `tpEvento` e `descEvento` (entradas e saídas); lista das notas com evento (movimento, NF, evento, emitente/destinatário, valor da nota e efeito — cancelada ou informativo), até 12 linhas, com o botão "Ver todos os eventos" que abre a aba Eventos. Sem XML de evento, o quadro informa que nenhum evento foi carregado.
