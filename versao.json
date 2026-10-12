@@ -1,5 +1,5 @@
 {
-  "versao": 78,
+  "versao": 79,
   "data": "2026-10-12",
-  "descricao": "Base de IBS/CBS: CFOP 6911 (amostra grátis) deve ter CST 410 e cClassTrib 410999, sem base e sem valor de IBS/CBS"
+  "descricao": "Base de IBS/CBS: regra da amostra grátis (CST 410, cClassTrib 410999, sem base e sem IBS/CBS) também para o CFOP 5911"
 }

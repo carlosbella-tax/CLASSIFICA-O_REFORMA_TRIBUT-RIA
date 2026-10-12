@@ -2,7 +2,7 @@
 
 Lê XML de NF-e, CT-e, NFS-e e eventos (arquivos, pasta inteira, TXT com XML), valida ICMS, ICMS ST, IPI, PIS/COFINS e IBS/CBS (LC 214/2025), mostra o Dashboard por imposto e gera Excel, PDF e a apresentação em PowerPoint. O entregável é **um único arquivo HTML** que roda offline no navegador.
 
-Versão atual: **V78** (ver [CHANGELOG.md](CHANGELOG.md)). Regras de trabalho do agente: [AGENTS.md](AGENTS.md).
+Versão atual: **V79** (ver [CHANGELOG.md](CHANGELOG.md)). Regras de trabalho do agente: [AGENTS.md](AGENTS.md).
 
 ## Comandos
 
@@ -87,7 +87,7 @@ Os arquivos são concatenados exatamente na ordem de `src/manifest.json`. Os mó
 | `src/js/modulos/35-v74-ibs-cst-cclasstrib-apos-is.js` | 1 KB | módulo V74 (cclasstrib e cst_ibs_cbs após valor_imposto_seletivo_is na aba Base de IBS/CBS) |
 | `src/js/modulos/36-v76-ibs-sem-difal.js` | 3 KB | módulo V76 (ICMS DIFAL e FCP do DIFAL fora da base de IBS/CBS; IBS/CBS sobre a base correta) |
 | `src/js/modulos/37-v77-difal-icms-pis-cofins.js` | 3 KB | módulo V77 (coluna do ICMS DIFAL nas abas ICMS e PIS/COFINS; base de PIS/COFINS sem o DIFAL) |
-| `src/js/modulos/38-v78-cfop-6911-amostra-gratis.js` | 2 KB | módulo V78 (CFOP 6911 amostra grátis: CST 410 / cClassTrib 410999, sem base e sem IBS/CBS) |
+| `src/js/modulos/38-v78-cfop-6911-amostra-gratis.js` | 2 KB | módulo V78/V79 (CFOP 5911 e 6911 amostra grátis: CST 410 / cClassTrib 410999, sem base e sem IBS/CBS) |
 | `src/js/modulos/99-fechamento.js` | 0 KB | fecha a função principal e desenha a tela — módulos novos entram antes dele |
 
 ## Origem

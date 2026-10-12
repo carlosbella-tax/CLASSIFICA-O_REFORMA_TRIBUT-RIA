@@ -4,8 +4,9 @@
      de IBS/CBS. Cada validação aponta o que estiver diferente; base e
      valores destacados no XML ficam NÃO VALIDADO (o correto é zero).
      Nas entradas, vale pelo CFOP original do XML (6911).
+     V79 — a mesma regra para o CFOP 5911 (amostra grátis dentro do estado).
      ===================================================================== */
-  const CFOP_AMOSTRA_V78 = new Set(['6911']);
+  const CFOP_AMOSTRA_V78 = new Set(['6911', '5911']);   // V79: 5911 (amostra grátis dentro do estado)
   const linhaIbsCbsV77 = linhaIbsCbs;
   linhaIbsCbs = r => {
     const o = linhaIbsCbsV77(r); if (!o) return o;
@@ -24,4 +25,4 @@
     for (const k of ['base_correta_ibs_cbs', 'valor_correto_ibs', 'valor_correto_cbs']) if (k in o) o[k] = 0;
     return o;
   };
-  OBS_VAL.validacao_cst_ibs_cbs = String(OBS_VAL.validacao_cst_ibs_cbs || '') + ' CFOP 6911 (amostra grátis): CST 410 e cClassTrib 410999, sem base e sem IBS/CBS.';
+  OBS_VAL.validacao_cst_ibs_cbs = String(OBS_VAL.validacao_cst_ibs_cbs || '') + ' CFOP 5911 e 6911 (amostra grátis): CST 410 e cClassTrib 410999, sem base e sem IBS/CBS.';

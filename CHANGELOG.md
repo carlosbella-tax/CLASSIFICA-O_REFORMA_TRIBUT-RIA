@@ -5,6 +5,12 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V79 — 2026-10-12
+
+- **Base de IBS/CBS — CFOP 5911 (amostra grátis dentro do estado)**: mesma regra do CFOP 6911 (V78) — CST 410, cClassTrib 410999, sem base e sem IBS/CBS; cada validação aponta o que estiver diferente.
+- Caso `tests/casos/v79-cfop-5911-amostra-gratis`.
+  `src/js/modulos/38-v78-cfop-6911-amostra-gratis.js` (comentário V79)
+
 ## V78 — 2026-10-12
 
 - **Base de IBS/CBS — CFOP 6911 (remessa de amostra grátis)**: o item deve vir com **CST 410** e **cClassTrib 410999**; CST 410 não tem base nem valor de IBS/CBS. Cada validação aponta o que estiver diferente: CST ("o XML traz CST 000"), cClassTrib ("o XML traz cClassTrib 000001"), base e valores destacados (NÃO VALIDADO, com a diferença; o correto é zero). Com tudo certo, todas as validações ficam "VALIDADO (CFOP 6911 — amostra grátis …)". A validação NCM × cClassTrib não se aplica (não depende do NCM).
