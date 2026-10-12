@@ -131,7 +131,7 @@
       + kpi('CANCELAMENTOS', fmtInt(nC), 'notas fora das abas de impostos') + kpi('OUTROS EVENTOS', fmtInt(ev.length - nC), 'informativos — a nota segue normal') + '</div>'
       + (ev.length ? '<h4 class="v42-sub">Resumo por tipo de evento</h4><div class="v33-scroll"><table class="dash-detail-table"><thead><tr><th>tpEvento</th><th>descEvento</th><th>Entradas</th><th>Saídas</th><th>Total</th></tr></thead><tbody>'
           + [...tipos.values()].sort((a, b) => (b.E + b.S) - (a.E + a.S)).map(t => '<tr><td><b>' + esc(t.tp) + '</b></td><td>' + esc(t.desc) + '</td><td>' + fmtInt(t.E) + '</td><td>' + fmtInt(t.S) + '</td><td><b>' + fmtInt(t.E + t.S) + '</b></td></tr>').join('')
-          + '</tbody></table></div>' + tabelaEventosV70('ENTRADAS', E, 'E') + tabelaEventosV70('SAÍDAS', S, 'S')
+          + '</tbody></table></div>'   // V88: sem o detalhe por nota (tabelas ENTRADAS/SAÍDAS retiradas)
         : '<div class="v50-vazio">Nenhum XML de evento foi carregado.</div>')
       + '</div>';
   }

@@ -1,5 +1,5 @@
 {
-  "versao": 87,
+  "versao": 88,
   "data": "2026-10-12",
-  "descricao": "Eventos das notas fiscais: Dashboard só com o resumo (totais e tabela por tpEvento/descEvento), sem Notas com evento; apresentação com o mesmo resumo"
+  "descricao": "ICMS: base reduzida NÃO VALIDADA com a diferença e observação 'Erro de cálculo de arredondamento'; IBS/CBS: diferença = IBS + CBS com observação 'Cálculo errado excluindo o valor de IBS e CBS'; Dashboard: eventos sem detalhe por nota"
 }

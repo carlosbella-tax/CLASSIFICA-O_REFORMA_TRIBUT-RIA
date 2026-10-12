@@ -10,7 +10,7 @@
     "cnpjEmpresa": "00.000.000/0001-91",
     "empresa": "EMPRESA V70"
   },
-  "descricao": "V70 — Dashboard: aba Eventos (entradas × saídas) e quadros de impostos sem a nota cancelada; apresentação com slide de eventos [V87: slide com o resumo por tipo]",
+  "descricao": "V70 — Dashboard: aba Eventos (entradas × saídas) e quadros de impostos sem a nota cancelada; apresentação com slide de eventos [V87: slide com o resumo por tipo] [V88: aba Eventos sem detalhe por nota]",
   "dashboard": [
     {
       "seletor": "#dashSubnav",
@@ -32,10 +32,12 @@
         "CANCELAMENTOS2",
         "Resumo por tipo de evento",
         "110111Cancelamento011",
-        "ENTRADAS · 1 evento(s)",
-        "SAÍDAS · 2 evento(s)",
-        "Nota cancelada — itens somente na aba Itens",
-        "Evento informativo — a nota segue nas abas de impostos",
+        "110110Carta de Correcao101",
+        "110112Cancelamento por substituicao011"
+      ],
+      "nao_contem": [
+        "Chave (chNFe)",
+        "Efeito no diagnóstico",
         "Nota não carregada"
       ]
     }

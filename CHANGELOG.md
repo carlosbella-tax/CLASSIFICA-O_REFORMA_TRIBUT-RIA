@@ -5,6 +5,15 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V88 — 2026-10-12
+
+- **Aba ICMS — base com redução (pRedBC) NÃO VALIDADA**: o texto da validação passa a mostrar a diferença em relação à base do XML (ex.: "… × (1 − 33,33%) = R$ 6.667,00) diferença: -R$ 0,33") e a coluna `observacao` recebe **"Erro de cálculo de arredondamento"**.
+- **Aba Base de IBS/CBS**: base NÃO VALIDADA cuja diferença é igual a IBS + CBS (margem de R$ 0,05) → observação **"Cálculo errado excluindo o valor de IBS e CBS"**.
+- **Dashboard — eventos sem detalhe por nota**: a aba Eventos do Dashboard deixa de carregar as tabelas ENTRADAS/SAÍDAS nota a nota (fica com os totais e o resumo por tpEvento/descEvento); o quadro do Resumo geral perde o botão "Ver todos os eventos".
+- Em todas as observações automáticas, o texto digitado pelo usuário substitui o padrão.
+- Caso `tests/casos/v88-arredondamento-ibs`; casos de eventos ajustados.
+  `src/js/modulos/45-v88-obs-arredondamento-ibs.js`, `31-v70-eventos-nfe.js` e `33-v72-dashboard-quadro-eventos.js` (comentários V88)
+
 ## V87 — 2026-10-12
 
 - **Dashboard › quadro "Eventos das notas fiscais"** (ao lado de Montante por imposto): passa a mostrar somente o resumo — totais (eventos, notas, entradas × saídas, cancelamentos) e a tabela por `tpEvento` e `descEvento` com entradas e saídas. A lista "Notas com evento" foi retirada; o detalhamento por nota continua na aba Eventos do Dashboard (botão "Ver todos os eventos").

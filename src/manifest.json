@@ -59,6 +59,7 @@
     "src/js/modulos/42-v84-tributacao-integral-analisar.js",
     "src/js/modulos/43-v85-icms-regime-frete-simples.js",
     "src/js/modulos/44-v86-observacoes-automaticas.js",
+    "src/js/modulos/45-v88-obs-arredondamento-ibs.js",
     "src/js/modulos/99-fechamento.js",
     "src/90-rodape.html"
   ]

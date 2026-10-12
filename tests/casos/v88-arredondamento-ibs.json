@@ -1,0 +1,38 @@
+{
+  "descricao": "V88 — ICMS com redução NÃO VALIDADO: diferença + observação 'Erro de cálculo de arredondamento'; IBS/CBS com diferença = IBS + CBS: observação 'Cálculo errado excluindo o valor de IBS e CBS'",
+  "arquivo": "v88-arredondamento-ibs.xml",
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91"
+  },
+  "funcao": "(() => linhasIcms().map(r => Object.assign(r, {k: 'icms-' + r.numero_item})).concat(linhasIbsCbsTabela().map(r => Object.assign(r, {k: 'ibs-' + r.numero_item}))))",
+  "chave": "k",
+  "linhas": [
+    {
+      "numero_item": "icms-1",
+      "esperado": {
+        "validacao_base_icms": "^NÃO VALIDADO .*33,33%.*6.667,00. diferença: -R.*0,33$",
+        "observacao": "^Erro de cálculo de arredondamento$"
+      }
+    },
+    {
+      "numero_item": "icms-2",
+      "esperado": {
+        "observacao": "^$"
+      }
+    },
+    {
+      "numero_item": "ibs-2",
+      "esperado": {
+        "validacao_base_ibs_cbs": "^NÃO VALIDADO .*diferença: -R.*9,90$",
+        "observacao": "^Cálculo errado excluindo o valor de IBS e CBS$"
+      }
+    },
+    {
+      "numero_item": "ibs-3",
+      "esperado": {
+        "validacao_base_ibs_cbs": "^VALIDADO",
+        "observacao": "^$"
+      }
+    }
+  ]
+}

@@ -21,7 +21,7 @@
       + [...tipos.values()].sort((a, b) => (b.E + b.S) - (a.E + a.S)).map(t => '<tr><td><b>' + esc(t.tp) + '</b></td><td' + (t.canc ? ' style="color:var(--warn);font-weight:700"' : '') + '>' + esc(t.desc) + '</td><td>' + fmtInt(t.E) + '</td><td>' + fmtInt(t.S) + '</td></tr>').join('')
       + '</tbody></table>'
       // V87: somente o resumo — a lista "Notas com evento" saiu do quadro (detalhe completo na aba Eventos)
-      + '<p style="margin:8px 0 0"><button type="button" class="secondary" data-v72-eventos>Ver todos os eventos (aba Eventos)</button></p>';
+      ;   // V88: sem o botão de detalhe por nota
     return h;
   }
   const renderDashImpostosV71 = renderDashImpostos;
