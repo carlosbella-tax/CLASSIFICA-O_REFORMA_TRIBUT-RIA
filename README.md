@@ -2,7 +2,7 @@
 
 Lê XML de NF-e, CT-e, NFS-e e eventos (arquivos, pasta inteira, TXT com XML), valida ICMS, ICMS ST, IPI, PIS/COFINS e IBS/CBS (LC 214/2025), mostra o Dashboard por imposto e gera Excel, PDF e a apresentação em PowerPoint. O entregável é **um único arquivo HTML** que roda offline no navegador.
 
-Versão atual: **V75** (ver [CHANGELOG.md](CHANGELOG.md)). Regras de trabalho do agente: [AGENTS.md](AGENTS.md).
+Versão atual: **V76** (ver [CHANGELOG.md](CHANGELOG.md)). Regras de trabalho do agente: [AGENTS.md](AGENTS.md).
 
 ## Comandos
 
@@ -85,6 +85,7 @@ Os arquivos são concatenados exatamente na ordem de `src/manifest.json`. Os mó
 | `src/js/modulos/33-v72-dashboard-quadro-eventos.js` | 4 KB | módulo V72 (quadro de eventos ao lado de Montante por imposto) |
 | `src/js/modulos/34-v73-ibs-valor-produtos-apos-ncm.js` | 1 KB | módulo V73 (valor total dos produtos logo após o NCM na aba Base de IBS/CBS) |
 | `src/js/modulos/35-v74-ibs-cst-cclasstrib-apos-is.js` | 1 KB | módulo V74 (cclasstrib e cst_ibs_cbs após valor_imposto_seletivo_is na aba Base de IBS/CBS) |
+| `src/js/modulos/36-v76-ibs-sem-difal.js` | 3 KB | módulo V76 (ICMS DIFAL e FCP do DIFAL fora da base de IBS/CBS; IBS/CBS sobre a base correta) |
 | `src/js/modulos/99-fechamento.js` | 0 KB | fecha a função principal e desenha a tela — módulos novos entram antes dele |
 
 ## Origem

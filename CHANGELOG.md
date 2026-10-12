@@ -5,6 +5,15 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V76 — 2026-10-12
+
+- **Base de IBS/CBS sem o ICMS DIFAL**: o ICMS devido à UF de destino (`vICMSUFDest`, mais `vICMSUFRemet` quando houver) e o FCP do DIFAL (`vFCPUFDest`) passam a ser excluídos da base calculada (NT 2025.002). Base = produtos + frete + seguro + juros + multa + outras despesas + desconto condicional + IS − desconto incondicional − ICMS − ICMS DIFAL − FCP do DIFAL − ISS − PIS − COFINS.
+- Correção: a fórmula do Art. 12 (V54/V55) tinha deixado de excluir o DIFAL que a V14 já excluía — a nota com a base certa ficava NÃO VALIDADO e a que não tirava o DIFAL passava como VALIDADO.
+- **Colunas novas** `valor_icms_difal` e `valor_fcp_difal` logo após `valor_icms`.
+- **Validação após a correção**: com a base NÃO VALIDADA, o IBS e a CBS passam a ser conferidos sobre a base correta (alíquotas do XML, margem de R$ 0,05), com o valor correto e a diferença — ex.: "NÃO VALIDADO (CBS sobre a base correta: R$ 800,00 × 0,90% = R$ 7,20) diferença: R$ 0,72". Itens com redução de alíquota (gRed) seguem a regra anterior.
+- Nos XMLs reais de teste, nenhuma mudança de status. Caso `tests/casos/v76-difal-base-ibs-cbs`.
+  `src/js/modulos/36-v76-ibs-sem-difal.js`
+
 ## V75 — 2026-10-12
 
 - **Abas IPI, Base de PIS/COFINS e Base de IBS/CBS — coluna `observacao`** como última coluna, com campo para digitar, igual à aba ICMS (V71). Cada aba tem as suas observações, guardadas por item (chave da nota + número do item); continuam ao trocar de aba, vão para o Excel e são salvas/importadas com o arquivo `.diagnostico`. Enter confirma.

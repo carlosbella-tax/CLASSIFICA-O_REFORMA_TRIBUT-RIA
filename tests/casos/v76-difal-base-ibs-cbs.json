@@ -1,0 +1,43 @@
+{
+  "descricao": "V76 — base de IBS/CBS sem o ICMS DIFAL (vICMSUFDest) e sem o FCP do DIFAL (vFCPUFDest); com a base não validada, IBS e CBS conferidos sobre a base correta",
+  "arquivo": "v76-difal-base-ibs-cbs.xml",
+  "funcao": "linhasIbsCbsTabela",
+  "colunas_apos": {
+    "valor_icms": [
+      "valor_icms_difal",
+      "valor_fcp_difal"
+    ]
+  },
+  "linhas": [
+    {
+      "numero_item": "1",
+      "esperado": {
+        "valor_icms_difal": 60,
+        "valor_fcp_difal": 20,
+        "validacao_base_ibs_cbs": "^VALIDADO$",
+        "base_correta_ibs_cbs": 0,
+        "validacao_ibs": "^VALIDADO",
+        "validacao_cbs": "^VALIDADO"
+      }
+    },
+    {
+      "numero_item": "2",
+      "esperado": {
+        "validacao_base_ibs_cbs": "^NÃO VALIDADO .base de IBS/CBS calculada: R.*800,00. diferença: R.*80,00$",
+        "base_correta_ibs_cbs": 800,
+        "validacao_cbs": "^NÃO VALIDADO .CBS sobre a base correta.*7,20. diferença: R.*0,72$",
+        "valor_correto_cbs": 7.2,
+        "validacao_ibs": "^NÃO VALIDADO",
+        "valor_correto_ibs": 0.8
+      }
+    },
+    {
+      "numero_item": "3",
+      "esperado": {
+        "valor_icms_difal": 0,
+        "validacao_base_ibs_cbs": "^VALIDADO$",
+        "validacao_cbs": "^VALIDADO"
+      }
+    }
+  ]
+}
