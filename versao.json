@@ -1,5 +1,5 @@
 {
-  "versao": 85,
+  "versao": 86,
   "data": "2026-10-12",
-  "descricao": "Aba ICMS: coluna regime_tributario após nome_emitente; Simples Nacional sem frete no XML recebe a observação 'Valor do frete não destacado no XML'"
+  "descricao": "Observações automáticas: PIS/COFINS CST 01 sem valor (ICMS tributado integralmente / Simples não tributado); IBS/CBS base sem dedução de PIS/COFINS; cClassTrib divergente do candidato = VALIDADO com 'Analisar cClassTrib'; bonificação divergente em vermelho com 'Bonificação CST 410 cClassTrib 410999'"
 }

@@ -1,5 +1,5 @@
 {
-  "descricao": "V75 — aba piscofins: coluna observacao como última coluna, com o texto do usuário (mapa próprio da aba)",
+  "descricao": "V75 — aba piscofins: coluna observacao como última coluna, com o texto do usuário (mapa próprio da aba) [V86: observação automática de CST 01 sem valor]",
   "arquivos": [
     "v60-importacao-3101-3102-3556.xml"
   ],
@@ -15,7 +15,7 @@
     {
       "numero_item": "1",
       "esperado": {
-        "observacao": "^$"
+        "observacao": "^CST do XML como tributado, porém sem valor do imposto$"
       }
     },
     {

@@ -5,6 +5,19 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V86 — 2026-10-12
+
+Observações automáticas na coluna `observacao` (o texto digitado pelo usuário sempre substitui o padrão; mais de um padrão no mesmo item é unido por " | "):
+- **Base de PIS/COFINS** — com `validacao_cst_pis` "NÃO VALIDADO (CST 01 tributado, mas o XML não traz valor do imposto)":
+  - `descricao_cst_icms` "Tributada integralmente" → **"CST do XML como tributado, porém sem valor do imposto"**;
+  - `descricao_cst_icms` "Não tributada pelo Simples Nacional" → **"CST como tributado, mas deve ser CST 99 (Outras Operações)"**.
+- **Base de IBS/CBS**:
+  - base NÃO VALIDADA cuja diferença é igual a PIS + COFINS (margem de R$ 0,05) → **"Valor da base não deduziu o valor de PIS e da COFINS"**;
+  - cClassTrib divergente do candidato do NCM (V83) → `validacao_cclasstrib` e `validacao_ncm_cclasstrib` passam a **VALIDADO**, com a observação **"Analisar cClassTrib"**;
+  - bonificação (CFOP 5910/6910) com CST ou cClassTrib divergente → `validacao_ncm_cclasstrib` **NÃO VALIDADO** (vermelho), com a observação **"Bonificação CST 410 cClassTrib 410999"**. O cClassTrib 410999 passa a ser aceito na bonificação, junto com 410001 e 410003.
+- Casos `v86-observacoes-automaticas` (novo), `v75-observacao-piscofins`, `v80-cst-410-por-cfop` e `v84-tributacao-integral` (ajustados).
+  `src/js/modulos/44-v86-observacoes-automaticas.js` e `38-v78-cfop-6911-amostra-gratis.js` (comentário V86)
+
 ## V85 — 2026-10-12
 
 - **Aba ICMS — coluna `regime_tributario`** logo após `nome_emitente`, com a mesma informação da aba Itens (opSimpNac ou CRT do emitente; ex.: "3 — Optante - ME / EPP (… ) (pelo CRT 1)", "1 — Não Optante (Lucro Presumido ou Lucro Real)").

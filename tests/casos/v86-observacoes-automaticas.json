@@ -1,0 +1,61 @@
+{
+  "descricao": "V86 — observações automáticas: PIS CST 01 sem valor (ICMS tributado integralmente / Simples não tributado); IBS base sem dedução de PIS/COFINS; cClassTrib divergente; bonificação divergente",
+  "arquivo": "v86-observacoes-automaticas.xml",
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91"
+  },
+  "funcao": "(() => linhasPisCofins().map(r => Object.assign(r, {k: 'pc-' + r.numero_item})).concat(linhasIbsCbsTabela().map(r => Object.assign(r, {k: 'ibs-' + r.numero_item}))))",
+  "chave": "k",
+  "linhas": [
+    {
+      "numero_item": "pc-1",
+      "esperado": {
+        "validacao_cst_pis": "^NÃO VALIDADO .CST 01 tributado",
+        "observacao": "^CST do XML como tributado, porém sem valor do imposto$"
+      }
+    },
+    {
+      "numero_item": "pc-2",
+      "esperado": {
+        "descricao_cst_icms": "^Não tributada pelo Simples Nacional",
+        "observacao": "^CST como tributado, mas deve ser CST 99 .Outras Operações.$"
+      }
+    },
+    {
+      "numero_item": "pc-3",
+      "esperado": {
+        "observacao": "^$"
+      }
+    },
+    {
+      "numero_item": "ibs-3",
+      "esperado": {
+        "validacao_base_ibs_cbs": "^NÃO VALIDADO",
+        "observacao": "^Valor da base não deduziu o valor de PIS e da COFINS$"
+      }
+    },
+    {
+      "numero_item": "ibs-4",
+      "esperado": {
+        "validacao_cclasstrib": "^VALIDADO .*analisar cClassTrib",
+        "validacao_ncm_cclasstrib": "^VALIDADO .*analisar cClassTrib",
+        "observacao": "^Analisar cClassTrib$"
+      }
+    },
+    {
+      "numero_item": "ibs-5",
+      "esperado": {
+        "validacao_ncm_cclasstrib": "^NÃO VALIDADO .CFOP 6910 — bonificação: o XML traz CST 000 e cClassTrib 000001",
+        "observacao": "^Bonificação CST 410 cClassTrib 410999$"
+      }
+    },
+    {
+      "numero_item": "ibs-6",
+      "esperado": {
+        "validacao_ncm_cclasstrib": "^VALIDADO",
+        "validacao_cclasstrib": "^VALIDADO",
+        "observacao": "^$"
+      }
+    }
+  ]
+}

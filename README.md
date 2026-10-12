@@ -2,7 +2,7 @@
 
 Lê XML de NF-e, CT-e, NFS-e e eventos (arquivos, pasta inteira, TXT com XML), valida ICMS, ICMS ST, IPI, PIS/COFINS e IBS/CBS (LC 214/2025), mostra o Dashboard por imposto e gera Excel, PDF e a apresentação em PowerPoint. O entregável é **um único arquivo HTML** que roda offline no navegador.
 
-Versão atual: **V85** (ver [CHANGELOG.md](CHANGELOG.md)). Regras de trabalho do agente: [AGENTS.md](AGENTS.md).
+Versão atual: **V86** (ver [CHANGELOG.md](CHANGELOG.md)). Regras de trabalho do agente: [AGENTS.md](AGENTS.md).
 
 ## Comandos
 
@@ -93,6 +93,7 @@ Os arquivos são concatenados exatamente na ordem de `src/manifest.json`. Os mó
 | `src/js/modulos/41-v83-cclasstrib-candidato-divergente.js` | 2 KB | módulo V83 (cClassTrib fora do candidato do NCM = NÃO VALIDADO) |
 | `src/js/modulos/42-v84-tributacao-integral-analisar.js` | 2 KB | módulo V84 (tributação integral em NCM com candidato: VALIDADO + observação "Analisar cClassTrib") |
 | `src/js/modulos/43-v85-icms-regime-frete-simples.js` | 2 KB | módulo V85 (regime tributário na aba ICMS; observação de frete não destacado no Simples Nacional) |
+| `src/js/modulos/44-v86-observacoes-automaticas.js` | 4 KB | módulo V86 (observações automáticas em PIS/COFINS e IBS/CBS; cClassTrib divergente = VALIDADO com "Analisar cClassTrib"; bonificação divergente) |
 | `src/js/modulos/99-fechamento.js` | 0 KB | fecha a função principal e desenha a tela — módulos novos entram antes dele |
 
 ## Origem

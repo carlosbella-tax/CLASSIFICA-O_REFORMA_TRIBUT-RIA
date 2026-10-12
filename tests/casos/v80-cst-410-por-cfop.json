@@ -1,5 +1,5 @@
 {
-  "descricao": "V80 — CST 410 por CFOP: 5910/6910 → 410001 ou 410003; exportação 7xxx → 410004 ou 410027; 5927 → 410030; 410037 sem base e sem IBS/CBS; 5102 CST 000 de controle",
+  "descricao": "V80 — CST 410 por CFOP: 5910/6910 → 410001 ou 410003; exportação 7xxx → 410004 ou 410027; 5927 → 410030; 410037 sem base e sem IBS/CBS; 5102 CST 000 de controle [V86: 5910/6910 aceita também 410999]",
   "arquivo": "v80-cst-410-por-cfop.xml",
   "campos": {
     "cnpjEmpresa": "00.000.000/0001-91"
@@ -23,7 +23,7 @@
     {
       "numero_item": "3",
       "esperado": {
-        "validacao_cclasstrib": "^NÃO VALIDADO.*410001 ou 410003.*o XML traz cClassTrib 410999",
+        "validacao_cclasstrib": "^VALIDADO .*410999",
         "validacao_cst_ibs_cbs": "^VALIDADO"
       }
     },

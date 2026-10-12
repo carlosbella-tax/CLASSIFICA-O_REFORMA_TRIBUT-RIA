@@ -15,7 +15,7 @@
      ===================================================================== */
   const REGRAS_CST410_V80 = [
     {cfops: ['5911', '6911'], codigos: ['410999'], nome: 'amostra grátis'},
-    {cfops: ['5910', '6910'], codigos: ['410001', '410003'], nome: 'bonificação, doação ou brinde'},
+    {cfops: ['5910', '6910'], codigos: ['410001', '410003', '410999'], nome: 'bonificação, doação ou brinde'},   // V86: 410999 também aceito
     {cfops: ['7101', '7102', '7105', '7106', '7127', '7501', '7949'], codigos: ['410004', '410027'], nome: 'exportação'},
     {cfops: ['5927'], codigos: ['410030'], nome: 'baixa por perda, roubo ou perecimento'}
   ];
