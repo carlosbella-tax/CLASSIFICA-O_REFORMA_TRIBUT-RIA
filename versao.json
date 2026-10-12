@@ -1,5 +1,5 @@
 {
-  "versao": 70,
+  "versao": 71,
   "data": "2026-10-12",
-  "descricao": "Eventos de NF-e: cancelamento (110111 ou descrição de cancelamento) marca a nota na aba Itens e retira os itens das abas de impostos, Dashboard e apresentação; demais eventos informativos; Dashboard com aba Eventos e apresentação com slide de eventos por entradas e saídas"
+  "descricao": "Aba ICMS: coluna observacao editável após base_correta_icms (salva com o diagnóstico e no Excel); aba Itens: filtro de observacao_evento por evento individual"
 }

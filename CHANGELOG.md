@@ -5,6 +5,14 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V71 — 2026-10-12
+
+- **Aba ICMS — coluna `observacao`** logo após `base_correta_icms`, com campo para digitar. O texto fica guardado por item (chave da nota + número do item), continua ao trocar de aba ou redesenhar, vai para o Excel (aba e diagnóstico completo) e é salvo e reimportado com o arquivo `.diagnostico`. Enter confirma.
+- **Aba Itens — filtro ▾ de `observacao_evento`**: a lista mostra cada evento separadamente (mais a opção "(sem evento)") e o filtro traz somente os itens com o evento selecionado — inclusive notas com mais de um evento (ex.: Carta de Correção e Cancelamento na mesma nota). Antes, a nota com dois eventos aparecia como um terceiro valor ("evento A | evento B") e não entrava ao selecionar só um deles.
+- Com o filtro de evento ativo, a lista de valores das outras colunas também respeita essa regra.
+- Testes: casos `tests/casos/v71-*` (o campo `funcao` aceita uma expressão, para aplicar filtros e observações antes de conferir).
+  `src/js/modulos/32-v71-observacao-icms-filtro-eventos.js`
+
 ## V70 — 2026-10-12
 
 Eventos de NF-e (`tpEvento`, `descEvento` e `chNFe`):
