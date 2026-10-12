@@ -1,0 +1,27 @@
+{
+  "arquivos": [
+    "v65-presumido-saida.xml",
+    "v65-presumido-entrada.xml",
+    "v70-evento-cancelamento-saida.xml",
+    "v70-evento-carta-correcao-entrada.xml",
+    "v70-evento-cancel-substituicao-nao-carregada.xml"
+  ],
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91",
+    "empresa": "EMPRESA V70"
+  },
+  "descricao": "V70 — aba ICMS sem a nota cancelada (651); a nota com carta de correção (652) segue",
+  "funcao": "linhasIcms",
+  "chave": "numero_nota_fiscal",
+  "linhas": [
+    {
+      "numero_item": "652",
+      "esperado": {
+        "validacao_icms": "^VALIDADO"
+      }
+    }
+  ],
+  "ausentes": [
+    "651"
+  ]
+}

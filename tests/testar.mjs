@@ -154,6 +154,11 @@ for (const nome of (existsSync(pastaCasos) ? readdirSync(pastaCasos) : []).filte
     const ks = Object.keys(linhas[0] || {}), i = ks.indexOf(depois), achou = ks.slice(i + 1, i + 1 + cols.length);
     JSON.stringify(achou) === JSON.stringify(cols) ? passou(`${nome}: colunas após ${depois}: ${cols.join(', ')}`) : falhou(`${nome}: colunas após ${depois} = ${achou.join(', ')}`);
   }
+  // linhas que NÃO devem aparecer na função (ex.: notas canceladas fora das abas de impostos)
+  for (const v of caso.ausentes || []) {
+    const chave = caso.chave || 'numero_item', achou = linhas.some(x => String(x[chave]) === v);
+    achou ? falhou(`${nome}: ${chave} ${v} não deveria aparecer em ${caso.funcao}`) : passou(`${nome}: ${chave} ${v} ausente de ${caso.funcao}`);
+  }
   for (const l of caso.linhas || []) {
     const chave = caso.chave || 'numero_item', row = linhas.find(x => String(x[chave]) === l.numero_item);
     if (!row) { falhou(`${nome}: item ${l.numero_item} não encontrado`); continue; }

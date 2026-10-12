@@ -274,6 +274,23 @@ function montarApresentacaoPptx(PptxGenJS, D, IMG){
       {x: 0.9, y: 5.95, w: 11.53, h: 0.9, fontSize: 16, color: C.navy, valign: 'middle'});
   }
 
+  /* ---------- V70 — Eventos das notas fiscais (entradas × saídas) ---------- */
+  if (D.eventos && D.eventos.total){
+    const EV = D.eventos, max = 7;
+    const s = base('EVENTOS DAS NOTAS FISCAIS', int(EV.total) + ' evento' + (EV.total > 1 ? 's' : '') + (EV.canc ? ', ' + int(EV.canc) + ' cancelamento' + (EV.canc > 1 ? 's' : '') + ' fora da apuração' : ', nenhum cancelamento'));
+    const lado = (x, rot, cor, lista, parte) => {
+      txt(s, rot + ' · ' + int(lista.length) + ' evento' + (lista.length === 1 ? '' : 's'), {x, y: 1.9, w: 5.9, h: 0.35, fontSize: 15, bold: true, color: cor});
+      const linhas = [[cab('NF'), cab(parte), cab('Evento'), cab('Efeito')]];
+      for (const e of lista.slice(0, max)) linhas.push([cel(e.nf || '—', {bold: true, fontSize: 10.5}), cel(((parte === 'Emitente' ? e.emitente : e.destinatario) || (e.carregada ? '—' : 'Nota não carregada')).slice(0, 34), {fontSize: 10}),
+        cel(e.tp + ' · ' + e.desc.slice(0, 32), {fontSize: 10, bold: e.canc, color: e.canc ? C.verm : C.navy}), cel(e.canc ? 'Cancelada — fora dos impostos' : e.cancNaoHomologado ? 'Cancelamento não homologado' : 'Informativo', {fontSize: 10, color: e.canc ? C.verm : C.cinza})]);
+      if (lista.length === 0) linhas.push([cel('—', {fontSize: 10}), cel('Nenhum evento', {fontSize: 10, color: C.cinza}), cel('', {}), cel('', {})]);
+      tabela(s, linhas, {x, y: 2.35, w: 5.9, colW: [0.75, 1.85, 1.95, 1.35], fontSize: 10, rowH: 0.42, autoPage: false});
+      if (lista.length > max) txt(s, '+ ' + int(lista.length - max) + ' evento(s) — detalhamento no Dashboard, aba Eventos.', {x, y: 6.15, w: 5.9, h: 0.3, fontSize: 11, color: C.cinza});
+    };
+    lado(0.6, 'ENTRADAS', C.verde, EV.E, 'Emitente'); lado(6.83, 'SAÍDAS', C.verm, EV.S, 'Destinatário');
+    txt(s, 'Notas canceladas ficam fora dos valores de ICMS, IPI, PIS, COFINS e IBS/CBS desta apresentação. Demais eventos são informativos.', {x: 0.6, y: 6.5, w: 12.13, h: 0.4, fontSize: 12, color: C.cinza, fit: 'shrink'});
+  }
+
   /* ---------- Observações: somente o que não foi validado ---------- */
   {
     const obs = D.observacoes || [], porSlide = 6, partes = [];

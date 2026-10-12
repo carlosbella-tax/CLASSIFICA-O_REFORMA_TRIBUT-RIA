@@ -1,5 +1,5 @@
 {
-  "versao": 69,
-  "data": "2026-10-11",
-  "descricao": "Margem única de R$ 0,05: diferença de até R$ 0,05 entre o XML e o valor/base calculado = VALIDADO, sem recálculo, em ICMS, IPI, PIS, COFINS e IBS/CBS"
+  "versao": 70,
+  "data": "2026-10-12",
+  "descricao": "Eventos de NF-e: cancelamento (110111 ou descrição de cancelamento) marca a nota na aba Itens e retira os itens das abas de impostos, Dashboard e apresentação; demais eventos informativos; Dashboard com aba Eventos e apresentação com slide de eventos por entradas e saídas"
 }

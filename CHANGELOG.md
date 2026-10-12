@@ -5,6 +5,17 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V70 — 2026-10-12
+
+Eventos de NF-e (`tpEvento`, `descEvento` e `chNFe`):
+- **Cancelamento** — `tpEvento` 110111 ou qualquer `descEvento` com "Cancelamento" (ex.: 110112 Cancelamento por substituição), homologado (cStat 135/136/155): os itens da nota ficam **somente na aba Itens** e no **Dashboard › Eventos**. Não entram nas abas ICMS, ICMS ST, IPI, Base de PIS/COFINS e Base de IBS/CBS, nos quadros de impostos e inconsistências do Dashboard, no Excel dessas abas nem nos valores da apresentação. Cancelamento rejeitado (outro cStat) não exclui a nota.
+- **Aba Itens**: coluna nova `observacao_evento`, antes de `arquivo_origem`, com o código e a descrição do evento (ex.: "110111 - Cancelamento (nota cancelada: fora das abas de impostos)"; "110110 - Carta de Correcao"). Aparece quando a carga tem XML de evento.
+- **Demais eventos** (ex.: 110110 Carta de Correção): informativos — observação na aba Itens e registro no Dashboard; a nota segue normal nas abas de impostos.
+- **Dashboard › nova aba "Eventos"**: totais (eventos, cancelamentos, outros), resumo por tpEvento/descEvento (entradas × saídas) e tabelas ENTRADAS e SAÍDAS com NF, chave, emitente/destinatário, valor da nota, tpEvento, descEvento, sequência, data, cStat e efeito no diagnóstico. Evento de nota não carregada aparece como "Nota não carregada" (entrada/saída pelo CNPJ da chave).
+- **Apresentação**: slide "Eventos das notas fiscais", antes das observações, com as notas de origem separadas em ENTRADAS e SAÍDAS.
+- Testes: executor de casos aceita `ausentes` (linhas que não podem aparecer). Casos `tests/casos/v70-*`.
+  `src/js/modulos/31-v70-eventos-nfe.js` e `src/js/apresentacao/gerador-pptx.js` (comentário V70)
+
 ## V69 — 2026-10-11
 
 - **Margem única de R$ 0,05 em todas as abas** (ICMS, IPI, PIS, COFINS e IBS/CBS): diferença de até R$ 0,05, para mais ou para menos, entre o XML e o valor/base calculado = **VALIDADO**, sem recálculo (base correta e valor correto = 0). Texto: "VALIDADO (diferença de R$ 0,04, dentro da margem de R$ 0,05)".

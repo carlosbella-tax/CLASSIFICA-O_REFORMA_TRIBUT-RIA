@@ -1,0 +1,36 @@
+{
+  "arquivos": [
+    "v65-presumido-saida.xml",
+    "v65-presumido-entrada.xml",
+    "v70-evento-cancelamento-saida.xml",
+    "v70-evento-carta-correcao-entrada.xml",
+    "v70-evento-cancel-substituicao-nao-carregada.xml"
+  ],
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91",
+    "empresa": "EMPRESA V70"
+  },
+  "descricao": "V70 — aba Itens: observação do evento antes de arquivo_origem; nota cancelada continua na aba Itens",
+  "funcao": "linhasItensComIcms",
+  "chave": "numero_documento",
+  "colunas_apos": {
+    "tipo_operacao": [
+      "observacao_evento",
+      "arquivo_origem"
+    ]
+  },
+  "linhas": [
+    {
+      "numero_item": "651",
+      "esperado": {
+        "observacao_evento": "^110111 - Cancelamento .nota cancelada: fora das abas de impostos.$"
+      }
+    },
+    {
+      "numero_item": "652",
+      "esperado": {
+        "observacao_evento": "^110110 - Carta de Correcao$"
+      }
+    }
+  ]
+}
