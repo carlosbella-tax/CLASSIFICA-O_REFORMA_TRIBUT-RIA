@@ -5,6 +5,14 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V83 — 2026-10-12
+
+- **Base de IBS/CBS — cClassTrib fora do candidato do NCM**: quando o cClassTrib do XML não está entre os códigos de `cclasstrib_candidato_capitulo`, as colunas `validacao_cclasstrib` e `validacao_ncm_cclasstrib` ficam **NÃO VALIDADO** — ex.: "NÃO VALIDADO (cClassTrib 000001 do XML diverge do cClassTrib candidato para o NCM 21069090: 200033 / 200034)". Antes ficavam VALIDADO com o aviso "confirme se o item tem benefício".
+- Não se aplica quando o NCM não tem candidato, às CST de operação (não dependem do NCM, ex.: 410, 550, 620) e às operações com regra própria por CFOP (amostra grátis, bonificação/doação, exportação, perda/roubo).
+- Efeito nos XMLs reais de teste: 5 itens de 2 notas (cClassTrib 000001 em NCM com candidato 200xxx) passam a NÃO VALIDADO nas duas colunas e entram nas inconsistências do Dashboard e da apresentação.
+- Caso `tests/casos/v83-cclasstrib-candidato`.
+  `src/js/modulos/41-v83-cclasstrib-candidato-divergente.js`
+
 ## V82 — 2026-10-12
 
 - **Regra única da base de PIS/COFINS**: Base = vProd + vFrete + vSeg + vOutro − vDesc − vICMS − vICMSUFDest, para as CST 01, 02 e 50–56 (nas 50–56, quando o XML traz base), margem de R$ 0,05. O texto do NÃO VALIDADO mostra a conta completa e a diferença; o PIS e a COFINS são conferidos sobre a base do XML (validada) ou sobre a base correta.

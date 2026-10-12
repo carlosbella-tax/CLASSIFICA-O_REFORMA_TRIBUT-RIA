@@ -1,0 +1,38 @@
+{
+  "descricao": "V83 — cClassTrib do XML fora do candidato do NCM: validacao_cclasstrib e validacao_ncm_cclasstrib NÃO VALIDADO; CST 410 por CFOP e cClassTrib candidato não mudam",
+  "arquivo": "v83-cclasstrib-candidato.xml",
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91"
+  },
+  "funcao": "linhasIbsCbsTabela",
+  "linhas": [
+    {
+      "numero_item": "1",
+      "esperado": {
+        "cclasstrib_candidato_capitulo": "200033 / 200034",
+        "validacao_cclasstrib": "^NÃO VALIDADO .cClassTrib 000001 do XML diverge do cClassTrib candidato para o NCM 21069090: 200033 / 200034.$",
+        "validacao_ncm_cclasstrib": "^NÃO VALIDADO .cClassTrib 000001 do XML diverge do cClassTrib candidato para o NCM 21069090: 200033 / 200034.$"
+      }
+    },
+    {
+      "numero_item": "2",
+      "esperado": {
+        "validacao_ncm_cclasstrib": "^VALIDADO"
+      }
+    },
+    {
+      "numero_item": "3",
+      "esperado": {
+        "validacao_cclasstrib": "^VALIDADO .CFOP 5910",
+        "validacao_ncm_cclasstrib": "^VALIDADO.*não depende do NCM"
+      }
+    },
+    {
+      "numero_item": "4",
+      "esperado": {
+        "validacao_cclasstrib": "^VALIDADO$",
+        "validacao_ncm_cclasstrib": "^VALIDADO$"
+      }
+    }
+  ]
+}

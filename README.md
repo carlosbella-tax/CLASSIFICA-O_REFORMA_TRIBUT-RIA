@@ -2,7 +2,7 @@
 
 Lê XML de NF-e, CT-e, NFS-e e eventos (arquivos, pasta inteira, TXT com XML), valida ICMS, ICMS ST, IPI, PIS/COFINS e IBS/CBS (LC 214/2025), mostra o Dashboard por imposto e gera Excel, PDF e a apresentação em PowerPoint. O entregável é **um único arquivo HTML** que roda offline no navegador.
 
-Versão atual: **V82** (ver [CHANGELOG.md](CHANGELOG.md)). Regras de trabalho do agente: [AGENTS.md](AGENTS.md).
+Versão atual: **V83** (ver [CHANGELOG.md](CHANGELOG.md)). Regras de trabalho do agente: [AGENTS.md](AGENTS.md).
 
 ## Comandos
 
@@ -90,6 +90,7 @@ Os arquivos são concatenados exatamente na ordem de `src/manifest.json`. Os mó
 | `src/js/modulos/38-v78-cfop-6911-amostra-gratis.js` | 2 KB | módulo V78–V80 (CST 410 por CFOP: amostra grátis, bonificação/doação, exportação, perda/roubo e 410037 — sem base e sem IBS/CBS) |
 | `src/js/modulos/39-v81-filtro-observacao-vazia.js` | 1 KB | módulo V81 (opção "(sem observação)" no filtro da coluna observacao) |
 | `src/js/modulos/40-v82-base-pis-cofins-formula.js` | 4 KB | módulo V82 (base de PIS/COFINS = vProd + vFrete + vSeg + vOutro − vDesc − vICMS − vICMSUFDest) |
+| `src/js/modulos/41-v83-cclasstrib-candidato-divergente.js` | 2 KB | módulo V83 (cClassTrib fora do candidato do NCM = NÃO VALIDADO) |
 | `src/js/modulos/99-fechamento.js` | 0 KB | fecha a função principal e desenha a tela — módulos novos entram antes dele |
 
 ## Origem
