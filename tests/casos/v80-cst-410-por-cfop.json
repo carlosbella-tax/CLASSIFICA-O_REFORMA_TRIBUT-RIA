@@ -1,0 +1,86 @@
+{
+  "descricao": "V80 — CST 410 por CFOP: 5910/6910 → 410001 ou 410003; exportação 7xxx → 410004 ou 410027; 5927 → 410030; 410037 sem base e sem IBS/CBS; 5102 CST 000 de controle",
+  "arquivo": "v80-cst-410-por-cfop.xml",
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91"
+  },
+  "funcao": "linhasIbsCbsTabela",
+  "linhas": [
+    {
+      "numero_item": "1",
+      "esperado": {
+        "validacao_cst_ibs_cbs": "^VALIDADO",
+        "validacao_cclasstrib": "^VALIDADO.*bonificação",
+        "validacao_base_ibs_cbs": "^VALIDADO"
+      }
+    },
+    {
+      "numero_item": "2",
+      "esperado": {
+        "validacao_cclasstrib": "^VALIDADO"
+      }
+    },
+    {
+      "numero_item": "3",
+      "esperado": {
+        "validacao_cclasstrib": "^NÃO VALIDADO.*410001 ou 410003.*o XML traz cClassTrib 410999",
+        "validacao_cst_ibs_cbs": "^VALIDADO"
+      }
+    },
+    {
+      "numero_item": "4",
+      "esperado": {
+        "validacao_cclasstrib": "^VALIDADO.*exportação"
+      }
+    },
+    {
+      "numero_item": "5",
+      "esperado": {
+        "validacao_cclasstrib": "^VALIDADO"
+      }
+    },
+    {
+      "numero_item": "6",
+      "esperado": {
+        "validacao_cst_ibs_cbs": "^NÃO VALIDADO.*CST 000",
+        "validacao_cclasstrib": "^NÃO VALIDADO",
+        "validacao_base_ibs_cbs": "^NÃO VALIDADO",
+        "validacao_cbs": "^NÃO VALIDADO",
+        "base_correta_ibs_cbs": 0
+      }
+    },
+    {
+      "numero_item": "7",
+      "esperado": {
+        "validacao_cclasstrib": "^VALIDADO.*410030"
+      }
+    },
+    {
+      "numero_item": "8",
+      "esperado": {
+        "validacao_cclasstrib": "^NÃO VALIDADO.*410030.*410004"
+      }
+    },
+    {
+      "numero_item": "9",
+      "esperado": {
+        "validacao_cclasstrib": "^VALIDADO.*410037",
+        "validacao_base_ibs_cbs": "^VALIDADO"
+      }
+    },
+    {
+      "numero_item": "10",
+      "esperado": {
+        "validacao_base_ibs_cbs": "^NÃO VALIDADO.*CST 410 não tem base",
+        "validacao_cbs": "^NÃO VALIDADO"
+      }
+    },
+    {
+      "numero_item": "11",
+      "esperado": {
+        "validacao_cst_ibs_cbs": "^VALIDADO$",
+        "validacao_cclasstrib": "^VALIDADO$"
+      }
+    }
+  ]
+}

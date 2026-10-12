@@ -1,5 +1,5 @@
 {
-  "versao": 79,
+  "versao": 80,
   "data": "2026-10-12",
-  "descricao": "Base de IBS/CBS: regra da amostra grátis (CST 410, cClassTrib 410999, sem base e sem IBS/CBS) também para o CFOP 5911"
+  "descricao": "Base de IBS/CBS: CST 410 por CFOP — bonificação/doação/brinde (5910/6910: 410001 ou 410003), exportação (7101/7102/7105/7106/7127/7501/7949: 410004 ou 410027), baixa por perda/roubo/perecimento (5927: 410030) e 410037 (importação sem incidência), sem base e sem IBS/CBS"
 }

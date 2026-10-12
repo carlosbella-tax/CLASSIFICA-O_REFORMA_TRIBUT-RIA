@@ -5,6 +5,23 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V80 — 2026-10-12
+
+Base de IBS/CBS — operações com **CST 410** (imunidade e não incidência), sem base e sem IBS/CBS, com o cClassTrib conferido pelo CFOP do XML:
+
+| CFOP | Operação | cClassTrib aceito |
+|---|---|---|
+| 5911, 6911 | amostra grátis (V78/V79) | 410999 |
+| 5910, 6910 | bonificação, doação ou brinde | 410001 ou 410003 |
+| 7101, 7102, 7105, 7106, 7127, 7501, 7949 | exportação | 410004 ou 410027 |
+| 5927 | baixa por perda, roubo ou perecimento | 410030 |
+| qualquer, com cClassTrib 410037 | importação de bens materiais sem incidência | 410037 (só confere CST 410, sem base e sem IBS/CBS) |
+
+- Cada validação aponta o que estiver diferente (CST, cClassTrib, base e valores destacados, com a diferença). NCM × cClassTrib não se aplica a essas operações. Nas entradas vale o CFOP original do XML (ex.: fornecedor com 5910).
+- Definições confirmadas pelo usuário: 5910/6910 aceita 410001 ou 410003; exportação aceita 410004 ou 410027; 5927 → 410030; 410037 só com a conferência de CST 410 sem base e valor.
+- Caso `tests/casos/v80-cst-410-por-cfop` (11 itens).
+  `src/js/modulos/38-v78-cfop-6911-amostra-gratis.js` (tabela V80)
+
 ## V79 — 2026-10-12
 
 - **Base de IBS/CBS — CFOP 5911 (amostra grátis dentro do estado)**: mesma regra do CFOP 6911 (V78) — CST 410, cClassTrib 410999, sem base e sem IBS/CBS; cada validação aponta o que estiver diferente.
