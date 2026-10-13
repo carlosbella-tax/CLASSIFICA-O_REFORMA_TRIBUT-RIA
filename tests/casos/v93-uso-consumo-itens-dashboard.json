@@ -1,0 +1,85 @@
+{
+  "descricao": "V93 — uso e consumo: coluna na aba Itens depois de cfop (1556/2556); fora das abas IPI/PIS/IBS; Dashboard e apresentação sem imposto do item (só valor dos produtos)",
+  "arquivo": "v92-compra-uso-consumo.xml",
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91"
+  },
+  "funcao": "(() => linhasItensComIcms().map(r => Object.assign(r, {k: 'item-' + r.numero_item})).concat(linhasIpi().map(r => Object.assign(r, {k: 'ipi-' + r.__src.numero_item}))).concat(linhasPisCofins().map(r => Object.assign(r, {k: 'pis-' + r.numero_item}))).concat(linhasIbsCbsTabela().map(r => Object.assign(r, {k: 'ibs-' + r.numero_item}))))",
+  "chave": "k",
+  "colunas_apos": {
+    "cfop": [
+      "uso_e_consumo"
+    ]
+  },
+  "linhas": [
+    {
+      "numero_item": "item-1",
+      "esperado": {
+        "cfop": "1556",
+        "uso_e_consumo": "USO E CONSUMO"
+      }
+    },
+    {
+      "numero_item": "item-2",
+      "esperado": {
+        "cfop": "1102",
+        "uso_e_consumo": "^$"
+      }
+    },
+    {
+      "numero_item": "item-3",
+      "esperado": {
+        "cfop": "2556",
+        "uso_e_consumo": "USO E CONSUMO"
+      }
+    },
+    {
+      "numero_item": "ipi-2",
+      "esperado": {
+        "uso_e_consumo": "^$"
+      }
+    },
+    {
+      "numero_item": "pis-2",
+      "esperado": {
+        "uso_e_consumo": "^$"
+      }
+    },
+    {
+      "numero_item": "ibs-2",
+      "esperado": {
+        "uso_e_consumo": "^$"
+      }
+    }
+  ],
+  "ausentes": [
+    "ipi-1",
+    "pis-3",
+    "ibs-4"
+  ],
+  "dashboard": [
+    {
+      "seletor": "#dashboard",
+      "sub": "impostos",
+      "contem": [
+        "1556XML: 5102Compra de material para uso ou consumo2R$ 2.000,00R$ 0,000,00%R$ 0,00",
+        "Total4R$ 4.000,00R$ 1.000,00"
+      ],
+      "nao_contem": [
+        "717,00"
+      ]
+    }
+  ],
+  "apresentacao": [
+    {
+      "slide": "SALDO POR IMPOSTO",
+      "contem": [
+        "ICMS | R$ 180,00 | R$ 0,00 | R$ 180,00",
+        "IPI | R$ 100,00 |"
+      ],
+      "nao_contem": [
+        "717,00"
+      ]
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "descricao": "V92 — compra de uso e consumo (IPI embutido na base de ICMS): CFOP 1556/2556, sem crédito, tudo VALIDADO e observação quando a CST do XML é tributada",
+  "descricao": "V92 — compra de uso e consumo (IPI embutido na base de ICMS): CFOP 1556/2556, sem crédito, tudo VALIDADO e observação quando a CST do XML é tributada — V93: a compra de uso e consumo não entra nas abas IPI, PIS/COFINS e IBS/CBS; observação USO E CONSUMO",
   "arquivo": "v92-compra-uso-consumo.xml",
   "campos": {
     "cnpjEmpresa": "00.000.000/0001-91"
@@ -17,7 +17,7 @@
         "validacao_icms": "^VALIDADO .uso e consumo — compra sem crédito",
         "base_correta_icms": 0,
         "valor_correto_icms": 0,
-        "observacao": "^CST informado divergente do uso$"
+        "observacao": "^USO E CONSUMO \\| CST informado divergente do uso$"
       }
     },
     {
@@ -34,7 +34,7 @@
         "uso_e_consumo": "USO E CONSUMO",
         "cfop": "2556",
         "validacao_base_icms": "^VALIDADO .uso e consumo — compra sem crédito",
-        "observacao": "^CST informado divergente do uso$"
+        "observacao": "^USO E CONSUMO \\| CST informado divergente do uso$"
       }
     },
     {
@@ -43,40 +43,6 @@
         "uso_e_consumo": "USO E CONSUMO",
         "cfop": "1556",
         "validacao_base_icms": "^VALIDADO .uso e consumo — compra sem crédito"
-      }
-    },
-    {
-      "numero_item": "ipi-1",
-      "esperado": {
-        "cfop": "1556",
-        "validacao_ipi": "^VALIDADO .uso e consumo — compra sem crédito",
-        "observacao": "^CST informado divergente do uso$"
-      }
-    },
-    {
-      "numero_item": "pis-1",
-      "esperado": {
-        "cfop": "1556",
-        "validacao_base_pis": "^VALIDADO .uso e consumo — compra sem crédito",
-        "validacao_valor_pis": "^VALIDADO .uso e consumo — compra sem crédito",
-        "validacao_base_cofins": "^VALIDADO .uso e consumo — compra sem crédito",
-        "validacao_valor_cofins": "^VALIDADO .uso e consumo — compra sem crédito",
-        "observacao": "^CST informado divergente do uso$"
-      }
-    },
-    {
-      "numero_item": "pis-3",
-      "esperado": {
-        "cfop": "2556",
-        "validacao_base_pis": "^VALIDADO .uso e consumo — compra sem crédito",
-        "observacao": "^$"
-      }
-    },
-    {
-      "numero_item": "ibs-1",
-      "esperado": {
-        "validacao_base_ibs_cbs": "^VALIDADO .uso e consumo — compra sem crédito",
-        "observacao": "^CST informado divergente do uso$"
       }
     },
     {
@@ -91,5 +57,15 @@
         "cfop": "2556"
       }
     }
+  ],
+  "ausentes": [
+    "ipi-1",
+    "ipi-3",
+    "ipi-4",
+    "pis-1",
+    "pis-3",
+    "pis-4",
+    "ibs-1",
+    "ibs-4"
   ]
 }

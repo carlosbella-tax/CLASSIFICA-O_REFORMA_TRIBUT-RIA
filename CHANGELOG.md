@@ -5,6 +5,17 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V93 — 2026-10-13
+
+- **Aba Itens**: coluna `uso_e_consumo` logo depois de `cfop` — "USO E CONSUMO" quando o XML tem IPI e o IPI compõe a base de ICMS. Nas compras de uso e consumo o `cfop` é **1556** (dentro do estado) ou **2556** (fora do estado), qualquer que seja o `cfop_xml`.
+- **Abas de impostos**: a coluna `uso_e_consumo` passa a ficar logo depois de `cfop`.
+- **Compra de uso e consumo (entrada)**:
+  - aba ICMS: os impostos do XML aparecem, sem validação (tudo VALIDADO, nada recalculado), e a observação recebe **"USO E CONSUMO"** (mais "CST informado divergente do uso" quando a CST do ICMS é tributada);
+  - abas ICMS ST, IPI, Base de PIS/COFINS e Base de IBS/CBS: o item não entra — nenhuma informação de imposto segue para as outras abas;
+  - Dashboard e apresentação: nenhum valor de imposto do item; no quadro de ICMS ele aparece no CFOP 1556/2556 só com o valor dos produtos (base e ICMS zerados).
+- Caso `tests/casos/v93-uso-consumo-itens-dashboard`; casos V90/V92 ajustados (coluna depois de cfop; item fora das demais abas).
+  `src/js/modulos/50-v93-uso-consumo-itens-dashboard.js`
+
 ## V92 — 2026-10-13
 
 - **Compra de uso e consumo**: toda ENTRADA em que a base de ICMS do XML inclui o IPI é marcada `uso_e_consumo` = "USO E CONSUMO" (reconhecimento da V90, agora também para base = produtos + frete + IPI).

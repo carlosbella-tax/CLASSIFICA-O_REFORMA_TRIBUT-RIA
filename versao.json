@@ -1,5 +1,5 @@
 {
-  "versao": 92,
+  "versao": 93,
   "data": "2026-10-13",
-  "descricao": "Compra de uso e consumo (IPI na base de ICMS): CFOP 1556/2556, sem crédito, tudo VALIDADO e observação CST divergente do uso"
+  "descricao": "Uso e consumo: coluna na aba Itens após cfop; ICMS populado sem validação com observação USO E CONSUMO; fora das demais abas e sem imposto no Dashboard"
 }
