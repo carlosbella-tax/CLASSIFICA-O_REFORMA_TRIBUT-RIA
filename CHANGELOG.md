@@ -5,6 +5,15 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V92 — 2026-10-13
+
+- **Compra de uso e consumo**: toda ENTRADA em que a base de ICMS do XML inclui o IPI é marcada `uso_e_consumo` = "USO E CONSUMO" (reconhecimento da V90, agora também para base = produtos + frete + IPI).
+- **CFOP da entrada**: sempre **1556** (fornecedor do estado — CFOP 5xxx) ou **2556** (interestadual — CFOP 6xxx), qualquer que seja a correlação normal; vale para a aba Itens e todas as abas de impostos.
+- **Sem crédito de nenhum imposto**: nas abas ICMS, ICMS ST, IPI, Base de PIS/COFINS e Base de IBS/CBS todas as validações ficam **VALIDADO** e nada é recalculado (base/valor corretos = 0), qualquer que seja a CST do XML.
+- **Observação**: se a CST do XML daquele imposto for tributada (ou houver imposto destacado), a coluna `observacao` recebe **"CST informado divergente do uso"** (o texto digitado pelo usuário continua prevalecendo).
+- Caso `tests/casos/v92-compra-uso-consumo`; item 3 do caso V62 (compra com IPI na base) passa a uso e consumo sem crédito.
+  `src/js/modulos/49-v92-compra-uso-consumo-sem-credito.js`
+
 ## V91 — 2026-10-13
 
 - **Aba ICMS — venda para consumidor final**: NF-e com `<indFinal>1</indFinal>`, CFOP 1xxx, 2xxx, 5xxx ou 6xxx e CST tributada → **base de ICMS = produtos + frete + IPI** (com a redução do pRedBC, quando houver); o ICMS é recalculado sobre essa base (margem R$ 0,05). NÃO VALIDADO mostra a base correta e a "diferença:". Nesses itens a regra prevalece sobre a V62/V63 e sobre a V90 (uso e consumo).

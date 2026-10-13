@@ -2,7 +2,7 @@
 
 Lê XML de NF-e, CT-e, NFS-e e eventos (arquivos, pasta inteira, TXT com XML), valida ICMS, ICMS ST, IPI, PIS/COFINS e IBS/CBS (LC 214/2025), mostra o Dashboard por imposto e gera Excel, PDF e a apresentação em PowerPoint. O entregável é **um único arquivo HTML** que roda offline no navegador.
 
-Versão atual: **V91** (ver [CHANGELOG.md](CHANGELOG.md)). Regras de trabalho do agente: [AGENTS.md](AGENTS.md).
+Versão atual: **V92** (ver [CHANGELOG.md](CHANGELOG.md)). Regras de trabalho do agente: [AGENTS.md](AGENTS.md).
 
 ## Comandos
 
@@ -101,6 +101,7 @@ Os arquivos são concatenados exatamente na ordem de `src/manifest.json`. Os mó
 | `src/js/modulos/46-v89-nfse-xml-pdf-iss.js` | 24 KB | módulo V89 (NFS-e em XML e PDF, tipo_de_documento na aba Itens, aba ISS, quadro no Dashboard e slide) |
 | `src/js/modulos/47-v90-ipi-base-uso-consumo.js` | 6 KB | módulo V90 (IPI incluso na base de ICMS = USO E CONSUMO, base = produtos + IPI; coluna nas demais abas) |
 | `src/js/modulos/48-v91-icms-consumidor-final.js` | 3 KB | módulo V91 (venda para consumidor final: base de ICMS = produtos + frete + IPI; leitura do indFinal) |
+| `src/js/modulos/49-v92-compra-uso-consumo-sem-credito.js` | 6 KB | módulo V92 (compra de uso e consumo: CFOP 1556/2556, sem crédito, tudo VALIDADO, observação "CST informado divergente do uso") |
 | `src/js/modulos/99-fechamento.js` | 0 KB | fecha a função principal e desenha a tela — módulos novos entram antes dele |
 
 ## Origem

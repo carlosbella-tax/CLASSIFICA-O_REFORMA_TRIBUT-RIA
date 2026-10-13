@@ -1,5 +1,5 @@
 {
-  "versao": 91,
+  "versao": 92,
   "data": "2026-10-13",
-  "descricao": "ICMS: venda para consumidor final (indFinal = 1) → base = produtos + frete + IPI"
+  "descricao": "Compra de uso e consumo (IPI na base de ICMS): CFOP 1556/2556, sem crédito, tudo VALIDADO e observação CST divergente do uso"
 }

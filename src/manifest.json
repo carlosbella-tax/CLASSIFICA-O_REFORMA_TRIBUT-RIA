@@ -70,6 +70,7 @@
     "src/js/modulos/46-v89-nfse-xml-pdf-iss.js",
     "src/js/modulos/47-v90-ipi-base-uso-consumo.js",
     "src/js/modulos/48-v91-icms-consumidor-final.js",
+    "src/js/modulos/49-v92-compra-uso-consumo-sem-credito.js",
     "src/js/modulos/99-fechamento.js",
     "src/90-rodape.html"
   ]
