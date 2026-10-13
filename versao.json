@@ -1,5 +1,5 @@
 {
-  "versao": 90,
-  "data": "2026-10-12",
-  "descricao": "ICMS: IPI incluso na base de ICMS → campo USO E CONSUMO e base = produtos + IPI; mesma informação nas demais abas de impostos"
+  "versao": 91,
+  "data": "2026-10-13",
+  "descricao": "ICMS: venda para consumidor final (indFinal = 1) → base = produtos + frete + IPI"
 }

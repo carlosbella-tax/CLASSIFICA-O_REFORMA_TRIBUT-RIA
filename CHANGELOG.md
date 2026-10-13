@@ -5,6 +5,13 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V91 — 2026-10-13
+
+- **Aba ICMS — venda para consumidor final**: NF-e com `<indFinal>1</indFinal>`, CFOP 1xxx, 2xxx, 5xxx ou 6xxx e CST tributada → **base de ICMS = produtos + frete + IPI** (com a redução do pRedBC, quando houver); o ICMS é recalculado sobre essa base (margem R$ 0,05). NÃO VALIDADO mostra a base correta e a "diferença:". Nesses itens a regra prevalece sobre a V62/V63 e sobre a V90 (uso e consumo).
+- A leitura do XML passa a guardar `ind_final` (1 = consumidor final, 0 = normal) no item — aparece na aba Itens.
+- Caso `tests/casos/v91-consumidor-final`; o XML do caso V90 passou a `indFinal` 0 (operação normal), para continuar testando só a regra de uso e consumo.
+  `src/js/modulos/48-v91-icms-consumidor-final.js`
+
 ## V90 — 2026-10-12
 
 - **Aba ICMS — IPI incluso na base de ICMS = USO E CONSUMO**: quando a base de ICMS do XML inclui o valor do IPI (CFOP 1xxx, 2xxx, 5xxx, 6xxx com IPI destacado), o item recebe a nova coluna `uso_e_consumo` = **"USO E CONSUMO"** e, somente neste caso, a base é validada por **produtos + IPI** (com a redução do pRedBC, quando houver); o ICMS é recalculado sobre essa base (margem R$ 0,05). NÃO VALIDADO mostra a base correta e a "diferença:".
