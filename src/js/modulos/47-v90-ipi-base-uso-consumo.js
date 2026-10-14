@@ -24,9 +24,10 @@
       const prod = num(r.valor_item), red = valorIcms(r, 'pRedBC'), fator = red > 0 && red < 100 ? 1 - red / 100 : 1;
       const frete = num(campoGrupo(r, 'prod', 'vFrete')), seg = num(campoGrupo(r, 'prod', 'vSeg')), desc = num(campoGrupo(r, 'prod', 'vDesc')), outras = num(campoGrupo(r, 'prod', 'vOutro'));
       const semIpi = arred(arred(prod - desc + frete + seg + outras) * fator);
-      const cheia = arred(prod + ipi), base = arred(cheia * fator), comp = arred(arred(prod - desc + frete + seg + outras + ipi) * fator);
-      if ((Math.abs(bc - base) <= TOL_V90 || Math.abs(bc - comp) <= TOL_V90) && Math.abs(bc - semIpi) > TOL_V90)
-        res = {cfop, prod, ipi, red, fator, cheia, base, bc};
+      const cheia = arred(prod - desc + ipi), base = arred(cheia * fator), comp = arred(arred(prod - desc + frete + seg + outras + ipi) * fator);
+      const semDesc = arred(arred(prod + ipi) * fator);   // V97: reconhece o IPI na base mesmo quando o XML não subtraiu o desconto
+      if ((Math.abs(bc - base) <= TOL_V90 || Math.abs(bc - comp) <= TOL_V90 || Math.abs(bc - semDesc) <= TOL_V90) && Math.abs(bc - semIpi) > TOL_V90)
+        res = {cfop, prod, desc, ipi, red, fator, cheia, base, bc};   // V97: com desconto
     }
     try { Object.defineProperty(r, '__ucV90', {value: res, configurable: true, writable: true}); } catch(e){}
     return res;
@@ -53,7 +54,7 @@
     const r = row0.__src, uc = usoConsumoV90(r), row = comUsoConsumoV90(row0, r, 'cfop_xml');
     if (!uc) return row;
     const baseXml = arred(num(row.base_icms_xml)), ok = Math.abs(baseXml - uc.base) <= TOL_V90;
-    const conta = 'uso e consumo — IPI incluso na base de ICMS, CFOP ' + uc.cfop + ': produtos ' + brl(uc.prod) + ' + IPI ' + brl(uc.ipi) + ' = ' + brl(uc.cheia)
+    const conta = 'uso e consumo — IPI incluso na base de ICMS, CFOP ' + uc.cfop + ': produtos ' + brl(uc.prod) + (uc.desc > 0.005 ? ' − desconto ' + brl(uc.desc) : '') + ' + IPI ' + brl(uc.ipi) + ' = ' + brl(uc.cheia)
       + (uc.fator !== 1 ? ' × (1 − ' + brNumero(uc.red, 2) + '%) = ' + brl(uc.base) : '');
     row.validacao_base_icms = ok ? 'VALIDADO (' + conta + ')' : 'NÃO VALIDADO (base deve ser ' + brl(uc.base) + ' — ' + conta + ') diferença: ' + brl(arred(baseXml - uc.base));
     if ('base_icms_calculada' in row) row.base_icms_calculada = ok ? 'VALIDADO' : uc.base;

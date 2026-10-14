@@ -63,16 +63,17 @@
 
     // 3a. consumidor final (V91) com o IPI fora da base do XML: produtos + frete
     if (/venda para consumidor final/.test(t)){
-      const comIpiXml = !!usoConsumoV90(r) || Math.abs(baseXml - arred(arred(prod + frete + ipi) * f)) <= TOL_V96;
+      const comIpiXml = !!usoConsumoV90(r) || Math.abs(baseXml - arred(arred(prod - desc + frete + ipi) * f)) <= TOL_V96
+        || Math.abs(baseXml - arred(arred(prod + frete + ipi) * f)) <= TOL_V96;   // V97: IPI na base do XML, com ou sem o desconto subtraído
       if (comIpiXml) return row;
-      const cheia = arred(prod + frete), base = arred(cheia * f);
-      return fixarIcmsV96(row, base, 'venda para consumidor final, CFOP ' + cfx + ': produtos ' + brl(prod) + ' + frete ' + brl(frete) + ' = ' + brl(cheia)
+      const cheia = arred(prod - desc + frete), base = arred(cheia * f);
+      return fixarIcmsV96(row, base, 'venda para consumidor final, CFOP ' + cfx + ': produtos ' + brl(prod) + (desc > 0.005 ? ' − desconto ' + brl(desc) : '') + ' + frete ' + brl(frete) + ' = ' + brl(cheia)
         + (f !== 1 ? pctRed + ' = ' + brl(base) : '') + '; IPI fora da base, como no XML');
     }
     // 3b. importação (V95): aceita a conta sem o IPI quando o XML não traz o IPI na base
     if (/importação, CFOP/.test(t) && cfx.charAt(0) === '3'){
       const outras = num(row.valor_outras_despesas), aliq = num(row.aliquota_icms);
-      const vaII = valorGrupo(r, 'II', 'vBC'), vaProd = arred(prod + frete + seg), ii = valorGrupo(r, 'II', 'vII'), iof = valorGrupo(r, 'II', 'vIOF'), da = valorGrupo(r, 'II', 'vDespAdu');
+      const vaII = valorGrupo(r, 'II', 'vBC'), vaProd = arred(prod + frete + seg - desc), ii = valorGrupo(r, 'II', 'vII'), iof = valorGrupo(r, 'II', 'vIOF'), da = valorGrupo(r, 'II', 'vDespAdu');
       const pis = valorGrupo(r, 'PIS', 'vPIS'), cof = valorGrupo(r, 'COFINS', 'vCOFINS');
       for (const va of [...new Set([vaII || vaProd, vaProd])]) for (const extra of outras > 0.005 ? [0, outras] : [0]){
         const soma = arred(va + ii + pis + cof + iof + da + extra), porDentro = aliq > 0 && aliq < 100 ? arred(soma / (1 - aliq / 100)) : soma, base = arred(porDentro * f);

@@ -5,6 +5,15 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V97 — 2026-10-14
+
+- **Aba ICMS — desconto sempre subtrai da base**: valor total dos produtos (−) desconto (vDesc), em todas as regras de base de ICMS.
+  - Já subtraíam: regra base (V14), operação própria interna/interestadual (V62/V63) e devolução 5202/6202 (V96).
+  - Passam a subtrair: uso e consumo (V90/V92: produtos − desconto + IPI), consumidor final (V91: produtos − desconto + frete + IPI; V96 sem IPI na base: produtos − desconto + frete) e importação quando o valor aduaneiro vem dos produtos (V95/V96: produtos + frete + seguro − desconto).
+  - O desconto aparece na conta da validação quando houver; XML que somou o IPI sem subtrair o desconto continua reconhecido como IPI na base e fica NÃO VALIDADO com a "diferença:".
+- Caso `tests/casos/v97-desconto-base-icms` (3 XMLs).
+  `src/js/modulos/54-v97-desconto-base-icms.js` e módulos 47, 48, 49, 52 e 53 (comentários V97)
+
 ## V96 — 2026-10-14
 
 - **Aba ICMS — devolução de compra (cfop_xml 5202/6202)**: outras despesas **não** compõem a base. Base = (produtos − desconto + frete + seguro [+ IPI, só se o XML trouxer o IPI na base]) × (1 − % redução); ICMS = base × alíquota (margem R$ 0,05). A devolução não é tratada como uso e consumo.

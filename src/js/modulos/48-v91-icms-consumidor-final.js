@@ -24,10 +24,10 @@
     const r = row.__src; if (!consumidorFinalV91(r)) return row;
     const cfop = String(row.cfop_xml || row.cfop || '').trim(), cst = String(row.cst_icms || '').trim(), baseXml = arred(num(row.base_icms_xml));
     if (!['1', '2', '5', '6'].includes(cfop.charAt(0)) || SEM_BASE_ICMS.has(cst) || CSOSN_SEM_V91.has(cst) || baseXml <= 0.005) return row;
-    const prod = num(row.valor_total_produtos), frete = num(row.valor_frete), ipi = num(row.valor_ipi);
+    const prod = num(row.valor_total_produtos), frete = num(row.valor_frete), ipi = num(row.valor_ipi), desc = num(row.valor_desconto);   // V97: desconto subtrai
     const red = num(row.reducao_base_icms), fator = red > 0 && red < 100 ? 1 - red / 100 : 1;
-    const cheia = arred(prod + frete + ipi), base = arred(cheia * fator), ok = Math.abs(baseXml - base) <= TOL_V91;
-    const conta = 'venda para consumidor final, CFOP ' + cfop + ': produtos ' + brl(prod) + ' + frete ' + brl(frete) + ' + IPI ' + brl(ipi) + ' = ' + brl(cheia)
+    const cheia = arred(prod - desc + frete + ipi), base = arred(cheia * fator), ok = Math.abs(baseXml - base) <= TOL_V91;
+    const conta = 'venda para consumidor final, CFOP ' + cfop + ': produtos ' + brl(prod) + (desc > 0.005 ? ' − desconto ' + brl(desc) : '') + ' + frete ' + brl(frete) + ' + IPI ' + brl(ipi) + ' = ' + brl(cheia)
       + (fator !== 1 ? ' × (1 − ' + brNumero(red, 2) + '%) = ' + brl(base) : '');
     row.validacao_base_icms = ok ? 'VALIDADO (' + conta + ')' : 'NÃO VALIDADO (base deve ser ' + brl(base) + ' — ' + conta + ') diferença: ' + brl(arred(baseXml - base));
     if ('base_icms_calculada' in row) row.base_icms_calculada = ok ? 'VALIDADO' : base;

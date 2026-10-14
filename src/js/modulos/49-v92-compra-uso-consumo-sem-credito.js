@@ -22,8 +22,10 @@
     const ipi = arred(valorGrupo(r, 'IPI', 'vIPI')), bc = arred(valorIcms(r, 'vBC')), frete = num(campoGrupo(r, 'prod', 'vFrete'));
     if (['1', '2', '5', '6'].includes(cfop.charAt(0)) && !SEM_BASE_ICMS.has(cst) && ipi > 0.0501 && bc > 0.005 && frete > 0.005){
       const prod = num(r.valor_item), red = valorIcms(r, 'pRedBC'), fator = red > 0 && red < 100 ? 1 - red / 100 : 1;
-      const base = arred(arred(prod + frete + ipi) * fator), semIpi = arred(arred(prod + frete) * fator);
-      if (Math.abs(bc - base) <= 0.0501 && Math.abs(bc - semIpi) > 0.0501) res = {cfop, prod, ipi, red, fator, cheia: arred(prod + ipi), base: arred(arred(prod + ipi) * fator), bc};
+      const desc = num(campoGrupo(r, 'prod', 'vDesc'));   // V97: desconto subtrai
+      const base = arred(arred(prod - desc + frete + ipi) * fator), semIpi = arred(arred(prod - desc + frete) * fator);
+      const semDesc = arred(arred(prod + frete + ipi) * fator);
+      if ((Math.abs(bc - base) <= 0.0501 || Math.abs(bc - semDesc) <= 0.0501) && Math.abs(bc - semIpi) > 0.0501) res = {cfop, prod, desc, ipi, red, fator, cheia: arred(prod - desc + ipi), base: arred(arred(prod - desc + ipi) * fator), bc};
     }
     if (res){ try { Object.defineProperty(r, '__ucV90', {value: res, configurable: true, writable: true}); } catch(e){} }
     else { try { Object.defineProperty(r, '__ucV92', {value: false, configurable: true, writable: true}); } catch(e){} }

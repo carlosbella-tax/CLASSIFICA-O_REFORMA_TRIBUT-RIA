@@ -30,7 +30,7 @@
     if (SEM_BASE_ICMS.has(cst) || baseXml <= 0.005) return row;
 
     const prod = num(row.valor_total_produtos), frete = num(row.valor_frete), seg = num(row.valor_seguro), outras = num(row.valor_outras_despesas);
-    const vaII = valorGrupo(r, 'II', 'vBC'), vaProd = arred(prod + frete + seg), va = vaII || vaProd, ii = valorGrupo(r, 'II', 'vII'), iof = valorGrupo(r, 'II', 'vIOF'), da = valorGrupo(r, 'II', 'vDespAdu');
+    const vaII = valorGrupo(r, 'II', 'vBC'), vaProd = arred(prod + frete + seg - num(row.valor_desconto)), va = vaII || vaProd, ii = valorGrupo(r, 'II', 'vII'), iof = valorGrupo(r, 'II', 'vIOF'), da = valorGrupo(r, 'II', 'vDespAdu');
     const ipi = valorGrupo(r, 'IPI', 'vIPI'), pis = valorGrupo(r, 'PIS', 'vPIS'), cof = valorGrupo(r, 'COFINS', 'vCOFINS');
     const aliq = num(row.aliquota_icms), red = num(row.reducao_base_icms), fator = red > 0 && red < 100 ? 1 - red / 100 : 1;
     const conta = (va, extra) => {

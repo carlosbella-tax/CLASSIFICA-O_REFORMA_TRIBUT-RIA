@@ -1,0 +1,65 @@
+{
+  "descricao": "V97 — desconto subtrai da base de ICMS em todas as regras (consumidor final, uso e consumo, operação própria e importação)",
+  "arquivos": [
+    "v97-desconto-consumidor-final.xml",
+    "v97-desconto-normal.xml",
+    "v97-desconto-importacao.xml"
+  ],
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91"
+  },
+  "funcao": "(() => linhasIcms().map(r => Object.assign(r, {k: r.numero_nota_fiscal + '-' + r.numero_item})))",
+  "chave": "k",
+  "linhas": [
+    {
+      "numero_item": "971-1",
+      "esperado": {
+        "validacao_base_icms": "^VALIDADO .venda para consumidor final, CFOP 5102: produtos R.*1\\.000,00 − desconto R.*100,00 \\+ frete R.*50,00 \\+ IPI R.*100,00 = R.*1\\.050,00.$",
+        "validacao_icms": "^VALIDADO$"
+      }
+    },
+    {
+      "numero_item": "971-2",
+      "esperado": {
+        "validacao_base_icms": "^VALIDADO .venda para consumidor final, CFOP 5102: produtos R.*1\\.000,00 − desconto R.*100,00 \\+ frete R.*50,00 = R.*950,00; IPI fora da base",
+        "validacao_icms": "^VALIDADO$"
+      }
+    },
+    {
+      "numero_item": "971-3",
+      "esperado": {
+        "validacao_base_icms": "^NÃO VALIDADO .base deve ser R.*1\\.050,00 — venda para consumidor final.* diferença: R.*100,00$",
+        "base_correta_icms": 1050,
+        "valor_correto_icms": 189
+      }
+    },
+    {
+      "numero_item": "972-1",
+      "esperado": {
+        "uso_e_consumo": "USO E CONSUMO",
+        "validacao_base_icms": "^VALIDADO .uso e consumo — IPI incluso na base de ICMS, CFOP 5102: produtos R.*1\\.000,00 − desconto R.*100,00 \\+ IPI R.*100,00 = R.*1\\.000,00.$"
+      }
+    },
+    {
+      "numero_item": "972-2",
+      "esperado": {
+        "uso_e_consumo": "^$",
+        "validacao_base_icms": "^VALIDADO .operação interna, CFOP 5102: produtos R.*1.000,00 − desconto R.*100,00"
+      }
+    },
+    {
+      "numero_item": "972-3",
+      "esperado": {
+        "validacao_base_icms": "^NÃO VALIDADO .base deve ser R.*900,00",
+        "base_correta_icms": 900
+      }
+    },
+    {
+      "numero_item": "973-1",
+      "esperado": {
+        "validacao_base_icms": "^VALIDADO .importação, CFOP 3102: .valor aduaneiro R.*9\\.500,00 .*= R.*12\\.500,00 ÷ .1 − 18,00%. = R.*15\\.243,90.$",
+        "validacao_icms": "^VALIDADO$"
+      }
+    }
+  ]
+}
