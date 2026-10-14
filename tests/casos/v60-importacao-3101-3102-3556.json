@@ -1,5 +1,5 @@
 {
-  "descricao": "V60 — CFOP 3101/3102/3556: base do ICMS = produtos + frete + seguro + desconto + outras despesas + II + IPI; margem de R$ 0,03 [V69: margem única de R$ 0,05]",
+  "descricao": "V60 — CFOP 3101/3102/3556: base do ICMS = produtos + frete + seguro + desconto + outras despesas + II + IPI; margem de R$ 0,03 [V69: margem única de R$ 0,05] [V95: regra de importação com o ICMS por dentro]",
   "arquivo": "v60-importacao-3101-3102-3556.xml",
   "funcao": "linhasIcms",
   "colunas_apos": {
@@ -22,40 +22,44 @@
         "valor_outras_despesas": 200,
         "valor_ii": 1200,
         "valor_ipi": 500,
-        "validacao_base_icms": "^VALIDADO",
-        "base_correta_icms": 0,
-        "validacao_icms": "^VALIDADO",
-        "valor_correto_icms": 0
-      }
+        "validacao_base_icms": "^NÃO VALIDADO .base deve ser R.*14\\.268,29 — importação",
+        "base_correta_icms": 14268.29,
+        "validacao_icms": "^NÃO VALIDADO",
+        "valor_correto_icms": 2568.29
+      },
+      "nota": "V95: importação = (VA + II + IPI + PIS + COFINS + IOF + desp. aduaneiras) ÷ (1 − alíquota); o XML deste caso foi montado sem o ICMS por dentro (regra antiga da V60)"
     },
     {
       "numero_item": "2",
       "esperado": {
         "cfop_xml": "3102",
         "valor_desconto": 10,
-        "validacao_base_icms": "^VALIDADO",
-        "base_correta_icms": 0,
-        "validacao_icms": "^VALIDADO"
-      }
+        "validacao_base_icms": "^NÃO VALIDADO .base deve ser R.*7\\.134,15 — importação",
+        "base_correta_icms": 7134.15,
+        "validacao_icms": "^NÃO VALIDADO"
+      },
+      "nota": "V95: importação = (VA + II + IPI + PIS + COFINS + IOF + desp. aduaneiras) ÷ (1 − alíquota); o XML deste caso foi montado sem o ICMS por dentro (regra antiga da V60)"
     },
     {
       "numero_item": "3",
       "esperado": {
         "cfop_xml": "3556",
-        "validacao_base_icms": "^NÃO VALIDADO",
-        "base_correta_icms": 2340,
+        "validacao_base_icms": "^NÃO VALIDADO .base deve ser R.*2\\.731,71 — importação",
+        "base_correta_icms": 2731.71,
         "validacao_icms": "^NÃO VALIDADO",
-        "valor_correto_icms": 421.2
-      }
+        "valor_correto_icms": 491.71
+      },
+      "nota": "V95: importação = (VA + II + IPI + PIS + COFINS + IOF + desp. aduaneiras) ÷ (1 − alíquota); o XML deste caso foi montado sem o ICMS por dentro (regra antiga da V60)"
     },
     {
       "numero_item": "4",
       "esperado": {
         "cfop_xml": "3102",
-        "validacao_base_icms": "^VALIDADO .diferença de R.*dentro da margem de R.*0,05",
-        "base_correta_icms": 0,
-        "validacao_icms": "^VALIDADO"
-      }
+        "validacao_base_icms": "^NÃO VALIDADO .base deve ser R.*1\\.219,51 — importação",
+        "base_correta_icms": 1219.51,
+        "validacao_icms": "^NÃO VALIDADO"
+      },
+      "nota": "V95: importação = (VA + II + IPI + PIS + COFINS + IOF + desp. aduaneiras) ÷ (1 − alíquota); o XML deste caso foi montado sem o ICMS por dentro (regra antiga da V60)"
     }
   ]
 }

@@ -5,6 +5,16 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V95 — 2026-10-14
+
+- **Aba ICMS — operação própria** (venda interna ou interestadual, entradas e saídas) com IPI fora da base do XML: BC = mercadoria + frete + seguro + outras despesas (juros e demais despesas cobradas do comprador) − desconto incondicional (vDesc), com a redução do pRedBC; ICMS = BC × alíquota. É a regra da V62/V63, mantida. Com IPI na base seguem as regras de uso e consumo (V90/V92/V93) e de consumidor final (V91).
+- **Aba ICMS — importação** (cfop_xml 3xxx), substitui a regra da V59/V60: **BC = (valor aduaneiro + II + IPI + PIS-Importação + COFINS-Importação + IOF + despesas aduaneiras) ÷ (1 − alíquota)**, com a redução do pRedBC; ICMS = BC × alíquota; margem R$ 0,05.
+  - Valor aduaneiro = vBC do grupo II; também é aceito produtos + frete + seguro (frete e seguro internacionais fora do vBC do II).
+  - Despesas aduaneiras = vDespAdu; também é aceita a conta com as outras despesas (vOutro), quando o importador lança Siscomex/AFRMM/capatazia nesse campo.
+  - NÃO VALIDADO mostra a base correta e a "diferença:".
+- Caso `tests/casos/v95-importacao-por-dentro`; casos V60/V61 (XML montado sem o ICMS por dentro) passam a NÃO VALIDADO com a base correta da nova regra.
+  `src/js/modulos/52-v95-icms-importacao-por-dentro.js`
+
 ## V94 — 2026-10-14
 
 - **CFOP das entradas (aba Itens e todas as abas)**: `cfop_xml` iniciado em 5 → `cfop` iniciado em 1, 6 → 2, 7 → 3, com o mesmo final (regra da V17, mantida e testada).

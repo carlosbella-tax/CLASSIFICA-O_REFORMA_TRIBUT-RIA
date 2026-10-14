@@ -1,5 +1,5 @@
 {
-  "descricao": "V61 — redução de base (pRedBC 51,11%) nos CFOP 3102 e 3556 (regra da V60 × fator de redução, margem R$ 0,03)",
+  "descricao": "V61 — redução de base (pRedBC 51,11%) nos CFOP 3102 e 3556 (regra da V60 × fator de redução, margem R$ 0,03) [V95: regra de importação com o ICMS por dentro]",
   "arquivo": "v61-reducao-importacao.xml",
   "funcao": "linhasIcms",
   "linhas": [
@@ -9,21 +9,23 @@
         "cfop_xml": "3102",
         "origem_icms": "^1 - Estrangeira",
         "reducao_base_icms": 51.11,
-        "validacao_base_icms": "^VALIDADO.*6.000,00.*51,11%.*2.933,40",
-        "base_correta_icms": 0,
-        "validacao_icms": "^VALIDADO",
-        "valor_correto_icms": 0
-      }
+        "validacao_base_icms": "^NÃO VALIDADO .base deve ser R.*3\\.487,89 — importação",
+        "base_correta_icms": 3487.89,
+        "validacao_icms": "^NÃO VALIDADO",
+        "valor_correto_icms": 627.82
+      },
+      "nota": "V95: importação = (VA + II + IPI + PIS + COFINS + IOF + desp. aduaneiras) ÷ (1 − alíquota); o XML deste caso foi montado sem o ICMS por dentro (regra antiga da V60)"
     },
     {
       "numero_item": "2",
       "esperado": {
         "cfop_xml": "3556",
-        "validacao_base_icms": "^NÃO VALIDADO",
-        "base_correta_icms": 1095.14,
+        "validacao_base_icms": "^NÃO VALIDADO .base deve ser R.*1\\.335,53 — importação",
+        "base_correta_icms": 1335.53,
         "validacao_icms": "^NÃO VALIDADO",
-        "valor_correto_icms": 197.13
-      }
+        "valor_correto_icms": 240.4
+      },
+      "nota": "V95: importação = (VA + II + IPI + PIS + COFINS + IOF + desp. aduaneiras) ÷ (1 − alíquota); o XML deste caso foi montado sem o ICMS por dentro (regra antiga da V60)"
     }
   ]
 }

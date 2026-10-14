@@ -1,0 +1,42 @@
+{
+  "descricao": "V95 — importação: base = (valor aduaneiro + II + IPI + PIS + COFINS + IOF + despesas aduaneiras) ÷ (1 − alíquota), com pRedBC; ICMS = base × alíquota",
+  "arquivo": "v95-importacao-por-dentro.xml",
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91"
+  },
+  "funcao": "linhasIcms",
+  "linhas": [
+    {
+      "numero_item": "1",
+      "esperado": {
+        "validacao_base_icms": "^VALIDADO .importação, CFOP 3102: .valor aduaneiro R.*10\\.000,00 \\+ II R.*1\\.000,00 \\+ IPI R.*550,00 \\+ PIS R.*210,00 \\+ COFINS R.*965,00 \\+ IOF R.*0,00 \\+ despesas aduaneiras R.*275,00. = R.*13\\.000,00 ÷ .1 − 18,00%. = R.*15\\.853,66.$",
+        "validacao_icms": "^VALIDADO$",
+        "base_correta_icms": 0
+      }
+    },
+    {
+      "numero_item": "2",
+      "esperado": {
+        "validacao_base_icms": "^VALIDADO .*\\+ outras despesas R.*275,00. = R.*13\\.000,00",
+        "validacao_icms": "^VALIDADO$"
+      }
+    },
+    {
+      "numero_item": "3",
+      "esperado": {
+        "validacao_base_icms": "^NÃO VALIDADO .base deve ser R.*15\\.853,66 — importação.* diferença: -R.*2\\.853,66$",
+        "base_correta_icms": 15853.66,
+        "validacao_icms": "^NÃO VALIDADO .ICMS deve ser R.*15\\.853,66 × 18,00% = R.*2\\.853,66.$",
+        "valor_correto_icms": 2853.66
+      }
+    },
+    {
+      "numero_item": "4",
+      "esperado": {
+        "validacao_base_icms": "^VALIDADO .*IOF R.*100,00.*÷ .1 − 18,00%. = R.*15\\.853,66 × .1 − 50,00%. = R.*7\\.926,83.$",
+        "validacao_icms": "^VALIDADO$",
+        "observacao": "^$"
+      }
+    }
+  ]
+}

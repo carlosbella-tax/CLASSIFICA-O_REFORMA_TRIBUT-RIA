@@ -73,6 +73,7 @@
     "src/js/modulos/49-v92-compra-uso-consumo-sem-credito.js",
     "src/js/modulos/50-v93-uso-consumo-itens-dashboard.js",
     "src/js/modulos/51-v94-cfop-uso-consumo-3556.js",
+    "src/js/modulos/52-v95-icms-importacao-por-dentro.js",
     "src/js/modulos/99-fechamento.js",
     "src/90-rodape.html"
   ]
