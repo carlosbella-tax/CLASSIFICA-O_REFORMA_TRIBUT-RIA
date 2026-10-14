@@ -5,6 +5,14 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V94 — 2026-10-14
+
+- **CFOP das entradas (aba Itens e todas as abas)**: `cfop_xml` iniciado em 5 → `cfop` iniciado em 1, 6 → 2, 7 → 3, com o mesmo final (regra da V17, mantida e testada).
+- **Compra de uso e consumo**: `cfop_xml` 5xxx → **1556**, 6xxx → **2556** e agora 7xxx → **3556** (antes o 7 caía em 1556). O reconhecimento de uso e consumo (IPI na base de ICMS) passa a valer também para entradas com `cfop_xml` 7xxx.
+- Saídas da empresa mantêm o próprio CFOP.
+- Caso `tests/casos/v94-cfop-entradas-uso-consumo`.
+  `src/js/modulos/51-v94-cfop-uso-consumo-3556.js` e `49-v92-compra-uso-consumo-sem-credito.js` (comentário V94)
+
 ## V93 — 2026-10-13
 
 - **Aba Itens**: coluna `uso_e_consumo` logo depois de `cfop` — "USO E CONSUMO" quando o XML tem IPI e o IPI compõe a base de ICMS. Nas compras de uso e consumo o `cfop` é **1556** (dentro do estado) ou **2556** (fora do estado), qualquer que seja o `cfop_xml`.

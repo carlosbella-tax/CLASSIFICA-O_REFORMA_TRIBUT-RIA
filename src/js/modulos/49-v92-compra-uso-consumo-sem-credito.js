@@ -30,7 +30,8 @@
     return res;
   };
   const compraUsoConsumoV92 = r => !!r && tipoOperacao(r) === 'ENTRADAS' && !r.dados_nfse && !!usoConsumoV90(r);
-  const cfopUsoConsumoV92 = r => ['6', '2'].includes(String(r.cfop_xml || r.cfop || '').trim().charAt(0)) ? '2556' : '1556';
+  // V94: cfop_xml 5xxx → 1556, 6xxx → 2556, 7xxx → 3556
+  const cfopUsoConsumoV92 = r => { const d = String(r.cfop_xml || r.cfop || '').trim().charAt(0); return d === '7' || d === '3' ? '3556' : d === '6' || d === '2' ? '2556' : '1556'; };
 
   /* ---------- CFOP 1556 / 2556 nas entradas de uso e consumo ---------- */
   const aplicarCfopV91 = aplicarCfop;

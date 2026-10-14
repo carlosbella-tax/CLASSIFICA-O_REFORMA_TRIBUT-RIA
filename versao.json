@@ -1,5 +1,5 @@
 {
-  "versao": 93,
-  "data": "2026-10-13",
-  "descricao": "Uso e consumo: coluna na aba Itens após cfop; ICMS populado sem validação com observação USO E CONSUMO; fora das demais abas e sem imposto no Dashboard"
+  "versao": 94,
+  "data": "2026-10-14",
+  "descricao": "Uso e consumo: CFOP 1556/2556/3556 conforme cfop_xml 5/6/7; conversão 5→1, 6→2, 7→3 nas entradas"
 }

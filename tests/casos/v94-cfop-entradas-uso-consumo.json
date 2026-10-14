@@ -1,0 +1,58 @@
+{
+  "descricao": "V94 — entradas: cfop_xml 5/6/7 → cfop 1/2/3 (mesmo final); uso e consumo: 5 → 1556, 6 → 2556, 7 → 3556",
+  "arquivo": "v94-cfop-entradas-uso-consumo.xml",
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91"
+  },
+  "funcao": "linhasItensComIcms",
+  "linhas": [
+    {
+      "numero_item": "1",
+      "esperado": {
+        "tipo_operacao": "ENTRADAS",
+        "cfop": "^3556$",
+        "uso_e_consumo": "^USO E CONSUMO$"
+      }
+    },
+    {
+      "numero_item": "2",
+      "esperado": {
+        "tipo_operacao": "ENTRADAS",
+        "cfop": "^3102$",
+        "uso_e_consumo": "^$"
+      }
+    },
+    {
+      "numero_item": "3",
+      "esperado": {
+        "tipo_operacao": "ENTRADAS",
+        "cfop": "^1556$",
+        "uso_e_consumo": "^USO E CONSUMO$"
+      }
+    },
+    {
+      "numero_item": "4",
+      "esperado": {
+        "tipo_operacao": "ENTRADAS",
+        "cfop": "^2102$",
+        "uso_e_consumo": "^$"
+      }
+    },
+    {
+      "numero_item": "5",
+      "esperado": {
+        "tipo_operacao": "ENTRADAS",
+        "cfop": "^2556$",
+        "uso_e_consumo": "^USO E CONSUMO$"
+      }
+    },
+    {
+      "numero_item": "6",
+      "esperado": {
+        "tipo_operacao": "ENTRADAS",
+        "cfop": "^1102$",
+        "uso_e_consumo": "^$"
+      }
+    }
+  ]
+}
