@@ -1,5 +1,5 @@
 {
-  "versao": 97,
+  "versao": 98,
   "data": "2026-10-14",
-  "descricao": "ICMS: desconto subtrai da base em todas as regras"
+  "descricao": "ICMS saídas: desconto no XML não abatido da base = VALIDADO; ICMS = base do XML × alíquota"
 }

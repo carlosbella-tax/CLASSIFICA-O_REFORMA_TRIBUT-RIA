@@ -2,7 +2,7 @@
 
 Lê XML de NF-e, CT-e, NFS-e e eventos (arquivos, pasta inteira, TXT com XML), valida ICMS, ICMS ST, IPI, PIS/COFINS e IBS/CBS (LC 214/2025), mostra o Dashboard por imposto e gera Excel, PDF e a apresentação em PowerPoint. O entregável é **um único arquivo HTML** que roda offline no navegador.
 
-Versão atual: **V97** (ver [CHANGELOG.md](CHANGELOG.md)). Regras de trabalho do agente: [AGENTS.md](AGENTS.md).
+Versão atual: **V98** (ver [CHANGELOG.md](CHANGELOG.md)). Regras de trabalho do agente: [AGENTS.md](AGENTS.md).
 
 ## Comandos
 
@@ -107,6 +107,7 @@ Os arquivos são concatenados exatamente na ordem de `src/manifest.json`. Os mó
 | `src/js/modulos/52-v95-icms-importacao-por-dentro.js` | 5 KB | módulo V95 (ICMS na importação: (VA + II + IPI + PIS + COFINS + IOF + despesas aduaneiras) ÷ (1 − alíquota)) |
 | `src/js/modulos/53-v96-devolucao-5202-ipi-no-xml.js` | 9 KB | módulo V96 (CFOP 5202/6202: outras despesas fora da base de ICMS e como valor do IPI; IPI só na base quando o XML traz) |
 | `src/js/modulos/54-v97-desconto-base-icms.js` | 1 KB | módulo V97 (desconto subtrai da base de ICMS em todas as regras; ajustes nos módulos 47, 48, 49, 52 e 53) |
+| `src/js/modulos/55-v98-saida-desconto-nao-abatido.js` | 2 KB | módulo V98 (saídas: desconto não abatido da base de ICMS = VALIDADO, ICMS = base do XML × alíquota) |
 | `src/js/modulos/99-fechamento.js` | 0 KB | fecha a função principal e desenha a tela — módulos novos entram antes dele |
 
 ## Origem

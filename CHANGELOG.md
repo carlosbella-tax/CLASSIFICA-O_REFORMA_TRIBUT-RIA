@@ -5,6 +5,13 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V98 — 2026-10-14
+
+- **Aba ICMS — notas de SAÍDA com desconto não abatido da base**: quando o XML traz desconto (vDesc) e a base de ICMS do XML não o abateu (base do XML − base calculada = desconto, ou desconto × (1 − % redução)), a base fica **VALIDADO** e o ICMS é conferido como **base do XML × alíquota** (margem R$ 0,05).
+- Nas **entradas** continua a regra da V97: o desconto subtrai da base e a diferença fica NÃO VALIDADO.
+- Caso `tests/casos/v98-saida-desconto`; itens de saída do caso V97 com desconto não abatido passam a VALIDADO.
+  `src/js/modulos/55-v98-saida-desconto-nao-abatido.js`
+
 ## V97 — 2026-10-14
 
 - **Aba ICMS — desconto sempre subtrai da base**: valor total dos produtos (−) desconto (vDesc), em todas as regras de base de ICMS.

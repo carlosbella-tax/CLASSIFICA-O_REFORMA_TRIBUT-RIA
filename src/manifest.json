@@ -76,6 +76,7 @@
     "src/js/modulos/52-v95-icms-importacao-por-dentro.js",
     "src/js/modulos/53-v96-devolucao-5202-ipi-no-xml.js",
     "src/js/modulos/54-v97-desconto-base-icms.js",
+    "src/js/modulos/55-v98-saida-desconto-nao-abatido.js",
     "src/js/modulos/99-fechamento.js",
     "src/90-rodape.html"
   ]

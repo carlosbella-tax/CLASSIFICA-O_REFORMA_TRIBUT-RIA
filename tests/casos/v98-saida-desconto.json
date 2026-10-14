@@ -1,0 +1,47 @@
+{
+  "descricao": "V98 — saídas: desconto no XML não abatido da base de ICMS = VALIDADO e ICMS = base do XML × alíquota; nas entradas o desconto continua subtraindo (V97)",
+  "arquivos": [
+    "v98-saida-desconto.xml",
+    "v98-entrada-desconto.xml"
+  ],
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91"
+  },
+  "funcao": "(() => linhasIcms().map(r => Object.assign(r, {k: r.numero_nota_fiscal + '-' + r.numero_item})))",
+  "chave": "k",
+  "linhas": [
+    {
+      "numero_item": "981-1",
+      "esperado": {
+        "tipo_operacao": "SAÍDAS",
+        "validacao_base_icms": "^VALIDADO .saída: desconto de R.*100,00 no XML não abatido da base de ICMS — base do XML R.*1\\.000,00 aceita; ICMS = base × alíquota.$",
+        "base_correta_icms": 0,
+        "validacao_icms": "^VALIDADO$",
+        "valor_correto_icms": 0
+      }
+    },
+    {
+      "numero_item": "981-2",
+      "esperado": {
+        "validacao_base_icms": "^VALIDADO .saída: desconto",
+        "validacao_icms": "^NÃO VALIDADO .ICMS deve ser R.*1\\.000,00 × 18,00% = R.*180,00.$",
+        "valor_correto_icms": 180
+      }
+    },
+    {
+      "numero_item": "981-3",
+      "esperado": {
+        "validacao_base_icms": "^VALIDADO .operação interna",
+        "validacao_icms": "^VALIDADO$"
+      }
+    },
+    {
+      "numero_item": "982-1",
+      "esperado": {
+        "tipo_operacao": "ENTRADAS",
+        "validacao_base_icms": "^NÃO VALIDADO .base deve ser R.*900,00",
+        "base_correta_icms": 900
+      }
+    }
+  ]
+}

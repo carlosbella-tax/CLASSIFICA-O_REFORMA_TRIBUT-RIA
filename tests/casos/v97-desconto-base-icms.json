@@ -28,10 +28,12 @@
     {
       "numero_item": "971-3",
       "esperado": {
-        "validacao_base_icms": "^NÃO VALIDADO .base deve ser R.*1\\.050,00 — venda para consumidor final.* diferença: R.*100,00$",
-        "base_correta_icms": 1050,
-        "valor_correto_icms": 189
-      }
+        "validacao_base_icms": "^VALIDADO .saída: desconto de R.*100,00 no XML não abatido da base de ICMS — base do XML R.*1\\.150,00 aceita",
+        "base_correta_icms": 0,
+        "validacao_icms": "^VALIDADO$",
+        "valor_correto_icms": 0
+      },
+      "nota": "V98: saída com desconto não abatido = VALIDADO"
     },
     {
       "numero_item": "972-1",
@@ -50,9 +52,11 @@
     {
       "numero_item": "972-3",
       "esperado": {
-        "validacao_base_icms": "^NÃO VALIDADO .base deve ser R.*900,00",
-        "base_correta_icms": 900
-      }
+        "validacao_base_icms": "^VALIDADO .saída: desconto de R.*100,00 no XML não abatido da base de ICMS — base do XML R.*1\\.000,00 aceita",
+        "base_correta_icms": 0,
+        "validacao_icms": "^VALIDADO$"
+      },
+      "nota": "V98: saída com desconto não abatido = VALIDADO"
     },
     {
       "numero_item": "973-1",
