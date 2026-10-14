@@ -1,0 +1,81 @@
+{
+  "descricao": "V96 — CFOP 5202/6202: outras despesas fora da base de ICMS e como valor do IPI; IPI só na base de ICMS quando o XML traz assim (consumidor final e importação)",
+  "arquivos": [
+    "v96-devolucao-5202.xml",
+    "v96-consumidor-final.xml",
+    "v96-importacao-sem-ipi.xml"
+  ],
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91"
+  },
+  "funcao": "(() => linhasIcms().map(r => Object.assign(r, {k: 'icms-' + r.numero_nota_fiscal + '-' + r.numero_item})).concat(linhasIpi().map(r => Object.assign(r, {k: 'ipi-' + r.numero_documento_fiscal + '-' + r.__src.numero_item}))))",
+  "chave": "k",
+  "linhas": [
+    {
+      "numero_item": "icms-961-1",
+      "esperado": {
+        "uso_e_consumo": "^$",
+        "validacao_base_icms": "^VALIDADO .devolução de compra, CFOP 5202: .*= R.*1\\.000,00; outras despesas não compõem a base.$",
+        "validacao_icms": "^VALIDADO$"
+      }
+    },
+    {
+      "numero_item": "icms-961-2",
+      "esperado": {
+        "validacao_base_icms": "^NÃO VALIDADO .base deve ser R.*1\\.000,00 — devolução de compra, CFOP 6202.* diferença: R.*100,00$",
+        "base_correta_icms": 1000,
+        "validacao_icms": "^NÃO VALIDADO .ICMS deve ser R.*1\\.000,00 × 12,00% = R.*120,00.$",
+        "valor_correto_icms": 120
+      }
+    },
+    {
+      "numero_item": "icms-961-3",
+      "esperado": {
+        "validacao_base_icms": "^VALIDADO .devolução de compra"
+      }
+    },
+    {
+      "numero_item": "icms-962-1",
+      "esperado": {
+        "validacao_base_icms": "^VALIDADO .venda para consumidor final, CFOP 5102: produtos R.*1\\.000,00 \\+ frete R.*50,00 = R.*1\\.050,00; IPI fora da base, como no XML.$",
+        "validacao_icms": "^VALIDADO$"
+      }
+    },
+    {
+      "numero_item": "icms-962-2",
+      "esperado": {
+        "validacao_base_icms": "^VALIDADO .venda para consumidor final.*IPI R.*100,00 = R.*1\\.150,00.$"
+      }
+    },
+    {
+      "numero_item": "icms-963-1",
+      "esperado": {
+        "validacao_base_icms": "^VALIDADO .importação, CFOP 3102: .*= R.*12\\.450,00 ÷ .1 − 18,00%. = R.*15\\.182,93; IPI fora da base, como no XML.$",
+        "validacao_icms": "^VALIDADO$"
+      }
+    },
+    {
+      "numero_item": "ipi-961-1",
+      "esperado": {
+        "valor_ipi_xml": 100,
+        "validacao_ipi": "^VALIDADO .devolução CFOP 5202: IPI devolvido informado em outras despesas R.*100,00.$"
+      }
+    },
+    {
+      "numero_item": "ipi-961-2",
+      "esperado": {
+        "valor_ipi_xml": 100,
+        "validacao_ipi": "^VALIDADO .devolução CFOP 6202"
+      }
+    },
+    {
+      "numero_item": "ipi-961-3",
+      "esperado": {
+        "valor_ipi_xml": 100,
+        "validacao_cst_ipi": "^VALIDADO",
+        "validacao_ipi": "^VALIDADO .devolução CFOP 5202: IPI devolvido em outras despesas R.*100,00 = R.*1\\.000,00 × 10,00%.$",
+        "valor_correto_ipi": 0
+      }
+    }
+  ]
+}

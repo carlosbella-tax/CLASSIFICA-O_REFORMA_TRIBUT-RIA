@@ -16,11 +16,12 @@
     {
       "numero_item": "2",
       "esperado": {
-        "validacao_base_icms": "^NÃO VALIDADO .base deve ser R.*1.100,00 — venda para consumidor final.* diferença: -R.*100,00$",
-        "base_correta_icms": 1100,
-        "validacao_icms": "^NÃO VALIDADO .ICMS deve ser R.*1.100,00 × 18,00% = R.*198,00.$",
-        "valor_correto_icms": 198
-      }
+        "validacao_base_icms": "^VALIDADO .venda para consumidor final, CFOP 5102: produtos R.*1\\.000,00 \\+ frete R.*0,00 = R.*1\\.000,00; IPI fora da base, como no XML.$",
+        "base_correta_icms": 0,
+        "validacao_icms": "^VALIDADO$",
+        "valor_correto_icms": 0
+      },
+      "nota": "V96: o IPI só compõe a base de ICMS quando o XML traz a base assim"
     },
     {
       "numero_item": "3",

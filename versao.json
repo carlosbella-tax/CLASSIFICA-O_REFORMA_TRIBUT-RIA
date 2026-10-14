@@ -1,5 +1,5 @@
 {
-  "versao": 95,
+  "versao": 96,
   "data": "2026-10-14",
-  "descricao": "ICMS: importação = (VA + II + IPI + PIS + COFINS + IOF + despesas aduaneiras) ÷ (1 − alíquota); operação própria sem IPI na base"
+  "descricao": "CFOP 5202/6202: outras despesas fora da base de ICMS e como valor do IPI; IPI só na base de ICMS quando o XML traz assim"
 }

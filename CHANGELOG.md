@@ -5,6 +5,14 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V96 — 2026-10-14
+
+- **Aba ICMS — devolução de compra (cfop_xml 5202/6202)**: outras despesas **não** compõem a base. Base = (produtos − desconto + frete + seguro [+ IPI, só se o XML trouxer o IPI na base]) × (1 − % redução); ICMS = base × alíquota (margem R$ 0,05). A devolução não é tratada como uso e consumo.
+- **Aba IPI — devolução de compra (cfop_xml 5202/6202)**: o valor de outras despesas (vOutro) é o IPI devolvido e vai para `valor_ipi_xml`. Com base e alíquota de IPI no XML, valida outras despesas = base × alíquota; sem grupo de IPI, VALIDADO (IPI devolvido em outras despesas). Item de devolução sem grupo de IPI, mas com outras despesas, também entra na aba IPI.
+- **Aba ICMS — IPI só na base quando o XML traz assim**: consumidor final (V91) com o IPI fora da base do XML → base = produtos + frete; importação (V95) com o IPI fora da base do XML → a conta sem o IPI também é aceita. Nas demais operações o IPI já ficava fora (V62/V63) e, quando o XML o inclui, valem as regras de uso e consumo (V90/V92/V93).
+- Caso `tests/casos/v96-devolucao-ipi-base` (3 XMLs); item 2 do caso V91 (base do XML sem IPI) passa a VALIDADO.
+  `src/js/modulos/53-v96-devolucao-5202-ipi-no-xml.js`
+
 ## V95 — 2026-10-14
 
 - **Aba ICMS — operação própria** (venda interna ou interestadual, entradas e saídas) com IPI fora da base do XML: BC = mercadoria + frete + seguro + outras despesas (juros e demais despesas cobradas do comprador) − desconto incondicional (vDesc), com a redução do pRedBC; ICMS = BC × alíquota. É a regra da V62/V63, mantida. Com IPI na base seguem as regras de uso e consumo (V90/V92/V93) e de consumidor final (V91).

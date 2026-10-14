@@ -2,7 +2,7 @@
 
 Lê XML de NF-e, CT-e, NFS-e e eventos (arquivos, pasta inteira, TXT com XML), valida ICMS, ICMS ST, IPI, PIS/COFINS e IBS/CBS (LC 214/2025), mostra o Dashboard por imposto e gera Excel, PDF e a apresentação em PowerPoint. O entregável é **um único arquivo HTML** que roda offline no navegador.
 
-Versão atual: **V95** (ver [CHANGELOG.md](CHANGELOG.md)). Regras de trabalho do agente: [AGENTS.md](AGENTS.md).
+Versão atual: **V96** (ver [CHANGELOG.md](CHANGELOG.md)). Regras de trabalho do agente: [AGENTS.md](AGENTS.md).
 
 ## Comandos
 
@@ -105,6 +105,7 @@ Os arquivos são concatenados exatamente na ordem de `src/manifest.json`. Os mó
 | `src/js/modulos/50-v93-uso-consumo-itens-dashboard.js` | 7 KB | módulo V93 (uso e consumo: coluna na aba Itens, ICMS sem validação com observação, fora das demais abas, Dashboard só com valor dos produtos) |
 | `src/js/modulos/51-v94-cfop-uso-consumo-3556.js` | 1 KB | módulo V94 (uso e consumo com cfop_xml 7xxx → 3556; conversão 5→1, 6→2, 7→3 nas entradas) |
 | `src/js/modulos/52-v95-icms-importacao-por-dentro.js` | 5 KB | módulo V95 (ICMS na importação: (VA + II + IPI + PIS + COFINS + IOF + despesas aduaneiras) ÷ (1 − alíquota)) |
+| `src/js/modulos/53-v96-devolucao-5202-ipi-no-xml.js` | 9 KB | módulo V96 (CFOP 5202/6202: outras despesas fora da base de ICMS e como valor do IPI; IPI só na base quando o XML traz) |
 | `src/js/modulos/99-fechamento.js` | 0 KB | fecha a função principal e desenha a tela — módulos novos entram antes dele |
 
 ## Origem
