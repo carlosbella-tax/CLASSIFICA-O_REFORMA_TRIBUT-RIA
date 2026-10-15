@@ -1,0 +1,69 @@
+{
+  "descricao": "V99 — CFOP 6110 (ZFM/ALC): descrição completa, cfop 2110, ICMS tudo VALIDADO sem recálculo, observação ZONA FRANCA",
+  "arquivos": [
+    "v99-zfm-saida.xml",
+    "v99-zfm-entrada.xml"
+  ],
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91"
+  },
+  "funcao": "(() => linhasIcms().map(r => Object.assign(r, {k: 'icms-' + r.numero_nota_fiscal + '-' + r.numero_item})).concat(linhasItensComIcms().map(r => Object.assign(r, {k: 'item-' + r.numero_documento + '-' + r.numero_item}))))",
+  "chave": "k",
+  "linhas": [
+    {
+      "numero_item": "icms-991-1",
+      "esperado": {
+        "cfop": "^2110$",
+        "descricao_cfop": "^Venda de mercadoria, adquirida ou recebida de terceiros, destinada à ZFM ou ALC$",
+        "validacao_icms": "^VALIDADO .ZONA FRANCA — CFOP 6110",
+        "validacao_base_icms": "^VALIDADO .ZONA FRANCA — CFOP 6110",
+        "base_correta_icms": 0,
+        "valor_correto_icms": 0,
+        "observacao": "^ZONA FRANCA$"
+      }
+    },
+    {
+      "numero_item": "icms-991-2",
+      "esperado": {
+        "cfop": "^2110$",
+        "validacao_base_icms": "^VALIDADO .ZONA FRANCA — CFOP 6110",
+        "validacao_icms": "^VALIDADO .ZONA FRANCA — CFOP 6110",
+        "base_correta_icms": 0,
+        "valor_correto_icms": 0,
+        "observacao": "^ZONA FRANCA$"
+      }
+    },
+    {
+      "numero_item": "icms-991-3",
+      "esperado": {
+        "cfop": "^6102$",
+        "validacao_base_icms": "^VALIDADO .operação interestadual",
+        "observacao": "^$"
+      }
+    },
+    {
+      "numero_item": "icms-992-1",
+      "esperado": {
+        "tipo_operacao": "ENTRADAS",
+        "cfop": "^2110$",
+        "uso_e_consumo": "^$",
+        "validacao_base_icms": "^VALIDADO .ZONA FRANCA — CFOP 6110",
+        "observacao": "^ZONA FRANCA$"
+      }
+    },
+    {
+      "numero_item": "item-991-1",
+      "esperado": {
+        "cfop": "^2110$",
+        "descricao_cfop": "^.*ZFM ou ALC$",
+        "descricao_cfop_xml": "^.*ZFM ou ALC$"
+      }
+    },
+    {
+      "numero_item": "item-992-1",
+      "esperado": {
+        "cfop": "^2110$"
+      }
+    }
+  ]
+}

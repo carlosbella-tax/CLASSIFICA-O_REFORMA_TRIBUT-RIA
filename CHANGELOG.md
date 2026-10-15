@@ -5,6 +5,16 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V99 — 2026-10-15
+
+- **CFOP 6110 — venda de mercadoria adquirida ou recebida de terceiros, destinada à ZFM ou ALC**:
+  - descrição completa na tabela de CFOP (estava truncada) e a mesma descrição para o 2110;
+  - conversão cfop_xml → cfop: **6110 → 2110** (entradas e saídas), na aba Itens e nas abas de impostos;
+  - **aba ICMS**: todas as validações **VALIDADO**, sem novo cálculo (base e valor corretos = 0), e observação **"ZONA FRANCA"** (o texto digitado pelo usuário continua prevalecendo);
+  - a venda para ZFM/ALC não é tratada como uso e consumo.
+- Caso `tests/casos/v99-cfop-6110-zona-franca` (saída e entrada).
+  `src/js/modulos/56-v99-cfop-6110-zona-franca.js`
+
 ## V98 — 2026-10-14
 
 - **Aba ICMS — notas de SAÍDA com desconto não abatido da base**: quando o XML traz desconto (vDesc) e a base de ICMS do XML não o abateu (base do XML − base calculada = desconto, ou desconto × (1 − % redução)), a base fica **VALIDADO** e o ICMS é conferido como **base do XML × alíquota** (margem R$ 0,05).

@@ -1,5 +1,5 @@
 {
-  "versao": 98,
-  "data": "2026-10-14",
-  "descricao": "ICMS saídas: desconto no XML não abatido da base = VALIDADO; ICMS = base do XML × alíquota"
+  "versao": 99,
+  "data": "2026-10-15",
+  "descricao": "CFOP 6110 (ZFM/ALC): descrição completa, cfop 2110, ICMS tudo VALIDADO sem recálculo, observação ZONA FRANCA"
 }
