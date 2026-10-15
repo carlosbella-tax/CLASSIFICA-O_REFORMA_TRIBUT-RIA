@@ -5,6 +5,14 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V100 — 2026-10-15
+
+- **Aba ICMS — regime_tributario opção 3 (Optante ME/EPP, Simples Nacional)**: o valor de `valor_outras_despesas` é o IPI e passa para `valor_ipi` (somado ao IPI destacado, se houver); `valor_outras_despesas` fica 0. A base é validada de novo: produtos − desconto + frete + seguro (+ IPI, só se a base do XML trouxer o IPI), com a redução do pRedBC; ICMS = base × alíquota. CSOSN sem base (ex.: 102) continua VALIDADO.
+- **Aba ICMS — nota 1632**: o valor de `reducao_base_icms` é excluído (fica 0) e a base é validada sem redução, seguindo as demais regras.
+- Vale para operações internas/interestaduais (cfop_xml 1, 2, 5, 6) com ICMS na base; não se aplica a compra de uso e consumo nem a ZFM (6110). Saída com desconto não abatido segue a V98.
+- Caso `tests/casos/v100-simples-outras-ipi-nota-1632` (3 XMLs).
+  `src/js/modulos/57-v100-simples-outras-ipi-nota-1632.js`
+
 ## V99 — 2026-10-15
 
 - **CFOP 6110 — venda de mercadoria adquirida ou recebida de terceiros, destinada à ZFM ou ALC**:

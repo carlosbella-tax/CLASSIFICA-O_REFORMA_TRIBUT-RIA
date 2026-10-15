@@ -1,0 +1,58 @@
+{
+  "descricao": "V100 — regime opção 3 (Simples ME/EPP): outras despesas vão para valor_ipi e a base é revalidada; nota 1632 sem redução de base",
+  "arquivos": [
+    "v100-simples-outras-ipi.xml",
+    "v100-nota-1632.xml",
+    "v100-nota-1633.xml"
+  ],
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91"
+  },
+  "funcao": "(() => linhasIcms().map(r => Object.assign(r, {k: r.numero_nota_fiscal + '-' + r.numero_item})))",
+  "chave": "k",
+  "linhas": [
+    {
+      "numero_item": "1001-1",
+      "esperado": {
+        "regime_tributario": "^3 — Optante - ME / EPP",
+        "valor_outras_despesas": 0,
+        "valor_ipi": 100,
+        "validacao_base_icms": "^VALIDADO .Simples Nacional .opção 3.: outras despesas lançadas como IPI, CFOP 5102: produtos R.*1\\.000,00 \\+ frete R.*0,00 \\+ seguro R.*0,00 \\+ outras despesas R.*0,00 = R.*1\\.000,00.$",
+        "validacao_icms": "^VALIDADO$"
+      }
+    },
+    {
+      "numero_item": "1001-2",
+      "esperado": {
+        "valor_ipi": 100,
+        "validacao_base_icms": "^VALIDADO .*\\+ IPI R.*100,00 .IPI na base do XML. = R.*1\\.100,00.$",
+        "validacao_icms": "^VALIDADO$"
+      }
+    },
+    {
+      "numero_item": "1001-3",
+      "esperado": {
+        "valor_outras_despesas": 0,
+        "valor_ipi": 100,
+        "validacao_base_icms": "^VALIDADO"
+      }
+    },
+    {
+      "numero_item": "1632-1",
+      "esperado": {
+        "reducao_base_icms": 0,
+        "validacao_base_icms": "^VALIDADO .nota 1632 sem redução de base, CFOP 5102: .*= R.*1\\.000,00.$",
+        "base_correta_icms": 0,
+        "validacao_icms": "^VALIDADO$"
+      }
+    },
+    {
+      "numero_item": "1633-1",
+      "esperado": {
+        "reducao_base_icms": 50,
+        "validacao_base_icms": "^NÃO VALIDADO",
+        "base_correta_icms": 500
+      }
+    }
+  ]
+}
