@@ -1,0 +1,44 @@
+{
+  "descricao": "V103 — XML com base e valor de ICMS sem pICMS: aliquota_icms = valor ÷ base (Itens, ICMS e Dashboard); regime opção 3: observação SIMPLES NACIONAL (Itens e ICMS)",
+  "arquivos": [
+    "v103-simples-sem-aliquota-icms.xml"
+  ],
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0002-72"
+  },
+  "funcao": "(() => linhasIcms().map(r => Object.assign(r, {k: 'icms-' + r.numero_nota_fiscal + '-' + r.numero_item})).concat(linhasItensComIcms().map(r => Object.assign(r, {k: 'item-' + r.numero_documento + '-' + r.numero_item}))))",
+  "chave": "k",
+  "linhas": [
+    {
+      "numero_item": "icms-1031-1",
+      "esperado": {
+        "aliquota_icms": 12,
+        "validacao_icms": "^VALIDADO",
+        "observacao": "^.*SIMPLES NACIONAL$"
+      }
+    },
+    {
+      "numero_item": "icms-1031-2",
+      "esperado": {
+        "aliquota_icms": 12,
+        "observacao": "^.*SIMPLES NACIONAL$"
+      }
+    },
+    {
+      "numero_item": "item-1031-1",
+      "esperado": {
+        "aliquota_icms": 12,
+        "base_icms": 1000,
+        "valor_icms": 120,
+        "observacao": "^SIMPLES NACIONAL$"
+      }
+    }
+  ],
+  "dashboard": [
+    {
+      "seletor": "#dashIcmsRows",
+      "contem": ["R$ 1.500,0012,00%R$ 180,00"],
+      "nao_contem": ["0,00%R$ 120,00"]
+    }
+  ]
+}

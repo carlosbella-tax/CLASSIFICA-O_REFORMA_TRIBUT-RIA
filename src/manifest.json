@@ -81,6 +81,7 @@
     "src/js/modulos/57-v100-simples-outras-ipi-nota-1632.js",
     "src/js/modulos/58-v101-icms-destinatario-zfm-base-todos-itens.js",
     "src/js/modulos/59-v102-ipi-devolucao-pis-cofins-lucro-real.js",
+    "src/js/modulos/60-v103-aliquota-icms-calculada-simples.js",
     "src/js/modulos/99-fechamento.js",
     "src/90-rodape.html"
   ]

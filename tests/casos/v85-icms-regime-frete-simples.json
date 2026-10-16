@@ -20,14 +20,14 @@
       "numero_item": "850-1",
       "esperado": {
         "regime_tributario": "^3 — Optante - ME / EPP",
-        "observacao": "^Valor do frete não destacado no XML$"
+        "observacao": "^Valor do frete não destacado no XML \\| SIMPLES NACIONAL$"
       }
     },
     {
       "numero_item": "850-2",
       "esperado": {
         "valor_frete": 30,
-        "observacao": "^$"
+        "observacao": "^SIMPLES NACIONAL$"
       }
     },
     {

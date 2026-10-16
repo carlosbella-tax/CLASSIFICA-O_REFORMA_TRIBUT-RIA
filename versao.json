@@ -1,5 +1,5 @@
 {
-  "versao": 102,
+  "versao": 103,
   "data": "2026-10-16",
-  "descricao": "IPI: vIPIDevol (impostoDevol) em valor_ipi_xml, sem validar base e aliquota, observacao DEVOLUCAO; Dashboard PIS/COFINS: entradas do Lucro Real a 1,65% e 7,60%"
+  "descricao": "ICMS: aliquota_icms calculada (valor do ICMS / base) quando o XML nao traz pICMS, nas abas Itens, ICMS e Dashboard; observacao SIMPLES NACIONAL para regime 3"
 }

@@ -5,6 +5,13 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V103 — 2026-10-16
+
+- **Alíquota de ICMS calculada**: quando o XML traz base (vBC) e valor (vICMS) de ICMS, mas não traz a alíquota (pICMS), `aliquota_icms` = valor do ICMS ÷ base × 100 (2 casas). Vale para a aba **Itens**, a aba **ICMS** (as validações usam essa alíquota) e o **Dashboard** (quadros por alíquota).
+- **Regime opção 3 (Optante ME/EPP — Simples Nacional)**: observação **"SIMPLES NACIONAL"** na aba **Itens** (coluna `observacao` nova, no fim) e na aba **ICMS** (somada às demais observações; o texto digitado pelo usuário prevalece).
+- Caso `tests/casos/v103-aliquota-icms-calculada-simples`; caso V85 atualizado (itens do Simples com a observação SIMPLES NACIONAL).
+  `src/js/modulos/60-v103-aliquota-icms-calculada-simples.js`
+
 ## V102 — 2026-10-16
 
 - **Aba IPI — IPI devolvido** (`<impostoDevol><IPI><vIPIDevol>`): o valor vai para `valor_ipi_xml`; base e alíquota de IPI não são validadas (validações VALIDADO, `valor_correto_ipi` = 0) e a observação traz **"DEVOLUÇÃO — IPI devolvido R$ X"** (o texto digitado pelo usuário prevalece). Item sem grupo de IPI, mas com vIPIDevol, também entra na aba IPI.
