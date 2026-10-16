@@ -5,6 +5,13 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V102 — 2026-10-16
+
+- **Aba IPI — IPI devolvido** (`<impostoDevol><IPI><vIPIDevol>`): o valor vai para `valor_ipi_xml`; base e alíquota de IPI não são validadas (validações VALIDADO, `valor_correto_ipi` = 0) e a observação traz **"DEVOLUÇÃO — IPI devolvido R$ X"** (o texto digitado pelo usuário prevalece). Item sem grupo de IPI, mas com vIPIDevol, também entra na aba IPI.
+- **Dashboard — PIS/COFINS, empresa do Lucro Real** (campo "Regime tributário" dos dados iniciais): nas **ENTRADAS**, alíquota de PIS **1,65%** e de COFINS **7,60%**, com valor = base × alíquota (crédito da não cumulatividade); saídas com os valores do XML; "Entradas (−) Saídas" = créditos − débitos. Vale para o quadro PIS/COFINS do Resumo geral, as seções PIS e COFINS e o gráfico. Lucro Presumido segue a V65.
+- Caso `tests/casos/v102-ipi-devolucao-pis-cofins-lucro-real` (NF-e 199 com vIPIDevol e entrada de fornecedor do Lucro Presumido a 0,65%/3%).
+  `src/js/modulos/59-v102-ipi-devolucao-pis-cofins-lucro-real.js`
+
 ## V101 — 2026-10-16
 
 - **Aba ICMS — colunas `destinatario_municipio` e `destinatario_uf`** (as mesmas da aba Itens) logo depois de `cnpj_destinatario`.

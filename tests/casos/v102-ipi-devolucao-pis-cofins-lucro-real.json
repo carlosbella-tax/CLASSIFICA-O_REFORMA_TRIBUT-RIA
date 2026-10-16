@@ -1,0 +1,44 @@
+{
+  "descricao": "V102 — aba IPI: vIPIDevol (impostoDevol) em valor_ipi_xml, sem validar base e alíquota, observação DEVOLUÇÃO; Dashboard PIS/COFINS: empresa do Lucro Real com entradas a 1,65% e 7,60%",
+  "arquivos": [
+    "v101-nfe-199-base-todos-itens.xml",
+    "v102-entrada-fornecedor-presumido.xml"
+  ],
+  "campos": {
+    "regimeEmpresa": "Lucro Real",
+    "cnpjEmpresa": "00.000.000/0002-72"
+  },
+  "funcao": "(() => linhasIpi().map(r => Object.assign(r, {k: 'ipi-' + r.numero_documento_fiscal + '-' + r.codigo_item})))",
+  "chave": "k",
+  "linhas": [
+    {
+      "numero_item": "ipi-199-00000213",
+      "esperado": {
+        "valor_ipi_xml": 108.76,
+        "validacao_cst_ipi": "^VALIDADO \\(DEVOLUÇÃO",
+        "validacao_ipi": "^VALIDADO \\(DEVOLUÇÃO: IPI devolvido R\\$.108,76 — vIPIDevol; base e alíquota de IPI não conferidas\\)$",
+        "valor_correto_ipi": 0,
+        "observacao": "^DEVOLUÇÃO — IPI devolvido R\\$.108,76$"
+      }
+    },
+    {
+      "numero_item": "ipi-199-00000665",
+      "esperado": {
+        "valor_ipi_xml": 108.75,
+        "validacao_ipi": "^VALIDADO \\(DEVOLUÇÃO",
+        "observacao": "^DEVOLUÇÃO — IPI devolvido R\\$.108,75$"
+      }
+    }
+  ],
+  "dashboard": [
+    {
+      "seletor": "#dashPisRows",
+      "contem": ["1,65%R$ 16,50", "7,60%R$ 76,00"],
+      "nao_contem": ["0,65%R$ 6,50", "3,00%R$ 30,00"]
+    },
+    {
+      "seletor": ".v102-nota",
+      "contem": ["Lucro Real: nas entradas, PIS 1,65% e COFINS 7,60%"]
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "versao": 101,
+  "versao": 102,
   "data": "2026-10-16",
-  "descricao": "ICMS: municipio e UF do destinatario; destinatario na ZFM/ALC = base do XML VALIDADO, OPERACAO COM ZFM; base de todos os itens lancada em um item"
+  "descricao": "IPI: vIPIDevol (impostoDevol) em valor_ipi_xml, sem validar base e aliquota, observacao DEVOLUCAO; Dashboard PIS/COFINS: entradas do Lucro Real a 1,65% e 7,60%"
 }
