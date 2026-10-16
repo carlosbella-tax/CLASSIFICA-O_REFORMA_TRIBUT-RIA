@@ -79,6 +79,7 @@
     "src/js/modulos/55-v98-saida-desconto-nao-abatido.js",
     "src/js/modulos/56-v99-cfop-6110-zona-franca.js",
     "src/js/modulos/57-v100-simples-outras-ipi-nota-1632.js",
+    "src/js/modulos/58-v101-icms-destinatario-zfm-base-todos-itens.js",
     "src/js/modulos/99-fechamento.js",
     "src/90-rodape.html"
   ]

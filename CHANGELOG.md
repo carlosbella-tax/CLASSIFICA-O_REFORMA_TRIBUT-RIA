@@ -5,6 +5,17 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V101 — 2026-10-16
+
+- **Aba ICMS — colunas `destinatario_municipio` e `destinatario_uf`** (as mesmas da aba Itens) logo depois de `cnpj_destinatario`.
+- **Aba ICMS — destinatário na Zona Franca de Manaus / Área de Livre Comércio**, em operação interestadual: AM, AC, RO e RR (inclusive as ALC de Tabatinga, Brasiléia, Epitaciolândia, Cruzeiro do Sul, Guajará-Mirim, Boa Vista e Bonfim) e, no Amapá, Macapá e Santana:
+  - a base de ICMS do XML (`base_icms_xml`) é a base correta (`base_icms_calculada` e `base_correta_icms` = base do XML);
+  - validações de base e de ICMS **VALIDADO** e observação **"OPERAÇÃO COM ZFM"** (o texto digitado pelo usuário continua prevalecendo);
+  - CFOP 6110 segue a V99 (ZONA FRANCA); outras cidades do Amapá e operações internas não entram na regra.
+- **Aba ICMS — XML com mais de um item e base de todos os itens lançada em um só item** (ex.: NF-e 199): a base desse item é conferida com a soma dos itens da nota (produtos − desconto + frete + seguro + outras, com ou sem IPI, com a redução) → **VALIDADO**; ICMS = base do XML × alíquota. Os demais itens da nota recebem a observação de onde está a base. Vale para todos os XML.
+- Caso `tests/casos/v101-icms-destinatario-zfm-base-todos-itens` (NF-e 199 real e XMLs para Manaus/AM, Macapá/AP e Oiapoque/AP).
+  `src/js/modulos/58-v101-icms-destinatario-zfm-base-todos-itens.js`
+
 ## V100 — 2026-10-15
 
 - **Aba ICMS — regime_tributario opção 3 (Optante ME/EPP, Simples Nacional)**: o valor de `valor_outras_despesas` é o IPI e passa para `valor_ipi` (somado ao IPI destacado, se houver); `valor_outras_despesas` fica 0. A base é validada de novo: produtos − desconto + frete + seguro (+ IPI, só se a base do XML trouxer o IPI), com a redução do pRedBC; ICMS = base × alíquota. CSOSN sem base (ex.: 102) continua VALIDADO.

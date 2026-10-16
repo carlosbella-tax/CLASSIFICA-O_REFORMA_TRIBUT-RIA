@@ -1,0 +1,69 @@
+{
+  "descricao": "V101 — aba ICMS: destinatario_municipio e destinatario_uf após cnpj_destinatario; destinatário na ZFM/ALC (operação interestadual) = base do XML VALIDADO com observação OPERAÇÃO COM ZFM; base de todos os itens lançada em um item (NF-e 199) = VALIDADO",
+  "arquivos": [
+    "v101-nfe-199-base-todos-itens.xml",
+    "v101-zfm-manaus-am.xml",
+    "v101-zfm-macapa-ap.xml",
+    "v101-zfm-oiapoque-ap.xml"
+  ],
+  "campos": {
+    "cnpjEmpresa": ""
+  },
+  "funcao": "(() => linhasIcms().map(r => Object.assign(r, {k: 'icms-' + r.numero_nota_fiscal + '-' + r.numero_item, colunas: Object.keys(r).slice(Object.keys(r).indexOf('cnpj_destinatario'), Object.keys(r).indexOf('cnpj_destinatario') + 3).join(',')})))",
+  "chave": "k",
+  "linhas": [
+    {
+      "numero_item": "icms-199-1",
+      "esperado": {
+        "colunas": "^cnpj_destinatario,destinatario_municipio,destinatario_uf$",
+        "destinatario_municipio": "^GUARULHOS$",
+        "destinatario_uf": "^SP$",
+        "validacao_base_icms": "^VALIDADO$",
+        "observacao": "^.*Base de ICMS deste item lançada no item 2 \\(soma de todos os itens\\)"
+      }
+    },
+    {
+      "numero_item": "icms-199-2",
+      "esperado": {
+        "base_icms_xml": 2230.9,
+        "validacao_base_icms": "^VALIDADO \\(base de ICMS de todos os 2 itens da nota lançada no item 2: R\\$.1\\.524,95 \\+ R\\$.705,95 = R\\$.2\\.230,90\\)$",
+        "validacao_icms": "^VALIDADO$",
+        "base_correta_icms": 0,
+        "valor_correto_icms": 0,
+        "observacao": "^.*Base de ICMS de todos os itens da nota lançada neste item"
+      }
+    },
+    {
+      "numero_item": "icms-1011-1",
+      "esperado": {
+        "destinatario_municipio": "^MANAUS$",
+        "destinatario_uf": "^AM$",
+        "validacao_base_icms": "^VALIDADO \\(OPERAÇÃO COM ZFM — destinatário em MANAUS/AM",
+        "validacao_icms": "^VALIDADO \\(OPERAÇÃO COM ZFM",
+        "base_icms_calculada": 900,
+        "base_correta_icms": 900,
+        "valor_correto_icms": 108,
+        "observacao": "^OPERAÇÃO COM ZFM$"
+      }
+    },
+    {
+      "numero_item": "icms-1012-1",
+      "esperado": {
+        "destinatario_municipio": "^MACAPÁ$",
+        "destinatario_uf": "^AP$",
+        "validacao_base_icms": "^VALIDADO \\(OPERAÇÃO COM ZFM — destinatário em MACAPÁ/AP",
+        "base_correta_icms": 900,
+        "observacao": "^OPERAÇÃO COM ZFM$"
+      }
+    },
+    {
+      "numero_item": "icms-1013-1",
+      "esperado": {
+        "destinatario_municipio": "^OIAPOQUE$",
+        "destinatario_uf": "^AP$",
+        "validacao_base_icms": "^NÃO VALIDADO",
+        "observacao": "^$"
+      }
+    }
+  ]
+}

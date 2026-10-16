@@ -1,5 +1,5 @@
 {
-  "versao": 100,
+  "versao": 101,
   "arquivos": [
     "35260243061654000480550010000929731211237179.XML",
     "CTEOS_simples_transporte_pessoas.xml",
@@ -35,8 +35,8 @@
       "incorreto": 0
     },
     "icms": {
-      "sha": "13bf8e5f33a9fc62",
-      "caracteres": 59498,
+      "sha": "7f24367f2c66de08",
+      "caracteres": 61335,
       "linhas_tabela": 100,
       "validado": 300,
       "nao_validado": 1,
@@ -83,10 +83,10 @@
       "incorreto": 1
     },
     "dashboard": {
-      "sha": "f78fed8eeee89434",
-      "caracteres": 25296,
+      "sha": "bde8b4c9a8506f47",
+      "caracteres": 25532,
       "linhas_tabela": 157,
-      "validado": 16,
+      "validado": 17,
       "nao_validado": 1,
       "incorreto": 0
     },

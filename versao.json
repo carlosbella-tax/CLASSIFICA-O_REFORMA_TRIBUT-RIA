@@ -1,5 +1,5 @@
 {
-  "versao": 100,
-  "data": "2026-10-15",
-  "descricao": "ICMS: regime opção 3 (Simples ME/EPP) — outras despesas vão para valor_ipi; nota 1632 sem redução de base"
+  "versao": 101,
+  "data": "2026-10-16",
+  "descricao": "ICMS: municipio e UF do destinatario; destinatario na ZFM/ALC = base do XML VALIDADO, OPERACAO COM ZFM; base de todos os itens lancada em um item"
 }
