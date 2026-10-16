@@ -13,16 +13,16 @@
      ===================================================================== */
   const TOL_V100 = 0.0501, NOTAS_SEM_REDUCAO_V100 = new Set(['1632']);
   const opcao3V100 = row => /^3\b/.test(String(row.regime_tributario || '').trim());
-  function revalidarV100(row, r, motivo){
+  function revalidarV100(row, r, motivo, semOutras){   // V104: semOutras = outras despesas fora da base
     const cfx = String(row.cfop_xml || (r && (r.cfop_xml || r.cfop)) || '').trim(), cst = String(row.cst_icms || '').trim(), baseXml = arred(num(row.base_icms_xml));
     if (!['1', '2', '5', '6'].includes(cfx.charAt(0)) || SEM_BASE_ICMS.has(cst) || CSOSN_SEM_V90.has(cst) || baseXml <= 0.005) return row;
     if ((r && (compraUsoConsumoV92(r) || ehZfmV99(null, r)))) return row;
-    const prod = num(row.valor_total_produtos), desc = num(row.valor_desconto), frete = num(row.valor_frete), seg = num(row.valor_seguro), outras = num(row.valor_outras_despesas), ipi = num(row.valor_ipi);
+    const prod = num(row.valor_total_produtos), desc = num(row.valor_desconto), frete = num(row.valor_frete), seg = num(row.valor_seguro), outras = semOutras ? 0 : num(row.valor_outras_despesas), ipi = num(row.valor_ipi);
     const red = num(row.reducao_base_icms), f = red > 0 && red < 100 ? 1 - red / 100 : 1;
     const sem = arred(prod - desc + frete + seg + outras), comIpi = ipi > TOL_V100 && Math.abs(baseXml - arred(arred(sem + ipi) * f)) <= TOL_V100;
     const cheia = comIpi ? arred(sem + ipi) : sem, base = arred(cheia * f);
     const conta = motivo + ', CFOP ' + cfx + ': produtos ' + brl(prod) + (desc > 0.005 ? ' − desconto ' + brl(desc) : '') + ' + frete ' + brl(frete) + ' + seguro ' + brl(seg)
-      + ' + outras despesas ' + brl(outras) + (comIpi ? ' + IPI ' + brl(ipi) + ' (IPI na base do XML)' : '') + ' = ' + brl(cheia) + (f !== 1 ? ' × (1 − ' + brNumero(red, 2) + '%) = ' + brl(base) : '');
+      + (semOutras ? '' : ' + outras despesas ' + brl(outras)) + (comIpi ? ' + IPI ' + brl(ipi) + ' (IPI na base do XML)' : '') + ' = ' + brl(cheia) + (f !== 1 ? ' × (1 − ' + brNumero(red, 2) + '%) = ' + brl(base) : '');
     let ok = Math.abs(baseXml - base) <= TOL_V100, txtOk = 'VALIDADO (' + conta + ')';
     // V98: saída com desconto não abatido da base
     if (!ok && row.tipo_operacao === 'SAÍDAS' && desc > 0.005 && (Math.abs(arred(baseXml - base) - desc) <= TOL_V100 || Math.abs(arred(baseXml - base) - arred(desc * f)) <= TOL_V100)){

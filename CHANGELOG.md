@@ -5,6 +5,14 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V104 — 2026-10-16
+
+- **Aba ICMS — regime_tributario 1 (Não Optante — Lucro Presumido ou Lucro Real, ex.: pelo CRT 3)**: o valor de `valor_outras_despesas` **não compõe a base de ICMS**. A base é validada de novo: produtos − desconto + frete + seguro (+ IPI, só se a base do XML o trouxer), com a redução do pRedBC; ICMS = base × alíquota (margem R$ 0,05). NÃO VALIDADO mostra a base correta e a "diferença:".
+- A observação recebe **"Outras despesas R$ X não compõem a base de ICMS"** (o texto digitado pelo usuário prevalece).
+- Só operações internas e interestaduais (cfop_xml 1, 2, 5, 6); importação segue a V95. Devolução 5202/6202, consumidor final e uso e consumo já tiravam as outras despesas da base; ZFM (V99/V101) e base de todos os itens em um item (V101) não são recalculadas. Simples Nacional (opção 3) segue a V100 (outras despesas = IPI).
+- Caso `tests/casos/v104-regime1-outras-fora-base`; casos V62/V63 atualizados (emitentes do regime 1 com outras despesas).
+  `src/js/modulos/61-v104-regime1-outras-fora-base.js` e `57-v100-simples-outras-ipi-nota-1632.js` (comentário V104)
+
 ## V103 — 2026-10-16
 
 - **Alíquota de ICMS calculada**: quando o XML traz base (vBC) e valor (vICMS) de ICMS, mas não traz a alíquota (pICMS), `aliquota_icms` = valor do ICMS ÷ base × 100 (2 casas). Vale para a aba **Itens**, a aba **ICMS** (as validações usam essa alíquota) e o **Dashboard** (quadros por alíquota).

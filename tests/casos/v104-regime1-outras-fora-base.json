@@ -1,0 +1,52 @@
+{
+  "descricao": "V104 — regime 1 (Não Optante): outras despesas não compõem a base de ICMS; valor na observação; base e ICMS validados",
+  "arquivos": [
+    "v104-regime1-outras.xml",
+    "v104-simples-outras.xml"
+  ],
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91"
+  },
+  "funcao": "(() => linhasIcms().map(r => Object.assign(r, {k: r.numero_nota_fiscal + '-' + r.numero_item})))",
+  "chave": "k",
+  "linhas": [
+    {
+      "numero_item": "1041-1",
+      "esperado": {
+        "regime_tributario": "^1 — Não Optante .Lucro Presumido ou Lucro Real. .pelo CRT 3.$",
+        "valor_outras_despesas": 100,
+        "validacao_base_icms": "^VALIDADO .regime 1 .Não Optante.: outras despesas R.*100,00 fora da base, CFOP 5102: produtos R.*1\\.000,00 \\+ frete R.*50,00 \\+ seguro R.*0,00 = R.*1\\.050,00.$",
+        "base_correta_icms": 0,
+        "validacao_icms": "^VALIDADO$",
+        "observacao": "^Outras despesas R.*100,00 não compõem a base de ICMS$"
+      }
+    },
+    {
+      "numero_item": "1041-2",
+      "esperado": {
+        "validacao_base_icms": "^NÃO VALIDADO .base deve ser R.*1\\.050,00 — regime 1.* diferença: R.*100,00$",
+        "base_correta_icms": 1050,
+        "validacao_icms": "^NÃO VALIDADO .ICMS deve ser R.*1\\.050,00 × 18,00% = R.*189,00.$",
+        "valor_correto_icms": 189,
+        "observacao": "^Outras despesas R.*100,00 não compõem a base de ICMS$"
+      }
+    },
+    {
+      "numero_item": "1041-3",
+      "esperado": {
+        "validacao_base_icms": "^VALIDADO .operação interna",
+        "observacao": "^$"
+      }
+    },
+    {
+      "numero_item": "1042-1",
+      "esperado": {
+        "regime_tributario": "^3 —",
+        "valor_outras_despesas": 0,
+        "valor_ipi": 100,
+        "validacao_base_icms": "^VALIDADO .Simples Nacional .opção 3.",
+        "observacao": "^.*SIMPLES NACIONAL$"
+      }
+    }
+  ]
+}

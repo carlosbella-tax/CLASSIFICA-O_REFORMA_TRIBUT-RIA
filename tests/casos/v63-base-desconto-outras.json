@@ -6,18 +6,21 @@
     {
       "numero_item": "1",
       "esperado": {
-        "validacao_base_icms": "^VALIDADO.*1.000,00.*desconto.*50,00.*frete.*30,00.*seguro.*10,00.*outras despesas.*20,00.*= R.*1.010,00",
-        "base_correta_icms": 0,
-        "validacao_icms": "^VALIDADO"
-      }
+        "validacao_base_icms": "^NÃO VALIDADO .base deve ser R.*990,00 — regime 1 .Não Optante.: outras despesas R.*20,00 fora da base.* diferença: R.*20,00$",
+        "base_correta_icms": 990,
+        "validacao_icms": "^NÃO VALIDADO",
+        "observacao": "^Outras despesas R.*20,00 não compõem a base de ICMS$"
+      },
+      "nota": "V104: regime 1 (Não Optante) — outras despesas não compõem a base de ICMS"
     },
     {
       "numero_item": "2",
       "esperado": {
-        "validacao_base_icms": "^VALIDADO.*2.000,00.*51,11%.*977,80",
-        "base_correta_icms": 0,
-        "validacao_icms": "^VALIDADO"
-      }
+        "validacao_base_icms": "^NÃO VALIDADO .base deve ser R.*953,36 — regime 1.*1\\.950,00 × .1 − 51,11%. = R.*953,36",
+        "base_correta_icms": 953.36,
+        "validacao_icms": "^NÃO VALIDADO"
+      },
+      "nota": "V104: regime 1 (Não Optante) — outras despesas não compõem a base de ICMS"
     },
     {
       "numero_item": "3",

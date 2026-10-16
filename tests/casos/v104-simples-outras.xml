@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nfeProc xmlns="http://www.portalfiscal.inf.br/nfe" versao="4.00"><NFe><infNFe Id="NFe35261000000000000434550010000010421000010429" versao="4.00">
+<ide><cUF>35</cUF><natOp>Venda</natOp><mod>55</mod><serie>1</serie><nNF>1042</nNF><dhEmi>2026-10-16T10:00:00-03:00</dhEmi><tpNF>1</tpNF><idDest>1</idDest><tpAmb>2</tpAmb><finNFe>1</finNFe><indFinal>0</indFinal><indPres>1</indPres></ide>
+<emit><CNPJ>00000000000434</CNPJ><xNome>EMITENTE 1042</xNome><IE>111111111111</IE><CRT>1</CRT></emit>
+<dest><CNPJ>00000000000191</CNPJ><xNome>DEST 1042</xNome></dest>
+<det nItem="1"><prod><cProd>1</cProd><cEAN>SEM GTIN</cEAN><xProd>ITEM 1</xProd><NCM>84145990</NCM><CFOP>5102</CFOP><uCom>UN</uCom><qCom>1.0000</qCom><vUnCom>1000.00</vUnCom><vProd>1000.00</vProd><vOutro>100.00</vOutro><indTot>1</indTot></prod><imposto><ICMS><ICMS00><orig>0</orig><CST>00</CST><modBC>3</modBC><vBC>1000.00</vBC><pICMS>18.00</pICMS><vICMS>180.00</vICMS></ICMS00></ICMS><PIS><PISNT><CST>07</CST></PISNT></PIS><COFINS><COFINSNT><CST>07</CST></COFINSNT></COFINS></imposto></det>
+</infNFe></NFe></nfeProc>

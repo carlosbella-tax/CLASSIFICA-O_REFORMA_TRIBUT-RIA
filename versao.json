@@ -1,5 +1,5 @@
 {
-  "versao": 103,
+  "versao": 104,
   "data": "2026-10-16",
-  "descricao": "ICMS: aliquota_icms calculada (valor do ICMS / base) quando o XML nao traz pICMS, nas abas Itens, ICMS e Dashboard; observacao SIMPLES NACIONAL para regime 3"
+  "descricao": "ICMS regime 1 (Não Optante): outras despesas fora da base de ICMS, valor na observação, base e ICMS validados"
 }

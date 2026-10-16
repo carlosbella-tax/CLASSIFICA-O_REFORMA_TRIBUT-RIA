@@ -6,11 +6,13 @@
     {
       "numero_item": "1",
       "esperado": {
-        "validacao_base_icms": "^NÃO VALIDADO.*outras despesas.*30,00.*1.090,00",
-        "base_correta_icms": 1090,
-        "validacao_icms": "^NÃO VALIDADO",
-        "valor_correto_icms": 196.2
-      }
+        "validacao_base_icms": "^VALIDADO .regime 1 .Não Optante.: outras despesas R.*30,00 fora da base, CFOP 5102: .*= R.*1\\.060,00.$",
+        "base_correta_icms": 0,
+        "validacao_icms": "^VALIDADO$",
+        "valor_correto_icms": 0,
+        "observacao": "^Outras despesas R.*30,00 não compõem a base de ICMS$"
+      },
+      "nota": "V104: regime 1 (Não Optante) — outras despesas não compõem a base de ICMS"
     },
     {
       "numero_item": "2",
