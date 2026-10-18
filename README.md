@@ -113,6 +113,7 @@ Os arquivos são concatenados exatamente na ordem de `src/manifest.json`. Os mó
 | `src/js/modulos/61-v104-regime1-outras-fora-base.js` | 2 KB | módulo V104 (regime 1: outras despesas fora da base de ICMS, valor na observação) |
 | `src/js/modulos/62-v105-imposto-seletivo.js` | 9 KB | módulo V105 (Imposto Seletivo na aba Base de IBS/CBS: colunas e validações de CST, base e valor; quadro de IS no Dashboard) |
 | `src/js/modulos/63-v106-pis-cofins-observacoes-simples-uso.js` | 3 KB | módulo V106 (PIS/COFINS: CSOSN 102 + Lucro Presumido VALIDADO; observações 5107/6107, 1656, 1556/2556) |
+| `src/js/modulos/64-v107-icms-st-portaria-sre-34-2026.js` | 25 KB | módulo V107 (ICMS ST: validação Portaria SRE nº 34/2026 — 174 itens excluídos do ICMS ST em SP) |
 | `src/js/modulos/99-fechamento.js` | 0 KB | fecha a função principal e desenha a tela — módulos novos entram antes dele |
 
 ## Origem

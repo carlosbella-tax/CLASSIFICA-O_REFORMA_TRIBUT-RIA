@@ -85,6 +85,7 @@
     "src/js/modulos/61-v104-regime1-outras-fora-base.js",
     "src/js/modulos/62-v105-imposto-seletivo.js",
     "src/js/modulos/63-v106-pis-cofins-observacoes-simples-uso.js",
+    "src/js/modulos/64-v107-icms-st-portaria-sre-34-2026.js",
     "src/js/modulos/99-fechamento.js",
     "src/90-rodape.html"
   ]

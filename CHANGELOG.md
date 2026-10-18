@@ -5,6 +5,15 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V107 — 2026-10-18
+
+- **Aba ICMS ST — coluna `validacao_portaria_sre_34_2026`** (última coluna): a NCM de cada item é comparada com as NCMs dos **174 itens** excluídos do ICMS ST em São Paulo pela **Portaria SRE nº 34/2026** (Anexos VII, VIII, XIV, XVIII, XXI e XXII itens 2 a 10 e 15 da Portaria CAT nº 68/2019), conforme a tabela do Informativo Tax Advice de 24/09/2026.
+  - Encontrada → **"NCM EXCLUÍDA DO ICMS ST EM 30/09/2026"**, com anexo, item, CEST e descrição legal.
+  - Não encontrada → "NCM não consta da relação de itens excluídos do ICMS ST pela Portaria SRE nº 34/2026".
+  - Comparação pelo código mais específico que casa com o início da NCM (a tabela traz posições de 4 a 8 dígitos); quando a mesma NCM está em mais de um anexo, o CEST do XML desempata; sem CEST, todos os itens possíveis são listados.
+- Caso `tests/casos/v107-icms-st-sre34`.
+  `src/js/modulos/64-v107-icms-st-portaria-sre-34-2026.js`
+
 ## V106 — 2026-10-18
 
 - **Aba Base de PIS/COFINS — CSOSN 102 (Simples Nacional sem permissão de crédito) com a empresa do diagnóstico no Lucro Presumido**: validações de CST, base e valor de PIS/COFINS **VALIDADO**, sem cálculo (valores corretos = 0), e observação **"OPTANTE PELO SIMPLES NACIONAL"**.

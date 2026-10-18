@@ -1,0 +1,40 @@
+{
+  "descricao": "V107 — aba ICMS ST: validação Portaria SRE nº 34/2026 (NCM excluída do ICMS ST em 30/09/2026)",
+  "arquivo": "v107-icms-st-sre34.xml",
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91"
+  },
+  "funcao": "linhasIcmsSt",
+  "linhas": [
+    {
+      "numero_item": "1",
+      "esperado": {
+        "validacao_portaria_sre_34_2026": "^NCM EXCLUÍDA DO ICMS ST EM 30/09/2026 — Portaria SRE nº 34/2026: Anexo XIV item 77 .CEST 01.075.00.: Partes e acessórios dos veículos automóveis"
+      }
+    },
+    {
+      "numero_item": "2",
+      "esperado": {
+        "validacao_portaria_sre_34_2026": "^NCM EXCLUÍDA DO ICMS ST EM 30/09/2026 — Portaria SRE nº 34/2026: Anexo XXI item 5 .CEST 12.005.00.: Partes reconhecíveis[^|]*$"
+      }
+    },
+    {
+      "numero_item": "3",
+      "esperado": {
+        "validacao_portaria_sre_34_2026": "^NCM não consta da relação de itens excluídos do ICMS ST pela Portaria SRE nº 34/2026$"
+      }
+    },
+    {
+      "numero_item": "4",
+      "esperado": {
+        "validacao_portaria_sre_34_2026": "^NCM EXCLUÍDA DO ICMS ST EM 30/09/2026 — Portaria SRE nº 34/2026: Anexo XIV item 71 .*\\| Anexo XXI item 5 "
+      }
+    },
+    {
+      "numero_item": "5",
+      "esperado": {
+        "validacao_portaria_sre_34_2026": "^NCM EXCLUÍDA DO ICMS ST EM 30/09/2026 — Portaria SRE nº 34/2026: Anexo VII item 1 .CEST 16.001.00.: Pneus novos"
+      }
+    }
+  ]
+}
