@@ -5,6 +5,20 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V105 — 2026-10-18
+
+- **Aba Base de IBS/CBS — Imposto Seletivo (IS)**, grupo `<IS>` da NF-e (NT 2025.002): colunas `cst_is`, `cclasstrib_is`, `base_is`, `aliquota_is` e `valor_is` logo depois dos valores de IBS e CBS.
+- **Validações do IS** (LC 214/2025, Livro II), logo depois de `validacao_cbs`: `validacao_cst_is`, `validacao_base_is`, `validacao_is` e `valor_correto_is` (margem R$ 0,05):
+  - vigência: IS cobrado a partir de 01/01/2027 — antes disso o grupo é opcional e IS destacado = NÃO VALIDADO;
+  - incidência: NCM do Anexo XVII (veículos 87.03/87.04, aeronaves 88.02, embarcações 89.03, fumígenos 24.02/24.03, bebidas alcoólicas 22.03–22.06 e 22.08, bebidas açucaradas 2202.10/2202.99, bens minerais 26.01, 27.01, 27.09, 27.11); NCM sujeito sem grupo IS a partir de 2027 ou NCM fora do Anexo com IS = NÃO VALIDADO;
+  - CST: com valor de IS deve ser 000 (tributada); CST 000 com base e alíquota, mas sem valor = NÃO VALIDADO;
+  - base: valor da operação = produtos + frete + seguro + outras despesas − desconto incondicional (não integram IBS, CBS e o próprio IS); também aceita a conta sem ICMS, PIS e COFINS;
+  - valor: base × alíquota ad valorem + quantidade × alíquota específica.
+- **Dashboard**: quadro "Imposto Seletivo (IS)" logo abaixo do quadro de IBS e CBS (Resumo geral), com ENTRADAS e SAÍDAS por CST e alíquota (base, valor e quantidade de itens).
+- DIFAL na base de IBS/CBS (V76) conferido: só subtrai vICMSUFDest e vFCPUFDest quando o grupo ICMSUFDest existe (venda a não contribuinte, EC 87/2015); na venda a contribuinte só o ICMS próprio é deduzido.
+- Caso `tests/casos/v105-imposto-seletivo` (notas de 2026 e 2027).
+  `src/js/modulos/62-v105-imposto-seletivo.js`
+
 ## V104 — 2026-10-16
 
 - **Aba ICMS — regime_tributario 1 (Não Optante — Lucro Presumido ou Lucro Real, ex.: pelo CRT 3)**: o valor de `valor_outras_despesas` **não compõe a base de ICMS**. A base é validada de novo: produtos − desconto + frete + seguro (+ IPI, só se a base do XML o trouxer), com a redução do pRedBC; ICMS = base × alíquota (margem R$ 0,05). NÃO VALIDADO mostra a base correta e a "diferença:".

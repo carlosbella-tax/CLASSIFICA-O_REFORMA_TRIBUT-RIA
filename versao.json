@@ -1,5 +1,5 @@
 {
-  "versao": 104,
-  "data": "2026-10-16",
-  "descricao": "ICMS regime 1 (Não Optante): outras despesas fora da base de ICMS, valor na observação, base e ICMS validados"
+  "versao": 105,
+  "data": "2026-10-18",
+  "descricao": "Imposto Seletivo (IS) na aba Base de IBS/CBS: CST, base, alíquota e valor; validações de CST, base e valor (LC 214/2025); quadro de IS no Dashboard"
 }

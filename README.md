@@ -111,6 +111,7 @@ Os arquivos são concatenados exatamente na ordem de `src/manifest.json`. Os mó
 | `src/js/modulos/56-v99-cfop-6110-zona-franca.js` | 2 KB | módulo V99 (CFOP 6110 ZFM/ALC: descrição, cfop 2110, ICMS VALIDADO sem recálculo, observação ZONA FRANCA) |
 | `src/js/modulos/57-v100-simples-outras-ipi-nota-1632.js` | 5 KB | módulo V100 (Simples opção 3: outras despesas → valor_ipi; nota 1632 sem redução de base) |
 | `src/js/modulos/61-v104-regime1-outras-fora-base.js` | 2 KB | módulo V104 (regime 1: outras despesas fora da base de ICMS, valor na observação) |
+| `src/js/modulos/62-v105-imposto-seletivo.js` | 9 KB | módulo V105 (Imposto Seletivo na aba Base de IBS/CBS: colunas e validações de CST, base e valor; quadro de IS no Dashboard) |
 | `src/js/modulos/99-fechamento.js` | 0 KB | fecha a função principal e desenha a tela — módulos novos entram antes dele |
 
 ## Origem

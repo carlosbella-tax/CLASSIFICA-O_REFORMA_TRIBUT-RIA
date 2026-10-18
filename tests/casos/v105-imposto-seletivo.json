@@ -1,0 +1,100 @@
+{
+  "descricao": "V105 — Imposto Seletivo na aba Base de IBS/CBS (colunas e validações de CST, base e valor — LC 214/2025) e quadro de IS no Dashboard",
+  "arquivos": [
+    "v105-is-2027.xml",
+    "v105-is-2026.xml"
+  ],
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91"
+  },
+  "funcao": "(() => linhasIbsCbsTabela().map(r => Object.assign(r, {k: r.numero_documento_fiscal + '-' + r.numero_item})))",
+  "chave": "k",
+  "colunas_apos": {
+    "valor_cbs": [
+      "cst_is",
+      "cclasstrib_is",
+      "base_is",
+      "aliquota_is",
+      "valor_is"
+    ],
+    "validacao_cbs": [
+      "validacao_cst_is",
+      "validacao_base_is",
+      "validacao_is",
+      "valor_correto_is"
+    ]
+  },
+  "linhas": [
+    {
+      "numero_item": "1051-1",
+      "esperado": {
+        "cst_is": "000",
+        "base_is": 1000,
+        "aliquota_is": 10,
+        "valor_is": 100,
+        "validacao_cst_is": "^VALIDADO .CST IS 000 — Anexo XVII: bebidas alcoólicas.$",
+        "validacao_base_is": "^VALIDADO .valor da operação",
+        "validacao_is": "^VALIDADO .R.*1\\.000,00 × 10,00% = R.*100,00.$",
+        "valor_correto_is": 0
+      }
+    },
+    {
+      "numero_item": "1051-2",
+      "esperado": {
+        "validacao_base_is": "^NÃO VALIDADO .base de IS deve ser R.*1\\.000,00.* diferença: R.*100,00$",
+        "validacao_is": "^VALIDADO"
+      }
+    },
+    {
+      "numero_item": "1051-3",
+      "esperado": {
+        "cst_is": "^$",
+        "validacao_cst_is": "^NÃO VALIDADO .NCM 22030000 do Anexo XVII.*bebidas alcoólicas.*não traz o grupo IS.$",
+        "validacao_base_is": "^VALIDADO",
+        "validacao_is": "^VALIDADO"
+      }
+    },
+    {
+      "numero_item": "1051-4",
+      "esperado": {
+        "validacao_cst_is": "^NÃO VALIDADO .NCM 84145990 fora do Anexo XVII"
+      }
+    },
+    {
+      "numero_item": "1051-5",
+      "esperado": {
+        "validacao_is": "^NÃO VALIDADO .IS deve ser R.*1\\.000,00 × 10,00% = R.*100,00. diferença: -R.*10,00$",
+        "valor_correto_is": 100
+      }
+    },
+    {
+      "numero_item": "1051-6",
+      "esperado": {
+        "validacao_cst_is": "^NÃO VALIDADO .CST IS 410 com valor de IS"
+      }
+    },
+    {
+      "numero_item": "1052-1",
+      "esperado": {
+        "validacao_cst_is": "^VALIDADO .sem grupo IS — o Imposto Seletivo é exigido a partir de 01/01/2027.$"
+      }
+    },
+    {
+      "numero_item": "1052-2",
+      "esperado": {
+        "validacao_cst_is": "^NÃO VALIDADO .IS destacado antes da vigência"
+      }
+    }
+  ],
+  "dashboard": [
+    {
+      "seletor": "#dashIsV105",
+      "contem": [
+        "Imposto Seletivo (IS)",
+        "CST IS",
+        "Saídas R$",
+        "550,00"
+      ]
+    }
+  ]
+}
