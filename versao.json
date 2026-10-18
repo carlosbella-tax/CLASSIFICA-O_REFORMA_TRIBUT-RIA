@@ -1,5 +1,5 @@
 {
-  "versao": 105,
+  "versao": 106,
   "data": "2026-10-18",
-  "descricao": "Imposto Seletivo (IS) na aba Base de IBS/CBS: CST, base, alíquota e valor; validações de CST, base e valor (LC 214/2025); quadro de IS no Dashboard"
+  "descricao": "Base de PIS/COFINS: CSOSN 102 + Lucro Presumido = VALIDADO (OPTANTE PELO SIMPLES NACIONAL); observações 5107/6107, 1656 e 1556/2556 (uso e consumo com crédito)"
 }

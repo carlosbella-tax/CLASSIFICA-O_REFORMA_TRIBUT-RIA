@@ -5,6 +5,17 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V106 — 2026-10-18
+
+- **Aba Base de PIS/COFINS — CSOSN 102 (Simples Nacional sem permissão de crédito) com a empresa do diagnóstico no Lucro Presumido**: validações de CST, base e valor de PIS/COFINS **VALIDADO**, sem cálculo (valores corretos = 0), e observação **"OPTANTE PELO SIMPLES NACIONAL"**.
+- **Observações automáticas na aba Base de PIS/COFINS** (somadas às demais; o texto digitado pelo usuário prevalece):
+  - venda CFOP 5107/6107 → **"VENDA NÃO CONTRIBUINTE"**;
+  - CFOP 1656 → **"COMPRA PARA USO E CONSUMO"**;
+  - entrada com CFOP 1556/2556 → **"USO E CONSUMO COM CRÉDITO"**.
+- As compras de uso e consumo (1556/2556), que desde a V93 ficavam fora da aba Base de PIS/COFINS, voltam para essa aba com a validação normal (com crédito). ICMS ST, IPI, IBS/CBS e Dashboard continuam como na V93.
+- Caso `tests/casos/v106-pis-cofins-observacoes`; casos V92/V93 ajustados.
+  `src/js/modulos/63-v106-pis-cofins-observacoes-simples-uso.js`
+
 ## V105 — 2026-10-18
 
 - **Aba Base de IBS/CBS — Imposto Seletivo (IS)**, grupo `<IS>` da NF-e (NT 2025.002): colunas `cst_is`, `cclasstrib_is`, `base_is`, `aliquota_is` e `valor_is` logo depois dos valores de IBS e CBS.

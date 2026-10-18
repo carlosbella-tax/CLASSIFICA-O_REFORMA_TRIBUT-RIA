@@ -1,0 +1,55 @@
+{
+  "descricao": "V106 — Base de PIS/COFINS: CSOSN 102 + Lucro Presumido = VALIDADO sem cálculo (OPTANTE PELO SIMPLES NACIONAL); observações 5107/6107, 1656 e 1556/2556",
+  "arquivos": [
+    "v106-entrada-simples-102.xml",
+    "v106-entradas-uso.xml",
+    "v106-saidas-5107.xml"
+  ],
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91",
+    "regimeEmpresa": "Lucro Presumido"
+  },
+  "funcao": "(() => linhasPisCofins().map(r => Object.assign(r, {k: r.numero_nota_fiscal + '-' + r.numero_item})))",
+  "chave": "k",
+  "linhas": [
+    {
+      "numero_item": "1061-1",
+      "esperado": {
+        "tipo_operacao": "ENTRADAS",
+        "validacao_base_pis": "^VALIDADO .Simples Nacional — CSOSN 102",
+        "validacao_valor_pis": "^VALIDADO .Simples Nacional — CSOSN 102",
+        "validacao_base_cofins": "^VALIDADO .Simples Nacional — CSOSN 102",
+        "validacao_valor_cofins": "^VALIDADO .Simples Nacional — CSOSN 102",
+        "observacao": "^OPTANTE PELO SIMPLES NACIONAL$"
+      }
+    },
+    {
+      "numero_item": "1062-1",
+      "esperado": {
+        "cfop": "^1656$",
+        "observacao": "^.*COMPRA PARA USO E CONSUMO$"
+      }
+    },
+    {
+      "numero_item": "1062-2",
+      "esperado": {
+        "cfop": "^1556$",
+        "uso_e_consumo": "USO E CONSUMO",
+        "observacao": "^.*USO E CONSUMO COM CRÉDITO$"
+      }
+    },
+    {
+      "numero_item": "1063-1",
+      "esperado": {
+        "tipo_operacao": "SAÍDAS",
+        "observacao": "^.*VENDA NÃO CONTRIBUINTE$"
+      }
+    },
+    {
+      "numero_item": "1063-2",
+      "esperado": {
+        "observacao": "^.*VENDA NÃO CONTRIBUINTE$"
+      }
+    }
+  ]
+}

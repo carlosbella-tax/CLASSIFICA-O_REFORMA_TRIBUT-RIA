@@ -56,15 +56,20 @@
       "esperado": {
         "cfop": "2556"
       }
+    },
+    {
+      "numero_item": "pis-3",
+      "esperado": {
+        "cfop": "^2556$",
+        "observacao": "^.*USO E CONSUMO COM CRÉDITO$"
+      },
+      "nota": "V106: compras de uso e consumo voltam para a aba Base de PIS/COFINS (com crédito)"
     }
   ],
   "ausentes": [
     "ipi-1",
     "ipi-3",
     "ipi-4",
-    "pis-1",
-    "pis-3",
-    "pis-4",
     "ibs-1",
     "ibs-4"
   ]
