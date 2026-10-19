@@ -1,0 +1,27 @@
+{
+  "descricao": "V111 — duplicados (XML e PDF idênticos com outro nome) excluídos automaticamente: não entram nas abas nem na lista de erros",
+  "arquivos": [
+    "v90-uso-consumo.xml",
+    "v111-copia-do-v90.xml",
+    "v108-caieiras-fort-system.pdf",
+    "v111-copia-fort-system.pdf"
+  ],
+  "campos": {
+    "cnpjEmpresa": "08.308.329/0001-26"
+  },
+  "funcao": "(() => [{k: 'r', docs: state.docs.length, erros: state.errors.length, dups: (state.duplicados || []).length, iss: linhasIss().length, status: document.getElementById('pStatus').textContent, motivo: (state.duplicados || [{}])[0].motivo}])",
+  "chave": "k",
+  "linhas": [
+    {
+      "numero_item": "r",
+      "esperado": {
+        "docs": 2,
+        "erros": 0,
+        "dups": 2,
+        "iss": 1,
+        "status": "^Concluído: 4 arquivo.s. lidos, 2 documento.s.,.* 2 duplicado.s. excluído.s. automaticamente e 0 erro.s.",
+        "motivo": "^Duplicado excluído automaticamente"
+      }
+    }
+  ]
+}

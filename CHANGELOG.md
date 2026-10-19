@@ -5,6 +5,16 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V111 — 2026-10-19
+
+- **Duplicados excluídos automaticamente (XML ou PDF)**:
+  - arquivo idêntico a outro já carregado (mesmo conteúdo, mesmo com nome diferente — ex.: "NF - 0038638 INTERTEK.pdf" e "… 08.2026.pdf") não é lido de novo: reaproveita a leitura do primeiro, sem OCR repetido;
+  - documento duplicado (mesma chave de acesso / mesmo prestador e número) não entra nas abas e **sai da lista de erros**; a mensagem final informa "N duplicado(s) excluído(s) automaticamente". A relação dos excluídos fica em `state.duplicados`.
+- **Contagem sempre visível nas abas** depois do processamento: aba sem itens mostra 0 em vez de ficar em branco.
+- Teste no Edge com os 10 PDFs: 9 notas na aba ISS, "1 duplicado(s) excluído(s) automaticamente e 0 erro(s)", 27 s (o PDF repetido não passa de novo pelo OCR).
+- Caso `tests/casos/v111-duplicados-automaticos`; referência de regressão: os 3 duplicados dos XMLs de teste deixam de contar como erro. PDFs de imagem dos casos V108/V109 viraram arquivos distintos (comentário no fim do PDF).
+  `src/js/modulos/68-v111-duplicados-automaticos.js`
+
 ## V110 — 2026-10-19
 
 - **O OCR nunca mais trava o processamento**: em alguns ambientes (ex.: visualizador do G4 OS) o OCR não dava erro — ficava esperando para sempre; como os arquivos são lidos em lotes, um PDF parado segurava o lote inteiro e nada era carregado (Itens 0, abas sem contagem).

@@ -118,6 +118,7 @@ Os arquivos são concatenados exatamente na ordem de `src/manifest.json`. Os mó
 | `src/js/modulos/65-v108-nfse-pdf-ocr.js` | 14 KB | módulo V108 (NFS-e em PDF de imagem por OCR, detecção de NFS-e e leitor de leiautes SP/Barueri/Caieiras; nenhuma NFS-e fica de fora) |
 | `src/js/modulos/66-v109-ocr-robusto.js` | 8 KB | módulo V109 (OCR robusto: leitura direta na página quando o worker é bloqueado, grupo de até 4 workers, andamento e aviso de PDFs não lidos na aba ISS) |
 | `src/js/modulos/67-v110-ocr-sem-travar.js` | 6 KB | módulo V110 (OCR com limites de tempo; desligado na hora se o ambiente bloquear; aviso na tela; XMLs e PDFs com texto sempre carregam) |
+| `src/js/modulos/68-v111-duplicados-automaticos.js` | 3 KB | módulo V111 (duplicados XML/PDF excluídos automaticamente, sem leitura repetida; contagem 0 visível nas abas) |
 | `src/js/modulos/99-fechamento.js` | 0 KB | fecha a função principal e desenha a tela — módulos novos entram antes dele |
 
 ## Origem

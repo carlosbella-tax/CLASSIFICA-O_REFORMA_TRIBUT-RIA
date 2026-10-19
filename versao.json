@@ -1,5 +1,5 @@
 {
-  "versao": 110,
+  "versao": 111,
   "data": "2026-10-19",
-  "descricao": "OCR nunca trava o processamento: limites de tempo, OCR desligado na hora se o ambiente bloquear, aviso na tela; XMLs e PDFs com texto sempre carregam"
+  "descricao": "Duplicados (XML ou PDF) excluídos automaticamente: arquivos idênticos não são lidos de novo (nem por OCR) e saem da lista de erros"
 }
