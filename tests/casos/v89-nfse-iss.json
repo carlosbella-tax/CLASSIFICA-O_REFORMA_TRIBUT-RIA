@@ -108,7 +108,7 @@
       }
     },
     {
-      "numero_item": "3.346/NFSE",
+      "numero_item": "3346",
       "esperado": {
         "tipo_de_documento": "NFS-e (PDF)",
         "nome_emitente": "SCHWING EQUIPAMENTOS INDUSTRIAIS LTDA",
@@ -116,7 +116,8 @@
         "municipio_destinatario": "MACEIO - AL",
         "valor_servico": 5975.32,
         "valor_iss": 119.51
-      }
+      },
+      "nota": "V108: número normalizado (era 3.346/NFSE)"
     },
     {
       "numero_item": "0000002001",

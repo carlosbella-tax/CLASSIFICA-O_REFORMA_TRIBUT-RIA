@@ -1,0 +1,95 @@
+SR, f = Número da Nota
+aa, PREFEITURA DO MUNICÍPIO DE SÃO PAULO 01256968
+o ..
+f EA SECRETARIA MUNICIPAL DA FAZENDA Data e Hora de Emissão
+f Pio R 01/09/2026 08:38:07
+PAO NOTA FISCAL ELETRÔNICA DE SERVIÇOS - NFS-e Código de Verificação
+202609 TOUT S664649000184 RPS Nº 724378 Série RP1, emitido em 01/09/2026 XPQ7-48LW
+Identificador Nacional: 35503081215664649000184000000125696826091665365699
+PRESTADOR DE SERVIÇOS
+CPF/CNPJ: 15.664.649/0001-84 Inscrição Municipal: 4.551.630-8
+Nome/Razão Social: GPBR PARTICIPACOES LTDA.
+Endereço: AV ENGENHEIRO LUIZ CARLOS BERRINI 716 716, ANDAR 10 - CIDADE MONCOES - CEP: 04571-926
+Município: São Paulo UF: SP
+wellhukb
+TOMADOR DE SERVIÇOS
+Nome/Razão Social: COB-INDUSTRIA E COMERCIO DE CAIXAS ORGANIZE DO BRASIL LTDA
+CPF/CNPJ: 08.308.329/0001-26 Inscrição Municipal: ----
+Endereço: ES Caetano Xavier de Moraes 600 - Laranjeiras - CEP: 07742-000
+Município: Caieiras UF: SP E-mail: nfeQmicropack.com
+INTERMEDIÁRIO DE SERVIÇOS
+CPF/CNPJ: ---- Nome/Razão Social: ----
+DISCRIMINAÇÃO DE SERVIÇOS
+1738.63 para sua assinatura da empresa de 2026-09-01 a 2026-09-30 - / Vencimento: 10/1/2026 - / Forma de
+Pagamento: BR - Boleto bancário - / https://latamready.app/short/BG1A8zZKL - /
+Enterprise Subscription - Taxa da empresa para o período finalizado em 2026-09-30 / Cobrança mensal /
+Token 202609254995723IM - 1.00 - R$ 1738.63
+Trib Aprox R$ O Federal, R$ O Estaduais, R$ O Municipal Fonte IBPT
+VALOR TOTAL DO SERVIÇO = R$ 1.738,63
+Contribuição Previdenciária - Retida (R$) IRRF (R$) COFINS (R$) PIS/PASEP (R$) IPI (R$)
+0,00 0,00 0,00 0,00 0,00
+Contribuições Sociais - Retidas (R$) Descrição Contribuições Sociais - Retidas
+0,00 O - PIS/COFINS/CSLL Não Retidos.
+Código do Serviço
+02800 - Licenciamento ou cessão de direito de uso de programas de computação, inclusive distribuição.
+Valor Total das Deduções (R$) Base de Cálculo (R$) Alíquota (%) Valor do ISS (R$) Crédito Programa da NFP (R$)
+0,00 1.738,63 2,90% 50,42 0,00
+Município de Prestação do Serviço Número Inscrição da Obra Valor Aproximado dos Tributos / Fonte
+- - IBPT
+OUTRAS INFORMAÇÕES
+(1) Esta NFS-e foi emitida com respaldo na Lei nº 14.097/2005; (2) Esta NFS-e substitui o RPS Nº 724378 Série RP1, emitido em 01/09/2026; (3) Data
+de vencimento do ISS desta NFS-e: 10/10/2026;
+Página 1 de 2
+
+IMPOSTO E CONTRIBUIÇÃO SOBRE BENS E SERVIÇOS (IBS E CBS)
+Identificador: 35503081215664649000184000000125696826091665365699
+CPF/CNPJ/NIF do Fornecedor Número da Nota Código de Verificação
+15.664.649/0001-84 01256968 XPQ7-48LW
+DESTINATÁRIO
+CPF/CNPJ: NÃO INFORMADO NIF: eee
+Nome/Razão Social: — ----
+Endereço: ---- Nº: Compl.: --
+Bairro: ---- E-mail: ----
+INFORMAÇÕES DE ENDEREÇO NACIONAL
+
+Município:  ---- CEP: ----
+
+INFORMAÇÕES DE ENDEREÇO NO EXTERIOR
+País: --—-- Cidade: ----
+Estado/Província/Região: m— CEP: ----
+
+ADQUIRENTE
+CPF/CNPJ: 08.308.329/0001-26 NIF:
+Nome/Razão Social: COB-INDUSTRIA E COMERCIO DE CAIXAS ORGANIZE DO BRASIL LTDA
+Endereço: ES Caetano Xavier de Moraes Nº: 600 Compl.:
+Bairro: Laranjeiras E-mail: nfe(omicropack.com
+INFORMAÇÕES DE ENDEREÇO NACIONAL
+
+Município: 3509007 - Caieiras - SP CEP: 07742-000
+
+INFORMAÇÕES DE ENDEREÇO NO EXTERIOR
+País: ---- Cidade: ----
+Estado/Província/Região: .— CEP: ----
+
+SERVIÇO PRESTADO
+Local de prestação: 3509007 - Caieiras - SP Código indicador da operação: 100301
+Localidade de incidência: 3509007 - Caieiras - SP
+Tipo de operação: — ----- Operação deuso: Não
+CLASSIFICAÇÃO TRIBUTÁRIA
+Situação tributária: 000 - Tributação integral
+Classificação tributária: 000001 - Situações tributadas integralmente pelo IBS e CBS.
+OUTRAS CLASSIFICAÇÕES
+NBS: 111032200 - Licenciamento de direitos de uso de programas de computador (software)
+NCM: ----
+Valor dos serviços antes dos tributos (R$) Valor da multa (R$) Valor do juros (R$)
+1.688,21 - -
+Valor das Deduções | Base de Cálculo do |Alíquota Estadual do | Alíquota Municipal |Redução de Alíquota| Alíquota Efetiva do |Valor Diferido do IBS| Valor do IBS (R$)
+de IBS e CBS (R$) IBS e CBS (R$) 1BS (%) do IBS (%) do IBS (%) 1BS (%) (R$)
+0,10% 0,00% 0,00% 0,10% - 1,69
+0,00 1.688,21 Alíquota da CBS (%) Redução de Alíquota| Alíquota Efetiva da | Valor Diferido da Valor da CBS (R$)
+' ' da CBS (%) CBS (%) CBS (R$)
+0,90% 0,00% 0,90% 0,00 15,19
+VALOR TOTAL COBRADO = R$ 1.738,63
+INFORMAÇÕES ADICIONAIS
+Página 2 de 2
+

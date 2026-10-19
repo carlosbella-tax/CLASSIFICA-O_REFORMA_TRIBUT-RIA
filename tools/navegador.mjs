@@ -8,7 +8,7 @@ import { JSDOM, VirtualConsole } from 'jsdom';
 const raiz = join(dirname(fileURLToPath(import.meta.url)), '..');
 const esperar = ms => new Promise(r => setTimeout(r, ms));
 
-export async function abrirDiagnostico(caminhos, { campos = {}, versao: v } = {}) {
+export async function abrirDiagnostico(caminhos, { campos = {}, versao: v, ocr = {} } = {}) {   // ocr: {nome do PDF: caminho do texto reconhecido} (V108 — jsdom não tem canvas/worker)
   const versao = v || JSON.parse(readFileSync(join(raiz, 'versao.json'), 'utf8')).versao;
   const html = readFileSync(join(raiz, 'dist', `DIAGNOSTICO_V${versao}.html`), 'utf8');
   const erros = [];
@@ -29,6 +29,7 @@ export async function abrirDiagnostico(caminhos, { campos = {}, versao: v } = {}
   w.HTMLElement.prototype.scrollIntoView = function () {};
   await esperar(50);
   for (const [id, v] of Object.entries(campos)) { const el = w.document.getElementById(id); if (el) { el.value = v; el.dispatchEvent(new w.Event('input')); el.dispatchEvent(new w.Event('change')); } }
+  if (Object.keys(ocr).length) w.__ocrTesteV108 = async nome => (ocr[nome] ? readFileSync(ocr[nome], 'utf8').replace(/\r/g, '').split('\n') : []);
   const files = caminhos.map(c => new w.File([readFileSync(c)], basename(c), { type: 'text/xml', lastModified: 0 }));
   w.setFiles(files);
   w.document.getElementById('pIniciar').click();

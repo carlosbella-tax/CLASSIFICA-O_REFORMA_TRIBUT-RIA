@@ -18,6 +18,10 @@
     "src/vendor/pdfjs-3.11.174.worker.min.js",
     "src/38-separador-motor-nfse.html",
     "src/vendor/motor-nfse.js",
+    "src/39-separador-ocr.html",
+    "src/vendor/tesseract-7.0.0.min.js",
+    "src/39b-separador-ocr-dados.html",
+    "src/vendor/ocr-dados-v108.js",
     "src/40-separador.html",
     "src/js/apresentacao/gerador-pptx.js",
     "src/js/apresentacao/imagens-pptx.js",
@@ -86,6 +90,7 @@
     "src/js/modulos/62-v105-imposto-seletivo.js",
     "src/js/modulos/63-v106-pis-cofins-observacoes-simples-uso.js",
     "src/js/modulos/64-v107-icms-st-portaria-sre-34-2026.js",
+    "src/js/modulos/65-v108-nfse-pdf-ocr.js",
     "src/js/modulos/99-fechamento.js",
     "src/90-rodape.html"
   ]

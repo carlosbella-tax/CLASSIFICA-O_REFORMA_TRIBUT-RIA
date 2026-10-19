@@ -122,7 +122,7 @@ const pastaCasos = join(raiz, 'tests/casos');
 for (const nome of (existsSync(pastaCasos) ? readdirSync(pastaCasos) : []).filter(n => n.endsWith('.json')).sort()) {
   const caso = JSON.parse(readFileSync(join(pastaCasos, nome), 'utf8'));
   const arqs = (caso.arquivos || [caso.arquivo]).map(a => join(pastaCasos, a));
-  const { w: wc, erros: ec, abrirAba: abaC } = await abrirDiagnostico(arqs, { campos: caso.campos || {} });
+  const { w: wc, erros: ec, abrirAba: abaC } = await abrirDiagnostico(arqs, { campos: caso.campos || {}, ocr: Object.fromEntries(Object.entries(caso.ocr || {}).map(([k, v]) => [k, join(pastaCasos, v)])) });
   const linhas = caso.funcao ? wc.eval(caso.funcao + '()') : [];
   // conferências de texto no Dashboard: [{seletor, sub?, contem: [...], nao_contem: [...]}]
   for (const c of caso.dashboard || []) {

@@ -1,0 +1,109 @@
+{
+  "descricao": "V108 — NFS-e em PDF de imagem (OCR) e leitor de leiautes (São Paulo, Barueri, Caieiras): todas as notas de serviço entram na aba ISS",
+  "arquivos": [
+    "v108-pdf-imagem-sp-gympass.pdf",
+    "v108-pdf-imagem-sp-taxadvice.pdf",
+    "v108-pdf-imagem-barueri-zund.pdf",
+    "v108-pdf-imagem-barueri-intertek.pdf",
+    "v108-pdf-imagem-sp-flash.pdf",
+    "v108-pdf-imagem-parcial.pdf",
+    "v108-caieiras-fort-system.pdf"
+  ],
+  "ocr": {
+    "v108-pdf-imagem-sp-gympass.pdf": "v108-ocr-sp-gympass.txt",
+    "v108-pdf-imagem-sp-taxadvice.pdf": "v108-ocr-sp-taxadvice.txt",
+    "v108-pdf-imagem-barueri-zund.pdf": "v108-ocr-barueri-zund.txt",
+    "v108-pdf-imagem-barueri-intertek.pdf": "v108-ocr-barueri-intertek.txt",
+    "v108-pdf-imagem-sp-flash.pdf": "v108-ocr-sp-flash.txt",
+    "v108-pdf-imagem-parcial.pdf": "v108-ocr-parcial.txt"
+  },
+  "campos": {
+    "cnpjEmpresa": "08.308.329/0001-26"
+  },
+  "funcao": "linhasIss",
+  "chave": "numero_nota",
+  "linhas": [
+    {
+      "numero_item": "1256968",
+      "esperado": {
+        "tipo_operacao": "ENTRADAS",
+        "tipo_de_documento": "NFS-e (PDF)",
+        "nome_emitente": "GPBR PARTICIPACOES LTDA.",
+        "cnpj_emitente": "15664649000184",
+        "codigo_servico": "02800",
+        "valor_servico": 1738.63,
+        "base_iss": 1738.63,
+        "aliquota_iss": 2.9,
+        "valor_iss": 50.42,
+        "iss_retido": "NÃO",
+        "leitura_pdf": "^OCR .PDF de imagem. — conferir$"
+      }
+    },
+    {
+      "numero_item": "2181",
+      "esperado": {
+        "nome_emitente": "TAX ADVICE GESTAO TRIBUTARIA LTDA",
+        "valor_servico": 8961.95,
+        "aliquota_iss": 5,
+        "valor_iss": 448.09,
+        "valor_ir": 134.43,
+        "valor_csll": 89.62,
+        "deducao": 0
+      }
+    },
+    {
+      "numero_item": "5597218",
+      "esperado": {
+        "valor_servico": 1000,
+        "deducao": 1000,
+        "base_iss": 0,
+        "valor_iss": 0,
+        "codigo_servico": "03205"
+      }
+    },
+    {
+      "numero_item": "2243",
+      "esperado": {
+        "nome_emitente": "ZUND BRASIL LTDA.",
+        "cnpj_emitente": "87792982000180",
+        "municipio_emitente": "BARUERI",
+        "codigo_servico": "140101220",
+        "valor_servico": 630.2,
+        "base_iss": 630.2,
+        "aliquota_iss": 2,
+        "valor_iss": 12.6,
+        "valor_csll": 6.3
+      }
+    },
+    {
+      "numero_item": "38638",
+      "esperado": {
+        "nome_emitente": "INTERTEK DO BRASIL INSPEÇÕES LTDA",
+        "valor_servico": 11132.15,
+        "aliquota_iss": 2,
+        "valor_iss": 222.64,
+        "data_emissao": "10/08/2026"
+      }
+    },
+    {
+      "numero_item": "3452",
+      "esperado": {
+        "nome_emitente": "FORT SYSTEM COMERCIO DE EQUIPAMENTOS E SERVICOS LTDA",
+        "valor_servico": 26854.43,
+        "valor_iss": 537.09,
+        "iss_retido": "SIM",
+        "valor_inss": 1476.99,
+        "valor_ir": 268.54,
+        "valor_csll": 268.54,
+        "leitura_pdf": "^Texto do PDF$"
+      }
+    },
+    {
+      "numero_item": "SEM NÚMERO",
+      "esperado": {
+        "tipo_de_documento": "NFS-e (PDF)",
+        "leitura_pdf": "^Leitura parcial — conferir o PDF$"
+      }
+    }
+  ]
+}

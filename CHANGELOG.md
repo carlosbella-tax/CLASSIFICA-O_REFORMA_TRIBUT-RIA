@@ -5,6 +5,16 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V108 — 2026-10-19
+
+- **NFS-e em PDF de imagem (OCR embutido, sem internet)**: PDF sem camada de texto (ex.: gerado pelo "Microsoft: Print To PDF" ou digitalizado) é renderizado página a página pelo pdf.js e lido por OCR (Tesseract 7, português `best_int`), dentro do próprio HTML. A nota entra na aba ISS como "NFS-e (PDF)" e a nova coluna `leitura_pdf` informa "OCR (PDF de imagem) — conferir" (ou "Texto do PDF" / "XML"). Cerca de 4 s por página.
+- **Detecção de NFS-e mais robusta**: deixa de tratar como DANFE notas com "NOTA FISCAL ELETRÔNICA" e "NCM" em qualquer ponto do texto e passa a reconhecer "NFSe" sem hífen e "NOTA FISCAL ELETRONICA DE SERVICOS" (ex.: Prefeitura de Barueri).
+- **Leitor complementar de leiautes** (PDF com texto ou OCR): linhas de rótulos seguidas da linha de valores — Prefeitura de São Paulo (retenções, deduções, base, alíquota e ISS), Barueri (ISSQN, retenções e item com código do serviço e alíquota) e Caieiras (número "3.452/NFE" e retenções de INSS, IR, ISS e PIS/COFINS/CSLL). CSLL das "Contribuições Sociais - Retidas" = total ÷ 4,65; ISS sem valor impresso = base × alíquota. Números de nota normalizados (ex.: "3.346/NFSE" → 3346).
+- **Nenhuma NFS-e fica de fora**: nota de serviço reconhecida, mas sem número nem valor legíveis, entra na aba ISS como "SEM NÚMERO", com `leitura_pdf` "Leitura parcial — conferir o PDF".
+- Testado no Edge com 10 PDFs reais (9 de imagem): 9 notas na aba ISS e 1 duplicada (mesma nota da Intertek em dois arquivos).
+- Caso `tests/casos/v108-nfse-pdf-ocr` (textos de OCR reais de São Paulo, Barueri e da FORT SYSTEM/Caieiras); `tools/navegador.mjs` aceita textos de OCR prontos (opção `ocr`), porque o jsdom não tem canvas nem worker.
+  `src/js/modulos/65-v108-nfse-pdf-ocr.js`, `src/vendor/tesseract-7.0.0.min.js` e `src/vendor/ocr-dados-v108.js` (gerados por `tools/portar-ocr.mjs`)
+
 ## V107 — 2026-10-18
 
 - **Aba ICMS ST — coluna `validacao_portaria_sre_34_2026`** (última coluna): a NCM de cada item é comparada com as NCMs dos **174 itens** excluídos do ICMS ST em São Paulo pela **Portaria SRE nº 34/2026** (Anexos VII, VIII, XIV, XVIII, XXI e XXII itens 2 a 10 e 15 da Portaria CAT nº 68/2019), conforme a tabela do Informativo Tax Advice de 24/09/2026.

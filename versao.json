@@ -1,5 +1,5 @@
 {
-  "versao": 107,
-  "data": "2026-10-18",
-  "descricao": "ICMS ST: coluna de validação Portaria SRE nº 34/2026 — NCM excluída do ICMS ST em 30/09/2026"
+  "versao": 108,
+  "data": "2026-10-19",
+  "descricao": "NFS-e em PDF de imagem (OCR embutido, offline) e detecção de NFS-e mais robusta: todas as notas de serviço entram na aba ISS"
 }

@@ -1,6 +1,6 @@
 {
   "name": "diagnostico-operacoes-fiscais",
-  "version": "107.0.0",
+  "version": "108.0.0",
   "private": true,
   "description": "Diagnóstico Operações Fiscais (Tax Advice) — leitura de XML de NF-e/CT-e/NFS-e, validações de ICMS, ICMS ST, IPI, PIS/COFINS, IBS/CBS e apresentação em PowerPoint",
   "type": "module",
@@ -14,7 +14,10 @@
     "node": ">=20"
   },
   "devDependencies": {
+    "@tesseract.js-data/por": "1.0.0",
     "jsdom": "24.1.3",
-    "pdfjs-dist": "3.11.174"
+    "pdfjs-dist": "3.11.174",
+    "puppeteer-core": "24.43.1",
+    "tesseract.js": "7.0.0"
   }
 }

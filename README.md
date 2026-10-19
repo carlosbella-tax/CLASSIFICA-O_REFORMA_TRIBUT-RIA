@@ -50,6 +50,7 @@ Os arquivos são concatenados exatamente na ordem de `src/manifest.json`. Os mó
 | `src/vendor/pdfjs-complementos.js` | 1 KB | V89: Promise.allSettled quando a página não tiver (exigido pelo pdf.js) |
 | `src/vendor/pdfjs-3.11.174.min.js` e `.worker.min.js` | 1.380 KB | pdf.js 3.11.174 embutido para ler PDF offline (não editar) |
 | `src/vendor/motor-nfse.js` | 60 KB | leitor de NFS-e (XML/PDF) do Motor de Cálculo — gerado por `tools/portar-nfse-motor.mjs` (não editar) |
+| `src/vendor/tesseract-7.0.0.min.js` e `src/vendor/ocr-dados-v108.js` | 5.900 KB | V108: OCR offline (tesseract.js 7.0.0, núcleo simd-lstm, português best_int) — gerado por `tools/portar-ocr.mjs` (não editar) |
 | `src/js/apresentacao/gerador-pptx.js` | 30 KB | montagem dos slides (modelo Tax Advice) |
 | `src/js/apresentacao/imagens-pptx.js` | 103 KB | logos e fundo da apresentação em base64 |
 | `src/js/base/auxiliares-v25-v29.js` | 6 KB | CST ICMS/CSOSN, alíquota exibida, leitura XML rápida, auxiliares do Excel |
@@ -114,6 +115,7 @@ Os arquivos são concatenados exatamente na ordem de `src/manifest.json`. Os mó
 | `src/js/modulos/62-v105-imposto-seletivo.js` | 9 KB | módulo V105 (Imposto Seletivo na aba Base de IBS/CBS: colunas e validações de CST, base e valor; quadro de IS no Dashboard) |
 | `src/js/modulos/63-v106-pis-cofins-observacoes-simples-uso.js` | 3 KB | módulo V106 (PIS/COFINS: CSOSN 102 + Lucro Presumido VALIDADO; observações 5107/6107, 1656, 1556/2556) |
 | `src/js/modulos/64-v107-icms-st-portaria-sre-34-2026.js` | 25 KB | módulo V107 (ICMS ST: validação Portaria SRE nº 34/2026 — 174 itens excluídos do ICMS ST em SP) |
+| `src/js/modulos/65-v108-nfse-pdf-ocr.js` | 14 KB | módulo V108 (NFS-e em PDF de imagem por OCR, detecção de NFS-e e leitor de leiautes SP/Barueri/Caieiras; nenhuma NFS-e fica de fora) |
 | `src/js/modulos/99-fechamento.js` | 0 KB | fecha a função principal e desenha a tela — módulos novos entram antes dele |
 
 ## Origem
