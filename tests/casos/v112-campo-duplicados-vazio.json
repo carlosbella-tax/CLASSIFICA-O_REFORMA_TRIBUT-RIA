@@ -1,0 +1,23 @@
+{
+  "descricao": "V112 — aba Processar: com arquivos duplicados (excluídos automaticamente desde a V111), o campo 'Duplicados ignorados' fica vazio",
+  "arquivos": [
+    "v90-uso-consumo.xml",
+    "v111-copia-do-v90.xml"
+  ],
+  "campos": {
+    "cnpjEmpresa": "08.308.329/0001-26"
+  },
+  "funcao": "(() => [{k: 'r', campo_dup: document.getElementById('pDup').textContent, dups: (state.duplicados || []).length, docs: state.docs.length, erros: state.errors.length}])",
+  "chave": "k",
+  "linhas": [
+    {
+      "numero_item": "r",
+      "esperado": {
+        "campo_dup": "^$",
+        "dups": 1,
+        "docs": 1,
+        "erros": 0
+      }
+    }
+  ]
+}

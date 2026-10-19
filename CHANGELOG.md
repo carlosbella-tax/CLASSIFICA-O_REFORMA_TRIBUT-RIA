@@ -5,6 +5,12 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V112 — 2026-10-19
+
+- **Aba Processar — campo "Duplicados ignorados" sempre vazio**: desde a V111 todo arquivo duplicado (XML ou PDF) é excluído automaticamente ao carregar, então o campo não mostra mais contagem (nem durante, nem depois do processamento). A relação dos excluídos continua em `state.duplicados`.
+- Caso `tests/casos/v112-campo-duplicados-vazio` (XML e cópia com outro nome: 1 documento, 1 duplicado excluído, 0 erro e campo vazio).
+  `src/js/modulos/69-v112-campo-duplicados-vazio.js`
+
 ## V111 — 2026-10-19
 
 - **Duplicados excluídos automaticamente (XML ou PDF)**:

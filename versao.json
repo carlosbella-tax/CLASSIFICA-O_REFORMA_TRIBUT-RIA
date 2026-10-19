@@ -1,5 +1,5 @@
 {
-  "versao": 111,
+  "versao": 112,
   "data": "2026-10-19",
-  "descricao": "Duplicados (XML ou PDF) excluídos automaticamente: arquivos idênticos não são lidos de novo (nem por OCR) e saem da lista de erros"
+  "descricao": "Processar: campo Duplicados ignorados sempre vazio (duplicados ja sao excluidos automaticamente)"
 }
