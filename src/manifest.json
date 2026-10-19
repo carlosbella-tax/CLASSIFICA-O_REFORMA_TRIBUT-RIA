@@ -92,6 +92,7 @@
     "src/js/modulos/64-v107-icms-st-portaria-sre-34-2026.js",
     "src/js/modulos/65-v108-nfse-pdf-ocr.js",
     "src/js/modulos/66-v109-ocr-robusto.js",
+    "src/js/modulos/67-v110-ocr-sem-travar.js",
     "src/js/modulos/99-fechamento.js",
     "src/90-rodape.html"
   ]

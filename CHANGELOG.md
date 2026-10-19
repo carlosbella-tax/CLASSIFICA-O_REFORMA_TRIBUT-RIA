@@ -5,6 +5,16 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V110 — 2026-10-19
+
+- **O OCR nunca mais trava o processamento**: em alguns ambientes (ex.: visualizador do G4 OS) o OCR não dava erro — ficava esperando para sempre; como os arquivos são lidos em lotes, um PDF parado segurava o lote inteiro e nada era carregado (Itens 0, abas sem contagem).
+  - Limite de 90 s para o OCR iniciar e de 90 s por página; PDF que não abre em 60 s vira erro.
+  - Se o OCR não iniciar ou travar em 2 páginas seguidas, ele é desligado para o resto do processamento: os PDFs de imagem seguintes vão para a lista de erros com "OCR bloqueado neste ambiente — abra o arquivo DIAGNOSTICO no Chrome ou no Edge" e **todos os XMLs e PDFs com texto continuam carregando**, com as contagens nas abas.
+  - A vaga da fila de OCR é sempre devolvida, mesmo com página travada.
+  - Aviso vermelho no topo da tela quando o OCR estiver bloqueado.
+- Testado no Edge com 9 XMLs + 10 PDFs: OCR normal (28 s, 114 itens, 9 NFS-e), OCR sem worker (71 s, mesmo resultado) e OCR travado (91 s, 106 itens, 1 NFS-e com texto, 9 PDFs de imagem na lista de erros com o aviso; antes ficava parado para sempre).
+  `src/js/modulos/67-v110-ocr-sem-travar.js`; `tools/testar-ocr-edge.mjs` ganhou o modo `travado`
+
 ## V109 — 2026-10-19
 
 - **OCR das NFS-e em PDF de imagem funciona em qualquer ambiente**: se o ambiente bloquear o worker do OCR (ex.: visualizador do G4 OS ou quadro isolado), o núcleo do Tesseract roda direto na página (TesseractCore + TessBaseAPI), com o mesmo dicionário de português embutido.

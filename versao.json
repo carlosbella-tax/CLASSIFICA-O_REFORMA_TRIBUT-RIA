@@ -1,5 +1,5 @@
 {
-  "versao": 109,
+  "versao": 110,
   "data": "2026-10-19",
-  "descricao": "OCR de NFS-e robusto: leitura direta na página quando o worker é bloqueado (visualizador), 2 leituras em paralelo, andamento por arquivo e aviso de PDFs não lidos na aba ISS"
+  "descricao": "OCR nunca trava o processamento: limites de tempo, OCR desligado na hora se o ambiente bloquear, aviso na tela; XMLs e PDFs com texto sempre carregam"
 }
