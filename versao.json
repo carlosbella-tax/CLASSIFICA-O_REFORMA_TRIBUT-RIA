@@ -1,5 +1,5 @@
 {
-  "versao": 112,
+  "versao": 113,
   "data": "2026-10-19",
-  "descricao": "Processar: campo Duplicados ignorados sempre vazio (duplicados ja sao excluidos automaticamente)"
+  "descricao": "ICMS ST: validacao pela NCM da Portaria SRE 34/2026 (ANALISAR em vermelho / VALIDADO), observacao, colunas do ICMS 60 (pST, ICMS do substituto, FCP ST retido)"
 }

@@ -5,6 +5,17 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V113 — 2026-10-19
+
+- **Aba ICMS ST — validação pela NCM (Portaria SRE nº 34/2026)**: a NCM do XML é comparada com a relação da planilha "Portaria SRE nº 342026 revogou" (colunas C e D — as mesmas 208 NCMs / 174 itens da V107).
+  - NCM encontrada → `validacao_icms_st` **ANALISAR** (em vermelho), com anexo, item, CEST e descrição legal, e observação **"NCM FOI EXCLUÍDA DA LISTA DE ICMS ST EM 30/09 ATRAVÉS DA Portaria SRE nº 34/2026"**;
+  - NCM não encontrada → **VALIDADO**.
+  - A coluna `validacao_portaria_sre_34_2026` da V107 passou a ser `validacao_icms_st`; nova coluna `observacao` editável (o texto digitado pelo usuário prevalece).
+- **Aba ICMS ST — todos os dados do ICMS 60 / CSOSN 500** (ST retido anteriormente): depois de `valor_st_retido` entram `aliquota_st_retido` (pST), `icms_substituto` (vICMSSubstituto) e o FCP ST retido (`base_fcp_st_retido`, `aliquota_fcp_st_retido`, `valor_fcp_st_retido`).
+- "ANALISAR" passa a ser exibido em vermelho, como NÃO VALIDADO.
+- Caso `tests/casos/v113-icms-st-validacao-ncm`; caso V107 atualizado para a coluna `validacao_icms_st`.
+  `src/js/modulos/70-v113-icms-st-validacao-ncm-sre34.js`
+
 ## V112 — 2026-10-19
 
 - **Aba Processar — campo "Duplicados ignorados" sempre vazio**: desde a V111 todo arquivo duplicado (XML ou PDF) é excluído automaticamente ao carregar, então o campo não mostra mais contagem (nem durante, nem depois do processamento). A relação dos excluídos continua em `state.duplicados`.

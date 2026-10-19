@@ -1,0 +1,31 @@
+{
+  "descricao": "V113 — aba ICMS ST: validação pela NCM da Portaria SRE nº 34/2026 (ANALISAR em vermelho com observação / VALIDADO) e colunas do ICMS 60 (pST e ICMS do substituto)",
+  "arquivo": "v107-icms-st-sre34.xml",
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91"
+  },
+  "funcao": "linhasIcmsSt",
+  "colunas_apos": {
+    "valor_st_retido": ["aliquota_st_retido", "icms_substituto", "base_fcp_st_retido", "aliquota_fcp_st_retido", "valor_fcp_st_retido", "validacao_icms_st", "observacao"]
+  },
+  "linhas": [
+    {
+      "numero_item": "1",
+      "esperado": {
+        "tipo_operacao": "^SAÍDAS$",
+        "base_st_retido": 130,
+        "aliquota_st_retido": 18,
+        "valor_st_retido": 5.4,
+        "validacao_icms_st": "^ANALISAR — NCM 87089990",
+        "observacao": "^NCM FOI EXCLUÍDA DA LISTA DE ICMS ST EM 30/09 ATRAVÉS DA Portaria SRE nº 34/2026$"
+      }
+    },
+    {
+      "numero_item": "3",
+      "esperado": {
+        "validacao_icms_st": "^VALIDADO — NCM 22030000",
+        "observacao": "^$"
+      }
+    }
+  ]
+}
