@@ -116,6 +116,7 @@ Os arquivos são concatenados exatamente na ordem de `src/manifest.json`. Os mó
 | `src/js/modulos/63-v106-pis-cofins-observacoes-simples-uso.js` | 3 KB | módulo V106 (PIS/COFINS: CSOSN 102 + Lucro Presumido VALIDADO; observações 5107/6107, 1656, 1556/2556) |
 | `src/js/modulos/64-v107-icms-st-portaria-sre-34-2026.js` | 25 KB | módulo V107 (ICMS ST: validação Portaria SRE nº 34/2026 — 174 itens excluídos do ICMS ST em SP) |
 | `src/js/modulos/65-v108-nfse-pdf-ocr.js` | 14 KB | módulo V108 (NFS-e em PDF de imagem por OCR, detecção de NFS-e e leitor de leiautes SP/Barueri/Caieiras; nenhuma NFS-e fica de fora) |
+| `src/js/modulos/66-v109-ocr-robusto.js` | 8 KB | módulo V109 (OCR robusto: leitura direta na página quando o worker é bloqueado, grupo de até 4 workers, andamento e aviso de PDFs não lidos na aba ISS) |
 | `src/js/modulos/99-fechamento.js` | 0 KB | fecha a função principal e desenha a tela — módulos novos entram antes dele |
 
 ## Origem

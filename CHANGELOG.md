@@ -5,6 +5,16 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V109 — 2026-10-19
+
+- **OCR das NFS-e em PDF de imagem funciona em qualquer ambiente**: se o ambiente bloquear o worker do OCR (ex.: visualizador do G4 OS ou quadro isolado), o núcleo do Tesseract roda direto na página (TesseractCore + TessBaseAPI), com o mesmo dicionário de português embutido.
+- **Mais rápido e sem estourar a memória com dezenas de PDFs**: grupo de workers de OCR, um por núcleo do processador (até 4), criados sob demanda, e fila de PDFs. A V108 criava um worker por PDF em andamento, sem limite. Teste no Edge com 60 PDFs (54 de imagem): 220 s (antes 625 s).
+- **Andamento visível**: "Lendo NFS-e em PDF de imagem por OCR — arquivo · página p de q · arquivo n de total".
+- **Aba ISS avisa os PDFs não lidos**: o resumo mostra "ATENÇÃO: N PDF(s) não lido(s)" com o motivo (lista completa na aba Carregar XMLs); duplicados não entram na conta.
+- Testado no Edge: arquivo aberto direto, em quadro isolado e com o worker bloqueado — as 9 notas distintas dos 10 PDFs entram na aba ISS nos três casos.
+- Caso `tests/casos/v109-iss-aviso-pdf-nao-lido`; `tools/testar-ocr-edge.mjs` (teste real no Edge).
+  `src/js/modulos/66-v109-ocr-robusto.js`
+
 ## V108 — 2026-10-19
 
 - **NFS-e em PDF de imagem (OCR embutido, sem internet)**: PDF sem camada de texto (ex.: gerado pelo "Microsoft: Print To PDF" ou digitalizado) é renderizado página a página pelo pdf.js e lido por OCR (Tesseract 7, português `best_int`), dentro do próprio HTML. A nota entra na aba ISS como "NFS-e (PDF)" e a nova coluna `leitura_pdf` informa "OCR (PDF de imagem) — conferir" (ou "Texto do PDF" / "XML"). Cerca de 4 s por página.

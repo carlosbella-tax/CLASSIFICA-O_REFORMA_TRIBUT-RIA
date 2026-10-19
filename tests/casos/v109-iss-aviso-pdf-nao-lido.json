@@ -1,0 +1,24 @@
+{
+  "descricao": "V109 — aba ISS avisa quantos PDFs não puderam ser lidos (e o motivo); nota de imagem lida por OCR continua entrando",
+  "arquivos": [
+    "v109-pdf-imagem-ilegivel.pdf",
+    "v108-pdf-imagem-barueri-zund.pdf"
+  ],
+  "ocr": {
+    "v108-pdf-imagem-barueri-zund.pdf": "v108-ocr-barueri-zund.txt"
+  },
+  "campos": {
+    "cnpjEmpresa": "08.308.329/0001-26"
+  },
+  "funcao": "(() => { renderAba('iss'); return [{k: 'info', info: document.getElementById('issInfo').textContent, notas: linhasIss().length}]; })",
+  "chave": "k",
+  "linhas": [
+    {
+      "numero_item": "info",
+      "esperado": {
+        "notas": 1,
+        "info": "^Notas de serviço: 1 · ATENÇÃO: 1 PDF.s. não lido.s. — 1× PDF sem texto .*lista completa na aba Carregar XMLs..$"
+      }
+    }
+  ]
+}

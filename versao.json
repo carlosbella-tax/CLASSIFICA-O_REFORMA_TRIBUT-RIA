@@ -1,5 +1,5 @@
 {
-  "versao": 108,
+  "versao": 109,
   "data": "2026-10-19",
-  "descricao": "NFS-e em PDF de imagem (OCR embutido, offline) e detecção de NFS-e mais robusta: todas as notas de serviço entram na aba ISS"
+  "descricao": "OCR de NFS-e robusto: leitura direta na página quando o worker é bloqueado (visualizador), 2 leituras em paralelo, andamento por arquivo e aviso de PDFs não lidos na aba ISS"
 }
