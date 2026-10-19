@@ -55,7 +55,7 @@
     motorV109 = (async () => {
       try {
         if (typeof Worker !== 'function') throw Error('sem Worker');
-        const w1 = await Promise.race([criarWorkerV109(), new Promise((_, erro) => setTimeout(() => erro(Error('worker do OCR não respondeu')), 45000))]);
+        const w1 = await Promise.race([criarWorkerV109(), new Promise((_, erro) => setTimeout(() => erro(Error('worker do OCR não respondeu')), 120000))   /* V115: 120 s */]);
         motorTipoV109 = 'worker';
         const N = Math.max(1, Math.min(4, (navigator.hardwareConcurrency || 2) - 1)), livres = [w1], espera = [];
         let criados = 1;

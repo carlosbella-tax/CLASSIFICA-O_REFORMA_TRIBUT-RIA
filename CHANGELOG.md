@@ -5,6 +5,15 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V115 — 2026-10-19
+
+- **OCR funciona com o arquivo aberto direto do disco em qualquer Chrome ou Edge** (corrige o aviso "OCR bloqueado neste ambiente"): num navegador comum, a página aberta do disco (file://) tem origem "null" e o worker do OCR não conseguia carregar o núcleo (importScripts de blob:null) nem o dicionário; sobrava a leitura direta na página, lenta em computadores modestos, que estourava o limite e desligava o OCR. Os testes anteriores passavam porque o Edge de teste rodava com `--allow-file-access-from-files`.
+- O worker agora é **autossuficiente**: núcleo do Tesseract e dicionário de português vão dentro do próprio script do worker — nada é carregado de fora.
+- Limites de tempo maiores para computadores lentos: 150 s para o OCR iniciar, 240 s por página, OCR desligado só após 3 páginas travadas seguidas; 120 s para o worker responder.
+- Teste no Edge **sem** permissões extras: 10 PDFs → 9 notas na aba ISS em 22 s; quadro isolado → 9 notas; 60 PDFs → 23 s (duplicados excluídos antes da leitura); OCR travado → 106 itens carregados e aviso.
+- `tools/testar-ocr-edge.mjs`: variável `SEM_FLAG=1` testa como um navegador comum.
+  `src/js/modulos/69-v115-ocr-worker-autossuficiente.js`; módulos 66 e 67 (comentários V115)
+
 ## V114 — 2026-10-19
 
 - **Aba Base de PIS/COFINS — colunas `valor_frete`, `valor_seguro`, `valor_desconto`, `valor_outras_despesas`, `valor_ii` e `valor_ipi`** depois do valor do ICMS (`valor_icms_xml` e `valor_icms_difal`, que seguem juntos como na V77) e antes de `base_pis_xml`.

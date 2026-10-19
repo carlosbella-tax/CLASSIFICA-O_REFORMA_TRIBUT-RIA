@@ -1,5 +1,5 @@
 {
-  "versao": 114,
+  "versao": 115,
   "data": "2026-10-19",
-  "descricao": "Base de PIS/COFINS: colunas frete, seguro, desconto, outras despesas, II e IPI apos o valor do ICMS (mesmos valores da aba ICMS)"
+  "descricao": "OCR funciona aberto do disco em qualquer Chrome/Edge: núcleo e dicionário embutidos no próprio worker; limites de tempo maiores para computadores lentos"
 }

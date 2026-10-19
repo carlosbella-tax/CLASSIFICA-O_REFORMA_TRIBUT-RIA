@@ -36,7 +36,7 @@
   const motorOcrV109b = motorOcrV109;
   motorOcrV109 = async function(){
     if (ocrDesligadoV110) throw Error(ocrDesligadoV110);
-    try { return await comLimiteV110(motorOcrV109b(), 90000, 'o OCR não iniciou em 90 s'); }
+    try { return await comLimiteV110(motorOcrV109b(), 150000, 'o OCR não iniciou em 2,5 min')   /* V115: 150 s */; }
     catch(e){ desligarOcrV110(e && e.message || String(e)); throw Error(ocrDesligadoV110); }
   };
   ocrPdfV108 = async function(buf, nome){
@@ -60,11 +60,11 @@
             cv.width = Math.ceil(vp.width); cv.height = Math.ceil(vp.height);
             await page.render({canvasContext: cv.getContext('2d'), viewport: vp}).promise;
             return motor.recognize(cv);
-          })(), 90000, 'página ' + p + ' sem resposta do OCR em 90 s');
+          })(), 240000, 'página ' + p + ' sem resposta do OCR em 4 min');   // V115: 240 s
           linhas.push(...String(texto || '').split('\n').map(s => s.trim()), '');
           travasV110 = 0;
         } catch(e){
-          if (/sem resposta/.test(e && e.message || '') && ++travasV110 >= 2) desligarOcrV110('OCR travou em 2 páginas seguidas');
+          if (/sem resposta/.test(e && e.message || '') && ++travasV110 >= 3) desligarOcrV110('OCR travou em 3 páginas seguidas');   // V115: 3
           throw e;
         }
       }

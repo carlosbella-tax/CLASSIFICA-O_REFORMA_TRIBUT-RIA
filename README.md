@@ -2,7 +2,7 @@
 
 Lê XML de NF-e, CT-e, NFS-e e eventos (arquivos, pasta inteira, TXT com XML), valida ICMS, ICMS ST, IPI, PIS/COFINS e IBS/CBS (LC 214/2025), mostra o Dashboard por imposto e gera Excel, PDF e a apresentação em PowerPoint. O entregável é **um único arquivo HTML** que roda offline no navegador.
 
-Versão atual: **V100** (ver [CHANGELOG.md](CHANGELOG.md)). Regras de trabalho do agente: [AGENTS.md](AGENTS.md).
+Versão atual: **V115** (ver [CHANGELOG.md](CHANGELOG.md)). Regras de trabalho do agente: [AGENTS.md](AGENTS.md).
 
 ## Comandos
 
@@ -119,6 +119,7 @@ Os arquivos são concatenados exatamente na ordem de `src/manifest.json`. Os mó
 | `src/js/modulos/66-v109-ocr-robusto.js` | 8 KB | módulo V109 (OCR robusto: leitura direta na página quando o worker é bloqueado, grupo de até 4 workers, andamento e aviso de PDFs não lidos na aba ISS) |
 | `src/js/modulos/67-v110-ocr-sem-travar.js` | 6 KB | módulo V110 (OCR com limites de tempo; desligado na hora se o ambiente bloquear; aviso na tela; XMLs e PDFs com texto sempre carregam) |
 | `src/js/modulos/68-v111-duplicados-automaticos.js` | 3 KB | módulo V111 (duplicados XML/PDF excluídos automaticamente, sem leitura repetida; contagem 0 visível nas abas) |
+| `src/js/modulos/69-v115-ocr-worker-autossuficiente.js` | 2 KB | módulo V115 (worker do OCR autossuficiente: funciona aberto do disco em qualquer Chrome/Edge) |
 | `src/js/modulos/99-fechamento.js` | 0 KB | fecha a função principal e desenha a tela — módulos novos entram antes dele |
 
 ## Origem
