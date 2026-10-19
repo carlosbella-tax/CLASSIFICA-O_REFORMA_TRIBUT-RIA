@@ -1,10 +1,10 @@
 {
-  "descricao": "V77 — base de PIS/COFINS sem o ICMS DIFAL; coluna valor_icms_difal após valor_icms_xml [V82: texto da fórmula única]",
+  "descricao": "V77 — base de PIS/COFINS sem o ICMS DIFAL; coluna valor_icms_difal após valor_icms_xml [V82: texto da fórmula única; V114: frete, seguro, desconto, outras, II e IPI depois do DIFAL]",
   "funcao": "linhasPisCofins",
   "colunas_apos": {
     "valor_icms_xml": [
       "valor_icms_difal",
-      "base_pis_xml"
+      "valor_frete"
     ]
   },
   "linhas": [

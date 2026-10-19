@@ -5,6 +5,13 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V114 — 2026-10-19
+
+- **Aba Base de PIS/COFINS — colunas `valor_frete`, `valor_seguro`, `valor_desconto`, `valor_outras_despesas`, `valor_ii` e `valor_ipi`** depois do valor do ICMS (`valor_icms_xml` e `valor_icms_difal`, que seguem juntos como na V77) e antes de `base_pis_xml`.
+  - Valores **iguais aos da aba ICMS**, inclusive os ajustes feitos lá (ex.: Simples opção 3 — outras despesas lançadas como IPI, V100); item que não está na aba ICMS traz os valores do XML.
+- Caso `tests/casos/v114-pis-cofins-colunas-icms`; caso V77 atualizado (depois do DIFAL vem `valor_frete`).
+  `src/js/modulos/71-v114-pis-cofins-colunas-icms.js`
+
 ## V113 — 2026-10-19
 
 - **Aba ICMS ST — validação pela NCM (Portaria SRE nº 34/2026)**: a NCM do XML é comparada com a relação da planilha "Portaria SRE nº 342026 revogou" (colunas C e D — as mesmas 208 NCMs / 174 itens da V107).

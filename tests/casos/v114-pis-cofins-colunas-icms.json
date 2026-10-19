@@ -1,0 +1,45 @@
+{
+  "descricao": "V114 — aba Base de PIS/COFINS: frete, seguro, desconto, outras despesas, II e IPI depois do valor do ICMS (após valor_icms_difal), com os mesmos valores da aba ICMS",
+  "arquivos": [
+    "v114-frete-seguro-outras-ipi.xml",
+    "v100-simples-outras-ipi.xml"
+  ],
+  "campos": {
+    "cnpjEmpresa": ""
+  },
+  "funcao": "(() => { const ic = new Map(linhasIcms().map(r => [r.numero_nota_fiscal + '-' + r.numero_item, r])); return linhasPisCofins().map(r => { const i = ic.get(r.numero_nota_fiscal + '-' + r.numero_item) || {}; return Object.assign(r, {k: 'pc-' + r.numero_nota_fiscal + '-' + r.numero_item, iguais_icms: ['valor_frete','valor_seguro','valor_desconto','valor_outras_despesas','valor_ii','valor_ipi'].every(c => Number(r[c]) === Number(i[c])) ? 'sim' : 'nao'}); }); })",
+  "chave": "k",
+  "colunas_apos": {
+    "valor_icms_difal": [
+      "valor_frete",
+      "valor_seguro",
+      "valor_desconto",
+      "valor_outras_despesas",
+      "valor_ii",
+      "valor_ipi",
+      "base_pis_xml"
+    ]
+  },
+  "linhas": [
+    {
+      "numero_item": "pc-123-1",
+      "esperado": {
+        "valor_frete": 300,
+        "valor_seguro": 100,
+        "valor_desconto": 0,
+        "valor_outras_despesas": 200,
+        "valor_ii": 0,
+        "valor_ipi": 500,
+        "iguais_icms": "^sim$"
+      }
+    },
+    {
+      "numero_item": "pc-1001-1",
+      "esperado": {
+        "valor_outras_despesas": 0,
+        "valor_ipi": 100,
+        "iguais_icms": "^sim$"
+      }
+    }
+  ]
+}

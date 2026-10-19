@@ -96,6 +96,7 @@
     "src/js/modulos/68-v111-duplicados-automaticos.js",
     "src/js/modulos/69-v112-campo-duplicados-vazio.js",
     "src/js/modulos/70-v113-icms-st-validacao-ncm-sre34.js",
+    "src/js/modulos/71-v114-pis-cofins-colunas-icms.js",
     "src/js/modulos/99-fechamento.js",
     "src/90-rodape.html"
   ]

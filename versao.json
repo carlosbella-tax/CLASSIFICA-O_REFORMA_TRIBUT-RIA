@@ -1,5 +1,5 @@
 {
-  "versao": 113,
+  "versao": 114,
   "data": "2026-10-19",
-  "descricao": "ICMS ST: validacao pela NCM da Portaria SRE 34/2026 (ANALISAR em vermelho / VALIDADO), observacao, colunas do ICMS 60 (pST, ICMS do substituto, FCP ST retido)"
+  "descricao": "Base de PIS/COFINS: colunas frete, seguro, desconto, outras despesas, II e IPI apos o valor do ICMS (mesmos valores da aba ICMS)"
 }
