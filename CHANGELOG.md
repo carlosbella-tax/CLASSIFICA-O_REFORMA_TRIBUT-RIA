@@ -5,6 +5,12 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V121 — 2026-10-20
+
+- **Aba ICMS ST — coluna `quantidade`** (quantidade comercial do item, qCom do XML) logo antes de `valor_total_produtos`; vai também para a exportação em Excel.
+- Caso `tests/casos/v121-icms-st-quantidade`.
+  `src/js/modulos/75-v121-icms-st-quantidade.js`
+
 ## V120 — 2026-10-20
 
 - **Aba ICMS ST — base, alíquota e valor preenchidos no CST 60**: quando o XML não traz o grupo de ST (vBCST/pICMSST/vICMSST), `base_icms_st_xml`, `aliquota_icms_st` e `valor_icms_st_xml` são lidos do texto da descrição do item (infAdProd, ex.: "BC ICMS ST 134,28 pST 18.00% Vlr ICMS ST 15,72"); sem o texto, vêm dos campos de ST retido (vBCSTRet, pST, vICMSSTRet). `icms_proprio_xml` sem valor recebe o vICMSSubstituto. Valores do grupo de ST do XML nunca são trocados; o Dashboard não muda.

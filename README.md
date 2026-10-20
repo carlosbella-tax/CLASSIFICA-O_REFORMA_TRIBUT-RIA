@@ -2,7 +2,7 @@
 
 Lê XML de NF-e, CT-e, NFS-e e eventos (arquivos, pasta inteira, TXT com XML), valida ICMS, ICMS ST, IPI, PIS/COFINS e IBS/CBS (LC 214/2025), mostra o Dashboard por imposto e gera Excel, PDF e a apresentação em PowerPoint. O entregável é **um único arquivo HTML** que roda offline no navegador.
 
-Versão atual: **V120** (ver [CHANGELOG.md](CHANGELOG.md)). Regras de trabalho do agente: [AGENTS.md](AGENTS.md).
+Versão atual: **V121** (ver [CHANGELOG.md](CHANGELOG.md)). Regras de trabalho do agente: [AGENTS.md](AGENTS.md).
 
 ## Comandos
 
@@ -125,6 +125,7 @@ Os arquivos são concatenados exatamente na ordem de `src/manifest.json`. Os mó
 | `src/js/modulos/72-v118-conferencia-duplicados.js` | 4 KB | módulo V118 (conferência arquivos = processados + duplicados + erros; lista de duplicados; proteção contra duplicado falso) |
 | `src/js/modulos/73-v119-icms-colunas-pis-cofins.js` | 1 KB | módulo V119 (aba ICMS: base, CST e valor de PIS/COFINS do XML após o ICMS DIFAL) |
 | `src/js/modulos/74-v120-icms-st-infadprod.js` | 3 KB | módulo V120 (aba ICMS ST: base, alíquota e valor do ST lidos do infAdProd ou do ST retido no CST 60) |
+| `src/js/modulos/75-v121-icms-st-quantidade.js` | 1 KB | módulo V121 (aba ICMS ST: quantidade de cada item) |
 | `src/js/modulos/99-fechamento.js` | 0 KB | fecha a função principal e desenha a tela — módulos novos entram antes dele |
 
 ## Origem

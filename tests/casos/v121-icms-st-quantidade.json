@@ -1,0 +1,34 @@
+{
+  "descricao": "V121 — aba ICMS ST: quantidade de cada item antes de valor_total_produtos",
+  "arquivo": "v120-st60-infadprod.xml",
+  "campos": {
+    "cnpjEmpresa": "42.542.419/0001-15"
+  },
+  "funcao": "linhasIcmsSt",
+  "colunas_apos": {
+    "descricao_cst_icms": [
+      "quantidade",
+      "valor_total_produtos"
+    ]
+  },
+  "linhas": [
+    {
+      "numero_item": "1",
+      "esperado": {
+        "quantidade": 4
+      }
+    },
+    {
+      "numero_item": "8",
+      "esperado": {
+        "quantidade": 20
+      }
+    },
+    {
+      "numero_item": "10",
+      "esperado": {
+        "quantidade": 10
+      }
+    }
+  ]
+}

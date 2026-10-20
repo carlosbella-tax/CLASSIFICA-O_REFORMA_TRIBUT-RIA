@@ -1,5 +1,5 @@
 {
-  "versao": 120,
+  "versao": 121,
   "data": "2026-10-20",
-  "descricao": "Aba ICMS ST: base, alíquota e valor do ICMS ST lidos da descrição do item (infAdProd) ou dos campos de ST retido"
+  "descricao": "Aba ICMS ST: coluna quantidade de cada item antes de valor_total_produtos"
 }
