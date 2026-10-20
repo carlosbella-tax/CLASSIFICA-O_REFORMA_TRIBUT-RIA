@@ -100,6 +100,7 @@
     "src/js/modulos/69-v115-ocr-worker-autossuficiente.js",
     "src/js/modulos/70-v116-ocr-teste-nao-lidos.js",
     "src/js/modulos/71-v117-dashboard-itens-iguais-processamento.js",
+    "src/js/modulos/72-v118-conferencia-duplicados.js",
     "src/js/modulos/99-fechamento.js",
     "src/90-rodape.html"
   ]

@@ -1,5 +1,5 @@
 {
-  "versao": 117,
+  "versao": 118,
   "data": "2026-10-20",
-  "descricao": "Dashboard/impressão: Itens analisados e documentos iguais à aba Processamento do lote (inclui itens de notas canceladas)"
+  "descricao": "Processamento: conferência arquivos = processados + duplicados + erros, lista de duplicados com o original; NFS-e com mesmo número e valor/data diferentes não é mais tratada como duplicada"
 }

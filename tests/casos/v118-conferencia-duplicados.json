@@ -1,0 +1,28 @@
+{
+  "descricao": "V118 — conferência arquivos = processados + duplicados + erros; lista de duplicados com o original; NFS-e com mesmo número e valor diferente não é duplicado",
+  "arquivos": [
+    "v90-uso-consumo.xml",
+    "v111-copia-do-v90.xml",
+    "v89-nfse-nacional.xml",
+    "v118-nfse-mesmo-numero-outro-valor.xml",
+    "v118-arquivo-invalido.xml"
+  ],
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91"
+  },
+  "funcao": "(() => [{k: 'r', docs: state.docs.length, dups: (state.duplicados || []).length, erros: state.errors.length, iss: linhasIss().length, conf: document.getElementById('pConferenciaV118').textContent, lista: document.getElementById('pErrosLista').textContent}])",
+  "chave": "k",
+  "linhas": [
+    {
+      "numero_item": "r",
+      "esperado": {
+        "docs": 3,
+        "dups": 1,
+        "erros": 1,
+        "iss": 2,
+        "conf": "^Conferência: 5 arquivo.s. carregado.s. = 3 documento.s. processado.s. .* \\+ 1 duplicado.s. excluído.s. \\+ 1 com erro ✔",
+        "lista": "^.*v111-copia-do-v90.xml — duplicado de v90-uso-consumo.xml"
+      }
+    }
+  ]
+}

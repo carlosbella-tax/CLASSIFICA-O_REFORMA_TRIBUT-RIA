@@ -5,6 +5,14 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V118 — 2026-10-20
+
+- **Aba Processamento — conferência de todos os arquivos**: abaixo dos indicadores, "N arquivo(s) carregado(s) = X documento(s) processado(s) (inclui eventos) + Y duplicado(s) excluído(s) + Z com erro ✔" (em laranja, com a diferença, se a conta não fechar) e o total de itens nas abas.
+- **Lista "Duplicados excluídos automaticamente"** (expansível, na caixa de ocorrências): cada arquivo duplicado com o arquivo de origem que ficou valendo e a chave.
+- **Proteção contra duplicado falso**: documento cuja chave não é a chave de acesso de 44 dígitos (ex.: NFS-e identificada por prestador + número, inclusive lida por OCR) só é tratado como duplicado se valor, data e emitente também forem iguais; caso contrário é processado normalmente.
+- Caso `tests/casos/v118-conferencia-duplicados`.
+  `src/js/modulos/72-v118-conferencia-duplicados.js`
+
 ## V117 — 2026-10-20
 
 - **Dashboard e impressão em PDF — "Itens analisados" igual à aba Processamento do lote**: o quadro da empresa contava os itens sem as notas canceladas (que desde a V70 ficam fora das apurações), enquanto a aba Processamento conta todos os itens carregados (ex.: 549 × 591). Agora "Documentos" e "Itens analisados" mostram os mesmos números do processamento, e o subtítulo informa quantos itens são de notas canceladas e ficam fora das apurações. Com filtro de consulta no Dashboard continua valendo a contagem filtrada (V15).
