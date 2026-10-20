@@ -1,5 +1,5 @@
 {
-  "versao": 119,
+  "versao": 120,
   "data": "2026-10-20",
-  "descricao": "Aba ICMS: base de PIS/COFINS, CST e valor de PIS e de COFINS do XML após valor_icms_difal"
+  "descricao": "Aba ICMS ST: base, alíquota e valor do ICMS ST lidos da descrição do item (infAdProd) ou dos campos de ST retido"
 }

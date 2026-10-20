@@ -5,6 +5,12 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V120 — 2026-10-20
+
+- **Aba ICMS ST — base, alíquota e valor preenchidos no CST 60**: quando o XML não traz o grupo de ST (vBCST/pICMSST/vICMSST), `base_icms_st_xml`, `aliquota_icms_st` e `valor_icms_st_xml` são lidos do texto da descrição do item (infAdProd, ex.: "BC ICMS ST 134,28 pST 18.00% Vlr ICMS ST 15,72"); sem o texto, vêm dos campos de ST retido (vBCSTRet, pST, vICMSSTRet). `icms_proprio_xml` sem valor recebe o vICMSSubstituto. Valores do grupo de ST do XML nunca são trocados; o Dashboard não muda.
+- Caso `tests/casos/v120-icms-st-infadprod` (XML real do usuário, NF 556419).
+  `src/js/modulos/74-v120-icms-st-infadprod.js`
+
 ## V119 — 2026-10-20
 
 - **Aba ICMS — colunas de PIS/COFINS do XML** logo depois de `valor_icms_difal`: `base_pis_cofins` (vBC do PIS; sem ele, vBC da COFINS), `cst_pis`, `valor_pis`, `cst_cofins` e `valor_cofins`. Somente a informação do XML, sem cálculo (a validação continua na aba Base de PIS/COFINS).

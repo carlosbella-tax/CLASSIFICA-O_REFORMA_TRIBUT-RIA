@@ -1,0 +1,36 @@
+{
+  "descricao": "V120 — aba ICMS ST: base, alíquota e valor do ICMS ST lidos da descrição do item (infAdProd) no CST 60",
+  "arquivo": "v120-st60-infadprod.xml",
+  "campos": {
+    "cnpjEmpresa": "42.542.419/0001-15"
+  },
+  "funcao": "linhasIcmsSt",
+  "linhas": [
+    {
+      "numero_item": "1",
+      "esperado": {
+        "base_icms_st_xml": 134.28,
+        "aliquota_icms_st": 18,
+        "valor_icms_st_xml": 15.72,
+        "icms_proprio_xml": 8.44
+      }
+    },
+    {
+      "numero_item": "2",
+      "esperado": {
+        "base_icms_st_xml": 195.12,
+        "aliquota_icms_st": 18,
+        "valor_icms_st_xml": 22.86,
+        "icms_proprio_xml": 12.3
+      }
+    },
+    {
+      "numero_item": "7",
+      "esperado": {
+        "base_icms_st_xml": 0,
+        "aliquota_icms_st": 18,
+        "valor_icms_st_xml": 0
+      }
+    }
+  ]
+}
