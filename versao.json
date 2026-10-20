@@ -1,5 +1,5 @@
 {
-  "versao": 118,
+  "versao": 119,
   "data": "2026-10-20",
-  "descricao": "Processamento: conferência arquivos = processados + duplicados + erros, lista de duplicados com o original; NFS-e com mesmo número e valor/data diferentes não é mais tratada como duplicada"
+  "descricao": "Aba ICMS: base de PIS/COFINS, CST e valor de PIS e de COFINS do XML após valor_icms_difal"
 }

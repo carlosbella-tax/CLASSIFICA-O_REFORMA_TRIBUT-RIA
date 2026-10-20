@@ -5,6 +5,12 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V119 — 2026-10-20
+
+- **Aba ICMS — colunas de PIS/COFINS do XML** logo depois de `valor_icms_difal`: `base_pis_cofins` (vBC do PIS; sem ele, vBC da COFINS), `cst_pis`, `valor_pis`, `cst_cofins` e `valor_cofins`. Somente a informação do XML, sem cálculo (a validação continua na aba Base de PIS/COFINS).
+- Caso `tests/casos/v119-icms-colunas-pis-cofins`.
+  `src/js/modulos/73-v119-icms-colunas-pis-cofins.js`
+
 ## V118 — 2026-10-20
 
 - **Aba Processamento — conferência de todos os arquivos**: abaixo dos indicadores, "N arquivo(s) carregado(s) = X documento(s) processado(s) (inclui eventos) + Y duplicado(s) excluído(s) + Z com erro ✔" (em laranja, com a diferença, se a conta não fechar) e o total de itens nas abas.

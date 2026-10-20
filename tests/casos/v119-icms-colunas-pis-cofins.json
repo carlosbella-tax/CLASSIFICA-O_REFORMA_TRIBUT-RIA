@@ -1,0 +1,29 @@
+{
+  "descricao": "V119 — aba ICMS: base de PIS/COFINS, CST e valor de PIS e de COFINS do XML após valor_icms_difal",
+  "arquivo": "v90-uso-consumo.xml",
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91"
+  },
+  "funcao": "linhasIcms",
+  "colunas_apos": {
+    "valor_icms_difal": [
+      "base_pis_cofins",
+      "cst_pis",
+      "valor_pis",
+      "cst_cofins",
+      "valor_cofins"
+    ]
+  },
+  "linhas": [
+    {
+      "numero_item": "1",
+      "esperado": {
+        "base_pis_cofins": 1000,
+        "cst_pis": "^01$",
+        "valor_pis": 16.5,
+        "cst_cofins": "^01$",
+        "valor_cofins": 76
+      }
+    }
+  ]
+}
