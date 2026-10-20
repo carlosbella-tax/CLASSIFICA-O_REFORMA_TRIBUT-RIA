@@ -1,5 +1,5 @@
 {
-  "versao": 115,
-  "data": "2026-10-19",
-  "descricao": "OCR funciona aberto do disco em qualquer Chrome/Edge: núcleo e dicionário embutidos no próprio worker; limites de tempo maiores para computadores lentos"
+  "versao": 116,
+  "data": "2026-10-20",
+  "descricao": "OCR: teste ao escolher PDFs com o motivo exato no aviso, botão Tentar novamente e PDFs de imagem não lidos entram na aba ISS como NÃO LIDO"
 }

@@ -5,6 +5,15 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V116 — 2026-10-20
+
+- **Teste do OCR ao escolher os arquivos**: quando há PDF, o OCR é testado com um texto de prova (e já fica aquecido para o processamento). Aparece "✔ OCR pronto" ou o aviso vermelho **antes** de processar.
+- **Aviso com o motivo técnico exato** (ex.: política de segurança bloqueia o WebAssembly, worker bloqueado, tempo esgotado), o ambiente (arquivo local, Worker, WebAssembly, quadro embutido) e a versão, e o botão **"Tentar OCR novamente"**.
+- **Nenhum PDF de imagem fica de fora**: se o OCR não puder ler, o PDF entra na aba ISS como linha "SEM NÚMERO", com `leitura_pdf` "NÃO LIDO — motivo — conferir o PDF" e o nome do arquivo; o resumo da aba ISS conta as linhas NÃO LIDO.
+- Testado em Chromium comum (sem permissões extras): 9 XMLs + 10 PDFs → 114 itens, 9 NFS-e (8 por OCR), 28 s; com política de segurança que bloqueia WebAssembly e worker → aviso com o motivo, 9 PDFs como NÃO LIDO na aba ISS, demais arquivos carregados em 1 s.
+- Caso V109 atualizado (PDF não lido vira linha NÃO LIDO); `tools/testar-ocr-edge.mjs` ganhou o modo `csp` e a variável `NAVEGADOR`.
+  `src/js/modulos/70-v116-ocr-teste-nao-lidos.js`
+
 ## V115 — 2026-10-19
 
 - **OCR funciona com o arquivo aberto direto do disco em qualquer Chrome ou Edge** (corrige o aviso "OCR bloqueado neste ambiente"): num navegador comum, a página aberta do disco (file://) tem origem "null" e o worker do OCR não conseguia carregar o núcleo (importScripts de blob:null) nem o dicionário; sobrava a leitura direta na página, lenta em computadores modestos, que estourava o limite e desligava o OCR. Os testes anteriores passavam porque o Edge de teste rodava com `--allow-file-access-from-files`.
