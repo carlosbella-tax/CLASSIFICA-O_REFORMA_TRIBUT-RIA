@@ -5,6 +5,12 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V117 — 2026-10-20
+
+- **Dashboard e impressão em PDF — "Itens analisados" igual à aba Processamento do lote**: o quadro da empresa contava os itens sem as notas canceladas (que desde a V70 ficam fora das apurações), enquanto a aba Processamento conta todos os itens carregados (ex.: 549 × 591). Agora "Documentos" e "Itens analisados" mostram os mesmos números do processamento, e o subtítulo informa quantos itens são de notas canceladas e ficam fora das apurações. Com filtro de consulta no Dashboard continua valendo a contagem filtrada (V15).
+- Caso `tests/casos/v117-dashboard-itens-processamento`.
+  `src/js/modulos/71-v117-dashboard-itens-iguais-processamento.js`
+
 ## V116 — 2026-10-20
 
 - **Teste do OCR ao escolher os arquivos**: quando há PDF, o OCR é testado com um texto de prova (e já fica aquecido para o processamento). Aparece "✔ OCR pronto" ou o aviso vermelho **antes** de processar.

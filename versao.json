@@ -1,5 +1,5 @@
 {
-  "versao": 116,
+  "versao": 117,
   "data": "2026-10-20",
-  "descricao": "OCR: teste ao escolher PDFs com o motivo exato no aviso, botão Tentar novamente e PDFs de imagem não lidos entram na aba ISS como NÃO LIDO"
+  "descricao": "Dashboard/impressão: Itens analisados e documentos iguais à aba Processamento do lote (inclui itens de notas canceladas)"
 }
