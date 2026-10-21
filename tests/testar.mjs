@@ -1,4 +1,4 @@
-// Bateria de testes do Diagnóstico Operações Fiscais.
+// Bateria de testes do Classificação Reforma Tributária.
 // 1) sintaxe de cada bloco <script>  2) selo de versão  3) identidade com a V59 original (só na V59)
 // 4) teste funcional: carrega os XMLs de tests/fixtures no navegador simulado (jsdom), processa
 //    e compara o conteúdo de cada aba com a referência gravada em tests/referencia.json.
@@ -16,7 +16,7 @@ const raiz = join(dirname(fileURLToPath(import.meta.url)), '..');
 const atualizar = process.argv.includes('--atualizar');
 const { versao } = JSON.parse(readFileSync(join(raiz, 'versao.json'), 'utf8'));
 const { arquivos } = JSON.parse(readFileSync(join(raiz, 'src/manifest.json'), 'utf8'));
-const dist = join(raiz, 'dist', `DIAGNOSTICO_V${versao}.html`);
+const dist = join(raiz, 'dist', `CLASSIFICACAO_REFORMA_TRIBUTARIA_V${versao}.html`);
 let falhas = 0, ok = 0;
 const passou = m => { ok++; console.log('  OK    ' + m); };
 const falhou = m => { falhas++; console.log('  FALHA ' + m); };
@@ -49,7 +49,7 @@ selo && Number(selo[1]) === versao ? passou(`selo VERSÃO ${versao} = versao.jso
 // 3) identidade com o arquivo original (vale só enquanto a versão for 59)
 console.log('\n[3] Identidade com a V59 original');
 const shaOriginal = readFileSync(join(raiz, '_arquivo_original/SHA256SUMS.txt'), 'utf8').split(/\s+/)[0];
-if (versao === 59) sha(html) === shaOriginal ? passou('build idêntico byte a byte ao DIAGNOSTICO_V59.html recebido') : falhou('build diferente do original V59');
+if (versao === 59) sha(html) === shaOriginal ? passou('build idêntico byte a byte ao CLASSIFICACAO_REFORMA_TRIBUTARIA_V59.html recebido') : falhou('build diferente do original V59');
 else console.log(`  --    não se aplica (versão ${versao}); a regressão funcional abaixo é a referência`);
 
 // 4) funcional

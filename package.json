@@ -1,8 +1,8 @@
 {
-  "name": "diagnostico-operacoes-fiscais",
+  "name": "classificacao-reforma-tributaria",
   "version": "121.0.0",
   "private": true,
-  "description": "Diagnóstico Operações Fiscais (Tax Advice) — leitura de XML de NF-e/CT-e/NFS-e, validações de ICMS, ICMS ST, IPI, PIS/COFINS, IBS/CBS e apresentação em PowerPoint",
+  "description": "Classificação Reforma Tributária (Tax Advice) — leitura de XML de NF-e/CT-e/NFS-e, validações de ICMS, ICMS ST, IPI, PIS/COFINS, IBS/CBS e apresentação em PowerPoint",
   "type": "module",
   "scripts": {
     "build": "node tools/build.mjs",

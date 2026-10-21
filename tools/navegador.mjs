@@ -1,4 +1,4 @@
-// Abre o dist/DIAGNOSTICO_V{versao}.html no navegador simulado (jsdom), carrega XMLs e processa.
+// Abre o dist/CLASSIFICACAO_REFORMA_TRIBUTARIA_V{versao}.html no navegador simulado (jsdom), carrega XMLs e processa.
 // Uso em scripts: const { w, abrirAba } = await abrirDiagnostico(['caminho/a.xml', ...]);
 import { readFileSync } from 'node:fs';
 import { join, dirname, basename } from 'node:path';
@@ -10,7 +10,7 @@ const esperar = ms => new Promise(r => setTimeout(r, ms));
 
 export async function abrirDiagnostico(caminhos, { campos = {}, versao: v, ocr = {} } = {}) {   // ocr: {nome do PDF: caminho do texto reconhecido} (V108 — jsdom não tem canvas/worker)
   const versao = v || JSON.parse(readFileSync(join(raiz, 'versao.json'), 'utf8')).versao;
-  const html = readFileSync(join(raiz, 'dist', `DIAGNOSTICO_V${versao}.html`), 'utf8');
+  const html = readFileSync(join(raiz, 'dist', `CLASSIFICACAO_REFORMA_TRIBUTARIA_V${versao}.html`), 'utf8');
   const erros = [];
   const vc = new VirtualConsole();
   vc.on('jsdomError', e => { if (!/Not implemented/.test(e.message)) erros.push(e.message); });

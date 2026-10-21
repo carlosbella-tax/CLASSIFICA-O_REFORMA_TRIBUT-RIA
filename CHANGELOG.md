@@ -1,6 +1,6 @@
-# Histórico de versões — Diagnóstico Operações Fiscais
+# Histórico de versões — Classificação Reforma Tributária
 
-Convenção: a versão é o número do selo **VERSÃO N** no cabeçalho do sistema e o nome do arquivo gerado (`DIAGNOSTICO_VN.html`).
+Convenção: a versão é o número do selo **VERSÃO N** no cabeçalho do sistema e o nome do arquivo gerado (`CLASSIFICACAO_REFORMA_TRIBUTARIA_VN.html`).
 Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza selo, `versao.json`, `package.json` e esta lista).
 
 <!-- novas versões abaixo desta linha -->
@@ -543,7 +543,7 @@ Vale quando o regime tributário do cabeçalho é **Lucro Presumido** (PIS e COF
 ## V59 — 2026-10-11 — base trazida para o G4 OS
 
 - ICMS na importação (CFOP 3xxx): base = valor aduaneiro + II + IPI + PIS + COFINS + despesas aduaneiras, com o ICMS por dentro.
-- Projeto decomposto em `src/` (módulos por versão), com build que remonta o arquivo único idêntico byte a byte ao `DIAGNOSTICO_V59.html` recebido (sha256 `9087863b…13a8b`) e teste funcional com XMLs reais.
+- Projeto decomposto em `src/` (módulos por versão), com build que remonta o arquivo único idêntico byte a byte ao `CLASSIFICACAO_REFORMA_TRIBUTARIA_V59.html` recebido (sha256 `9087863b…13a8b`) e teste funcional com XMLs reais.
 
 ---
 

@@ -3,7 +3,7 @@ import puppeteer from 'puppeteer-core';
 import { readdirSync, writeFileSync } from 'node:fs';
 const [D, V, modo] = process.argv.slice(2);
 const arqs = readdirSync(D).filter(f => /\.(pdf|xml)$/i.test(f)).map(f => D + '/' + f);
-const url = 'file:///C:/Users/Carlos%20Bella/.g4os/workspaces/meu-workspace/main/projects/diagnostico-operacoes-fiscais/dist/DIAGNOSTICO_V' + V + '.html';
+const url = 'file:///C:/Users/Carlos%20Bella/.g4os/workspaces/meu-workspace/main/projects/classificacao-reforma-tributaria/dist/CLASSIFICACAO_REFORMA_TRIBUTARIA_V' + V + '.html';
 const browser = await puppeteer.launch({ executablePath: process.env.NAVEGADOR || 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe', headless: process.env.NAVEGADOR ? 'shell' : 'new', args: process.env.SEM_FLAG ? [] : ['--allow-file-access-from-files'], protocolTimeout: 2400000 });
 const page = await browser.newPage();
 if (modo === 'travado') await page.evaluateOnNewDocument(() => { window.Worker = function(){ throw new Error('Worker bloqueado (simulação)'); }; const P = () => new Promise(() => {}); WebAssembly.instantiate = P; WebAssembly.instantiateStreaming = P; WebAssembly.compile = P; });
@@ -12,7 +12,7 @@ const erros = []; page.on('pageerror', e => erros.push(String(e))); page.on('con
 let alvo = page;
 if (modo === 'csp'){   // ambiente com política de segurança restrita: sem worker e sem WebAssembly
   const { readFileSync } = await import('node:fs');
-  const orig = 'C:/Users/Carlos Bella/.g4os/workspaces/meu-workspace/main/projects/diagnostico-operacoes-fiscais/dist/DIAGNOSTICO_V' + V + '.html', dest = orig.replace('.html', '-csp.html');
+  const orig = 'C:/Users/Carlos Bella/.g4os/workspaces/meu-workspace/main/projects/classificacao-reforma-tributaria/dist/CLASSIFICACAO_REFORMA_TRIBUTARIA_V' + V + '.html', dest = orig.replace('.html', '-csp.html');
   writeFileSync(dest, readFileSync(orig, 'utf8').replace('<head>', `<head><meta http-equiv="Content-Security-Policy" content="script-src 'unsafe-inline'; worker-src 'none'">`));
   await page.goto('file:///' + dest, { waitUntil: 'load', timeout: 180000 });
 } else

@@ -1,6 +1,6 @@
-# Diagnóstico Operações Fiscais — regras de trabalho para o agente
+# Classificação Reforma Tributária — regras de trabalho para o agente
 
-Ferramenta da Tax Advice que lê XML de NF-e, CT-e, NFS-e e eventos, valida ICMS, ICMS ST, IPI, PIS/COFINS e IBS/CBS (LC 214/2025) e gera Excel, PDF e a apresentação em PowerPoint. Entregável final: **um único arquivo HTML** (`dist/DIAGNOSTICO_VN.html`), que roda offline no navegador.
+Ferramenta da Tax Advice que lê XML de NF-e, CT-e, NFS-e e eventos, valida ICMS, ICMS ST, IPI, PIS/COFINS e IBS/CBS (LC 214/2025) e gera Excel, PDF e a apresentação em PowerPoint. Entregável final: **um único arquivo HTML** (`dist/CLASSIFICACAO_REFORMA_TRIBUTARIA_VN.html`), que roda offline no navegador.
 
 1. **Edite só em `src/`.** Nunca edite `dist/` nem `_arquivo_original/`. A ordem de montagem está em `src/manifest.json`.
 2. **Toda mudança abre uma versão nova**: `npm run nova-versao -- N "descrição"` antes de editar. Registre cada mudança no `CHANGELOG.md` e, no código, com um comentário `/* VN — ... */` (padrão herdado do arquivo único).

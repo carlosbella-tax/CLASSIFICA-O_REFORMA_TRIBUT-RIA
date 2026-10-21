@@ -1,11 +1,11 @@
-/* Gerador da apresentação "Diagnóstico Operações Fiscais" (modelo Tax Advice) — usa PptxGenJS */
+/* Gerador da apresentação "Classificação Reforma Tributária" (modelo Tax Advice) — usa PptxGenJS */
 function montarApresentacaoPptx(PptxGenJS, D, IMG){
   const C = {navy: '143854', navy2: '123F68', azul: '1D6B99', laranja: 'FD7B2F', verde: '1C7844', verm: 'C04010', cinza: '5B6670',
     borda: 'CFD9E3', card: 'F2F7FB', rosa: 'FBEAE3', total: 'DCE8F3', claro: 'CFE0EE', escuro: '0E3354', branco: 'FFFFFF'};
   const F = 'Poppins';
   const pres = new PptxGenJS();
   pres.layout = 'LAYOUT_WIDE';
-  pres.title = 'Diagnóstico Operações Fiscais — ' + D.empresa;
+  pres.title = 'Classificação Reforma Tributária — ' + D.empresa;
   pres.company = 'Tax Advice';
 
   /* ---------- formatação ---------- */
@@ -23,7 +23,7 @@ function montarApresentacaoPptx(PptxGenJS, D, IMG){
   const rodape = D.rodape;
 
   /* ---------- peças comuns ---------- */
-  let nSlide = 0; const roteiro = [{k: 'CAPA', t: 'Diagnóstico Operações Fiscais — ' + D.empresa}];
+  let nSlide = 0; const roteiro = [{k: 'CAPA', t: 'Classificação Reforma Tributária — ' + D.empresa}];
   function base(kicker, titulo){
     const s = pres.addSlide(); nSlide++; roteiro.push({k: kicker, t: titulo});
     s.background = {color: C.branco};
@@ -48,7 +48,7 @@ function montarApresentacaoPptx(PptxGenJS, D, IMG){
     s.background = {data: IMG.fundo};
     s.addImage({data: IMG.logoCapa, x: 9.54, y: 1.9, w: 3.19, h: 3.5});
     txt(s, 'DASHBOARD DA ANÁLISE FISCAL', {x: 0.6, y: 1.45, w: 8.2, h: 0.3, fontSize: 13, bold: true, color: C.laranja, charSpacing: 3});
-    txt(s, 'Diagnóstico Operações Fiscais', {x: 0.6, y: 1.95, w: 8.0, h: 1.75, fontSize: 44, bold: true, color: C.branco});
+    txt(s, 'Classificação Reforma Tributária', {x: 0.6, y: 1.95, w: 8.0, h: 1.75, fontSize: 44, bold: true, color: C.branco});
     txt(s, [
       {text: D.empresa, options: {fontSize: 22, bold: true, breakLine: true}},
       {text: 'CNPJ ' + D.cnpj + ' · ' + D.regime + ' · ' + D.periodo, options: {fontSize: 16, breakLine: true}},
@@ -334,7 +334,7 @@ function montarApresentacaoPptx(PptxGenJS, D, IMG){
     s.addImage({data: IMG.logoCapa, x: 9.54, y: 1.9, w: 3.19, h: 3.5});
     txt(s, 'TAX ADVICE · ASSESSORIA FISCAL TRIBUTÁRIA', {x: 0.6, y: 1.45, w: 8.2, h: 0.3, fontSize: 13, bold: true, color: C.laranja, charSpacing: 3});
     txt(s, 'Fale com a Tax Advice', {x: 0.6, y: 1.95, w: 8.0, h: 0.8, fontSize: 44, bold: true, color: C.branco});
-    txt(s, 'Diagnóstico Operações Fiscais · ' + D.periodo, {x: 0.6, y: 2.75, w: 8.0, h: 0.5, fontSize: 18, color: C.branco});
+    txt(s, 'Classificação Reforma Tributária · ' + D.periodo, {x: 0.6, y: 2.75, w: 8.0, h: 0.5, fontSize: 18, color: C.branco});
     s.addShape(pres.shapes.ROUNDED_RECTANGLE, {x: 0.6, y: 3.75, w: 8.55, h: 2.15, rectRadius: 0.08, fill: {color: C.escuro}, line: {color: '3E7399', width: 0.75}});
     txt(s, 'CONSULTOR TRIBUTÁRIO', {x: 1.0, y: 4.25, w: 3.2, h: 0.3, fontSize: 12, bold: true, color: C.laranja, charSpacing: 1.5});
     txt(s, D.consultor.nome, {x: 1.0, y: 4.65, w: 3.3, h: 0.7, fontSize: 28, bold: true, color: C.branco, fit: 'shrink'});
