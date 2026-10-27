@@ -1,5 +1,5 @@
 {
-  "versao": 121,
-  "data": "2026-10-20",
-  "descricao": "Aba ICMS ST: coluna quantidade de cada item antes de valor_total_produtos"
+  "versao": 122,
+  "data": "2026-10-27",
+  "descricao": "Classificação IBS/CBS: bloqueia falso positivo de benefício potencial e reforça validação de CST 410/620"
 }

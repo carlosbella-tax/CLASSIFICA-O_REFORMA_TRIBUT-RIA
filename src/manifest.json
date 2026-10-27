@@ -104,6 +104,7 @@
     "src/js/modulos/73-v119-icms-colunas-pis-cofins.js",
     "src/js/modulos/74-v120-icms-st-infadprod.js",
     "src/js/modulos/75-v121-icms-st-quantidade.js",
+    "src/js/modulos/76-v122-classificacao-ibs-cbs-revisao-obrigatoria.js",
     "src/js/modulos/99-fechamento.js",
     "src/90-rodape.html"
   ]

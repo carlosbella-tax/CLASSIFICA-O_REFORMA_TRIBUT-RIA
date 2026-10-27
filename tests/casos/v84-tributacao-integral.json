@@ -1,5 +1,5 @@
 {
-  "descricao": "V84 — observação 'Analisar cClassTrib' editável (texto do usuário substitui o padrão); cClassTrib de benefício divergente (200014) segue NÃO VALIDADO [V86: divergente = VALIDADO + Analisar cClassTrib]",
+  "descricao": "V122 — benefício potencial em tributação integral: classificação fica NÃO VALIDADA e requer revisão; observação manual do usuário é preservada.",
   "arquivo": "v84-tributacao-integral.xml",
   "campos": {
     "cnpjEmpresa": "00.000.000/0001-91"
@@ -10,7 +10,7 @@
       "numero_item": "1",
       "esperado": {
         "observacao": "^Analisar cClassTrib$",
-        "validacao_cst_ibs_cbs": "^VALIDADO"
+        "validacao_cst_ibs_cbs": "^NÃO VALIDADO \\(REVISÃO OBRIGATÓRIA"
       }
     },
     {

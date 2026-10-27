@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V122 — 2026-10-27
+
+- Classificação IBS/CBS: bloqueia falso positivo de benefício potencial e reforça validação de CST 410/620
+
 ## V121 — 2026-10-20
 
 - **Aba ICMS ST — coluna `quantidade`** (quantidade comercial do item, qCom do XML) logo antes de `valor_total_produtos`; vai também para a exportação em Excel.

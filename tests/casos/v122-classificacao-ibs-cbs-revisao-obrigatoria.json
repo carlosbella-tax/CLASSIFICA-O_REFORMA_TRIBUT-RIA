@@ -1,0 +1,18 @@
+{
+  "descricao": "V122 — tributação integral em NCM com cClassTrib candidato exige revisão obrigatória.",
+  "arquivo": "v83-cclasstrib-candidato.xml",
+  "campos": {
+    "cnpjEmpresa": "00.000.000/0001-91"
+  },
+  "funcao": "linhasIbsCbsTabela",
+  "linhas": [
+    {
+      "numero_item": "1",
+      "esperado": {
+        "validacao_cclasstrib": "^NÃO VALIDADO \\(REVISÃO OBRIGATÓRIA — NCM com cClassTrib candidato 200033 / 200034 e XML em tributação integral\\)$",
+        "validacao_ncm_cclasstrib": "^NÃO VALIDADO \\(REVISÃO OBRIGATÓRIA",
+        "validacao_cst_ibs_cbs": "^NÃO VALIDADO \\(REVISÃO OBRIGATÓRIA"
+      }
+    }
+  ]
+}
