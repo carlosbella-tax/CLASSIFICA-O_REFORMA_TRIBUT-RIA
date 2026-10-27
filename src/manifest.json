@@ -106,6 +106,7 @@
     "src/js/modulos/75-v121-icms-st-quantidade.js",
     "src/js/modulos/76-v122-classificacao-ibs-cbs-revisao-obrigatoria.js",
     "src/js/modulos/77-v123-painel-navegacao-consultas.js",
+    "src/js/modulos/78-v124-modelo-referencia-fontes-cronograma.js",
     "src/js/modulos/99-fechamento.js",
     "src/90-rodape.html"
   ]

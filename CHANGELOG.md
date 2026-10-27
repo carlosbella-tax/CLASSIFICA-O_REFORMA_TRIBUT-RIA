@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V124 — 2026-10-27
+
+- Modelo funcional V20: paleta, cronograma e fontes de pesquisa
+
 ## V123 — 2026-10-27
 
 - Interface em painel: navegação lateral, consultas NCM/NBS e indicadores de documentos
