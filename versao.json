@@ -1,5 +1,5 @@
 {
-  "versao": 122,
+  "versao": 123,
   "data": "2026-10-27",
-  "descricao": "Classificação IBS/CBS: bloqueia falso positivo de benefício potencial e reforça validação de CST 410/620"
+  "descricao": "Interface em painel: navegação lateral, consultas NCM/NBS e indicadores de documentos"
 }

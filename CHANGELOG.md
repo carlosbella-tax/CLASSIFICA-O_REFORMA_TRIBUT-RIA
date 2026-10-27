@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V123 — 2026-10-27
+
+- Interface em painel: navegação lateral, consultas NCM/NBS e indicadores de documentos
+
 ## V122 — 2026-10-27
 
 - Classificação IBS/CBS: bloqueia falso positivo de benefício potencial e reforça validação de CST 410/620
