@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V126 — 2026-10-29
+
+- Estrutura segura de acesso e administração Supabase
+
 ## V125 — 2026-10-29
 
 - Aba Fale Conosco com WhatsApp TaxAdvice
