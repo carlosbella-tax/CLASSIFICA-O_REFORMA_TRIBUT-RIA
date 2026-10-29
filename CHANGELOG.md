@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V125 — 2026-10-29
+
+- Aba Fale Conosco com WhatsApp TaxAdvice
+
 ## V124 — 2026-10-27
 
 - Modelo funcional V20: paleta, cronograma e fontes de pesquisa
