@@ -10,8 +10,11 @@ const { arquivos } = JSON.parse(readFileSync(join(raiz, 'src/manifest.json'), 'u
 const { versao } = JSON.parse(readFileSync(join(raiz, 'versao.json'), 'utf8'));
 
 const partes = arquivos.map(a => readFileSync(join(raiz, 'src', a.replace(/^src\//, ''))));
-const html = Buffer.concat(partes);
-const badge = html.toString('utf8').match(/class="build">VERSÃO (\d+)/);
+// V127 — Somente variáveis públicas são incorporadas ao HTML publicado; a chave service-role nunca entra no build.
+let html = Buffer.concat(partes).toString('utf8');
+html = html.replaceAll('__CLASSIFICADOR_SUPABASE_URL__', process.env.CLASSIFICADOR_SUPABASE_URL || '');
+html = html.replaceAll('__CLASSIFICADOR_SUPABASE_ANON_KEY__', process.env.CLASSIFICADOR_SUPABASE_ANON_KEY || '');
+const badge = html.match(/class="build">VERSÃO (\d+)/);
 if (!badge || Number(badge[1]) !== versao) {
   console.error(`ERRO: selo do cabeçalho (VERSÃO ${badge && badge[1]}) diferente de versao.json (${versao}). Use npm run nova-versao.`);
   process.exit(1);
@@ -20,6 +23,8 @@ mkdirSync(join(raiz, 'dist'), { recursive: true });
 const nome = `CLASSIFICACAO_REFORMA_TRIBUTARIA_V${versao}.html`;
 const destino = join(raiz, 'dist', nome);
 writeFileSync(destino, html);
+// Alias de hospedagem: a entrega offline preserva seu nome versionado acima.
+copyFileSync(destino, join(raiz, 'dist', 'index.html'));
 const sha = createHash('sha256').update(html).digest('hex');
 console.log(`OK  ${destino}\n    ${html.length.toLocaleString('pt-BR')} bytes · sha256 ${sha}`);
 

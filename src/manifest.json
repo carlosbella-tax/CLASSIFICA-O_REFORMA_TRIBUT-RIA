@@ -1,6 +1,7 @@
 {
   "arquivos": [
     "src/00-cabecalho.html",
+    "src/js/base/configuracao-ambiente.js",
     "src/css/estilo.css",
     "src/10-corpo.html",
     "src/js/dados/cfop-cst-icms.js",
@@ -108,6 +109,7 @@
     "src/js/modulos/77-v123-painel-navegacao-consultas.js",
     "src/js/modulos/78-v124-modelo-referencia-fontes-cronograma.js",
     "src/js/modulos/79-v125-fale-conosco-whatsapp.js",
+    "src/js/modulos/80-v127-acesso-administracao.js",
     "src/js/modulos/99-fechamento.js",
     "src/90-rodape.html"
   ]

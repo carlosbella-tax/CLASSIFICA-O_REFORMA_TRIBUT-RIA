@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V127 — 2026-10-29
+
+- interface de acesso e publicação Vercel
+
 ## V126 — 2026-10-29
 
 - Estrutura segura de acesso e administração Supabase

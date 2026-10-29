@@ -1,5 +1,5 @@
 {
-  "versao": 126,
+  "versao": 127,
   "data": "2026-10-29",
-  "descricao": "Estrutura segura de acesso e administração Supabase"
+  "descricao": "interface de acesso e publicação Vercel"
 }
