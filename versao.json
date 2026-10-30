@@ -1,5 +1,5 @@
 {
-  "versao": 137,
+  "versao": 138,
   "data": "2026-10-30",
-  "descricao": "uploads NCM NBS e usuário autenticado no cabeçalho"
+  "descricao": "redirecionamento automático ao ambiente online"
 }
