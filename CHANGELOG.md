@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V148 — 2026-10-30
+
+- adiciona visualização e fechamento no login
+
 ## V147 — 2026-10-30
 
 - oculta mês e ano processados

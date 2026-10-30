@@ -1,5 +1,5 @@
 {
-  "versao": 147,
+  "versao": 148,
   "data": "2026-10-30",
-  "descricao": "oculta mês e ano processados"
+  "descricao": "adiciona visualização e fechamento no login"
 }
