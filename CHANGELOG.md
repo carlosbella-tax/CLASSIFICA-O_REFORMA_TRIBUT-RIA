@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V141 — 2026-10-30
+
+- corrige entrada de conta autorizada
+
 ## V140 — 2026-10-30
 
 - atalho visual de documento auditado
