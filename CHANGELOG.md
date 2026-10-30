@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V150 — 2026-10-30
+
+- prioriza redefinição de senha
+
 ## V149 — 2026-10-30
 
 - valida cadastro público antes do envio

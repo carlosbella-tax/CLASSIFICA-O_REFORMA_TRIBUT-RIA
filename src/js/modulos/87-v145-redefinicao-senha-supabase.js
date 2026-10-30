@@ -4,15 +4,17 @@
   const configured=/^https:\/\/.+\.supabase\.co$/.test(env.supabaseUrl||'')&&!!env.supabaseAnonKey;
   const hash=new URLSearchParams(location.hash.replace(/^#/,''));
   const query=new URLSearchParams(location.search);
-  const recoveryRequested=hash.get('type')==='recovery'||query.has('code');
+  /* V150 — Aceita retorno implicit, PKCE e token_hash sem deixar a tela principal assumir o fluxo. */const recoveryType=hash.get('type')==='recovery'||query.get('type')==='recovery';
+  const recoveryRequested=recoveryType||query.has('code');
   if(!configured||!recoveryRequested)return;
   const login=document.getElementById('v127-login');
   if(!login)return;
   const waitForSdk=async()=>{
-    for(let n=0;n<80;n++){
-      if(window.supabase)return window.supabase;
-      await new Promise(resolve=>setTimeout(resolve,100));
-    }
+    if(window.supabase)return window.supabase;
+    /* V150 — A recuperação carrega seu próprio SDK porque a inicialização comum fica suspensa neste fluxo. */const script=document.createElement('script');script.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+    const loaded=new Promise((resolve,reject)=>{script.onload=resolve;script.onerror=reject});document.head.appendChild(script);
+    await loaded;
+    if(window.supabase)return window.supabase;
     throw new Error('Não foi possível preparar a redefinição de senha. Solicite um novo link.');
   };
   const render=(client)=>{
@@ -44,6 +46,10 @@
       let {data:{session}}=await client.auth.getSession();
       if(!session&&query.has('code')){
         const {data,error}=await client.auth.exchangeCodeForSession(query.get('code'));
+        if(error)throw error;
+        session=data.session;
+      }else if(!session&&recoveryType&&query.has('token_hash')){
+        const {data,error}=await client.auth.verifyOtp({token_hash:query.get('token_hash'),type:'recovery'});
         if(error)throw error;
         session=data.session;
       }

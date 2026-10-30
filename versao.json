@@ -1,5 +1,5 @@
 {
-  "versao": 149,
+  "versao": 150,
   "data": "2026-10-30",
-  "descricao": "valida cadastro público antes do envio"
+  "descricao": "prioriza redefinição de senha"
 }
