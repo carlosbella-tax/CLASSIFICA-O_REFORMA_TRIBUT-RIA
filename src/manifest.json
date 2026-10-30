@@ -112,6 +112,7 @@
     "src/js/modulos/80-v127-acesso-administracao.js",
     "src/js/modulos/81-v131-importacao-lote-ncm-nbs.js",
     "src/js/modulos/82-v135-tema-motor.js",
+    "src/js/modulos/83-v137-uploads-cabecalho.js",
     "src/js/modulos/99-fechamento.js",
     "src/90-rodape.html"
   ]

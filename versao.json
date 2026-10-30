@@ -1,5 +1,5 @@
 {
-  "versao": 136,
+  "versao": 137,
   "data": "2026-10-30",
-  "descricao": "orientação de acesso no arquivo offline"
+  "descricao": "uploads NCM NBS e usuário autenticado no cabeçalho"
 }

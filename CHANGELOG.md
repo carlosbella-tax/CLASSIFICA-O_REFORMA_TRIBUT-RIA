@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V137 — 2026-10-30
+
+- uploads NCM NBS e usuário autenticado no cabeçalho
+
 ## V136 — 2026-10-30
 
 - orientação de acesso no arquivo offline
