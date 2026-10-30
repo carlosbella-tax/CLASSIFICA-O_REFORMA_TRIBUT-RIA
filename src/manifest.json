@@ -113,6 +113,8 @@
     "src/js/modulos/81-v131-importacao-lote-ncm-nbs.js",
     "src/js/modulos/82-v135-tema-motor.js",
     "src/js/modulos/83-v137-uploads-cabecalho.js",
+    "src/js/modulos/84-v139-consulta-gratuita-cadastro.js",
+    "src/js/modulos/85-v140-atalho-documento-auditado.js",
     "src/js/modulos/99-fechamento.js",
     "src/90-rodape.html"
   ]

@@ -42,5 +42,7 @@
   document.getElementById('v127-logout').onclick=async()=>{if(client)await client.auth.signOut();currentUser=null;shell.classList.remove('active');login.classList.remove('v127-hide')};
   document.getElementById('v127-role').onchange=e=>document.getElementById('v127-valid-wrap').classList.toggle('v127-hide',e.target.value==='admin_taxadvice');
   document.getElementById('v127-invite').onclick=async e=>{const b=e.currentTarget,role=document.getElementById('v127-role').value,valid=document.getElementById('v127-valid').value;try{if(role==='usuario'&&!valid)throw new Error('Informe a validade para o usuário.');const data={full_name:document.getElementById('v127-name').value.trim(),role,valid_until:valid,organization_id:null,active:true};if(b.dataset.edit){data.action='update';data.user_id=b.dataset.edit}else{data.action='invite';data.email=document.getElementById('v127-email').value.trim();data.redirect_to=location.origin}await adminCall(data);b.dataset.edit='';b.textContent='Enviar convite';document.getElementById('v127-email').disabled=false;['v127-name','v127-email','v127-valid'].forEach(id=>document.getElementById(id).value='');await refresh();msg('Operação concluída.',true)}catch(x){msg(x.message)}};
+  /* V139 — Libera somente a consulta gratuita após cadastro público validado pelo servidor. */
+  window.addEventListener('classificador:consulta-gratuita',()=>login.classList.add('v127-hide'));
   initialize();
 })();

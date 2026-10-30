@@ -5,6 +5,14 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V140 — 2026-10-30
+
+- atalho visual de documento auditado
+
+## V139 — 2026-10-30
+
+- consulta gratuita NCM NBS e cadastro
+
 ## V138 — 2026-10-30
 
 - redirecionamento automático ao ambiente online
