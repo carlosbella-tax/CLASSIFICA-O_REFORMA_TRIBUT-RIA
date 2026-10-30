@@ -1,5 +1,5 @@
 {
-  "versao": 148,
+  "versao": 149,
   "data": "2026-10-30",
-  "descricao": "adiciona visualização e fechamento no login"
+  "descricao": "valida cadastro público antes do envio"
 }
