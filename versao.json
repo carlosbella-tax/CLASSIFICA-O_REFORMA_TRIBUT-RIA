@@ -1,5 +1,5 @@
 {
-  "versao": 130,
+  "versao": 131,
   "data": "2026-10-30",
-  "descricao": "recuperação de senha por e-mail"
+  "descricao": "importação em lote NCM e NBS"
 }

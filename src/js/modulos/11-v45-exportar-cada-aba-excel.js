@@ -1,7 +1,9 @@
   /* =====================================================================
      V45 — Exportar cada aba em Excel e salvar/importar o diagnóstico completo
      ===================================================================== */
+  /* V131 — Toda exportação recebe identificação institucional TaxAdvice. */
   function gerarXlsx(nomeArquivo, sheets){
+    sheets = [['TaxAdvice', [{Empresa: ($('empresa')?.value || 'Empresa não informada'), Consultor: 'Carlos Bella', Telefone: '(11) 99479-7347', Sistema: 'Classificação da Reforma Tributária'}]], ...sheets];
     const usados = new Set;
     sheets = sheets.filter(s => s[1] && s[1].length).map(([n, rows]) => {
       let nome = String(n).replace(/[\\\/\?\*\[\]:]/g, '-').slice(0, 31), base = nome, i = 2;

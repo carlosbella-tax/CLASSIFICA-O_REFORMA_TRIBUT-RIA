@@ -1,6 +1,7 @@
   /* =====================================================================
      V49 — Cabeçalho da impressão com os dados da empresa (nome, CNPJ,
-     regime, período, UFs), a aba impressa e a data/hora.
+     regime, período), a aba impressa e a data/hora.
+     V131 — Identificação institucional TaxAdvice e consultor.
      ===================================================================== */
   (function(){
     const cab = document.createElement('div'); cab.id = 'v49Cab'; cab.className = 'v49-cab';
@@ -13,9 +14,9 @@
     const aba = document.querySelector('.tab.active'), nomeAba = aba ? aba.childNodes[0].textContent.trim() : '';
     const periodo = [textoSel('periodo'), $('anoPeriodo') ? $('anoPeriodo').value : ''].filter(Boolean).join(' / ');
     const campo = (rot, val) => '<div><span>' + rot + '</span><b>' + esc(val || 'Não informado') + '</b></div>';
-    cab.innerHTML = '<div class="v49-topo"><div class="v49-tit">CLASSIFICAÇÃO REFORMA TRIBUTÁRIA — ' + esc(nomeAba.toUpperCase()) + '</div><div class="v49-data">Impresso em ' + new Date().toLocaleString('pt-BR') + '</div></div>'
+    cab.innerHTML = '<div class="v49-topo"><div class="v49-tit">TAXADVICE — CLASSIFICAÇÃO REFORMA TRIBUTÁRIA — ' + esc(nomeAba.toUpperCase()) + '</div><div class="v49-data">Impresso em ' + new Date().toLocaleString('pt-BR') + '</div></div>'
       + '<div class="v49-grade">' + campo('Nome da empresa', $('empresa').value) + campo('CNPJ da empresa', $('cnpjEmpresa').value) + campo('Regime tributário', textoSel('regimeEmpresa'))
-      + campo('Período processado', periodo) + campo('UF de origem', textoSel('ufOrigem') || 'Conforme XML') + campo('UF de destino', textoSel('ufDestino') || 'Conforme XML')
+      + campo('Período processado', periodo) + campo('Consultor', 'Carlos Bella — (11) 99479-7347')
       + campo('Documentos / itens', fmtInt(state.docs.length) + ' documento(s) · ' + fmtInt(state.items.length) + ' item(ns)') + '</div>';
   }
   const prepV48 = prepararImpressao;

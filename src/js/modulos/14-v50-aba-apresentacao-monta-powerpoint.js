@@ -134,7 +134,8 @@
       + '<button type="button" id="apGerar" class="v45-btn">📊 Gerar apresentação em PowerPoint</button></div>'
       + '<div class="card"><b>Consultor exibido no último slide</b><div class="v50-form">'
       + '<label>Nome<input id="apNome" value="Carlos Bella"></label><label>E-mail<input id="apEmail" value="carlos.bella@taxadvice.com.br"></label>'
-      + '<label>Telefone<input id="apFone" value="+55 11 99479-7347"></label><label>Site<input id="apSite" value="taxadvice.com.br"></label></div>'
+      /* V131 — telefone padronizado na identificação do consultor em PPTX. */
+      + '<label>Telefone<input id="apFone" value="(11) 99479-7347"></label><label>Site<input id="apSite" value="taxadvice.com.br"></label></div>'
       + '<div class="v50-form v51-rod"><label>Rodapé dos slides<input id="apRodape" value="CARLOS BELLA - ESPECIALISTA TRIBUTÁRIO - 11 9949-7347"></label></div>'
       + '<div id="apStatus" class="status">Os slides abaixo mostram o roteiro com os títulos calculados a partir dos dados atuais.</div></div>'
       + '<div class="v50-grade" id="apPrevia"></div>'

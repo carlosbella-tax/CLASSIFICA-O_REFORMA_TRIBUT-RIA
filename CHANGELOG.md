@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V131 — 2026-10-30
+
+- importação em lote NCM e NBS
+
 ## V130 — 2026-10-30
 
 - recuperação de senha por e-mail
