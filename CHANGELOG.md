@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V130 — 2026-10-30
+
+- recuperação de senha por e-mail
+
 ## V129 — 2026-10-30
 
 - Exige autenticação antes do acesso ao Classificador

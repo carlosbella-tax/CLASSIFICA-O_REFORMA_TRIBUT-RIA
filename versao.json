@@ -1,5 +1,5 @@
 {
-  "versao": 129,
+  "versao": 130,
   "data": "2026-10-30",
-  "descricao": "Exige autenticação antes do acesso ao Classificador"
+  "descricao": "recuperação de senha por e-mail"
 }
