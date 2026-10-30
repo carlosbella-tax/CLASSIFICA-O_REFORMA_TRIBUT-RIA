@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V145 — 2026-10-30
+
+- corrige formulário de redefinição de senha
+
 ## V144 — 2026-10-30
 
 - adiciona ícone Documento auditado na aba do navegador

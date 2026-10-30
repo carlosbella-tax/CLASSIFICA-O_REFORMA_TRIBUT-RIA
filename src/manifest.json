@@ -116,6 +116,7 @@
     "src/js/modulos/84-v139-consulta-gratuita-cadastro.js",
     "src/js/modulos/85-v140-atalho-documento-auditado.js",
     "src/js/modulos/86-v141-acesso-conta-autorizada.js",
+    "src/js/modulos/87-v145-redefinicao-senha-supabase.js",
     "src/js/modulos/99-fechamento.js",
     "src/90-rodape.html"
   ]
