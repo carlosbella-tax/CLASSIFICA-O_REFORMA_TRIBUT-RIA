@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V146 — 2026-10-30
+
+- ajusta largura das consultas NBS e NCM
+
 ## V145 — 2026-10-30
 
 - corrige formulário de redefinição de senha
