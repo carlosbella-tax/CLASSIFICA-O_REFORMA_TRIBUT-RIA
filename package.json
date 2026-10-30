@@ -1,6 +1,6 @@
 {
   "name": "classificacao-reforma-tributaria",
-  "version": "142.0.0",
+  "version": "143.0.0",
   "private": true,
   "description": "Classificação Reforma Tributária (Tax Advice) — leitura de XML de NF-e/CT-e/NFS-e, validações de ICMS, ICMS ST, IPI, PIS/COFINS, IBS/CBS e apresentação em PowerPoint",
   "type": "module",

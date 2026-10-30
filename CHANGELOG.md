@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V143 — 2026-10-30
+
+- corrige cadastro e entrada de conta autorizada
+
 ## V142 — 2026-10-30
 
 - corrige modal de cadastro em tela estreita
