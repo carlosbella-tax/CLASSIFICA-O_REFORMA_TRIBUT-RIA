@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V151 — 2026-10-30
+
+- padroniza login e senha no tema Motor
+
 ## V150 — 2026-10-30
 
 - prioriza redefinição de senha

@@ -119,6 +119,7 @@
     "src/js/modulos/87-v145-redefinicao-senha-supabase.js",
     "src/js/modulos/88-v146-consultas-nbs-ncm-integras.js",
     "src/js/modulos/89-v147-oculta-periodo-processado.js",
+    "src/js/modulos/90-v151-login-menu-motor.js",
     "src/js/modulos/99-fechamento.js",
     "src/90-rodape.html"
   ]
