@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V133 — 2026-10-30
+
+- campo de envio UPLOAD
+
 ## V132 — 2026-10-30
 
 - acessibilidade da importação e PowerPoint
