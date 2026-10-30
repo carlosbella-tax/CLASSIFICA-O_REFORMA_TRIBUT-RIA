@@ -1,5 +1,5 @@
 {
-  "versao": 128,
+  "versao": 129,
   "data": "2026-10-30",
-  "descricao": "Corrige injeção da configuração pública do Supabase"
+  "descricao": "Exige autenticação antes do acesso ao Classificador"
 }

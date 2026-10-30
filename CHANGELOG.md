@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V129 — 2026-10-30
+
+- Exige autenticação antes do acesso ao Classificador
+
 ## V128 — 2026-10-30
 
 - Corrige injeção da configuração pública do Supabase
