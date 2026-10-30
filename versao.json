@@ -1,5 +1,5 @@
 {
-  "versao": 133,
+  "versao": 134,
   "data": "2026-10-30",
-  "descricao": "campo de envio UPLOAD"
+  "descricao": "inicialização resiliente do acesso"
 }

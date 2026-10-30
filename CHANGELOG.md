@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V134 — 2026-10-30
+
+- inicialização resiliente do acesso
+
 ## V133 — 2026-10-30
 
 - campo de envio UPLOAD
