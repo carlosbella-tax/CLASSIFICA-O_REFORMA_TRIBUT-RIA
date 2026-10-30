@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V135 — 2026-10-30
+
+- layout visual padrão Motor
+
 ## V134 — 2026-10-30
 
 - inicialização resiliente do acesso
