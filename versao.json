@@ -1,5 +1,5 @@
 {
-  "versao": 146,
+  "versao": 147,
   "data": "2026-10-30",
-  "descricao": "ajusta largura das consultas NBS e NCM"
+  "descricao": "oculta mês e ano processados"
 }

@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V147 — 2026-10-30
+
+- oculta mês e ano processados
+
 ## V146 — 2026-10-30
 
 - ajusta largura das consultas NBS e NCM
