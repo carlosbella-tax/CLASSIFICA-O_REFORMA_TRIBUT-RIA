@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V128 — 2026-10-30
+
+- Corrige injeção da configuração pública do Supabase
+
 ## V127 — 2026-10-29
 
 - interface de acesso e publicação Vercel

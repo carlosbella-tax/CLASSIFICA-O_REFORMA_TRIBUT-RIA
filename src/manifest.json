@@ -1,9 +1,9 @@
 {
   "arquivos": [
     "src/00-cabecalho.html",
-    "src/js/base/configuracao-ambiente.js",
     "src/css/estilo.css",
     "src/10-corpo.html",
+    "src/js/base/configuracao-ambiente.js",
     "src/js/dados/cfop-cst-icms.js",
     "src/js/dados/icms-st-exclusoes.js",
     "src/js/dados/tipi-2026.js",

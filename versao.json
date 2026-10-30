@@ -1,5 +1,5 @@
 {
-  "versao": 127,
-  "data": "2026-10-29",
-  "descricao": "interface de acesso e publicação Vercel"
+  "versao": 128,
+  "data": "2026-10-30",
+  "descricao": "Corrige injeção da configuração pública do Supabase"
 }
