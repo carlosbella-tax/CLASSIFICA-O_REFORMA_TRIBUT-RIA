@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V153 — 2026-10-31
+
+- resultado e impressão de consulta NCM NBS
+
 ## V152 — 2026-10-31
 
 - restringe administração e adiciona painel TaxAdvice

@@ -54,5 +54,7 @@
     if (o.__src) Object.defineProperty(x, '__src', {value: o.__src, configurable: true, writable: true});
     return x;
   };
+  /* V153 — Expõe a referência já embarcada para a consulta individual, sem criar uma segunda base de regras. */
+  window.classificadorReferenciaNcm=function(codigo){const n=String(codigo||'').replace(/\D/g,''),t=REF39.tipi[n],corr=REF39.corr[n.slice(0,2)],u=REF39.u;return {codigo:n,descricao:t?t[0]:'NCM não encontrada na TIPI - Base Completa',anexo:t?u[t[1]]:(corr?corr[1]:''),cclasstrib:t?u[t[2]]:(corr?corr[2]:''),cst:t?u[t[3]]:(corr?corr[3]:''),observacao:t?u[t[4]]:(corr?corr[4]:'')};};
   linhaIbsCbs = memo(linhaIbsCbs);
 
