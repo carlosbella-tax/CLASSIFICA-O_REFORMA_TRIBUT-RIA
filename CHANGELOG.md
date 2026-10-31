@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V155 — 2026-10-31
+
+- organiza uploads e adiciona cronômetro flutuante
+
 ## V154 — 2026-10-31
 
 - bloqueia recursos de visitante e libera assinantes
