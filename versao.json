@@ -1,5 +1,5 @@
 {
-  "versao": 155,
+  "versao": 156,
   "data": "2026-10-31",
-  "descricao": "organiza uploads e adiciona cronômetro flutuante"
+  "descricao": "validação por CNAE e período das notas"
 }

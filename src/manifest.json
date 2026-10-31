@@ -124,6 +124,7 @@
     "src/js/modulos/92-v153-resultado-consulta-impressao.js",
     "src/js/modulos/93-v154-acesso-visitante-assinante.js",
     "src/js/modulos/94-v155-uploads-cronometro-flutuante.js",
+    "src/js/modulos/95-v156-validacao-cnae-periodo.js",
     "src/js/modulos/99-fechamento.js",
     "src/90-rodape.html"
   ]

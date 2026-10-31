@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V156 — 2026-10-31
+
+- validação por CNAE e período das notas
+
 ## V155 — 2026-10-31
 
 - organiza uploads e adiciona cronômetro flutuante

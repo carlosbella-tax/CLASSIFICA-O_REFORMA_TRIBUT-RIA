@@ -1,0 +1,33 @@
+/* V156 — Cadastro de CNAEs, painel de validação por atividade e período automático das notas. */
+(function(){
+  const css=document.createElement('style');
+  css.textContent=`.v156-cnae-field{grid-column:span 2}.v156-cnae-field textarea{min-height:43px;resize:vertical}.v156-cnae-help{font:500 11px system-ui;color:#aaa;margin-top:4px}.v156-cnae-panel{margin-top:18px}.v156-cnae-panel[hidden]{display:none!important}.v156-cnae-intro{margin:0 0 14px;color:#c9c6bd;line-height:1.55}.v156-cnae-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}.v156-cnae-card{border:1px solid #555b64;border-left:4px solid #ff761c;border-radius:9px;background:#24262c;padding:15px}.v156-cnae-card h3{margin:0 0 7px;color:#fff;font-size:16px}.v156-cnae-card p{margin:8px 0;color:#ddd9d0;font-size:13px;line-height:1.45}.v156-cnae-card ul{margin:7px 0 0;padding-left:18px;color:#c9c6bd;font-size:12px;line-height:1.55}.v156-cnae-source{display:block;margin-top:14px;color:#aaa;font-size:11px}.v156-cnae-source a{color:#ff9b5b}.v156-cnae-empty{padding:18px;border:1px dashed #686e76;border-radius:8px;color:#c9c6bd}.v156-periodo-datas{display:block;margin-top:4px;font-size:12px;color:#cac6bd;line-height:1.45}.v156-periodo-datas b{color:#fff}@media(max-width:1000px){.v156-cnae-field{grid-column:span 2}}@media(max-width:650px){.v156-cnae-field{grid-column:span 1}}#dashboard.v156-cnae-mode .dashboard-v6> :not(#v156-cnae-panel){display:none!important}#dashboard:not(.v156-cnae-mode) #dashSubnav,#dashboard:not(.v156-cnae-mode) #dashPane,#dashboard:not(.v156-cnae-mode) #dashValidacoes,#dashboard:not(.v156-cnae-mode) #dashGraficoES,#dashboard:not(.v156-cnae-mode) #dashBaseCst{display:none!important}#dashboard:not(.v156-cnae-mode) .dash-tax-grid>.dashboard-card:not(:has(#dashIbsCbsRows)){display:none!important}`;
+  document.head.appendChild(css);
+  const fields=document.querySelector('header .company-fields');
+  if(fields&&!document.getElementById('cnaesEmpresa')){
+    const label=document.createElement('label'); label.className='field-label v156-cnae-field'; label.innerHTML='CNAEs da empresa<textarea id="cnaesEmpresa" rows="2" inputmode="numeric" placeholder="Informe todos os CNAEs, um por linha ou separados por vírgula. Ex.: 6920-6/01"></textarea><span class="v156-cnae-help">A atividade principal e as secundárias devem ser informadas aqui.</span>';
+    fields.appendChild(label);
+  }
+  const dashboard=document.getElementById('dashboard');
+  if(!dashboard)return;
+  const panel=document.createElement('section'); panel.id='v156-cnae-panel'; panel.className='dashboard-card dash-wide v156-cnae-panel'; panel.hidden=true; dashboard.querySelector('.dashboard-v6')?.appendChild(panel);
+  const cnaeInput=document.getElementById('cnaesEmpresa');
+  const escHtml=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const listarCnaes=()=>[...new Set((cnaeInput?.value||'').split(/[;,\n]+/).map(v=>v.replace(/\D/g,'')).filter(Boolean))];
+  const cnaeFormatado=code=>code.length===7?code.slice(0,4)+'-'+code.slice(4,5)+'/'+code.slice(5):code;
+  function datasDocumentos(){
+    const valores=[...(typeof state==='undefined'?[]:state.docs||[]),...(typeof state==='undefined'?[]:state.items||[])].map(r=>r?.data_emissao).filter(Boolean).map(v=>{const s=String(v).trim();let m=s.match(/^(\d{4})-(\d{2})-(\d{2})/);if(m)return new Date(+m[1],+m[2]-1,+m[3]);m=s.match(/^(\d{2})\/(\d{2})\/(\d{2,4})/);if(m)return new Date(+(m[3].length===2?'20'+m[3]:m[3]),+m[2]-1,+m[1]);return null}).filter(d=>d&&!Number.isNaN(+d)).sort((a,b)=>a-b);
+    const f=d=>d?d.toLocaleDateString('pt-BR'):'Não identificada'; return {inicial:f(valores[0]),final:f(valores.at(-1))};
+  }
+  function atualizarPeriodo(){const card=document.getElementById('dashPeriodo');if(!card)return;const d=datasDocumentos();card.textContent='';card.innerHTML='<span class="v156-periodo-datas"><b>Data inicial:</b> '+d.inicial+'<br><b>Última nota validada:</b> '+d.final+'</span>';}
+  function renderCnae(){
+    const codigos=listarCnaes(); const invalidos=codigos.filter(c=>c.length!==7);
+    const cards=codigos.filter(c=>c.length===7).map((c,i)=>'<article class="v156-cnae-card"><h3>'+escHtml(cnaeFormatado(c))+(i===0?' — CNAE principal':' — CNAE secundário')+'</h3><p><b>IBS e CBS:</b> a atividade foi registrada para a análise. A LC 214/2025 disciplina a tributação conforme a operação, o bem ou serviço e suas condições legais; não institui alíquota, CST ou cClassTrib automáticos exclusivamente pelo CNAE.</p><p><b>LC 227/2026:</b> trata da administração do IBS pelo CGIBS e de regras de processo e gestão; não traz tabela de enquadramento tributário por CNAE.</p><p><b>Ponto positivo:</b> atividade identificada e segregada para rastreabilidade da análise.</p><p><b>Pontos de atenção:</b></p><ul><li>confirmar NCM/NBS, operação e destinatário em cada documento;</li><li>avaliar regimes específicos, redução, isenção ou alíquota zero conforme a hipótese legal;</li><li>validar a classificação técnica com especialista quando houver benefício fiscal.</li></ul></article>').join('');
+    panel.innerHTML='<h2>Validação de atividades por CNAE</h2><p class="v156-cnae-intro">As informações abaixo são separadas por CNAE informado. A conclusão tributária permanece condicionada aos dados da operação e à classificação do bem ou serviço.</p>'+(cards||'<div class="v156-cnae-empty">Informe os CNAEs da empresa no cabeçalho para gerar a análise por atividade.</div>')+(invalidos.length?'<p class="v156-cnae-empty">CNAE com formato incompleto: '+invalidos.map(escHtml).join(', ')+'. Informe os 7 dígitos de cada atividade.</p>':'')+'<span class="v156-cnae-source">Fontes: <a href="https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2025/lei/lcp214.htm" target="_blank" rel="noopener">LC 214/2025</a> e <a href="https://www2.camara.leg.br/legin/fed/leicom/2026/leicomplementar-227-13-janeiro-2026-798657-normaatualizada-pl.html" target="_blank" rel="noopener">LC 227/2026</a>. Conteúdo informativo, sujeito a atualização normativa.</span>';
+  }
+  function mostrarCnae(ativo){dashboard.classList.toggle('v156-cnae-mode',ativo);panel.hidden=!ativo;if(ativo)renderCnae();}
+  document.getElementById('v123-sidebar')?.addEventListener('click',e=>{const b=e.target.closest('[data-v123-key]');if(b)mostrarCnae(b.dataset.v123Key==='cnae');});
+  cnaeInput?.addEventListener('input',()=>{if(!panel.hidden)renderCnae();});
+  const anterior=window.renderDashboard; if(typeof anterior==='function')window.renderDashboard=function(){const r=anterior.apply(this,arguments);atualizarPeriodo();return r;};
+  atualizarPeriodo();
+})();
