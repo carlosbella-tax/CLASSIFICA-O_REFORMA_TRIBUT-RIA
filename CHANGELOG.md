@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V160 — 2026-10-31
+
+- tema claro e filtros na validação IBS CBS
+
 ## V159 — 2026-10-31
 
 - consulta NCM NBS com alíquotas e anexo oficial

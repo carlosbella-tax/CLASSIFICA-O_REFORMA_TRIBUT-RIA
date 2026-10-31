@@ -45,7 +45,9 @@
     cacheTabelas.ibscbs={rows};
     const filtro=typeof filtrarLinhas==='function'?filtrarLinhas(rows,'ibscbs'):rows;
     const labels={tipo_documento:'Documento',codigo_item:'Código do item/serviço',descricao_item:'Descrição',codigo_referencia:'NCM / NBS',fonte:'Base de validação',validacao_referencia:'Validação NCM/NBS',cst_adequada:'CST adequada',cclasstrib_adequada:'cClassTrib adequada',reducao_adequada:'Redução adequada',anexo_lc214:'Anexo / enquadramento',link_tipi:'Consulta TIPI'};
-    table.querySelector('thead').innerHTML='<tr>'+cols.map(c=>'<th>'+esc(labels[c])+'</th>').join('')+'</tr>';
+    /* V160 — Cabeçalhos da Base IBS/CBS usam o seletor de itens já disponível nas demais tabelas. */
+    const filtros=filtrosTabelas.ibscbs||{};
+    table.querySelector('thead').innerHTML='<tr class="excel-header">'+cols.map(c=>'<th title="'+esc(labels[c])+'"><span class="excel-label">'+esc(labels[c])+'</span><button type="button" class="excel-filter-flag'+((filtros[c]||[]).length?' active':'')+'" data-filter-table="ibscbs" data-filter-column="'+esc(c)+'" title="Filtrar '+esc(labels[c])+'">▾</button></th>').join('')+'</tr>';
     table.querySelector('tbody').innerHTML=filtro.slice(0,MAX_LINHAS_VISIVEIS).map(r=>'<tr>'+cols.map(c=>{
       if(c==='anexo_lc214')return '<td class="v157-validation">'+(r.link_legislacao?'<a class="v157-link" href="'+LC214+'" target="_blank" rel="noopener" title="Abrir a LC 214/2025 para consultar o anexo informado">'+esc(r[c])+'</a>':esc(r[c]))+'</td>';
       if(c==='link_tipi')return '<td class="v157-validation">'+(r[c]?'<a class="v157-link" href="'+TIPI+'" target="_blank" rel="noopener">Consultar TIPI</a>':'')+'</td>';
