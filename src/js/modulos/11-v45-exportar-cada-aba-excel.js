@@ -3,7 +3,8 @@
      ===================================================================== */
   /* V131 — Toda exportação recebe identificação institucional TaxAdvice. */
   function gerarXlsx(nomeArquivo, sheets){
-    sheets = [['TaxAdvice', [{Empresa: ($('empresa')?.value || 'Empresa não informada'), Consultor: 'Carlos Bella', Telefone: '(11) 99479-7347', Sistema: 'Classificação da Reforma Tributária'}]], ...sheets];
+    /* V157 — A primeira planilha identifica o documento como auditoria; a segunda mantém a tabela exportada. */
+    sheets = [['Auditoria Classificação Tributária', [{Empresa: ($('empresa')?.value || 'Empresa não informada'), CNPJ: ($('cnpjEmpresa')?.value || 'Não informado'), Título: 'AUDITORIA — CLASSIFICAÇÃO TRIBUTÁRIA', Sistema: 'Classificação da Reforma Tributária', Consultor: 'Carlos Bella', Telefone: '(11) 99479-7347'}]], ...sheets];
     const usados = new Set;
     sheets = sheets.filter(s => s[1] && s[1].length).map(([n, rows]) => {
       let nome = String(n).replace(/[\\\/\?\*\[\]:]/g, '-').slice(0, 31), base = nome, i = 2;

@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V157 — 2026-10-31
+
+- validação integrada NCM NBS e ajustes de interface
+
 ## V156 — 2026-10-31
 
 - validação por CNAE e período das notas
