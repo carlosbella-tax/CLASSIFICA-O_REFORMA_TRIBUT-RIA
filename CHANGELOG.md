@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V159 — 2026-10-31
+
+- consulta NCM NBS com alíquotas e anexo oficial
+
 ## V158 — 2026-10-31
 
 - remoção da faixa legada V59

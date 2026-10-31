@@ -126,6 +126,7 @@
     "src/js/modulos/94-v155-uploads-cronometro-flutuante.js",
     "src/js/modulos/95-v156-validacao-cnae-periodo.js",
     "src/js/modulos/96-v157-validacao-integrada-ajustes.js",
+    "src/js/modulos/97-v159-consulta-ncm-nbs-aliquotas.js",
     "src/js/modulos/99-fechamento.js",
     "src/90-rodape.html"
   ]
