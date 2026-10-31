@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V152 — 2026-10-31
+
+- restringe administração e adiciona painel TaxAdvice
+
 ## V151 — 2026-10-30
 
 - padroniza login e senha no tema Motor
