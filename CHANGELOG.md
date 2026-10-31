@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V162 — 2026-10-31
+
+- Consulta NCM/NBS com base CST e cClassTrib atualizada
+
 ## V161 — 2026-10-31
 
 - dashboard de análise IBS CBS e CNAE

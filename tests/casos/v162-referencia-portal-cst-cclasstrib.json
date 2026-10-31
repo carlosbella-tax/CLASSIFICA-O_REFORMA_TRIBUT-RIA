@@ -1,0 +1,9 @@
+{
+  "descricao": "V162 — referência do portal preserva candidatos NCM/NBS e não colapsa classificações condicionadas",
+  "arquivo": "v99-zfm-saida.xml",
+  "funcao": "(() => { const ncm = classificadorReferenciaPortal('NCM','3822.19.90'); const nbs = classificadorReferenciaPortal('NBS','106042100'); return [{numero_item:'ncm-38221990', registros:ncm.length, cst:ncm.map(x=>x.cst.codigo).join(','), cclasstrib:ncm.map(x=>x.classificacao.CodClassTrib).join(','), permissao:ncm.map(x=>x.vinculo.TipoPermissao).join(',')}, {numero_item:'nbs-106042100', registros:nbs.length, cst:nbs.map(x=>x.cst.codigo).join(','), cclasstrib:nbs.map(x=>x.classificacao.CodClassTrib).join(',')}]; })",
+  "linhas": [
+    {"numero_item":"ncm-38221990","esperado":{"registros":2,"cst":"200,200","cclasstrib":"200005,200030","permissao":"PERMITIDO,PERMITIDO"}},
+    {"numero_item":"nbs-106042100","esperado":{"registros":4,"cst":"000,000,820,820","cclasstrib":"000002,000002,820006,820006"}}
+  ]
+}

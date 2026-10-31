@@ -7,6 +7,7 @@
     "src/js/dados/cfop-cst-icms.js",
     "src/js/dados/icms-st-exclusoes.js",
     "src/js/dados/tipi-2026.js",
+    "src/js/dados/portal-conformidade-cst-cclasstrib-2026.js",
     "src/js/base/leitura-xml-e-telas.js",
     "src/20-separador-datalist.html",
     "src/js/base/v13-importacao-xml-txt.js",
@@ -129,6 +130,7 @@
     "src/js/modulos/97-v159-consulta-ncm-nbs-aliquotas.js",
     "src/js/modulos/98-v160-tema-claro-filtros-validacao.js",
     "src/js/modulos/99-v161-dashboard-ibs-cbs-cnae.js",
+    "src/js/modulos/100-v162-consulta-portal-cst-cclasstrib.js",
     "src/js/modulos/99-fechamento.js",
     "src/90-rodape.html"
   ]
