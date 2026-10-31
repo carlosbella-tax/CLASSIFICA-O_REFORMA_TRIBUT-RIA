@@ -131,6 +131,7 @@
     "src/js/modulos/98-v160-tema-claro-filtros-validacao.js",
     "src/js/modulos/99-v161-dashboard-ibs-cbs-cnae.js",
     "src/js/modulos/100-v162-consulta-portal-cst-cclasstrib.js",
+    "src/js/modulos/101-v163-validacao-lc214-consultas.js",
     "src/js/modulos/99-fechamento.js",
     "src/90-rodape.html"
   ]

@@ -1,5 +1,5 @@
 {
-  "versao": 162,
+  "versao": 163,
   "data": "2026-10-31",
-  "descricao": "Consulta NCM/NBS com base CST e cClassTrib atualizada"
+  "descricao": "evidenciar validacao LC 214 nas consultas NCM e NBS"
 }

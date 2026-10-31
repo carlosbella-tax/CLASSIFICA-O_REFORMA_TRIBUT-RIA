@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V163 — 2026-10-31
+
+- evidenciar validacao LC 214 nas consultas NCM e NBS
+
 ## V162 — 2026-10-31
 
 - Consulta NCM/NBS com base CST e cClassTrib atualizada
