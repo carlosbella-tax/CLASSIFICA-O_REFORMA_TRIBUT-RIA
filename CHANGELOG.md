@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V158 — 2026-10-31
+
+- remoção da faixa legada V59
+
 ## V157 — 2026-10-31
 
 - validação integrada NCM NBS e ajustes de interface
