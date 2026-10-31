@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V161 — 2026-10-31
+
+- dashboard de análise IBS CBS e CNAE
+
 ## V160 — 2026-10-31
 
 - tema claro e filtros na validação IBS CBS
