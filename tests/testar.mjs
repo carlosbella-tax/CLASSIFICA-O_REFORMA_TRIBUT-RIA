@@ -144,8 +144,15 @@ if (campoNbs && botaoNbs) {
     : falhou('consulta NBS não exibiu as relações priorizadas, Sem redução, cálculo ou fonte legal esperados');
 } else falhou('campos da consulta NBS não foram encontrados');
 
+// V172 — a administração oculta dados operacionais e destaca convites/usuários em laranja TaxAdvice.
+console.log('\n[4.3] Administração de acessos');
+const fonteV172 = readFileSync(join(raiz, 'src/js/modulos/80-v127-acesso-administracao.js'), 'utf8');
+fonteV172.includes('v172-admin-view') && fonteV172.includes('.v127-box{background:#f26a21') && fonteV172.includes('body.v172-admin-view .v123-header .company-fields') && fonteV172.includes('body.v172-admin-view #v152-specialist')
+  ? passou('administração oculta dados da empresa e aplica o destaque laranja TaxAdvice')
+  : falhou('administração não ocultou os dados operacionais ou não recebeu o destaque TaxAdvice');
+
 // V171 — o atalho Fale Conosco deve abrir a mensagem institucional de atendimento.
-console.log('\n[4.3] Atendimento TaxAdvice');
+console.log('\n[4.4] Atendimento TaxAdvice');
 const faleConosco = w.document.querySelector('[data-v125-contact]');
 if (faleConosco) {
   faleConosco.click();

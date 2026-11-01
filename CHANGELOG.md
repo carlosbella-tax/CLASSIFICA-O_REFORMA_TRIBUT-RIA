@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V172 — 2026-11-01
+
+- ajustar tela acessos e usuários
+
 ## V171 — 2026-11-01
 
 - ajustar logotipo e tela fale conosco
