@@ -49,4 +49,7 @@
     const atualizar = () => { const s = typeof state === 'undefined' ? {} : state; const arquivos=(s.files||[]).length, docs=(s.docs||[]).length, itens=(s.items||[]).length; const a=document.getElementById('v123-lote'), d=document.getElementById('v123-docs'); if(a)a.textContent=arquivos+' arquivo(s) carregado(s)'; if(d)d.textContent=docs+' documento(s) · '+itens+' item(ns)'; for(const k of ['nfe','nfse','cte','ibs','cnae','enquadramento','dashboard','consulta','documentos']) { const e=side.querySelector('[data-v123-count="'+k+'"]'); if(e)e.textContent=(k==='nfe'?docs:k==='ibs'?itens:0); } };
     const antigo = window.atualizarBadgesTributos; if (typeof antigo === 'function') window.atualizarBadgesTributos = function(){ const r=antigo.apply(this,arguments); atualizar(); return r; };
     atualizar(); ativar('load');
+    /* V164 — revela a página somente depois que a interface atual estiver montada. */
+    document.body.classList.add('v164-ready');
+    document.getElementById('v164-loading')?.remove();
   })();

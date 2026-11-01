@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V164 — 2026-11-01
+
+- eliminar abertura da tela legada da auditoria
+
 ## V163 — 2026-10-31
 
 - evidenciar validacao LC 214 nas consultas NCM e NBS

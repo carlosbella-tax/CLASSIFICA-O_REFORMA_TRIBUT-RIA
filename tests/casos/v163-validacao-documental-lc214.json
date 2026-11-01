@@ -1,7 +1,7 @@
 {
   "descricao": "V163 — consultas NCM/NBS exibem referência documental da LC 214/2025 sem automatizar enquadramentos condicionados",
   "arquivo": "v99-zfm-saida.xml",
-  "funcao": "(() => [{numero_item:'v163-lc214', status:document.documentElement.innerHTML.includes('REFERÊNCIA DOCUMENTAL LOCALIZADA NA LC 214/2025'), criterio:document.documentElement.innerHTML.includes('NroAnexo&&v.NroItemAnexoLei'), revisao:document.documentElement.innerHTML.includes('REVISÃO OBRIGATÓRIA')}])()",
+  "funcao": "(() => [{numero_item:'v163-lc214', status:document.documentElement.innerHTML.includes('REFERÊNCIA DOCUMENTAL LOCALIZADA NA LC 214/2025'), criterio:document.documentElement.innerHTML.includes('NroAnexo&&v.NroItemAnexoLei'), revisao:document.documentElement.innerHTML.includes('REVISÃO OBRIGATÓRIA')}])",
   "linhas": [
     {"numero_item":"v163-lc214","esperado":{"status":true,"criterio":true,"revisao":true}}
   ]

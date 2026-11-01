@@ -114,6 +114,21 @@ if (atualizar || !existsSync(refArq)) {
   }
   if (falhas) console.log('\n  Se as mudanças forem as esperadas para esta versão, grave a nova referência: node tests/testar.mjs --atualizar');
 }
+// V164 — a consulta individual deve encontrar o primeiro cartão mesmo após a navegação inserir o título da seção.
+console.log('\n[4.1] Consulta individual NCM');
+const campoConsulta = w.document.getElementById('v123-ncm');
+const botaoConsulta = w.document.querySelector('[data-v123-consulta="ncm"]');
+if (campoConsulta && botaoConsulta) {
+  campoConsulta.value = '3822.19.90';
+  botaoConsulta.click();
+  await esperar(140);
+  const painelConsulta = w.document.getElementById('v153-result');
+  const textoConsulta = (painelConsulta?.textContent || '').replace(/\s+/g, ' ');
+  painelConsulta && textoConsulta.includes('200005') && textoConsulta.includes('200030')
+    ? passou('NCM 3822.19.90 exibe os candidatos 200005 e 200030 abaixo da consulta')
+    : falhou('consulta NCM não exibiu o painel ou os candidatos esperados');
+} else falhou('campos da consulta individual não foram encontrados');
+
 w.close();
 
 // 5) casos de regra — cada tests/casos/*.json descreve um XML e o resultado esperado por item

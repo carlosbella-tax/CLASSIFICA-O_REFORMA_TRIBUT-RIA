@@ -1,0 +1,8 @@
+{
+  "descricao": "V164 — a Auditoria inicia somente após a montagem da interface visual atual",
+  "arquivo": "v99-zfm-saida.xml",
+  "funcao": "(() => [{numero_item:'v164-interface',preparo:document.documentElement.innerHTML.includes('v164-loading'),pronto:document.documentElement.innerHTML.includes('v164-ready'),interface:document.documentElement.innerHTML.includes('v123-sidebar')}])",
+  "linhas": [
+    {"numero_item":"v164-interface","esperado":{"preparo":true,"pronto":true,"interface":true}}
+  ]
+}
