@@ -8,6 +8,7 @@
     "src/js/dados/icms-st-exclusoes.js",
     "src/js/dados/tipi-2026.js",
     "src/js/dados/portal-conformidade-cst-cclasstrib-2026.js",
+    "src/js/dados/correlacao-anexo-viii-nbs.js",
     "src/js/base/leitura-xml-e-telas.js",
     "src/20-separador-datalist.html",
     "src/js/base/v13-importacao-xml-txt.js",

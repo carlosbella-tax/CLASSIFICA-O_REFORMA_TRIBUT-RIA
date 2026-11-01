@@ -129,6 +129,21 @@ if (campoConsulta && botaoConsulta) {
     : falhou('consulta NCM não exibiu o painel, a posição, os campos finais ou a identificação para PDF esperados');
 } else falhou('campos da consulta individual não foram encontrados');
 
+// V167 — NBS deve exibir cada relação de serviço do Anexo VIII e seu detalhamento de anexo/fonte.
+console.log('\n[4.2] Consulta individual NBS com Anexo VIII');
+const campoNbs = w.document.getElementById('v123-nbs');
+const botaoNbs = w.document.querySelector('[data-v123-consulta="nbs"]');
+if (campoNbs && botaoNbs) {
+  campoNbs.value = '1.1502.20.00';
+  botaoNbs.click();
+  await esperar(140);
+  const painelNbs = w.document.getElementById('v153-result');
+  const textoNbs = (painelNbs?.textContent || '').replace(/\s+/g, ' ');
+  painelNbs?.querySelectorAll('.v167-servicos tbody tr').length >= 2 && textoNbs.includes('01.01') && textoNbs.includes('01.02') && textoNbs.includes('Efetiva IBS') && textoNbs.includes('Abrir fonte legal')
+    ? passou('NBS 1.1502.20.00 exibe relações de serviços, alíquotas e anexo expansível')
+    : falhou('consulta NBS não exibiu as relações do Anexo VIII ou a fonte legal esperada');
+} else falhou('campos da consulta NBS não foram encontrados');
+
 w.close();
 
 // 5) casos de regra — cada tests/casos/*.json descreve um XML e o resultado esperado por item
