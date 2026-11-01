@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V173 — 2026-11-01
+
+- corrigir selo de versão na publicação
+
 ## V172 — 2026-11-01
 
 - ajustar tela acessos e usuários
