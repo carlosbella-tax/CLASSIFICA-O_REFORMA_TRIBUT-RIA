@@ -1,5 +1,5 @@
 {
-  "versao": 165,
+  "versao": 166,
   "data": "2026-11-01",
-  "descricao": "reposicionar resultado e destacar alíquotas finais"
+  "descricao": "adicionar identidade TaxAdvice na impressão PDF"
 }

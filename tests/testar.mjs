@@ -124,9 +124,9 @@ if (campoConsulta && botaoConsulta) {
   await esperar(140);
   const painelConsulta = w.document.getElementById('v153-result');
   const textoConsulta = (painelConsulta?.textContent || '').replace(/\s+/g, ' ');
-  painelConsulta && painelConsulta.previousElementSibling?.id === 'v123-topbar' && painelConsulta.querySelectorAll('.v162-final').length === 2 && textoConsulta.includes('200005') && textoConsulta.includes('200030')
-    ? passou('NCM 3822.19.90 exibe candidatos e alíquotas finais abaixo da consulta')
-    : falhou('consulta NCM não exibiu o painel, a posição ou os campos finais esperados');
+  painelConsulta && painelConsulta.previousElementSibling?.id === 'v123-topbar' && painelConsulta.querySelectorAll('.v162-final').length === 2 && textoConsulta.includes('200005') && textoConsulta.includes('200030') && textoConsulta.includes('Conte com a TaxAdvice na transição tributária.') && textoConsulta.includes('CARLOS BELLA - CONSULTOR TRIBUTÁRIO - 11 99479-7347')
+    ? passou('NCM 3822.19.90 exibe candidatos, alíquotas finais e identificação para PDF')
+    : falhou('consulta NCM não exibiu o painel, a posição, os campos finais ou a identificação para PDF esperados');
 } else falhou('campos da consulta individual não foram encontrados');
 
 w.close();

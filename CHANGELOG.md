@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V166 — 2026-11-01
+
+- adicionar identidade TaxAdvice na impressão PDF
+
 ## V165 — 2026-11-01
 
 - reposicionar resultado e destacar alíquotas finais
