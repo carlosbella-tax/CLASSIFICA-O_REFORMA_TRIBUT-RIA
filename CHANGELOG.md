@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V165 — 2026-11-01
+
+- reposicionar resultado e destacar alíquotas finais
+
 ## V164 — 2026-11-01
 
 - eliminar abertura da tela legada da auditoria

@@ -7,8 +7,8 @@
   const campo=(titulo,valor)=>'<div class="v159-field"><span>'+esc(titulo)+'</span><strong>'+esc(valor)+'</strong></div>';
   const anexoOficial=anexo=>{const m=String(anexo||'').match(/Anexo\s+([IVXLCDM]+)/i);if(!m)return '';const alvo='ANEXO '+m[1].toUpperCase();return LC214+'#:~:text='+encodeURIComponent(alvo)};
   const reducaoNcm=ref=>{const texto=String(ref?.observacao||'');const m=texto.match(/redução de\s*(\d+(?:[,.]\d+)?)%/i);if(m)return percentual(m[1]);return String(ref?.cst||'')==='000'?0:null};
-  /* V164 — o título da seção precede os cartões após a montagem da navegação atual. */
-  const destino=()=>document.querySelector('#items .card');
+  /* V165 — o resultado da consulta fica imediatamente abaixo dos campos NBS/NCM. */
+  const destino=()=>document.getElementById('v123-topbar');
   function calcular(panel){
     const ibs=percentual(panel.querySelector('[data-v159="ibs"]')?.value);
     const cbs=percentual(panel.querySelector('[data-v159="cbs"]')?.value);
