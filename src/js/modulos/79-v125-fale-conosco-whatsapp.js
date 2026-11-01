@@ -1,4 +1,5 @@
 /* V125 — Aba Fale Conosco: suporte especializado TaxAdvice e WhatsApp. */
+/* V171 — Ação Fale Conosco abre a mensagem institucional de atendimento. */
 (function(){
   const side=document.getElementById('v123-sidebar'), topTitle=document.getElementById('v123-title');
   if(!side || document.getElementById('v125-contact')) return;
@@ -8,7 +9,7 @@
   const button=document.createElement('button'); button.className='v123-link'; button.type='button'; button.dataset.v125Contact='1'; button.innerHTML='Fale Conosco <small>›</small>';
   const section=document.createElement('div'); section.className='v123-side-section'; section.textContent='Suporte'; side.appendChild(section); side.appendChild(button);
   const view=document.createElement('section'); view.id='v125-contact'; view.className='v125-contact';
-  view.innerHTML='<div class="v125-contact-card"><h2>Fale Conosco</h2><p>A otimização da cadeia de suprimentos diante da Reforma exige acompanhamento técnico contínuo, oferecido pela TaxAdvice.</p><a class="v125-whatsapp" href="https://wa.me/551197049434?text=Olá%2C%20quero%20falar%20com%20um%20especialista%20da%20TaxAdvice." target="_blank" rel="noopener noreferrer">Falar com um especialista</a><p class="v125-phone">WhatsApp: (11) 9704-9434</p></div>';
+  view.innerHTML='<div class="v125-contact-card"><h2>Conte com a TaxAdvice na transição tributária.</h2><p>Para realizar consultas em lote sem limites, a TaxAdvice estrutura e acompanha cada etapa deste plano com a sua equipe.</p><a class="v125-whatsapp" href="https://wa.me/551197049434?text=Olá%2C%20quero%20falar%20com%20um%20especialista%20da%20TaxAdvice." target="_blank" rel="noopener noreferrer">Falar com um especialista</a><p class="v125-phone">WhatsApp: (11) 9704-9434</p></div>';
   document.body.appendChild(view);
   const fechar=()=>{view.classList.remove('active');};
   side.addEventListener('click',e=>{const b=e.target.closest('.v123-link');if(b && !b.dataset.v125Contact) fechar();},true);

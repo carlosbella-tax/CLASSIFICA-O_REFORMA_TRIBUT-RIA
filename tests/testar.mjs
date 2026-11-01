@@ -144,6 +144,19 @@ if (campoNbs && botaoNbs) {
     : falhou('consulta NBS não exibiu as relações priorizadas, Sem redução, cálculo ou fonte legal esperados');
 } else falhou('campos da consulta NBS não foram encontrados');
 
+// V171 — o atalho Fale Conosco deve abrir a mensagem institucional de atendimento.
+console.log('\n[4.3] Atendimento TaxAdvice');
+const faleConosco = w.document.querySelector('[data-v125-contact]');
+if (faleConosco) {
+  faleConosco.click();
+  await esperar(20);
+  const atendimento = w.document.getElementById('v125-contact');
+  const marca = w.document.querySelector('.v123-header .brand');
+  atendimento?.classList.contains('active') && atendimento.textContent.includes('Conte com a TaxAdvice na transição tributária.') && atendimento.textContent.includes('Para realizar consultas em lote sem limites') && atendimento.textContent.includes('Falar com um especialista') && marca?.querySelector('.tax')?.textContent === 'Tax' && marca?.querySelector('.advice')?.textContent === 'Advice'
+    ? passou('Fale Conosco abre o atendimento institucional e preserva a marca TaxAdvice')
+    : falhou('Fale Conosco não abriu o atendimento institucional ou a marca TaxAdvice ficou incompleta');
+} else falhou('atalho Fale Conosco não foi encontrado');
+
 // V168 — cronograma anual, referência do regime e edição exclusiva do administrador.
 console.log('\n[4.3] Cronograma de alíquotas e parâmetros por regime');
 const abrirCronograma = w.document.querySelector('[data-v124-view="metodologia"]');
