@@ -1,4 +1,4 @@
-/* V168 — Cronograma anual editável pelo administrador e parâmetros de referência por regime. */
+/* V169 — Cronograma anual editável pelo administrador e parâmetros de referência por regime. */
 (function(){
   const anos=[2026,2027,2028,2029,2030,2031,2032,2033];
   const padrao={
@@ -23,7 +23,11 @@
   }
   const style=document.createElement('style');style.textContent=`.v168-head{display:flex;justify-content:space-between;gap:20px;align-items:start;margin-bottom:18px}.v168-head h2{margin:0 0 7px;color:#123d60}.v168-head p{margin:0;color:#42576a;line-height:1.5}.v168-badge{background:#dcecf7;color:#123d60;border-radius:99px;padding:6px 10px;font-weight:800;font-size:12px}.v168-card,.v168-parametros{background:#fff;border:1px solid #c5d3df;border-radius:10px;padding:18px;margin:0 0 16px}.v168-card h3,.v168-parametros h3{margin:0 0 5px;color:#123d60}.v168-card p{margin:0 0 12px;color:#42576a}.v168-card-head{display:flex;justify-content:space-between;align-items:start;gap:10px;flex-wrap:wrap}.v168-card-head button{padding:8px 10px;background:#164c78;color:#fff;border:0;border-radius:6px;font-weight:800;cursor:pointer}.v168-card-head #v168-restaurar{background:#617584}.v168-lock{font-size:12px;font-weight:700}.v168-scroll{overflow:auto;border:1px solid #c5d3df;border-radius:7px}.v168-table{width:100%;min-width:850px;border-collapse:collapse}.v168-table th,.v168-table td{padding:7px;border:1px solid #d5e0e8;text-align:center}.v168-table thead th{background:#164c78;color:#fff}.v168-table tbody th{text-align:left;color:#123d60;white-space:nowrap}.v168-table input{box-sizing:border-box;width:64px;padding:6px;border:1px solid #b8cad8;border-radius:4px;text-align:right;background:#fff;color:#142536;font-weight:700}.v168-table input:disabled{border-color:transparent;background:transparent;color:#142536;opacity:1}.v168-table td span{font-weight:700;color:#42576a}.v168-parametros p{margin:0 0 9px;color:#173f64}.v168-parametros div{padding:10px;background:#eef5f9;border-radius:6px;color:#173f64}.v168-parametros small{display:block;margin-top:9px;color:#42576a;line-height:1.45}.v168-fontes{color:#405563;line-height:1.5}@media(max-width:720px){.v168-head{flex-direction:column}.v168-card,.v168-parametros{padding:14px}}`;document.head.appendChild(style);
   window.addEventListener('classificador:usuario-autenticado',e=>{admin=e.detail?.role==='admin_taxadvice';render()});
-  document.getElementById('regimeEmpresa')?.addEventListener('change',render);document.getElementById('anoPeriodo')?.addEventListener('change',render);
+  // Delegação mantém a atualização ativa mesmo se o cabeçalho for reconstruído pela interface.
+  const atualizarCabecalho=e=>{if(e.target?.id==='regimeEmpresa'||e.target?.id==='anoPeriodo')render()};
+  document.addEventListener('change',atualizarCabecalho); window.addEventListener('change',atualizarCabecalho);
+  // Mantém o quadro sincronizado se outra rotina reconstruir o select do cabeçalho.
+  let ultimoCabecalho=''; setInterval(()=>{const atual=[document.getElementById('regimeEmpresa')?.value||'',document.getElementById('anoPeriodo')?.value||''].join('|');if(atual!==ultimoCabecalho){ultimoCabecalho=atual;render()}},250);
   const observer=new MutationObserver(()=>{if(document.getElementById('v124-metodologia')){observer.disconnect();render()}});observer.observe(document.body,{childList:true,subtree:true});
   render();
   const side=document.getElementById('v123-sidebar');const link=side?.querySelector('[data-v124-view="metodologia"]');if(link)link.innerHTML='Ver cronograma de alíquotas <small>i</small>';

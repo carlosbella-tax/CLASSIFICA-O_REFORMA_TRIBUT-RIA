@@ -1,5 +1,5 @@
 {
-  "versao": 168,
+  "versao": 169,
   "data": "2026-11-01",
-  "descricao": "cronograma editável e parâmetros por regime tributário"
+  "descricao": "atualizar parâmetros do cronograma ao trocar regime"
 }

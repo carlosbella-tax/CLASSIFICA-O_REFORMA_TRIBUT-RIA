@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V169 — 2026-11-01
+
+- atualizar parâmetros do cronograma ao trocar regime
+
 ## V168 — 2026-11-01
 
 - cronograma editável e parâmetros por regime tributário

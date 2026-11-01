@@ -152,13 +152,13 @@ if (abrirCronograma) {
   await esperar(30);
   const regimeEmpresa = w.document.getElementById('regimeEmpresa');
   regimeEmpresa.value = 'Lucro Real'; regimeEmpresa.dispatchEvent(new w.Event('change', { bubbles: true }));
-  await esperar(20);
+  await esperar(360);
   let cronograma = w.document.getElementById('v124-metodologia');
   const consultaOk = cronograma?.querySelectorAll('.v168-table tbody tr').length === 12 && cronograma.textContent.includes('Lucro Real: PIS 1,65% · COFINS 7,60%') && cronograma.textContent.includes('ICMS 18%');
   w.dispatchEvent(new w.CustomEvent('classificador:usuario-autenticado', { detail: { role: 'admin_taxadvice' } }));
   await esperar(20);
   cronograma = w.document.getElementById('v124-metodologia');
-  !cronograma.querySelector('[data-v168-tributo]')?.disabled && !!cronograma.querySelector('#v168-salvar') && cronograma.querySelectorAll('.v168-table tbody tr').length === 12 && cronograma.textContent.includes('Lucro Real: PIS 1,65% · COFINS 7,60%') && cronograma.textContent.includes('ICMS 18%')
+  consultaOk && !cronograma.querySelector('[data-v168-tributo]')?.disabled && !!cronograma.querySelector('#v168-salvar') && cronograma.querySelectorAll('.v168-table tbody tr').length === 12 && cronograma.textContent.includes('Lucro Real: PIS 1,65% · COFINS 7,60%') && cronograma.textContent.includes('ICMS 18%')
     ? passou('cronograma traz 12 tributos, parâmetros do Lucro Real e edição administrativa')
     : falhou('cronograma não exibiu os tributos, as referências do regime ou os controles administrativos esperados');
 } else falhou('atalho Ver cronograma de alíquotas não foi encontrado');
