@@ -139,9 +139,9 @@ if (campoNbs && botaoNbs) {
   await esperar(140);
   const painelNbs = w.document.getElementById('v153-result');
   const textoNbs = (painelNbs?.textContent || '').replace(/\s+/g, ' ');
-  painelNbs?.querySelectorAll('.v167-servicos tbody tr').length >= 2 && textoNbs.includes('01.01') && textoNbs.includes('01.02') && textoNbs.includes('Efetiva IBS') && textoNbs.includes('Abrir fonte legal')
-    ? passou('NBS 1.1502.20.00 exibe relações de serviços, alíquotas e anexo expansível')
-    : falhou('consulta NBS não exibiu as relações do Anexo VIII ou a fonte legal esperada');
+  painelNbs?.querySelectorAll('.v167-servicos tbody tr').length >= 2 && textoNbs.includes('01.01') && textoNbs.includes('01.02') && textoNbs.includes('Efetiva IBS') && textoNbs.includes('Abrir fonte legal') && textoNbs.includes('Sem redução') && painelNbs.querySelector('.v167-servicos')?.previousElementSibling?.classList.contains('v153-head') && painelNbs.querySelector('[data-v162="reducao"]')?.value === '0'
+    ? passou('NBS 1.1502.20.00 prioriza relações, informa Sem redução e preserva cálculo e fonte legal')
+    : falhou('consulta NBS não exibiu as relações priorizadas, Sem redução, cálculo ou fonte legal esperados');
 } else falhou('campos da consulta NBS não foram encontrados');
 
 // V168 — cronograma anual, referência do regime e edição exclusiva do administrador.
