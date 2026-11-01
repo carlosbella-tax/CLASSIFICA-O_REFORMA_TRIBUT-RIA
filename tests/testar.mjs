@@ -158,6 +158,14 @@ fonteApiAdmin.includes("created_at,organizations(name)") && fonteV172.includes('
   ? passou('administração exibe a data de envio do convite e a data de validade do acesso')
   : falhou('administração não informa separadamente as datas de convite e de validade');
 
+// V175 — upload de planilha em lote abre a análise e disponibiliza a exportação.
+console.log('\n[4.5] Validação em lote por planilha');
+const fonteV131 = readFileSync(join(raiz, 'src/js/modulos/81-v131-importacao-lote-ncm-nbs.js'), 'utf8');
+const fonteV137 = readFileSync(join(raiz, 'src/js/modulos/83-v137-uploads-cabecalho.js'), 'utf8');
+fonteV131.includes('classificadorAbrirResultadoLote') && fonteV131.includes("gerarXlsx('classificacao_ncm_nbs_") && fonteV137.includes('Carregue uma planilha Excel') && fonteV137.includes('VER RESULTADO / EXPORTAR EXCEL') && fonteV137.includes('abrirResultado()')
+  ? passou('upload NCM/NBS abre a análise local e permite exportar o resultado em Excel')
+  : falhou('upload em lote não expõe a análise ou a exportação em Excel');
+
 // V171 — o atalho Fale Conosco deve abrir a mensagem institucional de atendimento.
 console.log('\n[4.4] Atendimento TaxAdvice');
 const faleConosco = w.document.querySelector('[data-v125-contact]');

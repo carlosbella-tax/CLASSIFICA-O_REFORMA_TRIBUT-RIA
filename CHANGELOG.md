@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V175 — 2026-11-01
+
+- destacar validação de planilhas em lote
+
 ## V174 — 2026-11-01
 
 - incluir data de envio do convite
