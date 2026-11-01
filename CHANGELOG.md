@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V168 — 2026-11-01
+
+- cronograma editável e parâmetros por regime tributário
+
 ## V167 — 2026-11-01
 
 - incluir relação de serviços do Anexo VIII na consulta NBS

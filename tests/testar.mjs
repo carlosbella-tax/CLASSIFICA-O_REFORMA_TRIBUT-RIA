@@ -144,6 +144,25 @@ if (campoNbs && botaoNbs) {
     : falhou('consulta NBS não exibiu as relações do Anexo VIII ou a fonte legal esperada');
 } else falhou('campos da consulta NBS não foram encontrados');
 
+// V168 — cronograma anual, referência do regime e edição exclusiva do administrador.
+console.log('\n[4.3] Cronograma de alíquotas e parâmetros por regime');
+const abrirCronograma = w.document.querySelector('[data-v124-view="metodologia"]');
+if (abrirCronograma) {
+  abrirCronograma.click();
+  await esperar(30);
+  const regimeEmpresa = w.document.getElementById('regimeEmpresa');
+  regimeEmpresa.value = 'Lucro Real'; regimeEmpresa.dispatchEvent(new w.Event('change', { bubbles: true }));
+  await esperar(20);
+  let cronograma = w.document.getElementById('v124-metodologia');
+  const consultaOk = cronograma?.querySelectorAll('.v168-table tbody tr').length === 12 && cronograma.textContent.includes('Lucro Real: PIS 1,65% · COFINS 7,60%') && cronograma.textContent.includes('ICMS 18%');
+  w.dispatchEvent(new w.CustomEvent('classificador:usuario-autenticado', { detail: { role: 'admin_taxadvice' } }));
+  await esperar(20);
+  cronograma = w.document.getElementById('v124-metodologia');
+  !cronograma.querySelector('[data-v168-tributo]')?.disabled && !!cronograma.querySelector('#v168-salvar') && cronograma.querySelectorAll('.v168-table tbody tr').length === 12 && cronograma.textContent.includes('Lucro Real: PIS 1,65% · COFINS 7,60%') && cronograma.textContent.includes('ICMS 18%')
+    ? passou('cronograma traz 12 tributos, parâmetros do Lucro Real e edição administrativa')
+    : falhou('cronograma não exibiu os tributos, as referências do regime ou os controles administrativos esperados');
+} else falhou('atalho Ver cronograma de alíquotas não foi encontrado');
+
 w.close();
 
 // 5) casos de regra — cada tests/casos/*.json descreve um XML e o resultado esperado por item
