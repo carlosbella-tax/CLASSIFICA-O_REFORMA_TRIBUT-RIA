@@ -22,7 +22,7 @@ Deno.serve(async req => {
 
   if (body.action === 'list') {
     const [{ data: profiles, error }, { data: users, error: usersError }] = await Promise.all([
-      admin.from('profiles').select('id,full_name,role,active,valid_until,blocked_at,organizations(name)').order('created_at'),
+      admin.from('profiles').select('id,full_name,role,active,valid_until,blocked_at,created_at,organizations(name)').order('created_at'),
       admin.auth.admin.listUsers({ page: 1, perPage: 1000 })
     ]);
     if (error || usersError) return json({ error: error?.message ?? usersError?.message }, 400);

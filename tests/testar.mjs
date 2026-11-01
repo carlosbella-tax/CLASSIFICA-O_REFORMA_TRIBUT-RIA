@@ -151,6 +151,13 @@ fonteV172.includes('v172-admin-view') && fonteV172.includes('.v127-box{backgroun
   ? passou('administração oculta dados da empresa e aplica o destaque laranja TaxAdvice')
   : falhou('administração não ocultou os dados operacionais ou não recebeu o destaque TaxAdvice');
 
+// V174 — usuários devem exibir a data de convite e a validade separadamente.
+console.log('\n[4.4] Datas de convite e validade');
+const fonteApiAdmin = readFileSync(join(raiz, 'supabase/functions/admin-users/index.ts'), 'utf8');
+fonteApiAdmin.includes("created_at,organizations(name)") && fonteV172.includes('Convite enviado') && fonteV172.includes('Validade do acesso') && fonteV172.includes('dataPtBr(u.created_at)')
+  ? passou('administração exibe a data de envio do convite e a data de validade do acesso')
+  : falhou('administração não informa separadamente as datas de convite e de validade');
+
 // V171 — o atalho Fale Conosco deve abrir a mensagem institucional de atendimento.
 console.log('\n[4.4] Atendimento TaxAdvice');
 const faleConosco = w.document.querySelector('[data-v125-contact]');
