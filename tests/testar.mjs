@@ -160,6 +160,12 @@ fonteV172.includes('v172-admin-view') && fonteV172.includes('.v127-box{backgroun
   ? passou('administração oculta dados da empresa e aplica o destaque laranja TaxAdvice')
   : falhou('administração não ocultou os dados operacionais ou não recebeu o destaque TaxAdvice');
 
+// V184 — administrador pode conferir a interface equivalente à de usuário sem alterar sua autenticação.
+console.log('\n[4.3.1] Prévia de perfil no painel administrativo');
+fonteV172.includes('id="v184-preview-role"') && fonteV172.includes('Visualizar como') && fonteV172.includes('v184-user-preview') && fonteV172.includes('Prévia administrativa:') && fonteV172.includes('selecionarPrevia')
+  ? passou('administrador alterna entre sua visão e a prévia de usuário sem alterar o perfil autenticado')
+  : falhou('painel administrativo não disponibilizou a prévia de perfil solicitada');
+
 // V174 — usuários devem exibir a data de convite e a validade separadamente.
 console.log('\n[4.4] Datas de convite e validade');
 const fonteApiAdmin = readFileSync(join(raiz, 'supabase/functions/admin-users/index.ts'), 'utf8');
