@@ -239,7 +239,7 @@ fonteApiAdmin.includes('valid_from') && fonteV172.includes('Início de acesso') 
 console.log('\n[4.6] Validação em lote por planilha');
 const fonteV131 = readFileSync(join(raiz, 'src/js/modulos/81-v131-importacao-lote-ncm-nbs.js'), 'utf8');
 const fonteV137 = readFileSync(join(raiz, 'src/js/modulos/83-v137-uploads-cabecalho.js'), 'utf8');
-fonteV131.includes('classificadorAbrirResultadoLote') && fonteV131.includes("gerarXlsx('classificacao_ncm_nbs_") && fonteV131.includes('cabecalhosOriginais') && fonteV131.includes('Resultado da análise') && fonteV131.includes('v176-resultado') && fonteV137.includes('PROCESSAR') && fonteV137.includes('v137-processar-ncm') && fonteV137.includes('v137-importar-ncm-nbs') && fonteV137.includes('IMPORTAR NCM / NBS') && fonteV137.includes('VER RESULTADO / EXPORTAR EXCEL') && fonteV137.includes('abrirResultado()')
+fonteV131.includes('classificadorAbrirResultadoLote') && !fonteV131.includes('v123-side-section">Exportações') && fonteV131.includes("gerarXlsx('classificacao_ncm_nbs_") && fonteV131.includes('cabecalhosOriginais') && fonteV131.includes('Resultado da análise') && fonteV131.includes('v176-resultado') && fonteV137.includes('PROCESSAR') && fonteV137.includes('v137-processar-ncm') && fonteV137.includes('v137-export-title') && fonteV137.includes('v137-importar-ncm-nbs') && fonteV137.includes('IMPORTAR NCM / NBS') && fonteV137.includes('v137-baixar-pptx') && fonteV137.includes('BAIXAR .PPTX') && fonteV137.includes('VER RESULTADO / EXPORTAR EXCEL') && fonteV137.includes('abrirResultado()')
   ? passou('upload NCM/NBS processa planilhas, preserva colunas e acrescenta resultado em Excel')
   : falhou('upload em lote não processa a planilha ou não acrescenta o resultado exportável');
 

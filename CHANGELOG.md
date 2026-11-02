@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V187 — 2026-11-02
+
+- reposicionar exportações após validação em lote
+
 ## V186 — 2026-11-02
 
 - direcionar suporte para WhatsApp
