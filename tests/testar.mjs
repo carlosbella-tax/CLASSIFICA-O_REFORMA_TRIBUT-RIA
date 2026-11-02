@@ -205,6 +205,13 @@ contadorItens.includes('item(ns) analisado(s)') && fonteV182.includes('CNAE(s) i
   ? passou('validação de atividades e enquadramento exibem seus quantitativos processados')
   : falhou('contadores de CNAEs informados/validados ou itens analisados não foram apresentados');
 
+// V183 — as ações solicitadas e o painel consolidado devem estar disponíveis.
+console.log('\n[4.9] Resumos, ações e Dashboard consolidado');
+const fonteV183 = readFileSync(join(raiz, 'src/js/modulos/106-v183-resumos-acoes-dashboard.js'), 'utf8');
+fonteV183.includes('Baixar Excel no computador') === false && fonteV183.includes('v183-enquadramento-acoes') && fonteV183.includes('Código de serviço (LC 116/2003)') && fonteV183.includes('Quantidade de itens por NCM recomendada para análise') && fonteV183.includes('removerAcoesAntigas')
+  ? passou('painel consolida CNAEs, NCMs e NBSs e disponibiliza as ações solicitadas por aba')
+  : falhou('resumos, ações ou consolidação NCM/NBS do Dashboard não foram configurados');
+
 // V178 — a troca de menu deve encerrar integralmente a visão anterior.
 console.log('\n[4.5] Isolamento entre menus');
 const fonteV123 = readFileSync(join(raiz, 'src/js/modulos/77-v123-painel-navegacao-consultas.js'), 'utf8');

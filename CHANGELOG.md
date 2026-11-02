@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V183 — 2026-11-02
+
+- resumos, exportações e dashboard consolidado
+
 ## V182 — 2026-11-02
 
 - contadores de CNAEs e itens analisados
