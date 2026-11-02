@@ -139,10 +139,19 @@ if (campoNbs && botaoNbs) {
   await esperar(140);
   const painelNbs = w.document.getElementById('v153-result');
   const textoNbs = (painelNbs?.textContent || '').replace(/\s+/g, ' ');
-  painelNbs?.querySelectorAll('.v167-servicos tbody tr').length >= 2 && textoNbs.includes('01.01') && textoNbs.includes('01.02') && textoNbs.includes('Efetiva IBS') && textoNbs.includes('Abrir fonte legal') && textoNbs.includes('Sem redução') && painelNbs.querySelector('.v167-servicos')?.previousElementSibling?.classList.contains('v153-head') && painelNbs.querySelector('[data-v162="reducao"]')?.value === '0'
-    ? passou('NBS 1.1502.20.00 prioriza relações, informa Sem redução e preserva cálculo e fonte legal')
-    : falhou('consulta NBS não exibiu as relações priorizadas, Sem redução, cálculo ou fonte legal esperados');
+  painelNbs?.querySelectorAll('.v167-servicos .v176-servico').length >= 2 && textoNbs.includes('01.01') && textoNbs.includes('01.02') && textoNbs.includes('LC 116/2003') && textoNbs.includes('Alíquotas efetivas de referência') && textoNbs.includes('Base legal indicada') && textoNbs.includes('Sem redução') && painelNbs.querySelector('.v162-resumo')?.nextElementSibling?.classList.contains('v167-servicos') && painelNbs.querySelector('[data-v162="reducao"]')?.value === '0'
+    ? passou('NBS 1.1502.20.00 prioriza cartões de serviços, informa Sem redução e preserva cálculo e fonte legal')
+    : falhou('consulta NBS não exibiu cartões de serviços, Sem redução, cálculo ou fonte legal esperados');
 } else falhou('campos da consulta NBS não foram encontrados');
+
+// V176 — Limpar remove termos manuais e o resultado da consulta.
+const limparConsulta = w.document.getElementById('v123-clear');
+if (limparConsulta) {
+  limparConsulta.click();
+  !campoNbs?.value && !w.document.getElementById('v123-ncm')?.value && !w.document.getElementById('v153-result')
+    ? passou('Limpar apaga os termos NCM/NBS e o resultado da pesquisa')
+    : falhou('Limpar não removeu todos os termos ou o resultado da pesquisa');
+} else falhou('botão Limpar da consulta não foi encontrado');
 
 // V172 — a administração oculta dados operacionais e destaca convites/usuários em laranja TaxAdvice.
 console.log('\n[4.3] Administração de acessos');
@@ -162,9 +171,9 @@ fonteApiAdmin.includes("created_at,organizations(name)") && fonteV172.includes('
 console.log('\n[4.5] Validação em lote por planilha');
 const fonteV131 = readFileSync(join(raiz, 'src/js/modulos/81-v131-importacao-lote-ncm-nbs.js'), 'utf8');
 const fonteV137 = readFileSync(join(raiz, 'src/js/modulos/83-v137-uploads-cabecalho.js'), 'utf8');
-fonteV131.includes('classificadorAbrirResultadoLote') && fonteV131.includes("gerarXlsx('classificacao_ncm_nbs_") && fonteV137.includes('Carregue uma planilha Excel') && fonteV137.includes('VER RESULTADO / EXPORTAR EXCEL') && fonteV137.includes('abrirResultado()')
-  ? passou('upload NCM/NBS abre a análise local e permite exportar o resultado em Excel')
-  : falhou('upload em lote não expõe a análise ou a exportação em Excel');
+fonteV131.includes('classificadorAbrirResultadoLote') && fonteV131.includes("gerarXlsx('classificacao_ncm_nbs_") && fonteV131.includes('cabecalhosOriginais') && fonteV131.includes('Resultado da análise') && fonteV131.includes('v176-resultado') && fonteV137.includes('PROCESSAR') && fonteV137.includes('v137-processar-ncm') && fonteV137.includes('VER RESULTADO / EXPORTAR EXCEL') && fonteV137.includes('abrirResultado()')
+  ? passou('upload NCM/NBS processa planilhas, preserva colunas e acrescenta resultado em Excel')
+  : falhou('upload em lote não processa a planilha ou não acrescenta o resultado exportável');
 
 // V171 — o atalho Fale Conosco deve abrir a mensagem institucional de atendimento.
 console.log('\n[4.4] Atendimento TaxAdvice');
