@@ -167,6 +167,13 @@ fonteApiAdmin.includes('created_at') && fonteApiAdmin.includes('valid_from') && 
   ? passou('administração exibe as datas de convite, início e final do acesso separadamente')
   : falhou('administração não informa separadamente as datas de convite e período de acesso');
 
+// V179 — após a carga, o botão de processamento deve sinalizar a próxima ação.
+console.log('\n[4.5] Destaque do processamento');
+const fonteV14 = readFileSync(join(raiz, 'src/js/modulos/01-v14-carga-ilimitada-xml-arquivos.js'), 'utf8');
+fonteV14.includes('v179-processar-piscando') && fonteV14.includes("$('process').classList.toggle('v179-processar-piscando'") && fonteV14.includes("$('process').classList.remove('v179-processar-piscando')")
+  ? passou('PROCESSAR pisca após o carregamento e interrompe o destaque ao iniciar')
+  : falhou('PROCESSAR não recebeu o destaque após o carregamento de documentos');
+
 // V178 — a troca de menu deve encerrar integralmente a visão anterior.
 console.log('\n[4.5] Isolamento entre menus');
 const fonteV123 = readFileSync(join(raiz, 'src/js/modulos/77-v123-painel-navegacao-consultas.js'), 'utf8');

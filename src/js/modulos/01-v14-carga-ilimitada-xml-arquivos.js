@@ -4,6 +4,8 @@
    TODOS os itens, correções de cálculo e dashboard de validações.
    ===================================================================== */
 (function(){
+  /* V179 — chama a atenção para PROCESSAR logo após a carga de documentos. */
+  const styleV179=document.createElement('style');styleV179.textContent='#process.v179-processar-piscando{animation:v179-processar-pisca .85s ease-in-out infinite;box-shadow:0 0 0 0 #f26a21}@keyframes v179-processar-pisca{50%{transform:scale(1.035);background:#f26a21;color:#111;box-shadow:0 0 0 7px #f26a2166}}';document.head.appendChild(styleV179);
   const V14 = { keys: new Set(), naoXml: 0, pendente: false, cancelar: false, rodando: false, duplicadas: 0, t0: 0 };
   const fmtInt = n => new Intl.NumberFormat('pt-BR').format(n || 0);
   const tamanho = b => b > 1048576 ? brNumero(b / 1048576, 1) + ' MB' : brNumero(b / 1024, 1) + ' KB';
@@ -345,7 +347,7 @@
   function atualizarSelecao(){
     const n = state.files.length, bytes = state.files.reduce((a, f) => a + (f.size || 0), 0);
     $('mFiles').textContent = fmtInt(n);
-    $('clear').disabled = !n; $('process').disabled = !n || V14.rodando;
+    $('clear').disabled = !n; $('process').disabled = !n || V14.rodando; $('process').classList.toggle('v179-processar-piscando',!!(n&&V14.pendente&&!V14.rodando));
     $('selected').textContent = n ? fmtInt(n) + ' arquivo(s) XML/TXT carregado(s) · ' + tamanho(bytes) + (V14.naoXml ? ' · ' + fmtInt(V14.naoXml) + ' arquivo(s) de outro tipo descartado(s)' : '')
       : 'Nenhum arquivo selecionado.';
     $('status').textContent = n ? 'Arquivos carregados. Clique na aba "Processar" (ou no botão Processar arquivos) para iniciar.' : 'Aguardando seleção.';
@@ -442,7 +444,7 @@
     state.items = []; state.events = []; state.docs = []; state.errors = [];
     resetFiltrosV15();
     Object.keys(PAG).forEach(k => PAG[k].pagina = 0);
-    $('process').disabled = true; $('pIniciar').disabled = true; $('pCancelar').disabled = false; $('pVerDash').disabled = true;
+    $('process').disabled = true; $('process').classList.remove('v179-processar-piscando'); $('pIniciar').disabled = true; $('pCancelar').disabled = false; $('pVerDash').disabled = true;
     $('download').disabled = true; $('downloadTop').disabled = true;
     const chaves = new Set, LOTE = 20;
     let lidos = 0;
@@ -477,6 +479,7 @@
     if (runId !== state.runId) return;
     const cancelado = V14.cancelar;
     if (cancelado) V14.pendente = true;
+    $('process').classList.toggle('v179-processar-piscando',!!(V14.pendente && state.files.length));
     atualizarPainel(lidos, files.length);
     $('mDocs').textContent = fmtInt(state.docs.length); $('mItems').textContent = fmtInt(state.items.length); $('mErrors').textContent = fmtInt(state.errors.length);
     $('itemBadge').textContent = state.items.length; $('eventBadge').textContent = state.events.length;
