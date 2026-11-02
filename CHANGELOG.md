@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V188 — 2026-11-02
+
+- remover bloco institucional da consulta
+
 ## V187 — 2026-11-02
 
 - reposicionar exportações após validação em lote

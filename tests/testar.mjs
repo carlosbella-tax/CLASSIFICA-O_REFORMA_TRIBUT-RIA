@@ -231,7 +231,7 @@ console.log('\n[4.5] Período e bloqueio de acesso');
 const fonteV141 = readFileSync(join(raiz, 'src/js/modulos/86-v141-acesso-conta-autorizada.js'), 'utf8');
 const fonteV152 = readFileSync(join(raiz, 'src/js/modulos/91-v152-acesso-admin-painel-especialista.js'), 'utf8');
 const migracaoV177 = readFileSync(join(raiz, 'supabase/migrations/20261102093700_access_period.sql'), 'utf8');
-fonteApiAdmin.includes('valid_from') && fonteV172.includes('Início de acesso') && fonteV172.includes('Final de acesso') && fonteV172.includes('classificadorMostrarAcessoExpirado') && fonteV141.includes('valid_from') && fonteV141.includes('classificadorMostrarAcessoExpirado') && fonteV152.includes('Conte com a <strong>TaxAdvice</strong>') && !fonteV152.includes('Falar com um especialista') && !fonteV152.includes('9704-9434') && migracaoV177.includes('add column if not exists valid_from')
+fonteApiAdmin.includes('valid_from') && fonteV172.includes('Início de acesso') && fonteV172.includes('Final de acesso') && fonteV172.includes('classificadorMostrarAcessoExpirado') && fonteV141.includes('valid_from') && fonteV141.includes('classificadorMostrarAcessoExpirado') && !fonteV152.includes('Conte com a TaxAdvice') && !fonteV152.includes('Falar com um especialista') && !fonteV152.includes('9704-9434') && migracaoV177.includes('add column if not exists valid_from')
   ? passou('administração define início/final, bloqueia acesso vencido e remove contato redundante')
   : falhou('período de acesso, bloqueio por vencimento ou painel institucional não foi atualizado');
 

@@ -1,5 +1,5 @@
 {
-  "versao": 187,
+  "versao": 188,
   "data": "2026-11-02",
-  "descricao": "reposicionar exportações após validação em lote"
+  "descricao": "remover bloco institucional da consulta"
 }
