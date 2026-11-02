@@ -187,6 +187,15 @@ if (abaEnquadramento) {
     : falhou('enquadramento não exibiu as colunas por item, a revisão documental ou a referência legal esperadas');
 } else falhou('aba de enquadramento recomendado não foi encontrada');
 
+// V181 — os CFOPs carregados precisam apresentar a referência de crédito ou débito IBS/CBS.
+console.log('\n[4.7] CFOPs e crédito/débito IBS/CBS');
+await esperar(40);
+const quadroCfop = w.document.querySelector('#observacoes .v181-cfop');
+const colunasCfop = [...(quadroCfop?.querySelectorAll('th') || [])].map(x => x.textContent.trim()).join(' | ');
+quadroCfop?.querySelectorAll('tbody tr').length > 0 && colunasCfop.includes('Tratamento IBS/CBS') && colunasCfop.includes('CST recomendada') && colunasCfop.includes('cClassTrib recomendada') && quadroCfop.textContent.includes('Possibilidade de crédito de IBS/CBS') && quadroCfop.textContent.includes('CFOP não define isoladamente crédito')
+  ? passou('CFOPs carregados informam a possibilidade de crédito ou débito e preservam a revisão documental')
+  : falhou('quadro de CFOPs não exibiu a referência de crédito/débito e CST/cClassTrib esperada');
+
 // V178 — a troca de menu deve encerrar integralmente a visão anterior.
 console.log('\n[4.5] Isolamento entre menus');
 const fonteV123 = readFileSync(join(raiz, 'src/js/modulos/77-v123-painel-navegacao-consultas.js'), 'utf8');

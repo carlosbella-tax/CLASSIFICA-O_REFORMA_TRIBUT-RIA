@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V181 — 2026-11-02
+
+- quadro CFOP de créditos e débitos IBS CBS
+
 ## V180 — 2026-11-02
 
 - enquadramento recomendado por item
