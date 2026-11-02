@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V178 — 2026-11-02
+
+- isolar conteúdo entre menus
+
 ## V177 — 2026-11-02
 
 - aprimorar período e bloqueio de acesso

@@ -167,6 +167,14 @@ fonteApiAdmin.includes('created_at') && fonteApiAdmin.includes('valid_from') && 
   ? passou('administração exibe as datas de convite, início e final do acesso separadamente')
   : falhou('administração não informa separadamente as datas de convite e período de acesso');
 
+// V178 — a troca de menu deve encerrar integralmente a visão anterior.
+console.log('\n[4.5] Isolamento entre menus');
+const fonteV123 = readFileSync(join(raiz, 'src/js/modulos/77-v123-painel-navegacao-consultas.js'), 'utf8');
+const fonteV125 = readFileSync(join(raiz, 'src/js/modulos/79-v125-fale-conosco-whatsapp.js'), 'utf8');
+fonteV123.includes('fecharVisoesAnteriores') && fonteV123.includes("document.getElementById('v125-contact')?.classList.remove('active')") && fonteV123.includes("document.getElementById('v127-admin')?.classList.remove('active')") && fonteV123.includes("document.getElementById('v153-result')?.remove()") && fonteV125.includes("document.getElementById('v127-admin')?.classList.remove('active')")
+  ? passou('cada menu remove a tela anterior antes de abrir seu próprio conteúdo')
+  : falhou('a troca de menu pode manter conteúdo da tela anterior');
+
 // V177 — período de acesso deve separar início/final e bloquear consultas vencidas.
 console.log('\n[4.5] Período e bloqueio de acesso');
 const fonteV141 = readFileSync(join(raiz, 'src/js/modulos/86-v141-acesso-conta-autorizada.js'), 'utf8');

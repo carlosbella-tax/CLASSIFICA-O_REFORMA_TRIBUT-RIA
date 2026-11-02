@@ -13,5 +13,5 @@
   document.body.appendChild(view);
   const fechar=()=>{view.classList.remove('active');};
   side.addEventListener('click',e=>{const b=e.target.closest('.v123-link');if(b && !b.dataset.v125Contact) fechar();},true);
-  button.addEventListener('click',()=>{document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.v123-link').forEach(b=>b.classList.remove('active'));button.classList.add('active');view.classList.add('active');if(topTitle)topTitle.textContent='Fale Conosco';});
+  button.addEventListener('click',()=>{document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.getElementById('v127-admin')?.classList.remove('active');document.body.classList.remove('v172-admin-view');document.getElementById('v153-result')?.remove();document.querySelectorAll('.v123-link').forEach(b=>b.classList.remove('active'));button.classList.add('active');view.classList.add('active');if(topTitle)topTitle.textContent='Fale Conosco';});
 })();
