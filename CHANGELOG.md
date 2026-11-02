@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V180 — 2026-11-02
+
+- enquadramento recomendado por item
+
 ## V179 — 2026-11-02
 
 - destacar processamento após carga

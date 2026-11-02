@@ -174,6 +174,19 @@ fonteV14.includes('v179-processar-piscando') && fonteV14.includes("$('process').
   ? passou('PROCESSAR pisca após o carregamento e interrompe o destaque ao iniciar')
   : falhou('PROCESSAR não recebeu o destaque após o carregamento de documentos');
 
+// V180 — enquadramento recomendado deve trazer somente a análise IBS/CBS por item e a referência legislativa.
+console.log('\n[4.6] Enquadramento recomendado por item');
+const abaEnquadramento = w.document.querySelector('.tab[data-tab="observacoes"]');
+if (abaEnquadramento) {
+  abaEnquadramento.click();
+  await esperar(30);
+  const quadroEnquadramento = w.document.querySelector('#observacoes .v180-enquadramento');
+  const colunasEnquadramento = [...(quadroEnquadramento?.querySelectorAll('th') || [])].map(x => x.textContent.trim()).join(' | ');
+  quadroEnquadramento?.querySelectorAll('tbody tr').length > 0 && colunasEnquadramento.includes('CST recomendada') && colunasEnquadramento.includes('cClassTrib recomendada') && colunasEnquadramento.includes('Alíquota final IBS') && colunasEnquadramento.includes('Alíquota final CBS') && quadroEnquadramento.textContent.includes('REVISÃO NECESSÁRIA') && quadroEnquadramento.querySelector('a[href*="planalto.gov.br"]')
+    ? passou('enquadramento lista cada item com NCM/NBS, referências IBS/CBS, redução e link legal')
+    : falhou('enquadramento não exibiu as colunas por item, a revisão documental ou a referência legal esperadas');
+} else falhou('aba de enquadramento recomendado não foi encontrada');
+
 // V178 — a troca de menu deve encerrar integralmente a visão anterior.
 console.log('\n[4.5] Isolamento entre menus');
 const fonteV123 = readFileSync(join(raiz, 'src/js/modulos/77-v123-painel-navegacao-consultas.js'), 'utf8');
