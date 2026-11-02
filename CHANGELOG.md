@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V185 — 2026-11-02
+
+- reposicionar importação NCM e NBS
+
 ## V184 — 2026-11-02
 
 - prévia de perfil administrador e usuário
