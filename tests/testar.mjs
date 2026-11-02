@@ -222,7 +222,7 @@ fonteV183.includes('Baixar Excel no computador') === false && fonteV183.includes
 console.log('\n[4.5] Isolamento entre menus');
 const fonteV123 = readFileSync(join(raiz, 'src/js/modulos/77-v123-painel-navegacao-consultas.js'), 'utf8');
 const fonteV125 = readFileSync(join(raiz, 'src/js/modulos/79-v125-fale-conosco-whatsapp.js'), 'utf8');
-fonteV123.includes('fecharVisoesAnteriores') && fonteV123.includes("document.getElementById('v125-contact')?.classList.remove('active')") && fonteV123.includes("document.getElementById('v127-admin')?.classList.remove('active')") && fonteV123.includes("document.getElementById('v153-result')?.remove()") && fonteV125.includes("document.getElementById('v127-admin')?.classList.remove('active')")
+fonteV123.includes('fecharVisoesAnteriores') && fonteV123.includes("document.getElementById('v125-contact')?.classList.remove('active')") && fonteV123.includes("document.getElementById('v127-admin')?.classList.remove('active')") && fonteV123.includes("document.getElementById('v153-result')?.remove()") && fonteV125.includes('v125-contact-link') && fonteV125.includes('wa.me/551197049434')
   ? passou('cada menu remove a tela anterior antes de abrir seu próprio conteúdo')
   : falhou('a troca de menu pode manter conteúdo da tela anterior');
 
@@ -243,18 +243,13 @@ fonteV131.includes('classificadorAbrirResultadoLote') && fonteV131.includes("ger
   ? passou('upload NCM/NBS processa planilhas, preserva colunas e acrescenta resultado em Excel')
   : falhou('upload em lote não processa a planilha ou não acrescenta o resultado exportável');
 
-// V171 — o atalho Fale Conosco deve abrir a mensagem institucional de atendimento.
+// V186 — o atalho Fale Conosco deve abrir diretamente o WhatsApp, sem duplicar uma tela de contato.
 console.log('\n[4.4] Atendimento TaxAdvice');
-const faleConosco = w.document.querySelector('[data-v125-contact]');
-if (faleConosco) {
-  faleConosco.click();
-  await esperar(20);
-  const atendimento = w.document.getElementById('v125-contact');
-  const marca = w.document.querySelector('.v123-header .brand');
-  atendimento?.classList.contains('active') && atendimento.textContent.includes('Conte com a TaxAdvice na transição tributária.') && atendimento.textContent.includes('Para realizar consultas em lote sem limites') && atendimento.textContent.includes('Falar com um especialista') && marca?.querySelector('.tax')?.textContent === 'Tax' && marca?.querySelector('.advice')?.textContent === 'Advice'
-    ? passou('Fale Conosco abre o atendimento institucional e preserva a marca TaxAdvice')
-    : falhou('Fale Conosco não abriu o atendimento institucional ou a marca TaxAdvice ficou incompleta');
-} else falhou('atalho Fale Conosco não foi encontrado');
+const faleConosco = w.document.getElementById('v125-contact-link');
+const marca = w.document.querySelector('.v123-header .brand');
+faleConosco?.tagName === 'A' && faleConosco.target === '_blank' && faleConosco.href.includes('wa.me/551197049434') && decodeURIComponent(faleConosco.href).includes('Gostaria de saber mais da ferramenta de auditoria') && !w.document.getElementById('v125-contact') && marca?.querySelector('.tax')?.textContent === 'Tax' && marca?.querySelector('.advice')?.textContent === 'Advice'
+  ? passou('Fale Conosco direciona ao WhatsApp com a mensagem de auditoria e sem tela duplicada')
+  : falhou('atalho Fale Conosco não direciona corretamente ao WhatsApp ou conserva tela duplicada');
 
 // V168 — cronograma anual, referência do regime e edição exclusiva do administrador.
 console.log('\n[4.3] Cronograma de alíquotas e parâmetros por regime');
