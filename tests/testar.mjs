@@ -139,7 +139,7 @@ if (campoNbs && botaoNbs) {
   await esperar(140);
   const painelNbs = w.document.getElementById('v153-result');
   const textoNbs = (painelNbs?.textContent || '').replace(/\s+/g, ' ');
-  painelNbs?.querySelectorAll('.v167-servicos .v176-servico').length >= 2 && textoNbs.includes('cClassTrib') && textoNbs.includes('HIPÓTESE DE CORRELAÇÃO — CONFIRMAR') && textoNbs.includes('Condição') && textoNbs.includes('Exceção') && textoNbs.includes('Descrição do item') && textoNbs.includes('01.01') && textoNbs.includes('01.02') && textoNbs.includes('LC 116/2003') && textoNbs.includes('Base legal indicada') && textoNbs.includes('Sem redução') && painelNbs.querySelector('.v162-resumo')?.nextElementSibling?.classList.contains('v167-servicos') && painelNbs.querySelector('[data-v162="reducao"]')?.value === '0'
+  painelNbs?.querySelectorAll('.v162-candidatos > .v162-candidato').length >= 2 && textoNbs.includes('cClassTrib') && textoNbs.includes('HIPÓTESE DE CORRELAÇÃO — CONFIRMAR') && textoNbs.includes('Condição') && textoNbs.includes('Exceção') && textoNbs.includes('Descrição do item') && textoNbs.includes('01.01') && textoNbs.includes('01.02') && textoNbs.includes('LC 116/2003') && textoNbs.includes('Base legal indicada') && textoNbs.includes('Sem redução') && painelNbs.querySelector('.v162-resumo')?.nextElementSibling?.classList.contains('v162-candidatos') && !painelNbs.querySelector('.v167-servicos') && painelNbs.querySelector('[data-v162="reducao"]')?.value === '0'
     ? passou('NBS 1.1502.20.00 prioriza cartões de serviços, informa Sem redução e preserva cálculo e fonte legal')
     : falhou('consulta NBS não exibiu cartões de serviços, Sem redução, cálculo ou fonte legal esperados');
 } else falhou('campos da consulta NBS não foram encontrados');

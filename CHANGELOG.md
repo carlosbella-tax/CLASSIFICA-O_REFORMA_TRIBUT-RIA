@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V190 — 2026-11-02
+
+- unificar estrutura visual NBS e NCM
+
 ## V189 — 2026-11-02
 
 - padronizar consulta NBS com NCM
