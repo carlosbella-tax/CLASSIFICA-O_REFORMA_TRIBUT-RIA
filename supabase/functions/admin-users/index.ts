@@ -22,7 +22,7 @@ Deno.serve(async req => {
 
   if (body.action === 'list') {
     const [{ data: profiles, error }, { data: users, error: usersError }] = await Promise.all([
-      admin.from('profiles').select('id,full_name,role,active,valid_until,blocked_at,created_at,organizations(name)').order('created_at'),
+      admin.from('profiles').select('id,full_name,role,active,valid_from,valid_until,blocked_at,created_at,organizations(name)').order('created_at'),
       admin.auth.admin.listUsers({ page: 1, perPage: 1000 })
     ]);
     if (error || usersError) return json({ error: error?.message ?? usersError?.message }, 400);
@@ -31,12 +31,12 @@ Deno.serve(async req => {
   }
 
   if (body.action === 'invite') {
-    const { email, full_name, role = 'usuario', organization_id = null, valid_until = null } = body;
-    if (!email || !['admin_taxadvice', 'usuario'].includes(role) || (role === 'usuario' && !valid_until)) return json({ error: 'Dados de convite inválidos.' }, 400);
+    const { email, full_name, role = 'usuario', organization_id = null, valid_from = null, valid_until = null } = body;
+    if (!email || !['admin_taxadvice', 'usuario'].includes(role) || (role === 'usuario' && (!valid_from || !valid_until || valid_from > valid_until))) return json({ error: 'Informe início e final do acesso em um período válido.' }, 400);
     const { data, error } = await admin.auth.admin.inviteUserByEmail(email, { data: { full_name }, redirectTo: body.redirect_to });
     if (error || !data.user) return json({ error: error?.message ?? 'Convite não criado.' }, 400);
-    await admin.from('profiles').update({ full_name, role, organization_id, valid_until: role === 'admin_taxadvice' ? null : valid_until, active: true, blocked_at: null }).eq('id', data.user.id);
-    await admin.from('access_audit_events').insert({ actor_id: actor.id, subject_id: data.user.id, action: 'invite_sent', details: { role, valid_until } });
+    await admin.from('profiles').update({ full_name, role, organization_id, valid_from: role === 'admin_taxadvice' ? null : valid_from, valid_until: role === 'admin_taxadvice' ? null : valid_until, active: true, blocked_at: null }).eq('id', data.user.id);
+    await admin.from('access_audit_events').insert({ actor_id: actor.id, subject_id: data.user.id, action: 'invite_sent', details: { role, valid_from, valid_until } });
     return json({ user_id: data.user.id });
   }
 
@@ -49,9 +49,9 @@ Deno.serve(async req => {
   }
 
   if (body.action === 'update') {
-    const { user_id, full_name, role, organization_id, valid_until, active } = body;
-    if (!user_id || !['admin_taxadvice', 'usuario'].includes(role) || (role === 'usuario' && !valid_until)) return json({ error: 'Dados de atualização inválidos.' }, 400);
-    const patch = { full_name, role, organization_id: organization_id ?? null, valid_until: role === 'admin_taxadvice' ? null : valid_until, active: Boolean(active), blocked_at: active ? null : new Date().toISOString() };
+    const { user_id, full_name, role, organization_id, valid_from, valid_until, active } = body;
+    if (!user_id || !['admin_taxadvice', 'usuario'].includes(role) || (role === 'usuario' && (!valid_from || !valid_until || valid_from > valid_until))) return json({ error: 'Informe início e final do acesso em um período válido.' }, 400);
+    const patch = { full_name, role, organization_id: organization_id ?? null, valid_from: role === 'admin_taxadvice' ? null : valid_from, valid_until: role === 'admin_taxadvice' ? null : valid_until, active: Boolean(active), blocked_at: active ? null : new Date().toISOString() };
     const { error } = await admin.from('profiles').update(patch).eq('id', user_id);
     if (error) return json({ error: error.message }, 400);
     await admin.from('access_audit_events').insert({ actor_id: actor.id, subject_id: user_id, action: patch.active ? 'user_updated' : 'user_blocked', details: patch });

@@ -163,12 +163,21 @@ fonteV172.includes('v172-admin-view') && fonteV172.includes('.v127-box{backgroun
 // V174 — usuários devem exibir a data de convite e a validade separadamente.
 console.log('\n[4.4] Datas de convite e validade');
 const fonteApiAdmin = readFileSync(join(raiz, 'supabase/functions/admin-users/index.ts'), 'utf8');
-fonteApiAdmin.includes("created_at,organizations(name)") && fonteV172.includes('Convite enviado') && fonteV172.includes('Validade do acesso') && fonteV172.includes('dataPtBr(u.created_at)')
-  ? passou('administração exibe a data de envio do convite e a data de validade do acesso')
-  : falhou('administração não informa separadamente as datas de convite e de validade');
+fonteApiAdmin.includes('created_at') && fonteApiAdmin.includes('valid_from') && fonteV172.includes('Convite enviado') && fonteV172.includes('Início de acesso') && fonteV172.includes('Final de acesso') && fonteV172.includes('dataPtBr(u.created_at)')
+  ? passou('administração exibe as datas de convite, início e final do acesso separadamente')
+  : falhou('administração não informa separadamente as datas de convite e período de acesso');
+
+// V177 — período de acesso deve separar início/final e bloquear consultas vencidas.
+console.log('\n[4.5] Período e bloqueio de acesso');
+const fonteV141 = readFileSync(join(raiz, 'src/js/modulos/86-v141-acesso-conta-autorizada.js'), 'utf8');
+const fonteV152 = readFileSync(join(raiz, 'src/js/modulos/91-v152-acesso-admin-painel-especialista.js'), 'utf8');
+const migracaoV177 = readFileSync(join(raiz, 'supabase/migrations/20261102093700_access_period.sql'), 'utf8');
+fonteApiAdmin.includes('valid_from') && fonteV172.includes('Início de acesso') && fonteV172.includes('Final de acesso') && fonteV172.includes('classificadorMostrarAcessoExpirado') && fonteV141.includes('valid_from') && fonteV141.includes('classificadorMostrarAcessoExpirado') && fonteV152.includes('Conte com a <strong>TaxAdvice</strong>') && !fonteV152.includes('Falar com um especialista') && !fonteV152.includes('9704-9434') && migracaoV177.includes('add column if not exists valid_from')
+  ? passou('administração define início/final, bloqueia acesso vencido e remove contato redundante')
+  : falhou('período de acesso, bloqueio por vencimento ou painel institucional não foi atualizado');
 
 // V175 — upload de planilha em lote abre a análise e disponibiliza a exportação.
-console.log('\n[4.5] Validação em lote por planilha');
+console.log('\n[4.6] Validação em lote por planilha');
 const fonteV131 = readFileSync(join(raiz, 'src/js/modulos/81-v131-importacao-lote-ncm-nbs.js'), 'utf8');
 const fonteV137 = readFileSync(join(raiz, 'src/js/modulos/83-v137-uploads-cabecalho.js'), 'utf8');
 fonteV131.includes('classificadorAbrirResultadoLote') && fonteV131.includes("gerarXlsx('classificacao_ncm_nbs_") && fonteV131.includes('cabecalhosOriginais') && fonteV131.includes('Resultado da análise') && fonteV131.includes('v176-resultado') && fonteV137.includes('PROCESSAR') && fonteV137.includes('v137-processar-ncm') && fonteV137.includes('VER RESULTADO / EXPORTAR EXCEL') && fonteV137.includes('abrirResultado()')

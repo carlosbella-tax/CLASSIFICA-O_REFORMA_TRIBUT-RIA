@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V177 — 2026-11-02
+
+- aprimorar período e bloqueio de acesso
+
 ## V176 — 2026-11-02
 
 - aprimorar consulta NBS e processamento de planilhas
