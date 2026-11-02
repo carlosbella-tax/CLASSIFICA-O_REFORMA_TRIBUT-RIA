@@ -196,6 +196,15 @@ quadroCfop?.querySelectorAll('tbody tr').length > 0 && colunasCfop.includes('Tra
   ? passou('CFOPs carregados informam a possibilidade de crédito ou débito e preservam a revisão documental')
   : falhou('quadro de CFOPs não exibiu a referência de crédito/débito e CST/cClassTrib esperada');
 
+// V182 — os resumos devem informar CNAEs declarados/validados e todos os itens analisados.
+console.log('\n[4.8] Contadores de CNAEs e itens analisados');
+await esperar(20);
+const contadorItens = w.document.querySelector('#observacoes .v180-enquadramento h2')?.textContent || '';
+const fonteV182 = readFileSync(join(raiz, 'src/js/modulos/105-v182-contadores-validacao-cnae-itens.js'), 'utf8');
+contadorItens.includes('item(ns) analisado(s)') && fonteV182.includes('CNAE(s) informado(s)') && fonteV182.includes('CNAE(s) validado(s)')
+  ? passou('validação de atividades e enquadramento exibem seus quantitativos processados')
+  : falhou('contadores de CNAEs informados/validados ou itens analisados não foram apresentados');
+
 // V178 — a troca de menu deve encerrar integralmente a visão anterior.
 console.log('\n[4.5] Isolamento entre menus');
 const fonteV123 = readFileSync(join(raiz, 'src/js/modulos/77-v123-painel-navegacao-consultas.js'), 'utf8');

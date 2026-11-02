@@ -136,6 +136,7 @@
     "src/js/modulos/102-v168-cronograma-editavel-regime.js",
     "src/js/modulos/103-v180-enquadramento-recomendado-item.js",
     "src/js/modulos/104-v181-cfop-credito-debito-ibs-cbs.js",
+    "src/js/modulos/105-v182-contadores-validacao-cnae-itens.js",
     "src/js/modulos/99-fechamento.js",
     "src/90-rodape.html"
   ]
