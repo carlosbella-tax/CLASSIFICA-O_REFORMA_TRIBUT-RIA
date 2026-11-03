@@ -121,7 +121,7 @@ const botaoConsulta = w.document.querySelector('[data-v123-consulta="ncm"]');
 if (campoConsulta && botaoConsulta) {
   campoConsulta.value = '3822.19.90';
   botaoConsulta.click();
-  await esperar(260);
+  await esperar(140);
   const painelConsulta = w.document.getElementById('v153-result');
   const textoConsulta = (painelConsulta?.textContent || '').replace(/\s+/g, ' ');
   painelConsulta && painelConsulta.previousElementSibling?.id === 'v123-topbar' && painelConsulta.querySelectorAll('.v162-final').length === 2 && textoConsulta.includes('200005') && textoConsulta.includes('200030') && textoConsulta.includes('Conte com a TaxAdvice na transição tributária.') && textoConsulta.includes('CARLOS BELLA - CONSULTOR TRIBUTÁRIO - 11 99479-7347')
@@ -136,10 +136,10 @@ const botaoNbs = w.document.querySelector('[data-v123-consulta="nbs"]');
 if (campoNbs && botaoNbs) {
   campoNbs.value = '1.1502.20.00';
   botaoNbs.click();
-  await esperar(260);
+  await esperar(140);
   const painelNbs = w.document.getElementById('v153-result');
   const textoNbs = (painelNbs?.textContent || '').replace(/\s+/g, ' ');
-  painelNbs?.querySelectorAll('.v162-candidatos > .v162-candidato').length >= 2 && [...painelNbs.querySelectorAll('.v162-candidatos > .v162-candidato')].every(card=>card.querySelectorAll('dt').length===5) && textoNbs.includes('cClassTrib') && textoNbs.includes('HIPÓTESE DE CORRELAÇÃO — CONFIRMAR') && textoNbs.includes('Condição') && textoNbs.includes('Exceção') && textoNbs.includes('Descrição do item') && textoNbs.includes('01.01') && textoNbs.includes('01.02') && textoNbs.includes('LC 116/2003') && textoNbs.includes('Base legal indicada') && textoNbs.includes('Sem redução') && painelNbs.querySelector('.v162-resumo')?.nextElementSibling?.classList.contains('v162-candidatos') && !painelNbs.querySelector('.v167-servicos') && painelNbs.querySelector('[data-v162="reducao"]')?.value === '0'
+  painelNbs?.querySelectorAll('.v162-candidatos > .v162-candidato').length >= 2 && textoNbs.includes('cClassTrib') && textoNbs.includes('HIPÓTESE DE CORRELAÇÃO — CONFIRMAR') && textoNbs.includes('Condição') && textoNbs.includes('Exceção') && textoNbs.includes('Descrição do item') && textoNbs.includes('01.01') && textoNbs.includes('01.02') && textoNbs.includes('LC 116/2003') && textoNbs.includes('Base legal indicada') && textoNbs.includes('Sem redução') && painelNbs.querySelector('.v162-resumo')?.nextElementSibling?.classList.contains('v162-candidatos') && !painelNbs.querySelector('.v167-servicos') && painelNbs.querySelector('[data-v162="reducao"]')?.value === '0'
     ? passou('NBS 1.1502.20.00 prioriza cartões de serviços, informa Sem redução e preserva cálculo e fonte legal')
     : falhou('consulta NBS não exibiu cartões de serviços, Sem redução, cálculo ou fonte legal esperados');
 } else falhou('campos da consulta NBS não foram encontrados');

@@ -26,25 +26,21 @@
     const classe=cl.CodClassTrib||v.cClassTrib||'A confirmar',cst=cl.Cst||v.cst||'A confirmar';
     return '<article class="v162-candidato '+(permissao==='VEDADO'?'vedado':'')+'"><h3>cClassTrib '+esc(classe)+' <small>· CST '+esc(cst)+'</small></h3><p><b>'+esc(permissao)+'</b>'+(c.vigente?'':' · VIGÊNCIA A CONFIRMAR')+'</p><p><b>'+esc(cl.NomeReduzido||cl.NomeClassTrib||'Classificação sem nome disponível')+'</b></p><dl><div><dt>Redução IBS / CBS</dt><dd>'+fmt(numero(cl.PercRedIbs))+' / '+fmt(numero(cl.PercRedCbs))+'</dd></div><div><dt>Anexo / item</dt><dd>Anexo '+esc(v.NroAnexo||'—')+' · item '+esc(v.NroItemAnexoLei||'—')+'</dd></div><div><dt>Condição</dt><dd>'+esc(v.DescCondicao||'Não informada')+'</dd></div><div><dt>Exceção</dt><dd>'+esc(v.DescExcecao||'Não informada')+'</dd></div><div><dt>Descrição do item</dt><dd>'+esc(v.DescItemAnexo||v.DescAnexo||'Não informada')+'</dd></div></dl><p class="v162-links"><a href="'+esc(seguro(cl.TexUrlLegislacao))+'" target="_blank" rel="noopener">Base legal indicada</a> · <a href="'+LC214+'" target="_blank" rel="noopener">LC 214/2025</a></p></article>';
   }
-  /* V191 — cada hipótese NBS é normalizada e renderizada pela mesma função de cartão da NCM. */
+  /* V190 — NBS entrega os próprios candidatos diretamente na mesma grade da consulta NCM. */
   function blocosServicosNbs(chave,todos){
     const relacoes=typeof window.classificadorCorrelacaoAnexoViiiNbs==='function'?window.classificadorCorrelacaoAnexoViiiNbs(chave):[];
     const porClasse={};todos.forEach(c=>{const k=String(c.classificacao?.CodClassTrib||c.vinculo?.cClassTrib||'').replace(/\D/g,'').padStart(6,'0');if(k&&!porClasse[k])porClasse[k]=c});
     return relacoes.map(r=>{
-      const origem=porClasse[r.cClassTrib],v=origem?.vinculo||{},cl=origem?.classificacao||{};
+      const c=porClasse[r.cClassTrib],v=c?.vinculo||{},cl=c?.classificacao||{};
+      const classe=r.cClassTrib||cl.CodClassTrib||v.cClassTrib||'A confirmar',cst=cl.Cst||v.cst||'A confirmar';
+      const redI=numero(cl.PercRedIbs),redC=numero(cl.PercRedCbs),anexo=v.NroAnexo||'A confirmar',item=v.NroItemAnexoLei||'A confirmar';
       const servico=r.descricaoServico||'Descrição não informada';
-      const permitido=origem?.vigente&&v.TipoPermissao==='PERMITIDO';
-      return bloco({vigente:!!origem?.vigente,vinculo:{
-        TipoPermissao:permitido?'PERMITIDO':'HIPÓTESE DE CORRELAÇÃO — CONFIRMAR',
-        cClassTrib:r.cClassTrib||v.cClassTrib||'A confirmar',cst:cl.Cst||v.cst||'A confirmar',
-        NroAnexo:v.NroAnexo||'A confirmar',NroItemAnexoLei:v.NroItemAnexoLei||'A confirmar',
-        DescCondicao:v.DescCondicao||('Serviço '+(r.codigoServico||'não informado')+' da LC 116/2003 correlacionado ao NBS consultado.'),
-        DescExcecao:v.DescExcecao||'Confirmar a correlação conforme a operação, a destinação e a vigência.',
-        DescItemAnexo:v.DescItemAnexo||v.DescAnexo||('NBS '+(r.descricaoNbs||chave)+' · '+servico)
-      },classificacao:{
-        CodClassTrib:r.cClassTrib||cl.CodClassTrib||v.cClassTrib||'A confirmar',Cst:cl.Cst||v.cst||'A confirmar',
-        NomeReduzido:servico,PercRedIbs:cl.PercRedIbs,PercRedCbs:cl.PercRedCbs,TexUrlLegislacao:cl.TexUrlLegislacao
-      }});
+      const permissao=c?.vigente&&v.TipoPermissao==='PERMITIDO'?'PERMITIDO':'HIPÓTESE DE CORRELAÇÃO — CONFIRMAR';
+      const condicao=v.DescCondicao||('Serviço '+(r.codigoServico||'não informado')+' da LC 116/2003 correlacionado complementarmente ao NBS consultado.');
+      const excecao=v.DescExcecao||'Confirmar a correlação conforme a operação, a destinação e a vigência.';
+      const descricao=v.DescItemAnexo||v.DescAnexo||('NBS '+(r.descricaoNbs||chave)+' · '+servico);
+      const reducao=redI===null&&redC===null?'Sem redução':fmt(redI)+' / '+fmt(redC);
+      return '<article class="v162-candidato"><h3>cClassTrib '+esc(classe)+' <small>· CST '+esc(cst)+'</small></h3><p><b>'+esc(permissao)+'</b></p><p><b>'+esc(servico)+'</b></p><dl><div><dt>Redução IBS / CBS</dt><dd>'+reducao+'</dd></div><div><dt>Anexo / item</dt><dd>Anexo '+esc(anexo)+' · item '+esc(item)+'</dd></div><div><dt>Condição</dt><dd>'+esc(condicao)+'</dd></div><div><dt>Exceção</dt><dd>'+esc(excecao)+'</dd></div><div><dt>Descrição do item</dt><dd>'+esc(descricao)+'</dd></div></dl><p class="v162-links"><a href="'+esc(seguro(cl.TexUrlLegislacao))+'" target="_blank" rel="noopener">Base legal indicada</a> · <a href="'+LC214+'" target="_blank" rel="noopener">LC 214/2025</a></p></article>';
     });
   }
   function render(tipo,termo){
