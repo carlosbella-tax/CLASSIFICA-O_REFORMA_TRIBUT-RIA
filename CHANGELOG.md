@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V191 — 2026-11-03
+
+- unificar quadros de analise NBS e NCM
+
 ## V190 — 2026-11-02
 
 - unificar estrutura visual NBS e NCM
