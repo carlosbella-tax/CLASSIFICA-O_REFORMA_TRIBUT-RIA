@@ -151,9 +151,10 @@ if (campoNbs && botaoNbs) {
   await esperar(140);
   const painelNbs = w.document.getElementById('v153-result');
   const textoNbs = (painelNbs?.textContent || '').replace(/\s+/g, ' ');
-  painelNbs?.querySelectorAll('.v167-servicos .v176-servico').length >= 2 && textoNbs.includes('cClassTrib') && textoNbs.includes('HIPÓTESE DE CORRELAÇÃO — CONFIRMAR') && textoNbs.includes('Condição') && textoNbs.includes('Exceção') && textoNbs.includes('Descrição do item') && textoNbs.includes('01.01') && textoNbs.includes('01.02') && textoNbs.includes('LC 116/2003') && textoNbs.includes('Base legal indicada') && textoNbs.includes('Sem redução') && painelNbs.querySelector('.v162-resumo')?.nextElementSibling?.classList.contains('v167-servicos') && painelNbs.querySelector('[data-v162="reducao"]')?.value === '0'
-    ? passou('NBS 1.1502.20.00 prioriza cartões de serviços, informa Sem redução e preserva cálculo e fonte legal')
-    : falhou('consulta NBS não exibiu cartões de serviços, Sem redução, cálculo ou fonte legal esperados');
+  /* V195 — a NBS deve apresentar a mesma ficha detalhada, título e hierarquia visual da consulta NCM, sem perder os cartões de correlação. */
+  painelNbs?.querySelector('.v194-ficha-nbs') && painelNbs.querySelector('.v153-head h2')?.textContent.trim() === 'NBS' && textoNbs.includes('NBS 1.1502.20.00: Serviços de projeto e desenvolvimento') && textoNbs.includes('Estrutura de identificação do código NBS') && painelNbs.querySelectorAll('.v195-nbs-linha').length === 5 && painelNbs?.querySelectorAll('.v167-servicos .v176-servico').length >= 2 && textoNbs.includes('cClassTrib') && textoNbs.includes('HIPÓTESE DE CORRELAÇÃO — CONFIRMAR') && textoNbs.includes('Condição') && textoNbs.includes('Exceção') && textoNbs.includes('Descrição do item') && textoNbs.includes('01.01') && textoNbs.includes('01.02') && textoNbs.includes('LC 116/2003') && textoNbs.includes('Base legal indicada') && textoNbs.includes('Sem redução') && painelNbs.querySelector('.v162-resumo')?.nextElementSibling?.classList.contains('v167-servicos') && painelNbs.querySelector('[data-v162="reducao"]')?.value === '0'
+    ? passou('NBS 1.1502.20.00 exibe ficha detalhada, cartões de serviços, Sem redução, cálculo e fonte legal')
+    : falhou('consulta NBS não exibiu a ficha detalhada, os cartões de serviços, Sem redução, cálculo ou fonte legal esperados');
 } else falhou('campos da consulta NBS não foram encontrados');
 
 // V176 — Limpar remove termos manuais e o resultado da consulta.
