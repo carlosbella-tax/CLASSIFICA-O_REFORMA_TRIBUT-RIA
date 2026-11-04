@@ -5,6 +5,14 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V198 — 2026-11-04
+
+- consolida a entrega do acesso por link mágico sem senha
+
+## V197 — 2026-11-04
+
+- substitui senha por acesso seguro com link mágico no e-mail
+
 ## V196 — 2026-11-04
 
 - corrige o título da aba para refletir a versão publicada

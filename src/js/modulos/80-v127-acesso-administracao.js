@@ -2,7 +2,7 @@
 (function(){
   const env=window.CLASSIFICADOR_ENV||{};
   const configured=/^https:\/\/.+\.supabase\.co$/.test(env.supabaseUrl||'') && !!env.supabaseAnonKey;
-  /* V150 — Um retorno de recuperação não pode iniciar a tela principal antes da nova senha. */const v150Hash=new URLSearchParams(location.hash.replace(/^#/,'')),v150Query=new URLSearchParams(location.search),v150Recovery=v150Hash.get('type')==='recovery'||v150Query.get('type')==='recovery'||v150Query.has('code');
+  /* V150 — Um retorno de recuperação não pode iniciar a tela principal antes da nova senha. */ /* V197 — Callbacks de link mágico seguem o fluxo normal de sessão. */const v150Hash=new URLSearchParams(location.hash.replace(/^#/,'')),v150Query=new URLSearchParams(location.search),v150Recovery=v150Hash.get('type')==='recovery'||v150Query.get('type')==='recovery';
   let client=null, currentUser=null, currentProfile=null;
   const loadSdk=()=>new Promise((resolve,reject)=>{
     if(window.supabase)return resolve(window.supabase);

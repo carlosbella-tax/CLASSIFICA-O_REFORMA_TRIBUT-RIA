@@ -242,11 +242,19 @@ fonteV123.includes('fecharVisoesAnteriores') && fonteV123.includes("document.get
 // V177 — período de acesso deve separar início/final e bloquear consultas vencidas.
 console.log('\n[4.5] Período e bloqueio de acesso');
 const fonteV141 = readFileSync(join(raiz, 'src/js/modulos/86-v141-acesso-conta-autorizada.js'), 'utf8');
+/* V197 — o link mágico delega a validação da sessão ao módulo-base, sem campo de senha. */
+const fonteV127 = readFileSync(join(raiz, 'src/js/modulos/80-v127-acesso-administracao.js'), 'utf8');
 const fonteV152 = readFileSync(join(raiz, 'src/js/modulos/91-v152-acesso-admin-painel-especialista.js'), 'utf8');
 const migracaoV177 = readFileSync(join(raiz, 'supabase/migrations/20261102093700_access_period.sql'), 'utf8');
-fonteApiAdmin.includes('valid_from') && fonteV172.includes('Início de acesso') && fonteV172.includes('Final de acesso') && fonteV172.includes('classificadorMostrarAcessoExpirado') && fonteV141.includes('valid_from') && fonteV141.includes('classificadorMostrarAcessoExpirado') && !fonteV152.includes('Conte com a TaxAdvice') && !fonteV152.includes('Falar com um especialista') && !fonteV152.includes('9704-9434') && migracaoV177.includes('add column if not exists valid_from')
+fonteApiAdmin.includes('valid_from') && fonteV172.includes('Início de acesso') && fonteV172.includes('Final de acesso') && fonteV172.includes('classificadorMostrarAcessoExpirado') && fonteV141.includes('valid_from') && fonteV127.includes('classificadorMostrarAcessoExpirado') && !fonteV152.includes('Conte com a TaxAdvice') && !fonteV152.includes('Falar com um especialista') && !fonteV152.includes('9704-9434') && migracaoV177.includes('add column if not exists valid_from')
   ? passou('administração define início/final, bloqueia acesso vencido e remove contato redundante')
   : falhou('período de acesso, bloqueio por vencimento ou painel institucional não foi atualizado');
+
+// V197 — acesso autorizado usa link mágico sem senha e não cadastra e-mails desconhecidos.
+console.log('\n[4.5.1] Acesso por link mágico');
+fonteV141.includes('signInWithOtp') && fonteV141.includes('shouldCreateUser:false') && fonteV141.includes('Enviar link de acesso') && !fonteV141.includes('v141-login-password') && !fonteV141.includes('Esqueci minha senha')
+  ? passou('login remove senha e solicita link mágico apenas para conta previamente autorizada')
+  : falhou('acesso por link mágico ainda expõe senha ou permite cadastro automático');
 
 // V175 — upload de planilha em lote abre a análise e disponibiliza a exportação.
 console.log('\n[4.6] Validação em lote por planilha');
