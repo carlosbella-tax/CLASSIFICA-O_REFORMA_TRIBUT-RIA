@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V196 — 2026-11-04
+
+- corrige o título da aba para refletir a versão publicada
+
 ## V195 — 2026-11-04
 
 - padroniza o retorno visual das consultas NCM e NBS
