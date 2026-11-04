@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V194 — 2026-11-04
+
+- organizar a consulta individual NCM/NBS com ficha TIPI e cautela de enquadramento
+
 ## V193 — 2026-11-03
 
 - restaurar títulos do resultado da consulta NCM

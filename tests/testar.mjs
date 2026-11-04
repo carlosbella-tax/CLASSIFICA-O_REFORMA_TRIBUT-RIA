@@ -129,6 +129,18 @@ if (campoConsulta && botaoConsulta) {
     : falhou('consulta NCM não exibiu o painel, a posição, os campos finais ou a identificação para PDF esperados');
 } else falhou('campos da consulta individual não foram encontrados');
 
+// V194 — a TIPI identifica e organiza a hierarquia mesmo quando o Portal não possui vínculo CST/cClassTrib específico.
+if (campoConsulta && botaoConsulta) {
+  campoConsulta.value = '3208.90.10';
+  botaoConsulta.click();
+  await esperar(140);
+  const painelTipi = w.document.getElementById('v153-result');
+  const textoTipi = (painelTipi?.textContent || '').replace(/\s+/g, ' ');
+  painelTipi?.querySelector('.v194-ficha') && textoTipi.includes('Tabela NCM') && textoTipi.includes('NCM 3208.90.10: Tintas') && textoTipi.includes('Código sem pontuação: 32089010') && textoTipi.includes('Hierarquia na TIPI') && textoTipi.includes('Tintas e vernizes, à base de polímeros sintéticos') && textoTipi.includes('não há vínculo documental localizado na referência consultada') && textoTipi.includes('ausência de vínculo não prova tributação integral')
+    ? passou('NCM 3208.90.10 exibe ficha TIPI e preserva a cautela sem vínculo Portal')
+    : falhou('consulta NCM não exibiu a ficha TIPI ou presumiu enquadramento para 3208.90.10');
+}
+
 // V167 — NBS deve exibir cada relação de serviço do Anexo VIII e seu detalhamento de anexo/fonte.
 console.log('\n[4.2] Consulta individual NBS com Anexo VIII');
 const campoNbs = w.document.getElementById('v123-nbs');
