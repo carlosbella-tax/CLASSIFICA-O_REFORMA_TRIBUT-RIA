@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V201 — 2026-11-05
+
+- liberar acesso direto sem cadastro
+
 ## V200 — 2026-11-05
 
 - iniciar empresa CNPJ e ano em branco até o processamento da carga

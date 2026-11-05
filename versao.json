@@ -1,5 +1,5 @@
 {
-  "versao": 200,
+  "versao": 201,
   "data": "2026-11-05",
-  "descricao": "iniciar empresa CNPJ e ano em branco até o processamento da carga"
+  "descricao": "liberar acesso direto sem cadastro"
 }
