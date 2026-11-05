@@ -1,5 +1,5 @@
 {
-  "versao": 198,
-  "data": "2026-11-04",
-  "descricao": "consolida a entrega do acesso por link mágico sem senha"
+  "versao": 199,
+  "data": "2026-11-05",
+  "descricao": "integrar simulador de exclusão de IBS e CBS da base do ICMS"
 }

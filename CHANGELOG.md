@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V199 — 2026-11-05
+
+- integrar simulador de exclusão de IBS e CBS da base do ICMS
+
 ## V198 — 2026-11-04
 
 - consolida a entrega do acesso por link mágico sem senha
