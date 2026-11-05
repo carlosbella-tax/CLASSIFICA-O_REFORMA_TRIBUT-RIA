@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V202 — 2026-11-05
+
+- destacar planilha NCM NBS e ampliar CNAE
+
 ## V201 — 2026-11-05
 
 - liberar acesso direto sem cadastro
