@@ -5,9 +5,9 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
-## V205 — 2026-11-06
+## V206 — 2026-11-06
 
-- relacionar NCM ao Imposto Seletivo
+- restaurar tela de upload NCM da V202
 
 ## V204 — 2026-11-06
 
