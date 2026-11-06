@@ -1,5 +1,5 @@
 {
-  "versao": 206,
+  "versao": 207,
   "data": "2026-11-06",
-  "descricao": "restaurar tela de upload NCM da V202"
+  "descricao": "analisar IS por NCM sem alterar upload V202"
 }

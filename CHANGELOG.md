@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V207 — 2026-11-06
+
+- analisar IS por NCM sem alterar upload V202
+
 ## V206 — 2026-11-06
 
 - restaurar tela de upload NCM da V202
