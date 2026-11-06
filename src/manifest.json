@@ -141,6 +141,7 @@
     "src/js/modulos/107-v199-simulador-exclusao-ibs-cbs.js",
     "src/js/modulos/108-v201-acesso-livre.js",
     "src/js/modulos/109-v202-planilha-cnae.js",
+    "src/js/modulos/110-v205-ncm-imposto-seletivo.js",
     "src/js/modulos/99-fechamento.js",
     "src/90-rodape.html"
   ]
