@@ -1,7 +1,7 @@
 /* V202 — Atalho permanente para a planilha NCM/NBS e campo CNAE em toda a linha. */
 (function(){
   const style=document.createElement('style');
-  style.textContent='header .company-fields .v156-cnae-field{grid-column:1/-1!important;width:100%}header .company-fields .v156-cnae-field textarea{box-sizing:border-box;width:100%;min-height:52px}.v202-lote-link{border-color:#f26a21!important;color:#fff!important}';
+  style.textContent='header .company-fields .v156-cnae-field{grid-column:1/-1!important;width:100%}header .company-fields .v156-cnae-field textarea{box-sizing:border-box;width:100%;min-height:52px}';
   document.head.appendChild(style);
   const side=document.getElementById('v123-sidebar');
   if(!side||document.getElementById('v202-lote-link'))return;
