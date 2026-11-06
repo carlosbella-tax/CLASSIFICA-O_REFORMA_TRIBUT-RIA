@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V210 — 2026-11-06
+
+- reconhecer automaticamente colunas NCM NBS
+
 ## V209 — 2026-11-06
 
 - padronizar cor azul do menu NCM

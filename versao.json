@@ -1,5 +1,5 @@
 {
-  "versao": 209,
+  "versao": 210,
   "data": "2026-11-06",
-  "descricao": "padronizar cor azul do menu NCM"
+  "descricao": "reconhecer automaticamente colunas NCM NBS"
 }
