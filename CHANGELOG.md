@@ -5,9 +5,9 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
-## V203 — 2026-11-05
+## V204 — 2026-11-06
 
-- ajustar cabecalho cnpj regime cnae e validacao lote
+- restaurar interface funcional da V202
 
 ## V202 — 2026-11-05
 
