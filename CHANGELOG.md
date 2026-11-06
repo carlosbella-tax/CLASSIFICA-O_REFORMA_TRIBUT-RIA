@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V211 — 2026-11-06
+
+- analise completa IBS CBS e referencias legais
+
 ## V210 — 2026-11-06
 
 - reconhecer automaticamente colunas NCM NBS

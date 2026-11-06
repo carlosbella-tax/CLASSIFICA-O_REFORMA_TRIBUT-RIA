@@ -1,5 +1,5 @@
 {
-  "versao": 210,
+  "versao": 211,
   "data": "2026-11-06",
-  "descricao": "reconhecer automaticamente colunas NCM NBS"
+  "descricao": "analise completa IBS CBS e referencias legais"
 }
