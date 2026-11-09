@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V231 — 2026-11-09
+
+- Corrige e.submitter indefinido no cadastro de visitante (V230): fallback para o botao submit do formulario
+
 ## V230 — 2026-11-09
 
 - Controle de recursos visitante: cadastro com confirmacao de e-mail, 20 consultas vitalicias NCM/NBS, menus bloqueados para visitante, contagem atomica no Supabase (V229) + migration aplicada

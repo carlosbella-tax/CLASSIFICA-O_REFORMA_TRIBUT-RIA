@@ -1,5 +1,5 @@
 {
-  "versao": 230,
+  "versao": 231,
   "data": "2026-11-09",
-  "descricao": "Controle de recursos visitante: cadastro com confirmacao de e-mail, 20 consultas vitalicias NCM/NBS, menus bloqueados para visitante, contagem atomica no Supabase (V229) + migration aplicada"
+  "descricao": "Corrige e.submitter indefinido no cadastro de visitante (V230): fallback para o botao submit do formulario"
 }
