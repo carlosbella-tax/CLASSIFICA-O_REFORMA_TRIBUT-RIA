@@ -1,0 +1,9 @@
+{
+  "descricao": "V227 — abertura padrão sempre na tela Consulta NCM e NBS",
+  "arquivos": ["v105-is-2027.xml"],
+  "funcao": "(() => { const retorno=window.classificadorAbrirConsultaInicial?.(),consulta=document.querySelector('#v123-sidebar [data-v123-key=\"consulta\"]');const modo=retorno===true&&document.body.classList.contains('v219-modo-consulta');const titulo=document.getElementById('v123-title')?.textContent==='Consulta NCM e NBS';const ativo=consulta?.classList.contains('active')&&document.querySelectorAll('#v123-sidebar .v123-link.active').length===1;const isolado=!document.getElementById('load')?.classList.contains('active')&&document.getElementById('items')?.classList.contains('active');return [{numero_item:'v227',modo,titulo,ativo,isolado}]; })",
+  "chave": "numero_item",
+  "linhas": [
+    {"numero_item":"v227","esperado":{"modo":true,"titulo":true,"ativo":true,"isolado":true}}
+  ]
+}

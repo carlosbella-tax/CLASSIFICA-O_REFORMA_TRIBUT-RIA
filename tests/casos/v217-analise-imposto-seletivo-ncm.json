@@ -1,0 +1,95 @@
+{
+  "descricao": "V217 — análise documental das NCM correlacionadas ao Imposto Seletivo em 2027",
+  "arquivos": [
+    "v105-is-2027.xml"
+  ],
+  "funcao": "(() => ['22021000','22030000','22060090','22084000','24022000','26010000','27090010','27111100','87030000','88020000','89033000','32089010'].map(ncm => Object.assign({ncm}, window.classificadorAnaliseIsNcm(ncm))))",
+  "chave": "ncm",
+  "linhas": [
+    {
+      "esperado": {
+        "correlacionada": true,
+        "categoria": "Bebidas açucaradas",
+        "aliquotaFinal": "2,60%"
+      },
+      "numero_item": "22021000"
+    },
+    {
+      "esperado": {
+        "correlacionada": true,
+        "categoria": "Cervejas de malte",
+        "aliquotaFinal": "4,20%",
+        "fatorConversao": "1,07"
+      },
+      "numero_item": "22030000"
+    },
+    {
+      "esperado": {
+        "aliquotaFinal": "8,00% ou 16,00%",
+        "condicao": "^NCM insuficiente"
+      },
+      "numero_item": "22060090"
+    },
+    {
+      "esperado": {
+        "aliquotaFinal": "20,00% ou 24,00%",
+        "condicao": "^NCM insuficiente"
+      },
+      "numero_item": "22084000"
+    },
+    {
+      "esperado": {
+        "aliquotaFinal": "66,70%",
+        "aliquotaEspecifica": "R$ 3,50 por vintena"
+      },
+      "numero_item": "24022000"
+    },
+    {
+      "esperado": {
+        "aliquotaFinal": "0,00%",
+        "tratamento2027": "Alíquota reduzida a zero até 31/12/2027."
+      },
+      "numero_item": "26010000"
+    },
+    {
+      "esperado": {
+        "correlacionada": true,
+        "categoria": "Bens minerais extraídos"
+      },
+      "numero_item": "27090010"
+    },
+    {
+      "esperado": {
+        "correlacionada": true,
+        "aliquotaFinal": "0,00%"
+      },
+      "numero_item": "27111100"
+    },
+    {
+      "esperado": {
+        "aliquotaFinal": "A calcular",
+        "condicao": "^A alíquota final depende"
+      },
+      "numero_item": "87030000"
+    },
+    {
+      "esperado": {
+        "aliquotaFinal": "6,80%"
+      },
+      "numero_item": "88020000"
+    },
+    {
+      "esperado": {
+        "aliquotaFinal": "12,00%"
+      },
+      "numero_item": "89033000"
+    },
+    {
+      "esperado": {
+        "correlacionada": false,
+        "status": "NCM NÃO LOCALIZADA NAS CORRELAÇÕES DE IS INCORPORADAS"
+      },
+      "numero_item": "32089010"
+    }
+  ]
+}

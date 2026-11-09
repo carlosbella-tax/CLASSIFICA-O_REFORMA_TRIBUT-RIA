@@ -1,0 +1,23 @@
+{
+  "descricao": "V218 — título contextual da carga para planilha NCM/NBS sem alterar o fluxo XML",
+  "arquivos": [
+    "v105-is-2027.xml"
+  ],
+  "funcao": "(() => { const el=document.querySelector('#drop > strong'), linhas=[]; window.classificadorModoCarga('planilha','NCM'); linhas.push({numero_item:'planilha',titulo:el.textContent,modo:el.dataset.v218Modo}); window.classificadorModoCarga('xml'); linhas.push({numero_item:'xml',titulo:el.textContent,modo:el.dataset.v218Modo}); return linhas; })",
+  "linhas": [
+    {
+      "numero_item": "planilha",
+      "esperado": {
+        "titulo": "Arraste PLANILHA NCM OU NBS ou pastas inteiras, ou use os botões abaixo",
+        "modo": "planilha"
+      }
+    },
+    {
+      "numero_item": "xml",
+      "esperado": {
+        "titulo": "Arraste XMLs ou pastas inteiras, ou use os botões abaixo",
+        "modo": "xml"
+      }
+    }
+  ]
+}

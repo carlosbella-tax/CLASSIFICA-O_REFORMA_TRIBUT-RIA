@@ -1,0 +1,9 @@
+{
+  "descricao": "V228 — texto de fonte e critério documental branco na impressão PDF",
+  "arquivos": ["v105-is-2027.xml"],
+  "funcao": "(() => { const estilo=document.getElementById('v228-fonte-consulta-branca-impressao')?.textContent||'';const media=/@media\\s+print/.test(estilo);const fonte=estilo.includes('#v153-result .v153-source')&&estilo.includes('.v153-source *');const branco=/color\\s*:\\s*#fff\\s*!important/.test(estilo);const preserva=estilo.includes('print-color-adjust:exact!important')&&window.classificadorFonteConsultaBrancaImpressao===true;return [{numero_item:'v228',media,fonte,branco,preserva}]; })",
+  "chave": "numero_item",
+  "linhas": [
+    {"numero_item":"v228","esperado":{"media":true,"fonte":true,"branco":true,"preserva":true}}
+  ]
+}

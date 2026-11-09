@@ -43,7 +43,7 @@
 
     const titles = {load:'Carregar documentos',processar:'Processamento do lote',items:'Consulta NCM e NBS',iss:'NFS-e — Notas de serviço',icms:'NF-e — Modelo 55',icmsst:'ICMS ST',ipi:'IPI',piscofins:'PIS e COFINS',ibscbs:'Base de IBS/CBS',events:'Eventos fiscais',dashboard:'Painel de análise fiscal',observacoes:'Enquadramento recomendado'};
     /* V178 — cada opção de menu ocupa a tela sozinha; não conserva campos da visão anterior. */
-    const fecharVisoesAnteriores=()=>{document.querySelectorAll('.panel.active').forEach(p=>p.classList.remove('active'));document.getElementById('v125-contact')?.classList.remove('active');document.getElementById('v127-admin')?.classList.remove('active');document.body.classList.remove('v172-admin-view');document.getElementById('v153-result')?.remove();};
+    const fecharVisoesAnteriores=()=>{document.querySelectorAll('.panel.active').forEach(p=>p.classList.remove('active'));document.getElementById('v125-contact')?.classList.remove('active');document.getElementById('v153-result')?.remove();};
     const ativar = tab => { fecharVisoesAnteriores(); const original = document.querySelector('.tab[data-tab="' + tab + '"]'); if (original) original.click(); document.getElementById('v123-title').textContent = titles[tab] || 'Classificação tributária'; document.querySelectorAll('.v123-link').forEach(b => b.classList.toggle('active', b.dataset.v123Tab === tab)); };
     side.addEventListener('click', e => { const b = e.target.closest('[data-v123-tab]'); if (b) ativar(b.dataset.v123Tab); });
     /* V176 — Limpar remove os termos manuais e todo o resultado da consulta atual. */

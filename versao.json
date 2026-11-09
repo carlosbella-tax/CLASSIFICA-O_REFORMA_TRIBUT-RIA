@@ -1,5 +1,5 @@
 {
-  "versao": 198,
-  "data": "2026-11-04",
-  "descricao": "consolida a entrega do acesso por link mágico sem senha"
+  "versao": 230,
+  "data": "2026-11-09",
+  "descricao": "Controle de recursos visitante: cadastro com confirmacao de e-mail, 20 consultas vitalicias NCM/NBS, menus bloqueados para visitante, contagem atomica no Supabase (V229) + migration aplicada"
 }

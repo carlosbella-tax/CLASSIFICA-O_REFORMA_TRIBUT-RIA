@@ -1,6 +1,6 @@
-# Classificação Reforma Tributária — Tax Advice
+# Auditoria Reforma Tributária — Tax Advice
 
-> Cópia do **Diagnóstico Operações Fiscais** criada em 21/10/2026 a partir da V121, com o nome **Classificação Reforma Tributária**. Evolui separadamente do Diagnóstico.
+> Cópia do **Diagnóstico Operações Fiscais** criada em 21/10/2026 a partir da V121, com o nome **Auditoria Reforma Tributária**. Evolui separadamente do Diagnóstico.
 
 Lê XML de NF-e, CT-e, NFS-e e eventos (arquivos, pasta inteira, TXT com XML), valida ICMS, ICMS ST, IPI, PIS/COFINS e IBS/CBS (LC 214/2025), mostra o Dashboard por imposto e gera Excel, PDF e a apresentação em PowerPoint. O entregável é **um único arquivo HTML** que roda offline no navegador.
 
@@ -10,7 +10,7 @@ Versão atual: **V121** (ver [CHANGELOG.md](CHANGELOG.md)). Regras de trabalho d
 
 ```bash
 npm install                                   # uma vez (jsdom, para os testes)
-npm run build                                 # gera dist/CLASSIFICACAO_REFORMA_TRIBUTARIA_V{versão}.html
+npm run build                                 # gera dist/AUDITORIA_REFORMA_TRIBUTARIA_V{versão}.html
 npm test                                      # build + sintaxe + versão + teste funcional com XMLs reais
 npm run nova-versao -- 60 "descrição"         # abre a próxima versão (selo, versao.json, CHANGELOG)
 npm run drive                                 # build + cópia para a pasta do dia no Google Drive
@@ -132,4 +132,4 @@ Os arquivos são concatenados exatamente na ordem de `src/manifest.json`. Os mó
 
 ## Origem
 
-Arquivo único `CLASSIFICACAO_REFORMA_TRIBUTARIA_V59.html` (3.657.037 bytes, sha256 `9087863b78b95980462191ae3cfa2266e1d9585d0535ef9c63abf12824a13a8b`), preservado em `_arquivo_original/`. Versões anteriores (V4 a V49) estão no Drive em `0025- REFORMA TRIBUTARIA/00 - PAINEL AUTOMATICO/MOTOR DE CALCLULO/`.
+Arquivo único `AUDITORIA_REFORMA_TRIBUTARIA_V59.html` (3.657.037 bytes, sha256 `9087863b78b95980462191ae3cfa2266e1d9585d0535ef9c63abf12824a13a8b`), preservado em `_arquivo_original/`. Versões anteriores (V4 a V49) estão no Drive em `0025- REFORMA TRIBUTARIA/00 - PAINEL AUTOMATICO/MOTOR DE CALCLULO/`.

@@ -21,11 +21,16 @@
   function localizarLote(tipo,codigo){
     return (window.classificadorLoteNcmNbs||[]).find(x=>x.tipo===tipo&&String(x.codigo||'').replace(/\D/g,'')===String(codigo||'').replace(/\D/g,''));
   }
+  /* V219 — Mantém todas as hipóteses legais e o endereço oficial específico de cada uma, sem eleger candidato automaticamente. */
+  function referenciasLegais(tipo,codigo){
+    const lista=typeof window.classificadorReferenciaPortal==='function'?window.classificadorReferenciaPortal(tipo,String(codigo||'').replace(/\D/g,'')):[];
+    return lista.filter(x=>x?.vinculo?.TipoPermissao!=='VEDADO'&&x?.vinculo?.NroAnexo).map(x=>{const contingencia=String(x?.classificacao?.TexUrlLegislacao||'').replace(/\s+/g,''),url=typeof window.classificadorUrlAnexoLc214==='function'?window.classificadorUrlAnexoLc214(x.vinculo.NroAnexo,contingencia):contingencia;return {anexo:x.vinculo.NroAnexo,item:x.vinculo.NroItemAnexoLei||'—',url,classe:x.classificacao?.CodClassTrib||x.vinculo.cClassTrib||'A confirmar'}});
+  }
   function linhaNcm(r){
     const ncm=String(r.ncm||'').replace(/\D/g,'').padStart(8,'0');
-    const ref=typeof window.classificadorReferenciaNcm==='function'?window.classificadorReferenciaNcm(ncm):null;
+    const ref=typeof window.classificadorReferenciaNcm==='function'?window.classificadorReferenciaNcm(ncm):null,legais=referenciasLegais('NCM',ncm);
     const encontrado=ref&&ref.descricao&&!/^NCM não/i.test(ref.descricao);
-    return {tipo_documento:r.tipo_de_documento||'Documento Fiscal — Modelo 55',codigo_item:r.codigo_item||r.cProd||'',descricao_item:r.descricao_item||r.xProd||'',codigo_referencia:ncm,fonte:'NCM / TIPI',validacao_referencia:encontrado?'VALIDADO — NCM localizada na TIPI embarcada':'ANALISAR — NCM não localizada na TIPI embarcada',cst_adequada:ref?.cst||'A confirmar',cclasstrib_adequada:ref?.cclasstrib||'A confirmar',reducao_adequada:'Conforme anexo e hipótese legal',anexo_lc214:ref?.anexo||'Sem anexo candidato identificado',link_legislacao:encontrado?LC214:'',link_tipi:TIPI};
+    return {tipo_documento:r.tipo_de_documento||'Documento Fiscal — Modelo 55',codigo_item:r.codigo_item||r.cProd||'',descricao_item:r.descricao_item||r.xProd||'',codigo_referencia:ncm,fonte:'NCM / TIPI',validacao_referencia:encontrado?'VALIDADO — NCM localizada na TIPI embarcada':'ANALISAR — NCM não localizada na TIPI embarcada',cst_adequada:ref?.cst||'A confirmar',cclasstrib_adequada:ref?.cclasstrib||'A confirmar',reducao_adequada:'Conforme anexo e hipótese legal',anexo_lc214:legais.length?legais.map(x=>'Anexo '+x.anexo+' · item '+x.item).join(' | '):(ref?.anexo||'Sem anexo candidato identificado'),links_legislacao:legais,link_tipi:TIPI};
   }
   function linhaNbs(r){
     const nbs=String(r.nbs||r.codigo_nbs||'').trim();
@@ -33,7 +38,8 @@
     const lote=localizarLote('NBS',nbs);
     const temNbs=/^\d\.\d{4}\.\d{2}\.\d{2}$/.test(nbs);
     const referencia=lote?'REFERÊNCIA EM PLANILHA — NBS encontrada na planilha carregada; confirme o enquadramento legal.':temNbs?'ANALISAR — NBS informada no documento, sem correspondência em planilha carregada.':'ANALISAR — documento sem NBS válida; use o código do serviço para confirmar a NBS.';
-    return {tipo_documento:r.tipo_de_documento||'Nota de Serviço — NFS-e',codigo_item:servico||'Não informado',descricao_item:r.descricao_item||r.descricao_servico||'',codigo_referencia:nbs||'NBS não identificada',fonte:'NBS + código do serviço',validacao_referencia:referencia,cst_adequada:lote?.cst_sugerido||'A confirmar na legislação',cclasstrib_adequada:lote?.cclasstrib_sugerida||'A confirmar na legislação',reducao_adequada:lote?.reducao_sugerida||'A confirmar na legislação',anexo_lc214:lote?.anexo||'A confirmar — base oficial NBS não embarcada',link_legislacao:lote?.anexo&&lote.anexo!=='A validar'?LC214:'',link_tipi:''};
+    const legais=referenciasLegais('NBS',nbs);
+    return {tipo_documento:r.tipo_de_documento||'Nota de Serviço — NFS-e',codigo_item:servico||'Não informado',descricao_item:r.descricao_item||r.descricao_servico||'',codigo_referencia:nbs||'NBS não identificada',fonte:'NBS + código do serviço',validacao_referencia:referencia,cst_adequada:lote?.cst_sugerido||'A confirmar na legislação',cclasstrib_adequada:lote?.cclasstrib_sugerida||'A confirmar na legislação',reducao_adequada:lote?.reducao_sugerida||'A confirmar na legislação',anexo_lc214:legais.length?legais.map(x=>'Anexo '+x.anexo+' · item '+x.item).join(' | '):(lote?.anexo||'A confirmar — base oficial NBS não embarcada'),links_legislacao:legais,link_tipi:''};
   }
   function linhasValidacao(){
     const itens=(typeof state==='undefined'?[]:state.items||[]);
@@ -49,7 +55,7 @@
     const filtros=filtrosTabelas.ibscbs||{};
     table.querySelector('thead').innerHTML='<tr class="excel-header">'+cols.map(c=>'<th title="'+esc(labels[c])+'"><span class="excel-label">'+esc(labels[c])+'</span><button type="button" class="excel-filter-flag'+((filtros[c]||[]).length?' active':'')+'" data-filter-table="ibscbs" data-filter-column="'+esc(c)+'" title="Filtrar '+esc(labels[c])+'">▾</button></th>').join('')+'</tr>';
     table.querySelector('tbody').innerHTML=filtro.slice(0,MAX_LINHAS_VISIVEIS).map(r=>'<tr>'+cols.map(c=>{
-      if(c==='anexo_lc214')return '<td class="v157-validation">'+(r.link_legislacao?'<a class="v157-link" href="'+LC214+'" target="_blank" rel="noopener" title="Abrir a LC 214/2025 para consultar o anexo informado">'+esc(r[c])+'</a>':esc(r[c]))+'</td>';
+      if(c==='anexo_lc214'){const links=(r.links_legislacao||[]).map(x=>'<a class="v157-link" href="'+esc(x.url)+'" target="_blank" rel="noopener" title="Abrir o fundamento oficial do Anexo '+esc(x.anexo)+'">Anexo '+esc(x.anexo)+' · item '+esc(x.item)+' · cClassTrib '+esc(x.classe)+'</a>').join('<br>');return '<td class="v157-validation">'+(links||esc(r[c]))+'</td>';}
       if(c==='link_tipi')return '<td class="v157-validation">'+(r[c]?'<a class="v157-link" href="'+TIPI+'" target="_blank" rel="noopener">Consultar TIPI</a>':'')+'</td>';
       return '<td class="'+(/validacao|adequada/.test(c)?'v157-validation':'')+'">'+esc(r[c])+'</td>';
     }).join('')+'</tr>').join('')||'<tr><td class="empty" colspan="'+cols.length+'">Processe XML ou PDF com NCM/NBS para exibir a validação na mesma linha.</td></tr>';

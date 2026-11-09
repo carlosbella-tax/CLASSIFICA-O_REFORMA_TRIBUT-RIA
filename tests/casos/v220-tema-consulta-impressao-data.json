@@ -1,0 +1,9 @@
+{
+  "descricao": "V220 — consulta NCM/NBS com fundo azul-escuro, caixas contrastantes e PDF compacto com data de geração",
+  "arquivos": ["v105-is-2027.xml"],
+  "funcao": "(() => { window.classificadorAplicarAcessoV229?.('admin');document.querySelector('[data-v123-key=\"consulta\"]')?.click(); const campo=document.getElementById('v123-ncm');campo.value='38221990';document.querySelector('[data-v123-consulta=\"ncm\"]')?.click();window.classificadorAplicarDataGeracao();const painel=document.getElementById('v153-result'),data=painel?.querySelector('.v162-resumo .v220-geracao'),estilos=[...document.querySelectorAll('style')].map(x=>x.textContent).join(' ');return [{numero_item:'v220',temaAzul:getComputedStyle(document.body).backgroundColor==='rgb(11, 42, 67)',textoPreto:getComputedStyle(campo).color==='rgb(5, 5, 5)',dataPrimeiro:data===painel?.querySelector('.v162-resumo')?.firstElementChild&&/^\\d{2}\\/\\d{2}\\/\\d{4}/.test(data?.querySelector('b')?.textContent||''),calculoCompacto:/@media print[\\s\\S]*v162-calc \\.v159-calc-grid[\\s\\S]*repeat\\(5/.test(estilos),semQuebra:/page-break-inside:avoid/.test(estilos)}]; })",
+  "chave": "numero_item",
+  "linhas": [
+    {"numero_item":"v220","esperado":{"temaAzul":true,"textoPreto":true,"dataPrimeiro":true,"calculoCompacto":true,"semQuebra":true}}
+  ]
+}

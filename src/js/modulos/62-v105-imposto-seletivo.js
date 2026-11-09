@@ -35,19 +35,20 @@
     const base = num(tagIsV105(r, 'vBCIS')), aliq = num(tagIsV105(r, 'pIS')), esp = num(tagIsV105(r, 'pISEspec')), qtd = num(tagIsV105(r, 'qTrib')), valor = num(tagIsV105(r, 'vIS'));
     return {tem: !!(cst || base || valor || aliq), cst, cc, base, aliq, esp, qtd, valor};
   }
-  const anoV105 = r => { const m = String(r.data_emissao || '').match(/^(\d{4})-|\/(\d{4})/); return m ? +(m[1] || m[2]) : 0; };
+  /* V217 — A vigência e a correlação passam a observar a análise detalhada da MP nº 1.399/2026 quando disponível. */
+  const vigenciaIsV217 = r => { const s=String(r.data_emissao||'');const m=s.match(/^(\d{4})-(\d{2})-(\d{2})|(?:\d{2})\/(\d{2})\/(\d{4})/);if(!m)return false;const iso=m[1]?m[1]+'-'+m[2]+'-'+m[3]:m[5]+'-'+m[4]+'-'+s.slice(0,2);return iso>='2027-02-02'; };
   function validarIsV105(r){
-    const d = dadosIsV105(r), vig = anoV105(r) >= 2027, anexo = anexoIsV105(r.ncm), ncm = String(r.ncm || '');
+    const d = dadosIsV105(r), vig = vigenciaIsV217(r), analise=typeof window.classificadorAnaliseIsNcm==='function'?window.classificadorAnaliseIsNcm(r.ncm):null, anexo = analise?(analise.correlacionada?analise.categoria:''):anexoIsV105(r.ncm), ncm = String(r.ncm || '');
     const v = {cst: '', base: '', valor: '', correto: 0, d};
     if (!d.tem){
-      v.cst = !vig ? 'VALIDADO (sem grupo IS — o Imposto Seletivo é exigido a partir de 01/01/2027)'
+      v.cst = !vig ? 'VALIDADO (sem grupo IS — os efeitos da referência incorporada estão previstos a partir de 02/02/2027)'
         : anexo ? 'NÃO VALIDADO (NCM ' + ncm + ' do Anexo XVII da LC 214/2025 — ' + anexo + ' — sujeito ao IS, mas o XML não traz o grupo IS)'
         : 'VALIDADO (NCM fora do Anexo XVII da LC 214/2025: sem IS)';
       v.base = 'VALIDADO (sem base de IS)'; v.valor = 'VALIDADO (sem IS)';
       return v;
     }
     // CST e incidência
-    if (d.valor > 0.005 && !vig) v.cst = 'NÃO VALIDADO (IS destacado antes da vigência — o Imposto Seletivo é cobrado a partir de 01/01/2027)';
+    if (d.valor > 0.005 && !vig) v.cst = 'NÃO VALIDADO (IS destacado antes da vigência — efeitos da referência incorporada previstos a partir de 02/02/2027)';
     else if (d.valor > 0.005 && !anexo) v.cst = 'NÃO VALIDADO (NCM ' + ncm + ' fora do Anexo XVII da LC 214/2025 com IS destacado)';
     else if (d.valor > 0.005 && d.cst !== '000') v.cst = 'NÃO VALIDADO (CST IS ' + (d.cst || 'vazio') + ' com valor de IS — deveria ser CST 000, tributada)';
     else if (d.cst === '000' && d.valor <= 0.005 && d.base > 0.005 && (d.aliq > 0 || d.esp > 0)) v.cst = 'NÃO VALIDADO (CST IS 000 tributada com base e alíquota, mas sem valor de IS)';
@@ -90,7 +91,7 @@
     for (const p of ['__src', '__idx']) if (o[p] !== undefined) Object.defineProperty(x, p, {value: o[p], configurable: true, writable: true});
     return x;
   };
-  OBS_VAL.validacao_cst_is = 'Imposto Seletivo (LC 214/2025): cobrado a partir de 01/01/2027 sobre os bens do Anexo XVII; com valor de IS a CST deve ser 000.';
+  OBS_VAL.validacao_cst_is = 'Imposto Seletivo: a referência incorporada combina a LC 214/2025 e a MP nº 1.399/2026, com efeitos previstos a partir de 02/02/2027; confirme texto vigente e condições do Anexo XVII.';
   OBS_VAL.validacao_base_is = 'Base do IS = valor da operação (produtos + frete + seguro + outras despesas − desconto incondicional); não integram IBS, CBS e o próprio IS.';
   OBS_VAL.validacao_is = 'Valor do IS = base × alíquota ad valorem + quantidade × alíquota específica; margem de R$ 0,05.';
 
@@ -108,7 +109,7 @@
       + '<tr class="dash-total-row"><td colspan="2">Total</td><td>' + brl(t.b) + '</td><td>' + brl(t.v) + '</td><td>' + fmtInt(t.n) + '</td></tr>';
     const tab = (rot, cls, mp, t) => '<div style="flex:1;min-width:280px"><h4 class="' + cls + '" style="margin:6px 0">' + rot + '</h4><table class="dash-detail-table v105-is"><thead><tr><th>CST IS</th><th>Alíq. IS</th><th>Base IS</th><th>Valor IS</th><th>Qtd. itens</th></tr></thead><tbody>'
       + (t.n ? linhas(mp, t) : '<tr><td colspan="5" class="dash-empty">Sem IS nesta movimentação.</td></tr>') + '</tbody></table></div>';
-    return '<h3>Imposto Seletivo (IS)</h3><p class="subtle">Apuração do IS junto ao IBS e à CBS (LC 214/2025 — cobrado a partir de 01/01/2027). '
+    return '<h3>Imposto Seletivo (IS)</h3><p class="subtle">Apuração do IS junto ao IBS e à CBS (LC 214/2025 e MP nº 1.399/2026 — efeitos previstos a partir de 02/02/2027). '
       + (T.E.n + T.S.n ? 'Entradas ' + brl(T.E.v) + ' · Saídas ' + brl(T.S.v) + '.' : 'Nenhum grupo IS nos XMLs.') + ' Validação item a item na aba Base de IBS/CBS.</p>'
       + '<div style="display:flex;gap:16px;flex-wrap:wrap">' + tab('ENTRADAS', 'v30-ent', E, T.E) + tab('SAÍDAS', 'v30-sai', S, T.S) + '</div>';
   }

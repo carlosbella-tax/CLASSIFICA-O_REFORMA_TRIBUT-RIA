@@ -1,0 +1,9 @@
+{
+  "descricao": "V225 — remoção dos campos de lote e criação do painel único Carregar XML/PDF",
+  "arquivos": ["v105-is-2027.xml"],
+  "funcao": "(() => { const documentos=document.querySelector('#v123-sidebar [data-v123-key=\"documentos\"]');documentos?.click();const painel=document.getElementById('load'),arquivos=document.getElementById('files'),titulo=document.getElementById('v225-carregar-titulo');const removidos=!document.querySelector('.v156-cnae-field')&&!document.querySelector('.v137-uploads')&&document.getElementById('downloadTop')?.classList.contains('v225-controle-interno')&&!document.getElementById('v137-upload-ncm')&&!document.getElementById('v137-ver-cronograma')&&!document.getElementById('v137-ver-resultado');const campo=!!painel&&titulo?.textContent==='Carregar XML/PDF'&&painel.querySelector('#drop strong')?.textContent==='Arraste os XMLs ou a pasta para cá'&&painel.querySelector('#drop .hint')?.textContent==='ou use os botões abaixo';const controles=painel.querySelector('label.button')?.textContent.trim()==='Selecionar arquivos'&&document.getElementById('selectFolderFull')?.textContent==='Selecionar pasta'&&document.getElementById('process')?.textContent==='Processar'&&document.getElementById('clear')?.textContent==='Limpar carga';const pdf=String(arquivos?.accept||'').includes('.pdf')&&documentos?.textContent.trim().startsWith('Carregar XML/PDF')&&window.classificadorPainelCarregarXmlPdf===true;return [{numero_item:'v225',removidos,campo,controles,pdf}]; })",
+  "chave": "numero_item",
+  "linhas": [
+    {"numero_item":"v225","esperado":{"removidos":true,"campo":true,"controles":true,"pdf":true}}
+  ]
+}

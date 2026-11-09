@@ -1,4 +1,4 @@
-// Monta o arquivo único dist/CLASSIFICACAO_REFORMA_TRIBUTARIA_V{versao}.html a partir de src/ (ordem em src/manifest.json).
+// Monta o arquivo único dist/AUDITORIA_REFORMA_TRIBUTARIA_V{versao}.html a partir de src/ (ordem em src/manifest.json).
 // Uso: node tools/build.mjs [--drive]   --drive copia também para a pasta do dia no Google Drive.
 import { readFileSync, writeFileSync, mkdirSync, copyFileSync, existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
@@ -20,7 +20,7 @@ if (!badge || Number(badge[1]) !== versao) {
   process.exit(1);
 }
 mkdirSync(join(raiz, 'dist'), { recursive: true });
-const nome = `CLASSIFICACAO_REFORMA_TRIBUTARIA_V${versao}.html`;
+const nome = `AUDITORIA_REFORMA_TRIBUTARIA_V${versao}.html`;
 const destino = join(raiz, 'dist', nome);
 writeFileSync(destino, html);
 // Alias de hospedagem: a entrega offline preserva seu nome versionado acima.

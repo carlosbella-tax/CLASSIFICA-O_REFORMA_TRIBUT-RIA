@@ -1,0 +1,9 @@
+{
+  "descricao": "V223 — restauração do logotipo TaxAdvice original na tela de Consulta NCM/NBS",
+  "arquivos": ["v105-is-2027.xml"],
+  "funcao": "(() => { const consulta=document.querySelector('[data-v123-key=\"consulta\"]'),documentos=document.querySelector('[data-v123-key=\"documentos\"]'),logo=document.getElementById('v223-logo-consulta'),original=document.querySelector('header.v123-header .brand');consulta.click();const visivel=!!logo&&getComputedStyle(logo).display==='block';const identidade=logo?.querySelector('.tax')?.textContent==='Tax'&&logo?.querySelector('.advice')?.textContent==='Advice'&&logo?.querySelector('.tagline')?.textContent==='ASSESSORIA FISCAL TRIBUTÁRIA';const fiel=logo?.innerHTML===original?.innerHTML&&logo?.getAttribute('aria-label')==='TaxAdvice — Assessoria Fiscal Tributária';documentos.click();const exclusivo=getComputedStyle(logo).display==='none'&&getComputedStyle(original).display!=='none';return [{numero_item:'v223',visivel,identidade:!!identidade,fiel,exclusivo}]; })",
+  "chave": "numero_item",
+  "linhas": [
+    {"numero_item":"v223","esperado":{"visivel":true,"identidade":true,"fiel":true,"exclusivo":true}}
+  ]
+}

@@ -1,9 +1,141 @@
-# Histórico de versões — Classificação Reforma Tributária
+# Histórico de versões — Auditoria Reforma Tributária
 
-Convenção: a versão é o número do selo **VERSÃO N** no cabeçalho do sistema e o nome do arquivo gerado (`CLASSIFICACAO_REFORMA_TRIBUTARIA_VN.html`).
+Convenção: a versão é o número do selo **VERSÃO N** no cabeçalho do sistema e o nome do arquivo gerado (`AUDITORIA_REFORMA_TRIBUTARIA_VN.html`).
 Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza selo, `versao.json`, `package.json` e esta lista).
 
 <!-- novas versões abaixo desta linha -->
+
+## V230 — 2026-11-09
+
+- Controle de recursos visitante: cadastro com confirmacao de e-mail, 20 consultas vitalicias NCM/NBS, menus bloqueados para visitante, contagem atomica no Supabase (V229) + migration aplicada
+
+## V229 — 2026-11-09
+
+- cadastro público com nome, e-mail e senha, exigindo confirmação do e-mail antes do acesso
+- limite vitalício e combinado de 20 consultas NCM/NBS, contabilizado de forma atômica no Supabase
+- menus restritos exibidos em cinza e desabilitados para visitantes; administradores Tax Advice permanecem sem limite
+- bloqueio após a 20ª consulta com direcionamento para Fale Conosco no WhatsApp
+- login, encerramento de sessão e recuperação de senha
+
+## V228 — 2026-11-09
+
+- texto de fonte da consulta branco na impressao PDF
+
+## V227 — 2026-11-09
+
+- abertura inicial na tela Consulta NCM e NBS
+
+## V226 — 2026-11-06
+
+- remocao do botao lateral Exportar esta aba em Excel
+
+## V225 — 2026-11-06
+
+- substituicao dos campos de lote pelo painel Carregar XML PDF
+
+## V224 — 2026-11-06
+
+- menu selecionado piscante com efeito de relevo
+
+## V223 — 2026-11-06
+
+- restauracao do logotipo TaxAdvice na tela de consulta NCM e NBS
+
+## V222 — 2026-11-06
+
+- quadro institucional TaxAdvice na area azul da consulta NCM e NBS
+
+## V221 — 2026-11-06
+
+- icone de limpeza apos NBS, campos compactos e isolamento reforcado da consulta
+
+## V220 — 2026-11-06
+
+- tema azul-escuro na consulta e impressão compacta com data de geração
+
+## V219 — 2026-11-06
+
+- isola a consulta NCM/NBS e direciona links à referência legal específica
+
+## V218 — 2026-11-06
+
+- altera contextualização da carga entre planilha NCM/NBS e XML
+
+## V217 — 2026-11-06
+
+- incorpora análise de NCM correlacionadas ao Imposto Seletivo para 2027
+
+## V216 — 2026-11-06
+
+- destaca o acesso ao cronograma e ajusta CBS de 2027 para 11,30%
+
+## V215 — 2026-11-06
+
+- exibe o cálculo final de IBS e CBS em cada linha validada da planilha
+
+## V214 — 2026-11-05
+
+- oculta a aba duplicada de importação e mantém os controles compactos abaixo dos CNAEs
+
+## V213 — 2026-11-05
+
+- estende o campo CNAEs da empresa por toda a largura do cabeçalho
+
+## V212 — 2026-11-05
+
+- alinha o cronograma CBS da validação em lote às alíquotas informadas
+
+## V211 — 2026-11-05
+
+- detalha a análise em lote com CST, cClassTrib, redução, alíquotas finais e Sem Anexo
+
+## V210 — 2026-11-05
+
+- remove a faixa de controles da validação em lote do cabeçalho
+
+## V209 — 2026-11-05
+
+- amplia CNAEs por linha e alinha controles da validação em lote
+
+## V208 — 2026-11-05
+
+- compacta os dados da empresa e mantém CNPJ, regime e CNAEs no cabeçalho
+
+## V207 — 2026-11-05
+
+- abre imediatamente os resultados ao processar carga NCM ou NBS
+
+## V206 — 2026-11-05
+
+- posiciona a orientação de planilha acima das ações de importação e exportação
+
+## V205 — 2026-11-05
+
+- renomeia a identidade para Auditoria Reforma Tributária
+
+## V204 — 2026-11-05
+
+- exibe referências gerais da LC 214 para NCM sem vínculo específico
+
+## V203 — 2026-11-05
+
+- organiza a barra de validação em lote em uma linha
+
+## V202 — 2026-11-04
+
+- aprimora prévia, cronômetro e exportações da validação em lote
+
+## V201 — 2026-11-04
+
+- coloca orientação de planilha em linha inteira
+
+## V200 — 2026-11-04
+
+- remove temporariamente todo o acesso por e-mail, link e autenticação
+
+## V199 — 2026-11-04
+
+- remove definitivamente os resquícios do acesso por senha
 
 ## V198 — 2026-11-04
 
@@ -843,7 +975,7 @@ Vale quando o regime tributário do cabeçalho é **Lucro Presumido** (PIS e COF
 ## V59 — 2026-10-11 — base trazida para o G4 OS
 
 - ICMS na importação (CFOP 3xxx): base = valor aduaneiro + II + IPI + PIS + COFINS + despesas aduaneiras, com o ICMS por dentro.
-- Projeto decomposto em `src/` (módulos por versão), com build que remonta o arquivo único idêntico byte a byte ao `CLASSIFICACAO_REFORMA_TRIBUTARIA_V59.html` recebido (sha256 `9087863b…13a8b`) e teste funcional com XMLs reais.
+- Projeto decomposto em `src/` (módulos por versão), com build que remonta o arquivo único idêntico byte a byte ao `AUDITORIA_REFORMA_TRIBUTARIA_V59.html` recebido (sha256 `9087863b…13a8b`) e teste funcional com XMLs reais.
 
 ---
 

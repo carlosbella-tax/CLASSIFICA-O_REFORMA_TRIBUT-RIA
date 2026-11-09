@@ -1,0 +1,9 @@
+{
+  "descricao": "V226 — remoção definitiva do botão lateral Exportar esta aba em Excel",
+  "arquivos": ["v105-is-2027.xml"],
+  "funcao": "(() => { window.classificadorRemoverExportarAbaMenu?.();const ausente=!document.getElementById('v183-exportar-cte');const protecao=(document.getElementById('v226-remocao-exportar-style')?.textContent||'').includes('#v183-exportar-cte{display:none!important}');const preservado=!!document.querySelector('#items [data-exp=\"items\"]')||!!document.getElementById('download');return [{numero_item:'v226',ausente,protecao,preservado,api:typeof window.classificadorRemoverExportarAbaMenu==='function'}]; })",
+  "chave": "numero_item",
+  "linhas": [
+    {"numero_item":"v226","esperado":{"ausente":true,"protecao":true,"preservado":true,"api":true}}
+  ]
+}

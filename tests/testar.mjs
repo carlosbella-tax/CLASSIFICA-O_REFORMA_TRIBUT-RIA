@@ -1,4 +1,4 @@
-// Bateria de testes do Classificação Reforma Tributária.
+// Bateria de testes do Auditoria Reforma Tributária.
 // 1) sintaxe de cada bloco <script>  2) selo de versão  3) identidade com a V59 original (só na V59)
 // 4) teste funcional: carrega os XMLs de tests/fixtures no navegador simulado (jsdom), processa
 //    e compara o conteúdo de cada aba com a referência gravada em tests/referencia.json.
@@ -16,7 +16,7 @@ const raiz = join(dirname(fileURLToPath(import.meta.url)), '..');
 const atualizar = process.argv.includes('--atualizar');
 const { versao } = JSON.parse(readFileSync(join(raiz, 'versao.json'), 'utf8'));
 const { arquivos } = JSON.parse(readFileSync(join(raiz, 'src/manifest.json'), 'utf8'));
-const dist = join(raiz, 'dist', `CLASSIFICACAO_REFORMA_TRIBUTARIA_V${versao}.html`);
+const dist = join(raiz, 'dist', `AUDITORIA_REFORMA_TRIBUTARIA_V${versao}.html`);
 let falhas = 0, ok = 0;
 const passou = m => { ok++; console.log('  OK    ' + m); };
 const falhou = m => { falhas++; console.log('  FALHA ' + m); };
@@ -49,7 +49,7 @@ selo && Number(selo[1]) === versao ? passou(`selo VERSÃO ${versao} = versao.jso
 // 3) identidade com o arquivo original (vale só enquanto a versão for 59)
 console.log('\n[3] Identidade com a V59 original');
 const shaOriginal = readFileSync(join(raiz, '_arquivo_original/SHA256SUMS.txt'), 'utf8').split(/\s+/)[0];
-if (versao === 59) sha(html) === shaOriginal ? passou('build idêntico byte a byte ao CLASSIFICACAO_REFORMA_TRIBUTARIA_V59.html recebido') : falhou('build diferente do original V59');
+if (versao === 59) sha(html) === shaOriginal ? passou('build idêntico byte a byte ao AUDITORIA_REFORMA_TRIBUTARIA_V59.html recebido') : falhou('build diferente do original V59');
 else console.log(`  --    não se aplica (versão ${versao}); a regressão funcional abaixo é a referência`);
 
 // 4) funcional
@@ -114,6 +114,8 @@ if (atualizar || !existsSync(refArq)) {
   }
   if (falhas) console.log('\n  Se as mudanças forem as esperadas para esta versão, grave a nova referência: node tests/testar.mjs --atualizar');
 }
+// V229 — a suíte funcional valida as consultas sob uma sessão administrativa simulada, sem consumir cota real.
+w.classificadorAplicarAcessoV229?.('admin');
 // V165 — a consulta individual deve abrir abaixo dos campos NBS/NCM, com resultados finais destacados.
 console.log('\n[4.1] Consulta individual NCM');
 const campoConsulta = w.document.getElementById('v123-ncm');
@@ -136,7 +138,7 @@ if (campoConsulta && botaoConsulta) {
   await esperar(140);
   const painelTipi = w.document.getElementById('v153-result');
   const textoTipi = (painelTipi?.textContent || '').replace(/\s+/g, ' ');
-  painelTipi?.querySelector('.v194-ficha') && textoTipi.includes('Tabela NCM') && textoTipi.includes('NCM 3208.90.10: Tintas') && textoTipi.includes('Código sem pontuação: 32089010') && textoTipi.includes('Hierarquia na TIPI') && textoTipi.includes('Tintas e vernizes, à base de polímeros sintéticos') && textoTipi.includes('não há vínculo documental localizado na referência consultada') && textoTipi.includes('ausência de vínculo não prova tributação integral')
+  painelTipi?.querySelector('.v194-ficha') && textoTipi.includes('Tabela NCM') && textoTipi.includes('NCM 3208.90.10: Tintas') && textoTipi.includes('Código sem pontuação: 32089010') && textoTipi.includes('Hierarquia na TIPI') && textoTipi.includes('Tintas e vernizes, à base de polímeros sintéticos') && textoTipi.includes('não há vínculo documental localizado na referência consultada') && textoTipi.includes('ausência de vínculo não prova tributação integral') && painelTipi?.querySelector('.v204-lc214-geral') && textoTipi.includes('LC 214/2025 — parâmetros gerais para a operação') && textoTipi.includes('Arts. 14 a 16') && textoTipi.includes('não confirma alíquota-padrão')
     ? passou('NCM 3208.90.10 exibe ficha TIPI e preserva a cautela sem vínculo Portal')
     : falhou('consulta NCM não exibiu a ficha TIPI ou presumiu enquadramento para 3208.90.10');
 }
@@ -165,26 +167,6 @@ if (limparConsulta) {
     ? passou('Limpar apaga os termos NCM/NBS e o resultado da pesquisa')
     : falhou('Limpar não removeu todos os termos ou o resultado da pesquisa');
 } else falhou('botão Limpar da consulta não foi encontrado');
-
-// V172 — a administração oculta dados operacionais e destaca convites/usuários em laranja TaxAdvice.
-console.log('\n[4.3] Administração de acessos');
-const fonteV172 = readFileSync(join(raiz, 'src/js/modulos/80-v127-acesso-administracao.js'), 'utf8');
-fonteV172.includes('v172-admin-view') && fonteV172.includes('.v127-box{background:#f26a21') && fonteV172.includes('body.v172-admin-view .v123-header .company-fields') && fonteV172.includes('body.v172-admin-view #v152-specialist')
-  ? passou('administração oculta dados da empresa e aplica o destaque laranja TaxAdvice')
-  : falhou('administração não ocultou os dados operacionais ou não recebeu o destaque TaxAdvice');
-
-// V184 — administrador pode conferir a interface equivalente à de usuário sem alterar sua autenticação.
-console.log('\n[4.3.1] Prévia de perfil no painel administrativo');
-fonteV172.includes('id="v184-preview-role"') && fonteV172.includes('Visualizar como') && fonteV172.includes('v184-user-preview') && fonteV172.includes('Prévia administrativa:') && fonteV172.includes('selecionarPrevia')
-  ? passou('administrador alterna entre sua visão e a prévia de usuário sem alterar o perfil autenticado')
-  : falhou('painel administrativo não disponibilizou a prévia de perfil solicitada');
-
-// V174 — usuários devem exibir a data de convite e a validade separadamente.
-console.log('\n[4.4] Datas de convite e validade');
-const fonteApiAdmin = readFileSync(join(raiz, 'supabase/functions/admin-users/index.ts'), 'utf8');
-fonteApiAdmin.includes('created_at') && fonteApiAdmin.includes('valid_from') && fonteV172.includes('Convite enviado') && fonteV172.includes('Início de acesso') && fonteV172.includes('Final de acesso') && fonteV172.includes('dataPtBr(u.created_at)')
-  ? passou('administração exibe as datas de convite, início e final do acesso separadamente')
-  : falhou('administração não informa separadamente as datas de convite e período de acesso');
 
 // V179 — após a carga, o botão de processamento deve sinalizar a próxima ação.
 console.log('\n[4.5] Destaque do processamento');
@@ -235,40 +217,32 @@ fonteV183.includes('Baixar Excel no computador') === false && fonteV183.includes
 console.log('\n[4.5] Isolamento entre menus');
 const fonteV123 = readFileSync(join(raiz, 'src/js/modulos/77-v123-painel-navegacao-consultas.js'), 'utf8');
 const fonteV125 = readFileSync(join(raiz, 'src/js/modulos/79-v125-fale-conosco-whatsapp.js'), 'utf8');
-fonteV123.includes('fecharVisoesAnteriores') && fonteV123.includes("document.getElementById('v125-contact')?.classList.remove('active')") && fonteV123.includes("document.getElementById('v127-admin')?.classList.remove('active')") && fonteV123.includes("document.getElementById('v153-result')?.remove()") && fonteV125.includes('v125-contact-link') && fonteV125.includes('wa.me/551197049434')
+fonteV123.includes('fecharVisoesAnteriores') && fonteV123.includes("document.getElementById('v125-contact')?.classList.remove('active')") && fonteV123.includes("document.getElementById('v153-result')?.remove()") && fonteV125.includes('v125-contact-link') && fonteV125.includes('wa.me/551197049434')
   ? passou('cada menu remove a tela anterior antes de abrir seu próprio conteúdo')
   : falhou('a troca de menu pode manter conteúdo da tela anterior');
 
-// V177 — período de acesso deve separar início/final e bloquear consultas vencidas.
-console.log('\n[4.5] Período e bloqueio de acesso');
-const fonteV141 = readFileSync(join(raiz, 'src/js/modulos/86-v141-acesso-conta-autorizada.js'), 'utf8');
-/* V197 — o link mágico delega a validação da sessão ao módulo-base, sem campo de senha. */
-const fonteV127 = readFileSync(join(raiz, 'src/js/modulos/80-v127-acesso-administracao.js'), 'utf8');
-const fonteV152 = readFileSync(join(raiz, 'src/js/modulos/91-v152-acesso-admin-painel-especialista.js'), 'utf8');
-const migracaoV177 = readFileSync(join(raiz, 'supabase/migrations/20261102093700_access_period.sql'), 'utf8');
-fonteApiAdmin.includes('valid_from') && fonteV172.includes('Início de acesso') && fonteV172.includes('Final de acesso') && fonteV172.includes('classificadorMostrarAcessoExpirado') && fonteV141.includes('valid_from') && fonteV127.includes('classificadorMostrarAcessoExpirado') && !fonteV152.includes('Conte com a TaxAdvice') && !fonteV152.includes('Falar com um especialista') && !fonteV152.includes('9704-9434') && migracaoV177.includes('add column if not exists valid_from')
-  ? passou('administração define início/final, bloqueia acesso vencido e remove contato redundante')
-  : falhou('período de acesso, bloqueio por vencimento ou painel institucional não foi atualizado');
-
-// V197 — acesso autorizado usa link mágico sem senha e não cadastra e-mails desconhecidos.
-console.log('\n[4.5.1] Acesso por link mágico');
-fonteV141.includes('signInWithOtp') && fonteV141.includes('shouldCreateUser:false') && fonteV141.includes('Enviar link de acesso') && !fonteV141.includes('v141-login-password') && !fonteV141.includes('Esqueci minha senha')
-  ? passou('login remove senha e solicita link mágico apenas para conta previamente autorizada')
-  : falhou('acesso por link mágico ainda expõe senha ou permite cadastro automático');
+// V229 — autenticação voltou com confirmação de e-mail, 20 consultas combinadas e contagem servidor.
+console.log('\n[4.5] Acesso de visitante e administrador');
+const fonteV229 = readFileSync(join(raiz, 'src/js/modulos/119-v229-acesso-visitante-20-consultas.js'), 'utf8');
+const sqlV229 = readFileSync(join(raiz, 'supabase/migrations/20261109111400_visitor_twenty_consultations.sql'), 'utf8');
+fonteV229.includes('signUp') && fonteV229.includes('signInWithPassword') && fonteV229.includes('email_confirmed_at') && fonteV229.includes("LIMITE=20") && fonteV229.includes('consume_visitor_consultation') && sqlV229.includes('pg_advisory_xact_lock') && sqlV229.includes('v_used >= 20') && sqlV229.includes("role='admin_taxadvice'")
+  ? passou('cadastro confirmado, limite atômico de 20 consultas e isenção administrativa presentes')
+  : falhou('controle V229 está incompleto ou sem proteção servidor');
 
 // V175 — upload de planilha em lote abre a análise e disponibiliza a exportação.
 console.log('\n[4.6] Validação em lote por planilha');
 const fonteV131 = readFileSync(join(raiz, 'src/js/modulos/81-v131-importacao-lote-ncm-nbs.js'), 'utf8');
-const fonteV137 = readFileSync(join(raiz, 'src/js/modulos/83-v137-uploads-cabecalho.js'), 'utf8');
-fonteV131.includes('classificadorAbrirResultadoLote') && !fonteV131.includes('v123-side-section">Exportações') && fonteV131.includes("gerarXlsx('classificacao_ncm_nbs_") && fonteV131.includes('cabecalhosOriginais') && fonteV131.includes('Resultado da análise') && fonteV131.includes('v176-resultado') && fonteV137.includes('PROCESSAR') && fonteV137.includes('v137-processar-ncm') && fonteV137.includes('v137-export-title') && fonteV137.includes('v137-importar-ncm-nbs') && fonteV137.includes('IMPORTAR NCM / NBS') && fonteV137.includes('v137-baixar-pptx') && fonteV137.includes('BAIXAR .PPTX') && fonteV137.includes('VER RESULTADO / EXPORTAR EXCEL') && fonteV137.includes('abrirResultado()')
-  ? passou('upload NCM/NBS processa planilhas, preserva colunas e acrescenta resultado em Excel')
-  : falhou('upload em lote não processa a planilha ou não acrescenta o resultado exportável');
+const fonteV156 = readFileSync(join(raiz, 'src/js/modulos/95-v156-validacao-cnae-periodo.js'), 'utf8');
+/* V214 — CNAEs ocupa toda a largura; a importação permanece no cabeçalho e a área interna mostra somente resultados analisados. */
+fonteV156.includes('grid-column:1 / -1') && fonteV156.includes('textarea{width:100%') && fonteV131.includes('classificadorAbrirResultadoLote') && fonteV131.includes('Resultados analisados — NCM / NBS') && !fonteV131.includes('v131-file') && !fonteV131.includes('BAIXAR NCM ANALISADO') && !fonteV131.includes('BAIXAR NBS ANALISADO') && fonteV131.includes('classificador:lote-processamento') && fonteV131.includes('planilhaPrevia') && fonteV131.includes('cabecalhosOriginais') && fonteV131.includes('Alíquota final IBS Estadual (%)') && fonteV131.includes('Alíquota final IBS Municipal (%)') && fonteV131.includes('Alíquota final CBS (%)') && fonteV131.includes("anexo:'SEM ANEXO'") && arquivos.includes('src/js/modulos/83-v137-uploads-cabecalho.js') && fonteV156.includes('rows="6"') && fonteV156.includes('Informe um CNAE por linha')
+  ? passou('lote detalha CST, cClassTrib, redução, alíquotas e Sem Anexo sem exibir a tela duplicada de importação')
+  : falhou('a análise detalhada de lote ou a entrada de CNAEs não está na configuração esperada');
 
-// V186 — o atalho Fale Conosco deve abrir diretamente o WhatsApp, sem duplicar uma tela de contato.
+// V229 — o atalho Fale Conosco usa o WhatsApp atual e permanece acessível ao visitante.
 console.log('\n[4.4] Atendimento TaxAdvice');
 const faleConosco = w.document.getElementById('v125-contact-link');
 const marca = w.document.querySelector('.v123-header .brand');
-faleConosco?.tagName === 'A' && faleConosco.target === '_blank' && faleConosco.href.includes('wa.me/551197049434') && decodeURIComponent(faleConosco.href).includes('Gostaria de saber mais da ferramenta de auditoria') && !w.document.getElementById('v125-contact') && marca?.querySelector('.tax')?.textContent === 'Tax' && marca?.querySelector('.advice')?.textContent === 'Advice'
+faleConosco?.tagName === 'A' && faleConosco.target === '_blank' && faleConosco.href.includes('wa.me/5511994797347') && decodeURIComponent(faleConosco.href).includes('gostaria de falar com a Tax Advice') && !faleConosco.classList.contains('v229-locked') && !w.document.getElementById('v125-contact') && marca?.querySelector('.tax')?.textContent === 'Tax' && marca?.querySelector('.advice')?.textContent === 'Advice'
   ? passou('Fale Conosco direciona ao WhatsApp com a mensagem de auditoria e sem tela duplicada')
   : falhou('atalho Fale Conosco não direciona corretamente ao WhatsApp ou conserva tela duplicada');
 
@@ -283,12 +257,10 @@ if (abrirCronograma) {
   await esperar(360);
   let cronograma = w.document.getElementById('v124-metodologia');
   const consultaOk = cronograma?.querySelectorAll('.v168-table tbody tr').length === 12 && cronograma.textContent.includes('Lucro Real: PIS 1,65% · COFINS 7,60%') && cronograma.textContent.includes('ICMS 18%');
-  w.dispatchEvent(new w.CustomEvent('classificador:usuario-autenticado', { detail: { role: 'admin_taxadvice' } }));
-  await esperar(20);
   cronograma = w.document.getElementById('v124-metodologia');
   consultaOk && !cronograma.querySelector('[data-v168-tributo]')?.disabled && !!cronograma.querySelector('#v168-salvar') && cronograma.querySelectorAll('.v168-table tbody tr').length === 12 && cronograma.textContent.includes('Lucro Real: PIS 1,65% · COFINS 7,60%') && cronograma.textContent.includes('ICMS 18%')
-    ? passou('cronograma traz 12 tributos, parâmetros do Lucro Real e edição administrativa')
-    : falhou('cronograma não exibiu os tributos, as referências do regime ou os controles administrativos esperados');
+    ? passou('cronograma traz 12 tributos, parâmetros do Lucro Real e edição local')
+    : falhou('cronograma não exibiu os tributos, as referências do regime ou os controles locais esperados');
 } else falhou('atalho Ver cronograma de alíquotas não foi encontrado');
 
 w.close();

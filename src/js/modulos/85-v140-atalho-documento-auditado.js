@@ -1,4 +1,4 @@
-/* V140 — Atalho visual de Documento auditado para abrir a consulta liberada ao usuário. */
+/* V200 — Atalho visual de Documento auditado disponível diretamente, sem cadastro ou autenticação. */
 (function(){
   const side=document.getElementById('v123-sidebar');
   if(!side||document.getElementById('v140-audit-tool'))return;
@@ -22,10 +22,7 @@
   tool.innerHTML='<img src="'+image+'" alt=""><span><strong>Documento auditado</strong><span>Consulta tributária</span></span>';
   const status=side.querySelector('.v123-status');
   side.insertBefore(tool,status||null);
-  const show=()=>tool.classList.add('is-visible');
-  window.addEventListener('classificador:usuario-autenticado',show);
-  window.addEventListener('classificador:consulta-gratuita',show);
-  try{if(JSON.parse(sessionStorage.getItem('v139-free-consultant')||'null')?.consultant_id)show()}catch(_){}
+  tool.classList.add('is-visible');
   tool.addEventListener('click',()=>{
     const query=side.querySelector('[data-v123-key="consulta"]');
     if(query)query.click();
