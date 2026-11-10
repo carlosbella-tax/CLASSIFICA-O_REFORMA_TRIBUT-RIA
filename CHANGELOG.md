@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V236 — 2026-11-10
+
+- Impressao: orientacao segue o usuario (auto), titulo NCM/NBS em branco, rodape branco, espacamento compacto no resultado NBS; aba Administracao compacta e totalmente visivel sem rolar
+
 ## V235 — 2026-11-10
 
 - Controle de acesso na Consulta: 2 consultas sem cadastro com travamento e especialista +55 11 97074-9434, menus visiveis porem bloqueados, cadastro libera 100%, carlos.bella admin com aba Administracao para convidar usuarios e admins
