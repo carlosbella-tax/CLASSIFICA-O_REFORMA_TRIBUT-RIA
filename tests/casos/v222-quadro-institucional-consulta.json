@@ -1,9 +1,20 @@
 {
   "descricao": "V222 — quadro institucional Tax Advice exclusivo da área azul da Consulta NCM/NBS",
-  "arquivos": ["v105-is-2027.xml"],
-  "funcao": "(() => { const consulta=document.querySelector('[data-v123-key=\"consulta\"]'),documentos=document.querySelector('[data-v123-key=\"documentos\"]'),quadro=document.getElementById('v222-contato-consulta');consulta.click();const visivel=!!quadro&&getComputedStyle(quadro).display==='grid';const conteudo=quadro?.textContent.includes('Fale com a Tax Advice')&&quadro?.textContent.includes('Carlos Bella')&&quadro?.textContent.includes('carlos.bella@taxadvice.com.br')&&quadro?.textContent.includes('+55 11 99479-7347')&&quadro?.textContent.includes('taxadvice.com.br');const acessivel=quadro?.getAttribute('aria-label')==='Fale com a Tax Advice'&&quadro?.querySelector('a[href=\"mailto:carlos.bella@taxadvice.com.br\"]')?.getAttribute('aria-label')==='Enviar e-mail para Carlos Bella'&&quadro?.querySelector('a[href=\"tel:+5511994797347\"]');const azul=getComputedStyle(document.body).backgroundColor==='rgb(11, 42, 67)';documentos.click();const exclusivo=getComputedStyle(quadro).display==='none';return [{numero_item:'v222',visivel,conteudo:!!conteudo,acessivel:!!acessivel,azul,exclusivo}]; })",
+  "arquivos": [
+    "v105-is-2027.xml"
+  ],
+  "funcao": "(() => { try{window.classificadorAplicarAcessoV229&&window.classificadorAplicarAcessoV229('admin')}catch(e){} const consulta=document.querySelector('[data-v123-key=\"consulta\"]'),documentos=document.querySelector('[data-v123-key=\"documentos\"]'),quadro=document.getElementById('v222-contato-consulta');consulta.click();const visivel=!!quadro&&getComputedStyle(quadro).display==='grid';const conteudo=quadro?.textContent.includes('Fale com a Tax Advice')&&quadro?.textContent.includes('Carlos Bella')&&quadro?.textContent.includes('carlos.bella@taxadvice.com.br')&&quadro?.textContent.includes('+55 11 99479-7347')&&quadro?.textContent.includes('taxadvice.com.br');const acessivel=quadro?.getAttribute('aria-label')==='Fale com a Tax Advice'&&quadro?.querySelector('a[href=\"mailto:carlos.bella@taxadvice.com.br\"]')?.getAttribute('aria-label')==='Enviar e-mail para Carlos Bella'&&quadro?.querySelector('a[href=\"tel:+5511994797347\"]');const azul=getComputedStyle(document.body).backgroundColor==='rgb(11, 42, 67)';documentos.click();const exclusivo=getComputedStyle(quadro).display==='none';return [{numero_item:'v222',visivel,conteudo:!!conteudo,acessivel:!!acessivel,azul,exclusivo}]; })",
   "chave": "numero_item",
   "linhas": [
-    {"numero_item":"v222","esperado":{"visivel":true,"conteudo":true,"acessivel":true,"azul":true,"exclusivo":true}}
+    {
+      "numero_item": "v222",
+      "esperado": {
+        "visivel": true,
+        "conteudo": true,
+        "acessivel": true,
+        "azul": true,
+        "exclusivo": true
+      }
+    }
   ]
 }

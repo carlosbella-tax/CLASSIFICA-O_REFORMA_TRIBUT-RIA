@@ -1,9 +1,19 @@
 {
   "descricao": "V224 — menu selecionado com pulsação luminosa e efeito de relevo",
-  "arquivos": ["v105-is-2027.xml"],
-  "funcao": "(() => { const consulta=document.querySelector('[data-v123-key=\"consulta\"]'),documentos=document.querySelector('[data-v123-key=\"documentos\"]'),folha=document.getElementById('v224-menu-selecionado-style')?.textContent||'';consulta.click();const consultaAtiva=consulta.classList.contains('active')&&document.querySelectorAll('#v123-sidebar .v123-link.active').length===1&&folha.includes('@keyframes v224-menu-pulsar')&&folha.includes('animation:v224-menu-pulsar 1.35s ease-in-out infinite')&&folha.includes('box-shadow:0 6px 15px')&&folha.includes('transform:translateY(-2px)');documentos.click();const alterna=documentos.classList.contains('active')&&!consulta.classList.contains('active');const unico=document.querySelectorAll('#v123-sidebar .v123-link.active').length===1;const acessivel=folha.includes('@media(prefers-reduced-motion:reduce)')&&window.classificadorDestaqueMenuSelecionado==='v224-menu-pulsar'&&typeof window.classificadorDestacarMenuUnico==='function';return [{numero_item:'v224',consultaAtiva,alterna,unico,acessivel}]; })",
+  "arquivos": [
+    "v105-is-2027.xml"
+  ],
+  "funcao": "(() => { try{window.classificadorAplicarAcessoV229&&window.classificadorAplicarAcessoV229('admin')}catch(e){} const consulta=document.querySelector('[data-v123-key=\"consulta\"]'),documentos=document.querySelector('[data-v123-key=\"documentos\"]'),folha=document.getElementById('v224-menu-selecionado-style')?.textContent||'';consulta.click();const consultaAtiva=consulta.classList.contains('active')&&document.querySelectorAll('#v123-sidebar .v123-link.active').length===1&&folha.includes('@keyframes v224-menu-pulsar')&&folha.includes('animation:v224-menu-pulsar 1.35s ease-in-out infinite')&&folha.includes('box-shadow:0 6px 15px')&&folha.includes('transform:translateY(-2px)');documentos.click();const alterna=documentos.classList.contains('active')&&!consulta.classList.contains('active');const unico=document.querySelectorAll('#v123-sidebar .v123-link.active').length===1;const acessivel=folha.includes('@media(prefers-reduced-motion:reduce)')&&window.classificadorDestaqueMenuSelecionado==='v224-menu-pulsar'&&typeof window.classificadorDestacarMenuUnico==='function';return [{numero_item:'v224',consultaAtiva,alterna,unico,acessivel}]; })",
   "chave": "numero_item",
   "linhas": [
-    {"numero_item":"v224","esperado":{"consultaAtiva":true,"alterna":true,"unico":true,"acessivel":true}}
+    {
+      "numero_item": "v224",
+      "esperado": {
+        "consultaAtiva": true,
+        "alterna": true,
+        "unico": true,
+        "acessivel": true
+      }
+    }
   ]
 }

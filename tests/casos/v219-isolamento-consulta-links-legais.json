@@ -1,8 +1,20 @@
 {
   "descricao": "V219 — consulta NCM/NBS isolada, IS somente para NCM correlacionada e atalhos legais específicos",
-  "arquivos": ["v105-is-2027.xml"],
-  "funcao": "(() => { const consulta=document.querySelector('[data-v123-key=\"consulta\"]'),documentos=document.querySelector('[data-v123-key=\"documentos\"]'); consulta.click(); const modoConsulta=document.body.classList.contains('v219-modo-consulta'),cabecalhoOculto=getComputedStyle(document.querySelector('header .header-grid')).display==='none'; documentos.click(); const restaurado=!document.body.classList.contains('v219-modo-consulta'); let painel=document.getElementById('v153-result');if(!painel){painel=document.createElement('section');painel.id='v153-result';document.body.appendChild(painel)} const campo=document.getElementById('v123-ncm');campo.value='32089010';window.classificadorMostrarIsConsulta();const semIsVazio=!painel.querySelector('.v217-is');campo.value='22021000';window.classificadorMostrarIsConsulta();const comIsCorrelacionado=Boolean(painel.querySelector('.v217-is'));const url=window.classificadorReferenciaPortal('NCM','38221990')[0]?.classificacao?.TexUrlLegislacao||'';const linkLegalEspecifico=url.includes('#art')&&window.classificadorUrlAnexoLc214('VIII',url).endsWith('#anexo8')&&document.documentElement.innerHTML.includes('Abrir Anexo'); painel.remove();campo.value='';window.classificadorModoConsultaNcmNbs(false);return [{numero_item:'v219',modoConsulta,cabecalhoOculto,restaurado,semIsVazio,comIsCorrelacionado,linkLegalEspecifico}]; })",
+  "arquivos": [
+    "v105-is-2027.xml"
+  ],
+  "funcao": "(() => { try{window.classificadorAplicarAcessoV229&&window.classificadorAplicarAcessoV229('admin')}catch(e){} const consulta=document.querySelector('[data-v123-key=\"consulta\"]'),documentos=document.querySelector('[data-v123-key=\"documentos\"]'); consulta.click(); const modoConsulta=document.body.classList.contains('v219-modo-consulta'),cabecalhoOculto=getComputedStyle(document.querySelector('header .header-grid')).display==='none'; documentos.click(); const restaurado=!document.body.classList.contains('v219-modo-consulta'); let painel=document.getElementById('v153-result');if(!painel){painel=document.createElement('section');painel.id='v153-result';document.body.appendChild(painel)} const campo=document.getElementById('v123-ncm');campo.value='32089010';window.classificadorMostrarIsConsulta();const semIsVazio=!painel.querySelector('.v217-is');campo.value='22021000';window.classificadorMostrarIsConsulta();const comIsCorrelacionado=Boolean(painel.querySelector('.v217-is'));const url=window.classificadorReferenciaPortal('NCM','38221990')[0]?.classificacao?.TexUrlLegislacao||'';const linkLegalEspecifico=url.includes('#art')&&window.classificadorUrlAnexoLc214('VIII',url).endsWith('#anexo8')&&document.documentElement.innerHTML.includes('Abrir Anexo'); painel.remove();campo.value='';window.classificadorModoConsultaNcmNbs(false);return [{numero_item:'v219',modoConsulta,cabecalhoOculto,restaurado,semIsVazio,comIsCorrelacionado,linkLegalEspecifico}]; })",
   "linhas": [
-    {"numero_item":"v219","esperado":{"modoConsulta":true,"cabecalhoOculto":true,"restaurado":true,"semIsVazio":true,"comIsCorrelacionado":true,"linkLegalEspecifico":true}}
+    {
+      "numero_item": "v219",
+      "esperado": {
+        "modoConsulta": true,
+        "cabecalhoOculto": true,
+        "restaurado": true,
+        "semIsVazio": true,
+        "comIsCorrelacionado": true,
+        "linkLegalEspecifico": true
+      }
+    }
   ]
 }

@@ -4,7 +4,8 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 const url = Deno.env.get('SUPABASE_URL')!;
 const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 const admin = createClient(url, serviceKey, { auth: { autoRefreshToken: false, persistSession: false } });
-const json = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json' } });
+const CORS = { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'authorization, content-type, apikey, x-client-info, accept', 'Access-Control-Allow-Methods': 'POST, OPTIONS' };
+const json = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json', ...CORS } });
 
 async function requireAdmin(req: Request) {
   const token = req.headers.get('Authorization')?.replace(/^Bearer\s+/i, '');
@@ -16,13 +17,14 @@ async function requireAdmin(req: Request) {
 }
 
 Deno.serve(async req => {
+  if (req.method === 'OPTIONS') return new Response('ok', { headers: CORS });
   const actor = await requireAdmin(req);
   if (!actor) return json({ error: 'Não autorizado.' }, 403);
   const body = await req.json();
 
   if (body.action === 'list') {
     const [{ data: profiles, error }, { data: users, error: usersError }] = await Promise.all([
-      admin.from('profiles').select('id,full_name,role,active,valid_from,valid_until,blocked_at,created_at,organizations(name)').order('created_at'),
+      admin.from('profiles').select('id,full_name,role,active,valid_from,valid_until,blocked_at,created_at').order('created_at'),
       admin.auth.admin.listUsers({ page: 1, perPage: 1000 })
     ]);
     if (error || usersError) return json({ error: error?.message ?? usersError?.message }, 400);

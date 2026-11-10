@@ -1,9 +1,21 @@
 {
   "descricao": "V221 — limpeza após NBS, campos compactos e exibição exclusiva da consulta NCM/NBS",
-  "arquivos": ["v105-is-2027.xml"],
-  "funcao": "(() => { const consulta=document.querySelector('[data-v123-key=\"consulta\"]'),documentos=document.querySelector('[data-v123-key=\"documentos\"]'),buscas=document.querySelector('.v123-searches'),nbs=document.getElementById('v123-nbs'),ncm=document.getElementById('v123-ncm'),limpar=document.getElementById('v123-clear');consulta.click();const ordem=buscas.children[0]?.contains(nbs)&&buscas.children[1]===limpar&&buscas.children[2]?.contains(ncm);nbs.value='1.0101.10.00';ncm.value='38221990';const resultado=document.createElement('section');resultado.id='v153-result';document.getElementById('v123-topbar').insertAdjacentElement('afterend',resultado);window.classificadorLimparConsultaNcmNbs();const limpou=nbs.value===''&&ncm.value===''&&!document.getElementById('v153-result');const isolado=document.body.classList.contains('v219-modo-consulta')&&getComputedStyle(document.querySelector('header.v123-header')).display==='none'&&[...document.querySelectorAll('.panel')].every(p=>getComputedStyle(p).display==='none')&&getComputedStyle(buscas).display==='flex';const compacto=getComputedStyle(nbs).width==='190px'&&getComputedStyle(ncm).width==='155px';const icone=!!limpar.querySelector('.v221-clear-icon')&&limpar.getAttribute('aria-label')==='Limpar todos os campos da consulta NBS e NCM';documentos.click();const outrasTelas=getComputedStyle(buscas).display==='none'&&getComputedStyle(document.querySelector('header.v123-header')).display!=='none';return [{numero_item:'v221',ordem,limpou,isolado,compacto,icone,outrasTelas}]; })",
+  "arquivos": [
+    "v105-is-2027.xml"
+  ],
+  "funcao": "(() => { try{window.classificadorAplicarAcessoV229&&window.classificadorAplicarAcessoV229('admin')}catch(e){} const consulta=document.querySelector('[data-v123-key=\"consulta\"]'),documentos=document.querySelector('[data-v123-key=\"documentos\"]'),buscas=document.querySelector('.v123-searches'),nbs=document.getElementById('v123-nbs'),ncm=document.getElementById('v123-ncm'),limpar=document.getElementById('v123-clear');consulta.click();const ordem=buscas.children[0]?.contains(nbs)&&buscas.children[1]===limpar&&buscas.children[2]?.contains(ncm);nbs.value='1.0101.10.00';ncm.value='38221990';const resultado=document.createElement('section');resultado.id='v153-result';document.getElementById('v123-topbar').insertAdjacentElement('afterend',resultado);window.classificadorLimparConsultaNcmNbs();const limpou=nbs.value===''&&ncm.value===''&&!document.getElementById('v153-result');const isolado=document.body.classList.contains('v219-modo-consulta')&&getComputedStyle(document.querySelector('header.v123-header')).display==='none'&&[...document.querySelectorAll('.panel')].every(p=>getComputedStyle(p).display==='none')&&getComputedStyle(buscas).display==='flex';const compacto=getComputedStyle(nbs).width==='190px'&&getComputedStyle(ncm).width==='155px';const icone=!!limpar.querySelector('.v221-clear-icon')&&limpar.getAttribute('aria-label')==='Limpar todos os campos da consulta NBS e NCM';documentos.click();const outrasTelas=getComputedStyle(buscas).display==='none'&&getComputedStyle(document.querySelector('header.v123-header')).display!=='none';return [{numero_item:'v221',ordem,limpou,isolado,compacto,icone,outrasTelas}]; })",
   "chave": "numero_item",
   "linhas": [
-    {"numero_item":"v221","esperado":{"ordem":true,"limpou":true,"isolado":true,"compacto":true,"icone":true,"outrasTelas":true}}
+    {
+      "numero_item": "v221",
+      "esperado": {
+        "ordem": true,
+        "limpou": true,
+        "isolado": true,
+        "compacto": true,
+        "icone": true,
+        "outrasTelas": true
+      }
+    }
   ]
 }

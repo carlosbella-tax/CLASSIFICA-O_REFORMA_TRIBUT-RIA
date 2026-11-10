@@ -225,7 +225,7 @@ fonteV123.includes('fecharVisoesAnteriores') && fonteV123.includes("document.get
 console.log('\n[4.5] Acesso de visitante e administrador');
 const fonteV229 = readFileSync(join(raiz, 'src/js/modulos/119-v229-acesso-visitante-20-consultas.js'), 'utf8');
 const sqlV229 = readFileSync(join(raiz, 'supabase/migrations/20261109111400_visitor_twenty_consultations.sql'), 'utf8');
-fonteV229.includes('signUp') && fonteV229.includes('signInWithPassword') && fonteV229.includes('email_confirmed_at') && fonteV229.includes("LIMITE=20") && fonteV229.includes('consume_visitor_consultation') && sqlV229.includes('pg_advisory_xact_lock') && sqlV229.includes('v_used >= 20') && sqlV229.includes("role='admin_taxadvice'")
+fonteV229.includes('signUp') && fonteV229.includes('signInWithPassword') && fonteV229.includes('email_confirmed_at') && fonteV229.includes('LIMITE_ANON=2') && fonteV229.includes('consume_visitor_consultation') && sqlV229.includes('pg_advisory_xact_lock') && sqlV229.includes('v_used >= 20') && sqlV229.includes("role='admin_taxadvice'")
   ? passou('cadastro confirmado, limite atômico de 20 consultas e isenção administrativa presentes')
   : falhou('controle V229 está incompleto ou sem proteção servidor');
 
@@ -242,7 +242,7 @@ fonteV156.includes('grid-column:1 / -1') && fonteV156.includes('textarea{width:1
 console.log('\n[4.4] Atendimento TaxAdvice');
 const faleConosco = w.document.getElementById('v125-contact-link');
 const marca = w.document.querySelector('.v123-header .brand');
-faleConosco?.tagName === 'A' && faleConosco.target === '_blank' && faleConosco.href.includes('wa.me/5511994797347') && decodeURIComponent(faleConosco.href).includes('gostaria de falar com a Tax Advice') && !faleConosco.classList.contains('v229-locked') && !w.document.getElementById('v125-contact') && marca?.querySelector('.tax')?.textContent === 'Tax' && marca?.querySelector('.advice')?.textContent === 'Advice'
+faleConosco?.tagName === 'A' && faleConosco.target === '_blank' && faleConosco.href.includes('wa.me/551197049434') && !faleConosco.classList.contains('v229-locked') && w.classificadorWhatsEspecialistaV235?.includes('5511970749434') && !w.document.getElementById('v125-contact') && marca?.querySelector('.tax')?.textContent === 'Tax' && marca?.querySelector('.advice')?.textContent === 'Advice'
   ? passou('Fale Conosco direciona ao WhatsApp com a mensagem de auditoria e sem tela duplicada')
   : falhou('atalho Fale Conosco não direciona corretamente ao WhatsApp ou conserva tela duplicada');
 

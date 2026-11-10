@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V235 — 2026-11-10
+
+- Controle de acesso na Consulta: 2 consultas sem cadastro com travamento e especialista +55 11 97074-9434, menus visiveis porem bloqueados, cadastro libera 100%, carlos.bella admin com aba Administracao para convidar usuarios e admins
+
 ## V234 — 2026-11-10
 
 - Remove o rodape de fonte/criterio (Fonte da consulta e Criterio V163) da consulta Portal CST
