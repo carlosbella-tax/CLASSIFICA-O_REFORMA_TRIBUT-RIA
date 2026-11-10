@@ -11,9 +11,12 @@ const { versao } = JSON.parse(readFileSync(join(raiz, 'versao.json'), 'utf8'));
 
 const partes = arquivos.map(a => readFileSync(join(raiz, 'src', a.replace(/^src\//, ''))));
 // V127 — Somente variáveis públicas são incorporadas ao HTML publicado; a chave service-role nunca entra no build.
+// V232 — Sem variáveis de ambiente, usa os valores públicos do projeto Taxadvice (anon key pública, já embutida no HTML da produção).
+const SUPA_URL_PADRAO = 'https://ifjigaevwdlzvwkpefkh.supabase.co';
+const SUPA_ANON_PADRAO = 'sb_publishable_NQW4KPrVWJp_FQnXeHH2Ng_zPCahQ3A';
 let html = Buffer.concat(partes).toString('utf8');
-html = html.replaceAll('__CLASSIFICADOR_SUPABASE_URL__', process.env.CLASSIFICADOR_SUPABASE_URL || '');
-html = html.replaceAll('__CLASSIFICADOR_SUPABASE_ANON_KEY__', process.env.CLASSIFICADOR_SUPABASE_ANON_KEY || '');
+html = html.replaceAll('__CLASSIFICADOR_SUPABASE_URL__', process.env.CLASSIFICADOR_SUPABASE_URL || SUPA_URL_PADRAO);
+html = html.replaceAll('__CLASSIFICADOR_SUPABASE_ANON_KEY__', process.env.CLASSIFICADOR_SUPABASE_ANON_KEY || SUPA_ANON_PADRAO);
 const badge = html.match(/class="build">VERSÃO (\d+)/);
 if (!badge || Number(badge[1]) !== versao) {
   console.error(`ERRO: selo do cabeçalho (VERSÃO ${badge && badge[1]}) diferente de versao.json (${versao}). Use npm run nova-versao.`);
