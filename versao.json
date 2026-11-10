@@ -1,5 +1,5 @@
 {
-  "versao": 233,
+  "versao": 234,
   "data": "2026-11-10",
-  "descricao": "Impressao PDF do modo consulta: fundo da pagina azul mais claro e titulo TaxAdvice em branco"
+  "descricao": "Remove o rodape de fonte/criterio (Fonte da consulta e Criterio V163) da consulta Portal CST"
 }

@@ -47,8 +47,6 @@
           :'<b>LC 214/2025 — revisão necessária</b><span>A referência consultada não informa anexo e item suficientes para uma validação documental automática. Confirme o enquadramento na legislação oficial.</span><a href="'+LC214+'" target="_blank" rel="noopener">Abrir texto completo da LC 214/2025</a>';
       artigo.querySelector('.v162-links')?.insertAdjacentElement('beforebegin',box);
     });
-    const fonte=painel.querySelector('.v153-source');
-    if(fonte)fonte.insertAdjacentHTML('beforeend',' <b>Critério V163:</b> somente vínculos com anexo e item registrados são apresentados como referência documental identificada; isso não elimina a conferência das condições legais da operação.');
     painel.dataset.v163Aplicado='1';
   }
   const css=document.createElement('style');

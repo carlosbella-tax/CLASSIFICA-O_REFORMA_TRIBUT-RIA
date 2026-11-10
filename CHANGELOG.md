@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V234 — 2026-11-10
+
+- Remove o rodape de fonte/criterio (Fonte da consulta e Criterio V163) da consulta Portal CST
+
 ## V233 — 2026-11-10
 
 - Impressao PDF do modo consulta: fundo da pagina azul mais claro e titulo TaxAdvice em branco
