@@ -41,7 +41,8 @@
     body.v219-modo-consulta #v153-result .v162-final small{color:#101820!important}
     body.v219-modo-consulta #v153-result .v162-calc input{background:#fff!important;color:#000!important;border-color:#6f93aa!important}
     @media print{
-      @page{size:A4 portrait;margin:8mm}
+      @page{margin:8mm}
+      .v194-ficha{padding:8px 10px!important;margin:4px 0!important}.v194-ficha p{margin:2px 0!important;line-height:1.15!important}.v194-caminho{gap:3px!important;margin-bottom:3px!important}.v194-tipi-linha{padding:2px 6px!important;line-height:1.1!important;gap:8px!important}.v194-meta,.v194-base{padding:3px 6px!important;margin:3px 0!important}.v166-print-message{margin:8px 0!important;padding:6px 10px!important}.v166-print-message b{margin-bottom:2px!important;font-size:12px!important}.v166-print-message span{font-size:9px!important;line-height:1.2!important}.v166-print-footer{padding-top:4px!important;margin-top:6px!important;font-size:7px!important}
       #v153-result.v162-result{padding:5mm!important;font-size:9px!important}
       #v153-result .v220-geracao{order:-1!important}
       #v153-result .v162-resumo{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:4px!important;margin:5px 0!important}

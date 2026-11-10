@@ -182,7 +182,7 @@ td.v43-mots{white-space:normal}
 @media print{.v45-bar,.v45-diag{display:none}}
 .v42-cod tr.dash-total-row td:not(:first-child){text-align:right!important}
 /* ===== V46 — impressão / PDF compacta ===== */
-@page{size:A4 landscape;margin:7mm}
+@page{margin:7mm}
 @media print{
   html,body{background:#fff!important;font-size:8px!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .v3-notice,header,.tabs,.footer,.v45-bar,.v45-diag,.v14-pager,.v34-faixa .v34-limpar,.v34-chip button,.dash-print,#printDashboard,.excel-filter-flag,.hscroll,.h-scroll,.top-scroll,#v15Pop,#excelFilterPopover,.v17-subnav,.v23-atalhos,.v30-sel,.v14-steps{display:none!important}

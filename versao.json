@@ -1,5 +1,5 @@
 {
-  "versao": 236,
+  "versao": 237,
   "data": "2026-11-10",
-  "descricao": "Impressao: orientacao segue o usuario (auto), titulo NCM/NBS em branco, rodape branco, espacamento compacto no resultado NBS; aba Administracao compacta e totalmente visivel sem rolar"
+  "descricao": "Impressao sem orientacao fixa (navegador manda), ficha TIPI e bloco final compactos na impressao (hierarquia, mensagem e rodape)"
 }

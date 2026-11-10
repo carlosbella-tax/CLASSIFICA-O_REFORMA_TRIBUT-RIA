@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V237 — 2026-11-10
+
+- Impressao sem orientacao fixa (navegador manda), ficha TIPI e bloco final compactos na impressao (hierarquia, mensagem e rodape)
+
 ## V236 — 2026-11-10
 
 - Impressao: orientacao segue o usuario (auto), titulo NCM/NBS em branco, rodape branco, espacamento compacto no resultado NBS; aba Administracao compacta e totalmente visivel sem rolar
