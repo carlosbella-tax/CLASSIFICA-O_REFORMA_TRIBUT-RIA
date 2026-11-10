@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V232 — 2026-11-10
+
+- Fonte e criterio da consulta em branco puro na impressao PDF: cobre b, strong, a e v159-link, vencendo as regras antigas #333 e laranja
+
 ## V231 — 2026-11-09
 
 - Corrige e.submitter indefinido no cadastro de visitante (V230): fallback para o botao submit do formulario

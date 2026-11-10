@@ -1,5 +1,5 @@
 {
-  "versao": 231,
-  "data": "2026-11-09",
-  "descricao": "Corrige e.submitter indefinido no cadastro de visitante (V230): fallback para o botao submit do formulario"
+  "versao": 232,
+  "data": "2026-11-10",
+  "descricao": "Fonte e criterio da consulta em branco puro na impressao PDF: cobre b, strong, a e v159-link, vencendo as regras antigas #333 e laranja"
 }
