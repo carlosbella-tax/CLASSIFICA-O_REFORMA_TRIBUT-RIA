@@ -1,5 +1,5 @@
 {
-  "versao": 232,
+  "versao": 233,
   "data": "2026-11-10",
-  "descricao": "Fonte e criterio da consulta em branco puro na impressao PDF: cobre b, strong, a e v159-link, vencendo as regras antigas #333 e laranja"
+  "descricao": "Impressao PDF do modo consulta: fundo da pagina azul mais claro e titulo TaxAdvice em branco"
 }
