@@ -5,6 +5,14 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V239 — 2026-11-16
+
+- Aba Administracao: colunas da lista compactas e ajustadas a largura do card (sem barra horizontal)
+
+## V238 — 2026-11-10
+
+- Impressao: margem da pagina 4mm e padding 3mm (menos espaco branco no cabecalho); textos internos do resultado (REVISAO OBRIGATORIA, reducao, anexo/item, condicao, excecao, descricao) em preto sobre fundos claros
+
 ## V237 — 2026-11-10
 
 - Impressao sem orientacao fixa (navegador manda), ficha TIPI e bloco final compactos na impressao (hierarquia, mensagem e rodape)
