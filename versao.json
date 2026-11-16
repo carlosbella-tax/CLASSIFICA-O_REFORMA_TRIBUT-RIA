@@ -1,5 +1,5 @@
 {
-  "versao": 245,
+  "versao": 246,
   "data": "2026-11-16",
-  "descricao": "Preenchimento emitente/tomador com os campos corretos do parser (emitente_razao_social etc.)"
+  "descricao": "Corrige volta indevida para a Consulta ao selecionar arquivo: permanece na aba Carregar XML/PDF"
 }

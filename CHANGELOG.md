@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V246 — 2026-11-16
+
+- Corrige volta indevida para a Consulta ao selecionar arquivo: permanece na aba Carregar XML/PDF
+
 ## V245 — 2026-11-16
 
 - Preenchimento emitente/tomador com os campos corretos do parser (emitente_razao_social etc.)

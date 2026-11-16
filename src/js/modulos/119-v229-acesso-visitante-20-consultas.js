@@ -40,6 +40,7 @@
   const mensagemAdmin=(texto,ok=false)=>{const el=document.getElementById('v235-admin-message');el.textContent=texto||'';el.style.color=ok?'#17683a':'#a53320'};
 
   const menus=()=>[...side.querySelectorAll('.v123-link,#v140-audit-tool')];
+  document.addEventListener('click',function(e){var m=e.target.closest&&e.target.closest('[data-v123-key="documentos"]');if(m)window.v242ManterCargaAtiva=true;},true);
   const permitido=menu=>menu.dataset.v123Key==='consulta'||menu.id==='v125-contact-link';
   const usoAnonimo=()=>{try{return JSON.parse(localStorage.getItem(CHAVE_ANON)||'{"n":0}')}catch(e){return {n:0}}};
   const registrarAnonimo=()=>{try{const u=usoAnonimo();localStorage.setItem(CHAVE_ANON,JSON.stringify({n:(u.n||0)+1}))}catch(e){}};
@@ -51,7 +52,7 @@
     else if(visitante){counter.innerHTML='Consultas utilizadas: <b>'+estado.usadas+'/20</b><br>Restantes: <b>'+estado.restantes+'</b>'}
     else{counter.innerHTML='<b>Acesso administrativo</b><br>Consultas ilimitadas'}
     auth.hidden=estado.modo!=='nao_autenticado';
-    if(visitante||estado.modo==='admin')window.classificadorAbrirConsultaInicial?.();
+    if((visitante||estado.modo==='admin')&&!window.v242ManterCargaAtiva)window.classificadorAbrirConsultaInicial?.();
   };
   const aplicar=(modo,dados={})=>{estado.modo=modo;estado.usadas=Number(dados.used??dados.usadas??0);estado.restantes=modo==='admin'?20:Number(dados.remaining??dados.restantes??Math.max(0,20-estado.usadas));estado.email=dados.email||estado.email;estado.nome=dados.nome||estado.nome;atualizar()};
   window.classificadorAplicarAcessoV229=aplicar;

@@ -18,14 +18,11 @@
   };
   window.classificadorV243AbaPorArquivo=tipoPorArquivo;
   const abrirAbaTipo=function(files){
+    /* V246 — permanece na aba de carga: apenas identifica o tipo, sem navegar */
     if(!files||!files.length)return '';
     for(let i=0;i<files.length;i++){
       const aba=tipoPorArquivo((files[i]&&files[i].name)||'');
-      if(aba){
-        const tab=document.querySelector('.tab[data-tab="'+aba+'"]');
-        if(tab&&!tab.classList.contains('active'))tab.click();
-        return aba;
-      }
+      if(aba)return aba;
     }
     return '';
   };
