@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V247 — 2026-11-16
+
+- Badges do menu contam documentos por tipo (NF-e, NFS-e, CT-e)
+
 ## V246 — 2026-11-16
 
 - Corrige volta indevida para a Consulta ao selecionar arquivo: permanece na aba Carregar XML/PDF

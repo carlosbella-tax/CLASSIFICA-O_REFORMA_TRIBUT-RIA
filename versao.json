@@ -1,5 +1,5 @@
 {
-  "versao": 246,
+  "versao": 247,
   "data": "2026-11-16",
-  "descricao": "Corrige volta indevida para a Consulta ao selecionar arquivo: permanece na aba Carregar XML/PDF"
+  "descricao": "Badges do menu contam documentos por tipo (NF-e, NFS-e, CT-e)"
 }
