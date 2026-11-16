@@ -1,13 +1,17 @@
 /* V225 — Substitui os campos de CNAE/lote/exportações do cabeçalho por um painel único de carga XML/PDF. */
 (function(){
   /* V225 — Remove da interface os blocos solicitados sem alterar os mecanismos internos de análise. */
-  document.querySelector('.v156-cnae-field')?.remove();
+  /* V240 — o campo de CNAEs volta a existir, agora dentro deste painel. */
   document.querySelector('.v137-uploads')?.remove();
 
   const painel=document.getElementById('load');
   const cartao=painel?.querySelector(':scope > .card');
   const area=document.getElementById('drop');
   if(!painel||!cartao||!area)return;
+
+  /* V240 — Move o campo de CNAEs do cabeçalho para dentro do painel, preservando o id legado usado pelo motor. */
+  const cnaeHeader=document.querySelector('.v156-cnae-field');
+  if(cnaeHeader){cnaeHeader.style.cssText='grid-column:1/-1;display:flex;flex-direction:column;gap:5px;margin:10px 0 0;font-weight:700';cnaeHeader.querySelector('textarea').style.cssText='box-sizing:border-box;width:100%;padding:9px;border:1px solid #9eb4c3;border-radius:7px;font:13px system-ui;background:#fff;color:#173f64';area.insertAdjacentElement('afterend',cnaeHeader)};
 
   const titulo=document.createElement('h2');
   titulo.id='v225-carregar-titulo';

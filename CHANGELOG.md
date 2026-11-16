@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V240 — 2026-11-16
+
+- Campo CNAEs da empresa dentro do painel Carregar XML/PDF (id legado cnaesEmpresa preservado para o motor)
+
 ## V239 — 2026-11-16
 
 - Aba Administracao: colunas da lista compactas e ajustadas a largura do card (sem barra horizontal)

@@ -1,5 +1,5 @@
 {
-  "versao": 239,
+  "versao": 240,
   "data": "2026-11-16",
-  "descricao": "Aba Administracao: colunas da lista compactas e ajustadas a largura do card (sem barra horizontal)"
+  "descricao": "Campo CNAEs da empresa dentro do painel Carregar XML/PDF (id legado cnaesEmpresa preservado para o motor)"
 }
