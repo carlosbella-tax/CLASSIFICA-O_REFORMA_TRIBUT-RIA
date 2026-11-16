@@ -495,7 +495,7 @@
     $('pStatus').textContent = fim; $('status').textContent = fim + ' Clique em Baixar Excel no computador para salvar.'; $('status').className = 'status ok';
     $('pBar').style.width = '100%'; $('bar').style.width = '100%';
     $('download').disabled = !state.docs.length; $('downloadTop').disabled = !state.docs.length; $('pVerDash').disabled = !state.docs.length;
-    if (state.docs.length && !cancelado) document.querySelector('.tab[data-tab="items"]').click();
+    if (state.docs.length && !cancelado && !window.v242FicarNaCarga) document.querySelector('.tab[data-tab="items"]').click();
   }
   window.process = processarV14;
   const abrirProcessar = () => { document.querySelector('.tab[data-tab="processar"]').click(); };

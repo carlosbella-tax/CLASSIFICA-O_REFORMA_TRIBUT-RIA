@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V242 — 2026-11-16
+
+- Fluxo de carga: tipo de documento automatico ao arrastar/selecionar, botao Voltar ao lado de Processar, permanece na aba de carga e preenche emitente/tomador apos processar
+
 ## V241 — 2026-11-16
 
 - Impressao PDF: tamanho das letras reduzido em 30 por cento
