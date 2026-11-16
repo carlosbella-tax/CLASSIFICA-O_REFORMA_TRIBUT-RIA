@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V250 — 2026-11-16
+
+- Isolamento total por tipo: NFS-e nao vaza para Base de IBS/CBS, ICMS ST, IPI nem Dashboard fiscal; NF-e nao vaza para NFS-e
+
 ## V249 — 2026-11-16
 
 - Arrastar e soltar reforçado: drop na área ou em qualquer ponto da tela sempre carrega e mantém na aba Carregar XML/PDF

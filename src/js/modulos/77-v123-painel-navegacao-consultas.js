@@ -53,7 +53,7 @@
     const atualizar = () => { const s = typeof state === 'undefined' ? {} : state; const arquivos=(s.files||[]).length, docs=(s.docs||[]).length, itens=(s.items||[]).length; const a=document.getElementById('v123-lote'), d=document.getElementById('v123-docs'); if(a)a.textContent=arquivos+' arquivo(s) carregado(s)'; if(d)d.textContent=docs+' documento(s) · '+itens+' item(ns)'; const tipoDoc=(d)=>String(d&&d.tipo_documento||'').toUpperCase();
     const porTipo={nfe:0,nfse:0,cte:0};
     (s.docs||[]).forEach(d=>{const t=tipoDoc(d);if(t.indexOf('NF-E')>-1||t.indexOf('NFE')>-1)porTipo.nfe++;else if(t.indexOf('NFS')>-1)porTipo.nfse++;else if(t.indexOf('CT-E')>-1||t.indexOf('CTE')>-1)porTipo.cte++;});
-    for(const k of ['nfe','nfse','cte','ibs','cnae','enquadramento','dashboard','consulta','documentos']) { const e=side.querySelector('[data-v123-count="'+k+'"]'); if(e)e.textContent=(k==='nfe'?porTipo.nfe:k==='nfse'?porTipo.nfse:k==='cte'?porTipo.cte:k==='ibs'?itens:0); }
+    for(const k of ['nfe','nfse','cte','ibs','cnae','enquadramento','dashboard','consulta','documentos']) { const e=side.querySelector('[data-v123-count="'+k+'"]'); if(e)e.textContent=(k==='nfe'?porTipo.nfe:k==='nfse'?porTipo.nfse:k==='cte'?porTipo.cte:k==='ibs'?(s.items||[]).filter(function(r){return !/NFS/i.test(String(r.tipo_documento||''))}).length:0); }
     };
     const antigo = window.atualizarBadgesTributos; if (typeof antigo === 'function') window.atualizarBadgesTributos = function(){ const r=antigo.apply(this,arguments); atualizar(); return r; };
     atualizar(); ativar('load');
