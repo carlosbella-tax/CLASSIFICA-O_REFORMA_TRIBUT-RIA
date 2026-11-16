@@ -1,5 +1,5 @@
 {
-  "versao": 242,
+  "versao": 245,
   "data": "2026-11-16",
-  "descricao": "Fluxo de carga: tipo de documento automatico ao arrastar/selecionar, botao Voltar ao lado de Processar, permanece na aba de carga e preenche emitente/tomador apos processar"
+  "descricao": "Preenchimento emitente/tomador com os campos corretos do parser (emitente_razao_social etc.)"
 }

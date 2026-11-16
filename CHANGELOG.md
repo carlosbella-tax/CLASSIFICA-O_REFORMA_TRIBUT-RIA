@@ -5,6 +5,18 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V245 — 2026-11-16
+
+- Preenchimento emitente/tomador com os campos corretos do parser (emitente_razao_social etc.)
+
+## V244 — 2026-11-16
+
+- Preenchimento emitente/tomador corrigido para os campos reais do parser (emitente_razao_social, destinatario_municipio)
+
+## V243 — 2026-11-16
+
+- Fluxo de carga corrigido: permanece na carga apos processar (bug da variavel local), abre a aba do tipo do documento ao arrastar/selecionar
+
 ## V242 — 2026-11-16
 
 - Fluxo de carga: tipo de documento automatico ao arrastar/selecionar, botao Voltar ao lado de Processar, permanece na aba de carga e preenche emitente/tomador apos processar
