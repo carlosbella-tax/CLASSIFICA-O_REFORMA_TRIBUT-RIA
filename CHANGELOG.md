@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V241 — 2026-11-16
+
+- Impressao PDF: tamanho das letras reduzido em 30 por cento
+
 ## V240 — 2026-11-16
 
 - Campo CNAEs da empresa dentro do painel Carregar XML/PDF (id legado cnaesEmpresa preservado para o motor)

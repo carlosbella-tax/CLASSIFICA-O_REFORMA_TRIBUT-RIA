@@ -1,5 +1,5 @@
 {
-  "versao": 240,
+  "versao": 241,
   "data": "2026-11-16",
-  "descricao": "Campo CNAEs da empresa dentro do painel Carregar XML/PDF (id legado cnaesEmpresa preservado para o motor)"
+  "descricao": "Impressao PDF: tamanho das letras reduzido em 30 por cento"
 }
