@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V249 — 2026-11-16
+
+- Arrastar e soltar reforçado: drop na área ou em qualquer ponto da tela sempre carrega e mantém na aba Carregar XML/PDF
+
 ## V248 — 2026-11-16
 
 - Aba NFS-e: documentos de servico nao aparecem mais na NF-e; campo para informar NBS com correlacao do servico (Anexo VIII LC 214/2025)
