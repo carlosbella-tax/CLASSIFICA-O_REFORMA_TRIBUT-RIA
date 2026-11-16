@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V248 — 2026-11-16
+
+- Aba NFS-e: documentos de servico nao aparecem mais na NF-e; campo para informar NBS com correlacao do servico (Anexo VIII LC 214/2025)
+
 ## V247 — 2026-11-16
 
 - Badges do menu contam documentos por tipo (NF-e, NFS-e, CT-e)
