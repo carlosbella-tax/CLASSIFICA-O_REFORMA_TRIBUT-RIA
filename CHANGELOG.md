@@ -5,6 +5,17 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V252 — 2026-11-17
+
+- Removida a coluna Validação do Enquadramento recomendado; avisos de hipótese/condição permanecem no Tratamento IBS/CBS.
+- Após Tratamento IBS/CBS: alíquotas-base de IBS Municipal, IBS Estadual e CBS, obtidas do cronograma editável no ano selecionado, também nos quadros de serviços/CFOP.
+- Redução comum exibida uma única vez. Alíquota final apresenta base menos desconto proporcional em p.p. e resultado, sem alterar impostos originais da nota. Hipóteses ambíguas, reduções divergentes e regimes não calculáveis permanecem em revisão.
+- Anexo da LC 214/2025 e Base legal por hipótese: vínculo/NomeClassTrib documental, descrição aplicável e link direto ao artigo. A planilha de correlação NBS não atribui automaticamente o Anexo VIII da lei. Âncoras oficiais dos arts. 4º, 125, 136 e 142 verificadas no Planalto.
+- Troca de ano, edição local e restauração do cronograma atualizam os quadros. Mantidos isolamento por documento e prioridade dos dados da NFS-e.
+- Cobertura focada V252: colunas, reduções de 0%, 60% e 100%, taxa municipal zero, ano/parâmetros editáveis, anexos/artigos, hipóteses, ausência de identificação e preservação de dados.
+- Corrigida a atualização visual quando o cabeçalho legado intercepta a troca de ano: sincronização após o render adiado, sem sobrescrever parâmetros salvos.
+- Validação consolidada: 397 verificações gerais (359 regras aprovadas na execução integral e 38 verificações estáticas/funcionais na retomada da expectativa V180), 17 testes V251 e 28 testes V252; Chromium sem erros, NBS/exportação preservadas e ano 2029 atualizado. Apenas o snapshot de Observações mudou; 105 itens e 111 linhas agregadas preservados.
+
 ## V251 — 2026-11-17
 
 - NFS-e: a NBS consultada é gravada também em dados_nfse, refletindo na análise e exportação da nota; não substitui NBS já informada nem aplica a serviços incompatíveis.

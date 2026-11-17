@@ -1,5 +1,5 @@
 {
-  "versao": 251,
+  "versao": 252,
   "arquivos": [
     "35260243061654000480550010000929731211237179.XML",
     "CTEOS_simples_transporte_pessoas.xml",
@@ -99,8 +99,8 @@
       "incorreto": 0
     },
     "observacoes": {
-      "sha": "e0771d041823ae2c",
-      "caracteres": 17838,
+      "sha": "5b140dbc6d328620",
+      "caracteres": 78795,
       "linhas_tabela": 111,
       "validado": 0,
       "nao_validado": 0,

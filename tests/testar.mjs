@@ -183,8 +183,19 @@ if (abaEnquadramento) {
   await esperar(30);
   const quadroEnquadramento = w.document.querySelector('#observacoes .v180-enquadramento');
   const colunasEnquadramento = [...(quadroEnquadramento?.querySelectorAll('th') || [])].map(x => x.textContent.trim()).join(' | ');
-  quadroEnquadramento?.querySelectorAll('tbody tr').length > 0 && colunasEnquadramento.includes('CST recomendada') && colunasEnquadramento.includes('cClassTrib recomendada') && colunasEnquadramento.includes('Alíquota final IBS') && colunasEnquadramento.includes('Alíquota final CBS') && quadroEnquadramento.textContent.includes('REVISÃO NECESSÁRIA') && quadroEnquadramento.querySelector('a[href*="planalto.gov.br"]')
-    ? passou('enquadramento lista cada item com NCM/NBS, referências IBS/CBS, redução e link legal')
+  /* V252 — Valida a nova apresentação sem exigir links genéricos para NCM sem vínculo documental. */
+  const linksEnquadramento = [...(quadroEnquadramento?.querySelectorAll('a[href*="planalto.gov.br"]') || [])];
+  const formatoEnquadramento = versao >= 252
+    ? ['Alíquota de IBS Municipal', 'Alíquota de IBS Estadual', 'Alíquota de CBS', 'Redução IBS / CBS', 'Alíquota final IBS / CBS', 'Anexo da LC 214/2025', 'Base legal'].every(x => colunasEnquadramento.includes(x)) && !colunasEnquadramento.includes('Validação')
+    : colunasEnquadramento.includes('Alíquota final IBS') && colunasEnquadramento.includes('Alíquota final CBS');
+  const revisaoEnquadramento = versao >= 252
+    ? /ANÁLISE NECESSÁRIA|REVISÃO NECESSÁRIA|REFERÊNCIA DOCUMENTAL/.test(quadroEnquadramento?.textContent || '')
+    : quadroEnquadramento?.textContent.includes('REVISÃO NECESSÁRIA');
+  const legislacaoEnquadramento = versao >= 252
+    ? linksEnquadramento.every(x => /^https:\/\/www\.planalto\.gov\.br\/.*\/lcp214\.htm#art\d+[a-z]?$/i.test(x.href)) && (linksEnquadramento.length > 0 || quadroEnquadramento?.textContent.includes('Base legal não documentada — confirmar o enquadramento'))
+    : linksEnquadramento.length > 0;
+  quadroEnquadramento?.querySelectorAll('.v180-scroll tbody tr').length === atual.contagens.itens && atual.contagens.itens > 0 && colunasEnquadramento.includes('CST recomendada') && colunasEnquadramento.includes('cClassTrib recomendada') && formatoEnquadramento && revisaoEnquadramento && legislacaoEnquadramento
+    ? passou('enquadramento lista cada item com NCM/NBS, referências IBS/CBS, redução e base legal documental')
     : falhou('enquadramento não exibiu as colunas por item, a revisão documental ou a referência legal esperadas');
 } else falhou('aba de enquadramento recomendado não foi encontrada');
 

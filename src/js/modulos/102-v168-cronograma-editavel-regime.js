@@ -27,10 +27,12 @@
   const atualizarCabecalho=e=>{if(e.target?.id==='regimeEmpresa'||e.target?.id==='anoPeriodo')render()};
   document.addEventListener('change',atualizarCabecalho); window.addEventListener('change',atualizarCabecalho);
   // Mantém o quadro sincronizado se outra rotina reconstruir o select do cabeçalho.
-  let ultimoCabecalho=''; setInterval(()=>{const atual=[document.getElementById('regimeEmpresa')?.value||'',document.getElementById('anoPeriodo')?.value||''].join('|');if(atual!==ultimoCabecalho){ultimoCabecalho=atual;render()}},250);
+  let ultimoCabecalho=''; setInterval(()=>{const atual=[document.getElementById('regimeEmpresa')?.value||'',document.getElementById('anoPeriodo')?.value||''].join('|');if(atual!==ultimoCabecalho){ultimoCabecalho=atual;render();window.classificadorV252AtualizarCronograma?.()}},250);
   const observer=new MutationObserver(()=>{if(document.getElementById('v124-metodologia')){observer.disconnect();render()}});observer.observe(document.body,{childList:true,subtree:true});
   render();
   const side=document.getElementById('v123-sidebar');const link=side?.querySelector('[data-v124-view="metodologia"]');if(link)link.innerHTML='Ver cronograma de alíquotas <small>i</small>';
   /* V216 — Expõe o cronograma também ao campo destacado junto aos dados e ações da empresa. */
   window.classificadorAbrirCronograma=()=>link?.click();
+  /* V252 — Leitura dos parâmetros editáveis no ano selecionado, sem alterar impostos da nota. */
+  window.classificadorAliquotasCronograma=()=>({ano:anoAtual(),ibsMunicipal:valor('IBS Municipal (%)'),ibsEstadual:valor('IBS Estadual (%)'),cbs:valor('CBS (%)')});
 })();
