@@ -1,0 +1,16 @@
+{
+  "arquivo": "v89-nfse-abrasf.xml",
+  "funcao": "(() => {const n=window.classificadorV248AplicarNbsAsItens('1.0608.40.00',window.classificadorV248BuscarCorrelacao('1.0608.40.00'));const r=state.items.find(x=>x.dados_nfse);return [{numero_item:'1',aplicados:n,nbs:r.dados_nfse.nbs,nbs_exportada:linhasIss()[0].nbs,codigo:r.dados_nfse.codigo_servico,cfop_nao_usado:window.classificadorV251DadosServico(r).tipo}];})",
+  "linhas": [
+    {
+      "numero_item": "1",
+      "esperado": {
+        "aplicados": 1,
+        "nbs": "1.0608.40.00",
+        "nbs_exportada": "1.0608.40.00",
+        "codigo": "17.01 / 170100",
+        "cfop_nao_usado": "SERVIÇO"
+      }
+    }
+  ]
+}

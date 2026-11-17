@@ -5,6 +5,15 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V251 — 2026-11-17
+
+- NFS-e: a NBS consultada é gravada também em dados_nfse, refletindo na análise e exportação da nota; não substitui NBS já informada nem aplica a serviços incompatíveis.
+- Enquadramento e quadro da operação usam código de serviço da nota; sem código, mostram as hipóteses da correlação NBS, sem escolher arbitrariamente entre múltiplos serviços/NBS.
+- Regras IBS/CBS, CST, cClassTrib, reduções, incidência, INDOP e legislação vêm das bases documentais anexadas. Alíquotas finais somente em hipótese única calculável; impostos originais não são alterados.
+- CFOPs permanecem exclusivos dos demais documentos, inclusive em cargas mistas. Corrigido o tratamento de itens sem NCM/NBS/serviço.
+- Reconsulta de NBS já informada preserva a nota e abre o Enquadramento recomendado. Título do navegador sincronizado com a versão 251.
+- Validação: 397 verificações gerais e 17 testes específicos, além do fluxo completo em Chromium; novo caso ABRASF confere a NBS nos dados e na exportação.
+
 ## V250 — 2026-11-16
 
 - Isolamento total por tipo: NFS-e nao vaza para Base de IBS/CBS, ICMS ST, IPI nem Dashboard fiscal; NF-e nao vaza para NFS-e

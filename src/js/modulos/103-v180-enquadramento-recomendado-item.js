@@ -19,7 +19,9 @@
   }
   function dadosItem(r){
     const id=identificar(r),descricao=r.descricao_item||r.descricao_produto||r.descricao_servico||r.xProd||r.discriminacao||'Descrição não informada';
-    if(!id)return {codigoProduto:r.codigo_produto||r.cProd||'—',descricao,tipo:'—',codigo:'—',status:'ANÁLISE NECESSÁRIA',mensagem:'O item não informa NCM ou NBS para consulta documental.'};
+    /* V251 — Serviço usa dados_nfse da nota e regras documentadas, sem CFOP. */
+    if(window.classificadorV251EhNfse?.(r))return window.classificadorV251DadosServico(r);
+    if(!id)return {codigoProduto:r.codigo_produto||r.cProd||'—',descricao,tipo:'—',codigo:'—',status:'ANÁLISE NECESSÁRIA',mensagem:'O item não informa NCM, NBS ou código de serviço para consulta documental.'};
     const todos=typeof window.classificadorReferenciaPortal==='function'?window.classificadorReferenciaPortal(id.tipo,id.codigo):[];
     const ativos=todos.filter(x=>vigente(x.vinculo)&&vigente(x.classificacao)&&vigente(x.cst)&&x.vinculo?.TipoPermissao!=='VEDADO');
     if(ativos.length!==1)return {codigoProduto:r.codigo_produto||r.cProd||'—',descricao,tipo:id.tipo,codigo:id.codigo,status:ativos.length?'REVISÃO NECESSÁRIA':'ANÁLISE NECESSÁRIA',mensagem:ativos.length?'Há mais de uma hipótese aplicável; o enquadramento não foi selecionado automaticamente.':'Não foi localizado vínculo documental aplicável na base consultada.'};

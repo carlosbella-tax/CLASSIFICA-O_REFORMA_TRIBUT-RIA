@@ -1,5 +1,5 @@
 {
-  "versao": 250,
-  "data": "2026-11-16",
-  "descricao": "Isolamento total por tipo: NFS-e nao vaza para Base de IBS/CBS, ICMS ST, IPI nem Dashboard fiscal; NF-e nao vaza para NFS-e"
+  "versao": 251,
+  "data": "2026-11-17",
+  "descricao": "Enquadramento recomendado para NFS-e: consulta por Codigo do Servico (da nota ou da correlacao NBS) e regras IBS/CBS do Anexo VIII"
 }

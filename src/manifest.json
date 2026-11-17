@@ -148,6 +148,7 @@
     "src/js/modulos/121-v242-fluxo-carga-automatico.js",
     "src/js/dados/anexo-viii-correlacao-nbs.js",
     "src/js/modulos/122-v248-nbs-correlacao-nfse.js",
+    "src/js/modulos/123-v251-nfse-enquadramento-servico.js",
     "src/js/modulos/123-v249-drop-reforcado.js",
     "src/js/modulos/99-fechamento.js",
     "src/90-rodape.html"

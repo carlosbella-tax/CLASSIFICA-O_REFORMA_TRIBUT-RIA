@@ -11,7 +11,7 @@
   }
   function resumir(){
     const mapa=new Map;
-    (state.items||[]).forEach(r=>{
+    (state.items||[]).filter(r=>!window.classificadorV251EhNfse?.(r)).forEach(r=>{
       const cfop=String(r.cfop||r.cfop_xml||'Sem CFOP'),operacao=typeof tipoOperacao==='function'?tipoOperacao(r):'';
       const chave=cfop+'|'+operacao,atual=mapa.get(chave)||{cfop,operacao,descricao:r.descricao_cfop||window.cfopDesc?.(cfop)||'Descrição do CFOP não localizada',itens:0,csts:new Set,classes:new Set};
       atual.itens++;const ref=itemRef(r),v=ref?.vinculo||{},cl=ref?.classificacao||{};
@@ -28,9 +28,11 @@
   function valores(set){return set.size===1?[...set][0]:set.size?'Conforme item / revisão necessária':'Sem referência única';}
   function quadro(){
     const destino=document.querySelector('#observacoes .v180-enquadramento');if(!destino)return;
-    destino.querySelector('.v181-cfop')?.remove();const lista=resumir();
+    /* V251 — NFS-e é segregada do quadro CFOP, inclusive em carga mista. */
+    destino.querySelectorAll('.v181-cfop').forEach(x=>x.remove());const lista=resumir(),servicos=(state.items||[]).filter(r=>window.classificadorV251EhNfse?.(r));
     const linhas=lista.map(x=>{const n=natureza(x);return '<tr><td><b>'+esc(x.cfop)+'</b></td><td>'+esc(x.descricao)+'</td><td>'+esc(n.mov)+'</td><td><b>'+esc(n.efeito)+'</b><small>'+esc(n.nota)+'</small></td><td>'+esc(valores(x.csts))+'</td><td>'+esc(valores(x.classes))+'</td><td>'+x.itens+'</td></tr>';}).join('');
-    const sec=document.createElement('section');sec.className='v181-cfop';sec.innerHTML='<h3>CFOPs da operação — referência de crédito e débito de IBS/CBS</h3><p class="subtle">CFOPs identificados nos documentos carregados, descritos segundo a operação. A indicação abaixo é uma referência analítica: o CFOP não define isoladamente crédito, débito, CST ou cClassTrib.</p>'+(lista.length?'<div class="v181-scroll"><table><thead><tr><th>CFOP</th><th>Descrição da operação</th><th>Movimentação</th><th>Tratamento IBS/CBS</th><th>CST recomendada</th><th>cClassTrib recomendada</th><th>Itens</th></tr></thead><tbody>'+linhas+'</tbody></table></div>':'<p class="hint">Carregue e processe XMLs para relacionar os CFOPs da operação.</p>');destino.appendChild(sec);
+    if(lista.length||!servicos.length){const sec=document.createElement('section');sec.className='v181-cfop';sec.innerHTML='<h3>CFOPs da operação — referência de crédito e débito de IBS/CBS</h3><p class="subtle">CFOPs identificados nos documentos carregados, descritos segundo a operação. A indicação abaixo é uma referência analítica: o CFOP não define isoladamente crédito, débito, CST ou cClassTrib.</p>'+(lista.length?'<div class="v181-scroll"><table><thead><tr><th>CFOP</th><th>Descrição da operação</th><th>Movimentação</th><th>Tratamento IBS/CBS</th><th>CST recomendada</th><th>cClassTrib recomendada</th><th>Itens</th></tr></thead><tbody>'+linhas+'</tbody></table></div>':'<p class="hint">Carregue e processe XMLs para relacionar os CFOPs da operação.</p>');destino.appendChild(sec);}
+    if(servicos.length)destino.appendChild(window.classificadorV251QuadroServicos(servicos));
   }
   const css=document.createElement('style');css.textContent='.v181-cfop{margin-top:20px;padding-top:17px;border-top:2px solid #d6e1e9}.v181-cfop h3{margin:0 0 6px;color:#123d60}.v181-scroll{overflow:auto;border:1px solid #c5d3df;border-radius:8px}.v181-scroll table{width:100%;min-width:1100px;border-collapse:collapse;font-size:12px}.v181-scroll th,.v181-scroll td{padding:9px 10px;border:1px solid #d7e1e8;text-align:left;vertical-align:top;color:#172a39}.v181-scroll th{background:#315f82;color:#fff;white-space:nowrap}.v181-scroll td small{display:block;margin-top:5px;min-width:290px;color:#536879;line-height:1.35}.v181-scroll td:nth-child(1),.v181-scroll td:nth-child(3),.v181-scroll td:nth-child(n+5){white-space:nowrap}';document.head.appendChild(css);
   document.querySelector('.tab[data-tab="observacoes"]')?.addEventListener('click',()=>setTimeout(quadro,20));

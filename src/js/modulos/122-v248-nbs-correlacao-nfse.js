@@ -1,5 +1,6 @@
-/* V248 — Aba NFS-e: quando o documento fiscal não tem NBS, campo para digitar a NBS; ao informar,
-   carrega a regra da NBS com a correlação do serviço (Anexo VIII — LC 214/2025). */
+/* V248/V251 — Aba NFS-e: quando o documento fiscal não tem NBS, campo para digitar a NBS; ao informar,
+   carrega a regra da NBS com a correlação do serviço (Anexo VIII — LC 214/2025), grava a NBS e o código
+   do serviço nos dados da análise da nota e segue para a aba Enquadramento recomendado. */
 (function(){
   const issPanel=document.getElementById('iss');
   if(!issPanel)return;
@@ -18,9 +19,9 @@
     .v248-nbs-resultado .v248-nbs-cod{font-weight:800;color:#0e5b91;white-space:nowrap}
     .v248-nbs-aviso{margin-top:8px;padding:8px 10px;border-radius:6px;background:#fff5df;color:#6f4a05;font-size:12px;font-weight:600}
     .v248-nbs-vazio{margin-top:8px;color:#76500a;font-weight:700;font-size:12px}
+    .v248-nbs-ok{margin-top:8px;padding:8px 10px;border-radius:6px;background:#e8f6ed;color:#17683a;font-size:12px;font-weight:700}
   `;document.head.appendChild(css);
 
-  /* O painel de NBS é injetado dentro da aba iss sempre que um resultado NFS-e é renderizado. */
   let montado=false;
   const garantirPainel=function(){
     if(montado&&document.getElementById('v248-nbs-box'))return;
@@ -28,60 +29,79 @@
     if(!box){
       box=document.createElement('div');box.className='v248-nbs-box';box.id='v248-nbs-box';
       box.innerHTML='<h3>Correlação NBS × Serviço — LC 214/2025 (Anexo VIII)</h3>'+
-        '<p style="margin:0 0 8px;color:#4c6272;font-size:12px">Se a NFS-e não trouxer a NBS, informe o código abaixo para carregar a regra tributária do serviço.</p>'+
+        '<p style="margin:0 0 8px;color:#4c6272;font-size:12px">Se a NFS-e não trouxer a NBS, informe o código abaixo para carregar a regra tributária do serviço e aplicá-la aos itens da nota.</p>'+
         '<div class="v248-nbs-input"><input id="v248-nbs-campo" placeholder="Ex.: 1.1502.20.00 ou 01.06" inputmode="text"><button type="button" id="v248-nbs-buscar">Consultar regra</button></div>'+
         '<div class="v248-nbs-resultado" id="v248-nbs-resultado" hidden></div>';
-      const alvo=issPanel.querySelector('#v153-result')||issPanel;
-      alvo.insertAdjacentElement(issoAlvo(alvo),box);
+      const alvo=document.getElementById('v153-result');
+      if(alvo&&issPanel.contains(alvo))alvo.insertAdjacentElement('beforebegin',box);else issPanel.insertAdjacentElement('afterbegin',box);
     }
     montado=true;
   };
-  const issoAlvo=function(alvo){return alvo.id==='v153-result'?'beforebegin':'afterbegin'};
 
+  const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const normalizar=function(v){return String(v||'').replace(/\D/g,'')};
-  const formatarNbs=function(d){const d8=d.padStart(9,'0');return d8.slice(0,1)+'.'+d8.slice(1,5)+'.'+d8.slice(5,7)+'.'+d8.slice(7)};
+
+  /* busca na base: NBS completa, prefixo, ou código de serviço da LC 116 */
+  window.classificadorV248BuscarCorrelacao=function(bruto){
+    const digitos=normalizar(bruto);
+    let itens=[];
+    if(digitos.length>=7){
+      itens=base.filter(x=>normalizar(x.nbs)===digitos);
+      if(!itens.length)itens=base.filter(x=>normalizar(x.nbs).startsWith(digitos.slice(0,7)));
+    }
+    if(!itens.length)itens=base.filter(x=>normalizar(x.codigo)===digitos||x.codigo.replace(/\D/g,'')===digitos);
+    if(!itens.length&&bruto&&bruto.length<=6)itens=base.filter(x=>x.codigo===bruto.trim());
+    const vistos=new Set,unicos=[];
+    itens.forEach(x=>{const k=normalizar(x.nbs)+'|'+x.cClassTrib;if(!vistos.has(k)){vistos.add(k);unicos.push(x)}});
+    return unicos;
+  };
+
+  /* grava a NBS e o código do serviço nos itens NFS-e carregados (dados da análise da nota) */
+  window.classificadorV248AplicarNbsAsItens=function(bruto,correlacoes){
+    return window.classificadorV251AplicarConsulta?.(bruto,correlacoes)||0;
+  };
 
   const buscar=function(){
     const campo=document.getElementById('v248-nbs-campo'),saida=document.getElementById('v248-nbs-resultado');
     if(!campo||!saida)return;
     const bruto=campo.value.trim();
     if(!bruto){saida.hidden=false;saida.innerHTML='<div class="v248-nbs-vazio">Informe a NBS ou o código do serviço.</div>';return}
-    const digitos=normalizar(bruto);
-    let itens=[];
-    /* busca pela NBS completa (9 dígitos), prefixo, ou código de serviço da LC 116 */
-    if(digitos.length>=7){
-      itens=base.filter(x=>normalizar(x.nbs)===digitos);
-      if(!itens.length)itens=base.filter(x=>normalizar(x.nbs).startsWith(digitos.slice(0,7)));
-    }
-    if(!itens.length){
-      itens=base.filter(x=>normalizar(x.codigo)===digitos||x.codigo.replace(/\D/g,'')===digitos);
-    }
-    if(!itens.length&&bruto.length<=6){
-      itens=base.filter(x=>x.codigo===bruto);
-    }
-    if(!itens.length){
+    const unicos=window.classificadorV248BuscarCorrelacao(bruto);
+    if(!unicos.length){
       saida.hidden=false;
       saida.innerHTML='<div class="v248-nbs-aviso">Nenhuma correlação encontrada para <b>'+esc(bruto)+'</b> no Anexo VIII. Confirme o código na tabela oficial da LC 214/2025.</div>';
       return;
     }
-    /* deduplicar por nbs+cClassTrib */
-    const vistos=new Set,unicos=[];
-    itens.forEach(x=>{const k=normalizar(x.nbs)+'|'+x.cClassTrib;if(!vistos.has(k)){vistos.add(k);unicos.push(x)}});
     saida.hidden=false;
     saida.innerHTML='<table><thead><tr><th>NBS</th><th>Descrição</th><th>Serviço (LC 116)</th><th>Local de incidência</th><th>cClassTrib</th><th>Regra IBS/CBS</th></tr></thead><tbody>'+
       unicos.map(x=>'<tr><td class="v248-nbs-cod">'+esc(x.nbs)+'</td><td>'+esc(x.nbsDesc||'—')+'</td><td>'+esc(x.codigo)+' — '+esc(x.servico||'—')+'</td><td>'+esc(x.local||'—')+'</td><td class="v248-nbs-cod">'+esc(x.cClassTrib)+'</td><td>'+esc(x.cClassTribNome||'—')+'</td></tr>').join('')+
-      '</tbody></table>'+(unicos.some(x=>x.indop&&x.indop!=='NaN')?'<div class="v248-nbs-aviso">INDOP aplicável: '+esc([...new Set(unicos.map(x=>x.indop).filter(i=>i&&i!=='NaN'))].join(', '))+' — verifique o local da incidência (interno ou exterior).</div>':'');
+      '</tbody></table>'+(unicos.some(x=>x.indop&&x.indop!=='NaN')?'<div class="v248-nbs-aviso">INDOP aplicável: '+esc([...new Set(unicos.map(x=>x.indop).filter(i=>i&&i!=='NaN'))].join(', '))+' — verifique o local da incidência.</div>':'');
+    /* grava nos itens da nota e segue para o Enquadramento recomendado */
+    const aplicados=window.classificadorV248AplicarNbsAsItens(bruto,unicos);
+    const existentes=typeof state!=='undefined'?(state.items||[]).filter(r=>window.classificadorV251EhNfse?.(r)&&normalizar(r.dados_nfse?.nbs||r.nbs||r.codigo_nbs)===normalizar(bruto)).length:0;
+    if(aplicados||existentes){
+      const aviso=document.createElement('div');aviso.className='v248-nbs-ok';
+      aviso.textContent=(aplicados?'NBS '+unicos[0].nbs+' aplicada a '+aplicados+' item(ns) da nota. ':'NBS já informada na nota, preservada. ')+'Abrindo Enquadramento recomendado…';
+      saida.insertAdjacentElement('beforeend',aviso);
+      setTimeout(function(){
+        if(typeof window.renderAba==='function')window.renderAba('iss');
+        const tab=document.querySelector('.tab[data-tab="observacoes"]');
+        if(tab)tab.click();
+      },700);
+    }else{
+      const aviso=document.createElement('div');aviso.className='v248-nbs-aviso';
+      aviso.textContent='Nenhum item alterado: use uma NBS completa de 9 dígitos e confirme a compatibilidade com o código de serviço. NBS já informada é preservada; correlações ambíguas não são escolhidas automaticamente.';
+      saida.appendChild(aviso);
+    }
   };
 
   document.addEventListener('click',function(e){
-    if(e.target&&e.target.id==='v248-nbs-buscar'){buscar();return}
-    if(e.target&&e.target.id==='v248-nbs-campo'&&e.key==='Enter'){buscar()}
+    if(e.target&&e.target.id==='v248-nbs-buscar'){buscar()}
   });
   document.addEventListener('keydown',function(e){
     if(e.key==='Enter'&&e.target&&e.target.id==='v248-nbs-campo'){e.preventDefault();buscar()}
   });
 
-  /* o painel acompanha os resultados NFS-e: observa a aba iss */
   const obs=new MutationObserver(()=>{if(document.getElementById('iss').classList.contains('active'))garantirPainel()});
   obs.observe(issPanel,{childList:true,subtree:true});
   issPanel.addEventListener('click',garantirPainel);
