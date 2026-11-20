@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V256 — 2026-11-20
+
+- Apuracao assistida da CBS, etapas 1 e 2: apuracao previa por periodo e documento com os arquivos carregados e conciliacao com os JSON oficiais da Receita Federal (debitos, creditos, pagamentos e recolhimentos), com validacao de estrutura e exportacao em Excel
+
 ## V255 — 2026-11-20
 
 - Novo padrao visual institucional aprovado: menu lateral azul-marinho, cores do Motor, cartoes claros com borda fina, tabelas densas com numerais tabulares, valores a direita e opcao de linha compacta. Nenhuma alteracao de dados ou calculos
