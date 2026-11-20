@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V258 — 2026-11-20
+
+- Credito fixo do desenvolvedor (Carlos Bella, +55 11 99479-7347) no menu, na tela de acesso e na Administracao; sem tela ou permissao para alterar ou remover, e recolocado automaticamente se apagado
+
 ## V257 — 2026-11-20
 
 - Cadastro com liberacao do administrador: quem se cadastra sozinho fica pendente ate o administrador liberar na aba Administracao, com inicio e fim do acesso; usuario liberado tem acesso completo no periodo; administrador libera, altera o periodo ou bloqueia

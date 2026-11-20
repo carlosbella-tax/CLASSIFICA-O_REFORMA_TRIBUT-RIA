@@ -64,5 +64,5 @@ await teste('bloquear: grava inativo, mantém um período válido e a situação
 await teste('migration: cadastro próprio nasce inativo, sem blocos $$',()=>{const sql=fs.readFileSync(path.join(root,'supabase/migrations/20261120150000_signup_requires_admin_release.sql'),'utf8');
  assert.match(sql,/create or replace function public\.handle_new_user\(\)/);assert.match(sql,/''usuario'', false, current_date, current_date/);assert.doesNotMatch(sql,/\$\$/);
  const fn=fs.readFileSync(path.join(root,'supabase/functions/admin-users/index.ts'),'utf8');assert.match(fn,/active: true, blocked_at: null/);assert.match(fn,/body\.action === 'update'/)});
-await teste('build: selo e título V257',()=>{const dist=fs.readFileSync(path.join(root,'dist','index.html'),'utf8');assert.match(dist,/class="build">VERSÃO 257/);assert.match(dist,/<title>Auditoria Reforma Tributária — V257<\/title>/);assert.ok(dist.includes('classificadorV257'))});
+await teste('build: selo e título V257',()=>{const dist=fs.readFileSync(path.join(root,'dist','index.html'),'utf8');assert.match(dist,/class="build">VERSÃO \d+/);assert.match(dist,/<title>Auditoria Reforma Tributária — V\d+<\/title>/);assert.ok(dist.includes('classificadorV257'))});
 w.close();console.log(`${ok} testes focados V257 OK`);process.exit(0);
