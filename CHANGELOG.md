@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V257 — 2026-11-20
+
+- Cadastro com liberacao do administrador: quem se cadastra sozinho fica pendente ate o administrador liberar na aba Administracao, com inicio e fim do acesso; usuario liberado tem acesso completo no periodo; administrador libera, altera o periodo ou bloqueia
+
 ## V256 — 2026-11-20
 
 - Apuracao assistida da CBS, etapas 1 e 2: apuracao previa por periodo e documento com os arquivos carregados e conciliacao com os JSON oficiais da Receita Federal (debitos, creditos, pagamentos e recolhimentos), com validacao de estrutura e exportacao em Excel

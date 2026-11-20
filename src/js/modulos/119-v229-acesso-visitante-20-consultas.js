@@ -5,6 +5,9 @@
    - Cadastrado confirmado: acesso integral (sem limite).
    - Administrador (carlos.bella e quem ele convidar): aba Administração para cadastrar
      usuários e administradores (nome, e-mail, organização, papel e validade). */
+/* V257 — Cadastro com liberação do administrador: quem se cadastra sozinho fica pendente até o
+   administrador liberar na aba Administração (com início e fim do acesso). Usuário liberado e dentro
+   do período tem acesso completo; pendente, bloqueado ou vencido não entra. */
 (function(){
   const env=window.CLASSIFICADOR_ENV||{};
   const configurado=/^https:\/\/.+\.supabase\.co$/.test(env.supabaseUrl||'')&&!!env.supabaseAnonKey;
@@ -12,7 +15,7 @@
   if(!side||!top)return;
   const LIMITE_ANON=2,WHATS_ESPECIALISTA='https://wa.me/5511970749434?text='+encodeURIComponent('Olá! Gostaria de falar com um especialista da TaxAdvice sobre a Consulta NCM e NBS.');
   const CHAVE_ANON='v235-anonimo-uso';
-  let client=null,bypass=false,processando=false;
+  let client=null,bypass=false,processando=false,usuariosV257=[];
   const estado={modo:'nao_autenticado',usadas:0,restantes:LIMITE_ANON,email:'',nome:''};
 
   const css=document.createElement('style');css.id='v235-acesso-style';css.textContent=`
@@ -32,7 +35,7 @@
 
   /* V235 — Aba Administração (somente para admin_taxadvice). */
   const adminAba=document.createElement('section');adminAba.id='v235-admin-aba';adminAba.setAttribute('aria-label','Administração de usuários');adminAba.hidden=true;
-  adminAba.innerHTML=`<div class="v229-card" style="width:min(1200px,98vw);max-height:94vh;overflow-y:auto;padding:12px 14px"><div class="v229-brand">TaxAdvice</div><h2>Administração</h2><p>Cadastre usuários e administradores. Usuários têm acesso completo por período definido; administradores não expiram.</p><form id="v235-form" class="v235-admin-form"><div><label>Nome</label><input id="v235-nome" required></div><div><label>E-mail</label><input id="v235-email" type="email" required></div><div><label>Organização</label><select id="v235-org"><option>TaxAdvice</option></select></div><div><label>Papel</label><select id="v235-papel"><option value="usuario">Usuário</option><option value="admin_taxadvice">Administrador</option></select></div><div class="full"><label id="v235-validade-lb">Válido até (convidado: obrigatório)</label><input id="v235-valido" type="date" required></div><div class="full"><button class="v229-submit" type="submit" style="margin-top:6px">Salvar</button></div></form><p class="v229-message" id="v235-admin-message"></p><div id="v235-lista"></div><button class="v229-logout" type="button" id="v235-fechar-admin">Voltar</button></div>`;
+  adminAba.innerHTML=`<div class="v229-card" style="width:min(1200px,98vw);max-height:94vh;overflow-y:auto;padding:12px 14px"><div class="v229-brand">TaxAdvice</div><h2>Administração</h2><p>Cadastre usuários e administradores, e libere quem se cadastrou sozinho. Usuários têm acesso completo no período definido; administradores não expiram.</p><form id="v235-form" class="v235-admin-form"><div><label>Nome</label><input id="v235-nome" required></div><div><label>E-mail</label><input id="v235-email" type="email" required></div><div><label>Organização</label><select id="v235-org"><option>TaxAdvice</option></select></div><div><label>Papel</label><select id="v235-papel"><option value="usuario">Usuário</option><option value="admin_taxadvice">Administrador</option></select></div><div class="full"><label id="v235-validade-lb">Válido até (convidado: obrigatório)</label><input id="v235-valido" type="date" required></div><div class="full"><button class="v229-submit" type="submit" style="margin-top:6px">Salvar</button></div></form><p class="v229-message" id="v235-admin-message"></p><div id="v235-lista"></div><button class="v229-logout" type="button" id="v235-fechar-admin">Voltar</button></div>`;
   document.body.appendChild(adminAba);
   document.getElementById('v235-fechar-admin').onclick=()=>{adminAba.hidden=true};
 
@@ -44,22 +47,38 @@
   const permitido=menu=>menu.dataset.v123Key==='consulta'||menu.id==='v125-contact-link';
   const usoAnonimo=()=>{try{return JSON.parse(localStorage.getItem(CHAVE_ANON)||'{"n":0}')}catch(e){return {n:0}}};
   const registrarAnonimo=()=>{try{const u=usoAnonimo();localStorage.setItem(CHAVE_ANON,JSON.stringify({n:(u.n||0)+1}))}catch(e){}};
+  const pleno=()=>estado.modo==='admin'||estado.modo==='usuario';
+  const hojeIso=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+  const dataBr=v=>{const m=String(v||'').match(/^(\d{4})-(\d{2})-(\d{2})/);return m?m[3]+'/'+m[2]+'/'+m[1]:'—'};
+  const escV257=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const MSG_PENDENTE='Seu cadastro ainda não foi liberado pelo administrador, ou está bloqueado. Aguarde a liberação ou fale com a TaxAdvice.';
+  const MSG_VENCIDO='Seu período de acesso não está vigente. Peça ao administrador da TaxAdvice a liberação de um novo período.';
+  /* Situação do cadastro na lista do administrador. */
+  const situacaoV257=(u,hoje=hojeIso())=>{
+    if(u.role==='admin_taxadvice')return (u.active&&!u.blocked_at)?'Ativo':'Bloqueado';
+    if(u.blocked_at)return 'Bloqueado';
+    if(!u.active)return 'Pendente';
+    if(!u.valid_until||u.valid_until<hoje)return 'Vencido';
+    if(u.valid_from&&u.valid_from>hoje)return 'Agendado';
+    return 'Ativo';
+  };
   const atualizar=()=>{
     const anon=estado.modo==='nao_autenticado',visitante=estado.modo==='visitante';
-    menus().forEach(menu=>{const travado=estado.modo!=='admin'&&!permitido(menu);menu.classList.toggle('v229-locked',travado);menu.setAttribute('aria-disabled',String(travado));if('disabled' in menu)menu.disabled=false;menu.title=travado?'Acesso completo após entrar com cadastro':'';});
+    menus().forEach(menu=>{const travado=!pleno()&&!permitido(menu);menu.classList.toggle('v229-locked',travado);menu.setAttribute('aria-disabled',String(travado));if('disabled' in menu)menu.disabled=false;menu.title=travado?'Acesso completo após entrar com cadastro':'';});
     counter.hidden=estado.modo==='nao_autenticado';logout.hidden=counter.hidden;
     if(anon){counter.hidden=true}
     else if(visitante){counter.innerHTML='Consultas utilizadas: <b>'+estado.usadas+'/20</b><br>Restantes: <b>'+estado.restantes+'</b>'}
+    else if(estado.modo==='usuario'){counter.innerHTML='<b>Acesso completo</b><br>Liberado até '+dataBr(estado.validoAte)}
     else{counter.innerHTML='<b>Acesso administrativo</b><br>Consultas ilimitadas'}
     auth.hidden=estado.modo!=='nao_autenticado';
-    if((visitante||estado.modo==='admin')&&!window.v242ManterCargaAtiva)window.classificadorAbrirConsultaInicial?.();
+    if((visitante||pleno())&&!window.v242ManterCargaAtiva)window.classificadorAbrirConsultaInicial?.();
   };
-  const aplicar=(modo,dados={})=>{estado.modo=modo;estado.usadas=Number(dados.used??dados.usadas??0);estado.restantes=modo==='admin'?20:Number(dados.remaining??dados.restantes??Math.max(0,20-estado.usadas));estado.email=dados.email||estado.email;estado.nome=dados.nome||estado.nome;atualizar()};
+  const aplicar=(modo,dados={})=>{estado.modo=modo;estado.usadas=Number(dados.used??dados.usadas??0);estado.validoAte=dados.validoAte||'';estado.restantes=(modo==='admin'||modo==='usuario')?20:Number(dados.remaining??dados.restantes??Math.max(0,20-estado.usadas));estado.email=dados.email||estado.email;estado.nome=dados.nome||estado.nome;atualizar()};
   window.classificadorAplicarAcessoV229=aplicar;
   window.classificadorLimiteVisitante=20;
   window.classificadorLimiteAnonimoV235=LIMITE_ANON;
   window.classificadorWhatsEspecialistaV235=WHATS_ESPECIALISTA;
-  window.classificadorExibirLimiteEsgotado=(restrito=false)=>{document.getElementById('v229-limit-title').textContent=restrito?'Recurso restrito ao acesso completo':'Limite de consultas alcançado';document.getElementById('v229-limit-text').textContent=restrito?'Este recurso faz parte do acesso completo da TaxAdvice. Crie seu cadastro para liberar todos os menus.':'Suas 2 consultas sem cadastro foram utilizadas. Crie seu cadastro para acesso completo e ilimitado — ou, se já tiver conta, entre para ter 20 consultas vitalícias.';limite.classList.add('show')};
+  window.classificadorExibirLimiteEsgotado=(restrito=false)=>{document.getElementById('v229-limit-title').textContent=restrito?'Recurso restrito ao acesso completo':'Limite de consultas alcançado';document.getElementById('v229-limit-text').textContent=restrito?'Este recurso faz parte do acesso completo da TaxAdvice. Crie seu cadastro; o administrador libera o acesso completo.':'Suas 2 consultas sem cadastro foram utilizadas. Crie seu cadastro para acesso completo e ilimitado — ou, se já tiver conta, entre para ter 20 consultas vitalícias.';limite.classList.add('show')};
 
   const carregarSdk=()=>new Promise((resolve,reject)=>{if(window.supabase)return resolve(window.supabase);const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';s.onload=()=>window.supabase?resolve(window.supabase):reject(new Error('Não foi possível carregar a biblioteca de acesso.'));s.onerror=()=>reject(new Error('Não foi possível carregar a biblioteca de acesso.'));document.head.appendChild(s)});
   const conectar=async()=>{if(client)return client;if(!configurado)throw new Error('O serviço de cadastro ainda não está configurado nesta cópia.');const sdk=await carregarSdk();client=sdk.createClient(env.supabaseUrl,env.supabaseAnonKey,{auth:{detectSessionInUrl:true,persistSession:true,autoRefreshToken:true}});return client};
@@ -68,8 +87,19 @@
     const c=await conectar(),{data,error}=await c.functions.invoke('admin-users',{body:{action:'list'}});
     if(error)throw new Error(error.message);
     if(data?.error)throw new Error(data.error);
-    const users=data.users||[];
-    document.getElementById('v235-lista').innerHTML='<table class="v235-admin-list"><colgroup><col style="width:20%"><col style="width:32%"><col style="width:18%"><col style="width:17%"><col style="width:13%"></colgroup><thead><tr><th>Nome</th><th>E-mail</th><th>Papel</th><th>Válido até</th><th>Situação</th></tr></thead><tbody>'+users.map(u=>'<tr><td>'+String(u.full_name||'—')+'</td><td>'+String(u.email||'—')+'</td><td>'+(u.role==='admin_taxadvice'?'Administrador':'Usuário')+'</td><td>'+(u.valid_until||'—')+'</td><td>'+((u.active&&!u.blocked_at)?'Ativo':'Bloqueado')+'</td></tr>').join('')+'</tbody></table>';
+    const users=data.users||[],hoje=hojeIso(),fimPadrao=(()=>{const d=new Date();d.setDate(d.getDate()+30);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')})();
+    usuariosV257=users;
+    const ordem={Pendente:0,Vencido:1,Agendado:2,Ativo:3,Bloqueado:4};
+    const linhas=users.map(u=>({u,sit:situacaoV257(u,hoje)})).sort((x,y)=>ordem[x.sit]-ordem[y.sit]||String(x.u.full_name||'').localeCompare(String(y.u.full_name||'')));
+    const pendentes=linhas.filter(x=>x.sit==='Pendente').length;
+    document.getElementById('v235-lista').innerHTML=(pendentes?'<p class="v257-aviso"><b>'+pendentes+' cadastro(s) aguardando liberação.</b> Defina o período e clique em Liberar.</p>':'')
+      +'<table class="v235-admin-list v257-lista"><colgroup><col style="width:15%"><col style="width:22%"><col style="width:9%"><col style="width:9%"><col style="width:12%"><col style="width:12%"><col style="width:21%"></colgroup><thead><tr><th>Nome</th><th>E-mail</th><th>Papel</th><th>Situação</th><th>Início do acesso</th><th>Fim do acesso</th><th>Ação</th></tr></thead><tbody>'
+      +linhas.map(({u,sit})=>{
+        const adm=u.role==='admin_taxadvice',id=escV257(u.id);
+        const ini=adm?'—':'<input type="date" data-v257-inicio="'+id+'" value="'+escV257(sit==='Pendente'||sit==='Vencido'?hoje:(u.valid_from||hoje))+'">';
+        const fim=adm?'Não expira':'<input type="date" data-v257-fim="'+id+'" value="'+escV257(sit==='Pendente'||sit==='Vencido'?fimPadrao:(u.valid_until||fimPadrao))+'">';
+        const acoes=adm?'—':'<button type="button" data-v257-acao="liberar" data-v257-id="'+id+'">'+(sit==='Ativo'||sit==='Agendado'?'Salvar período':'Liberar')+'</button>'+(sit==='Bloqueado'?'':' <button type="button" class="v257-bloquear" data-v257-acao="bloquear" data-v257-id="'+id+'">Bloquear</button>');
+        return '<tr data-v257-sit="'+sit+'"><td title="'+escV257(u.full_name||'')+'">'+escV257(u.full_name||'—')+'</td><td title="'+escV257(u.email||'')+'">'+escV257(u.email||'—')+'</td><td>'+(adm?'Administrador':'Usuário')+'</td><td><span class="v257-sit v257-'+sit.toLowerCase()+'">'+sit+'</span></td><td>'+ini+'</td><td>'+fim+'</td><td>'+acoes+'</td></tr>'}).join('')+'</tbody></table>';
   };
   document.getElementById('v235-form').onsubmit=async e=>{
     e.preventDefault();const botao=e.submitter||e.currentTarget?.querySelector('[type=submit]')||e.target?.querySelector('[type=submit]');
@@ -87,17 +117,42 @@
     }catch(x){mensagemAdmin(x.message||'Não foi possível criar o convite.')}finally{botao.disabled=false}
   };
 
+  /* V257 — Liberar, alterar o período ou bloquear um cadastro (ação 'update' da função admin-users). */
+  document.getElementById('v235-lista').addEventListener('click',async e=>{
+    const b=e.target.closest('[data-v257-acao]');if(!b)return;
+    const u=usuariosV257.find(x=>x.id===b.dataset.v257Id);if(!u)return;
+    const liberar=b.dataset.v257Acao==='liberar';
+    const inicio=document.querySelector('[data-v257-inicio="'+u.id+'"]')?.value||'',fim=document.querySelector('[data-v257-fim="'+u.id+'"]')?.value||'';
+    try{
+      if(liberar&&(!inicio||!fim||inicio>fim))throw new Error('Informe o início e o fim do acesso; o fim não pode ser anterior ao início.');
+      if(liberar&&fim<hojeIso())throw new Error('O fim do acesso já passou. Escolha uma data a partir de hoje.');
+      if(!liberar&&!window.confirm('Bloquear o acesso de '+(u.full_name||u.email||'este usuário')+'?'))return;
+      b.disabled=true;mensagemAdmin(liberar?'Liberando acesso…':'Bloqueando acesso…',true);
+      const c=await conectar(),{data,error}=await c.functions.invoke('admin-users',{body:{action:'update',user_id:u.id,full_name:u.full_name||'',role:'usuario',organization_id:u.organization_id??null,
+        valid_from:liberar?inicio:(u.valid_from||hojeIso()),valid_until:liberar?fim:(u.valid_until&&u.valid_until>=(u.valid_from||'')?u.valid_until:(u.valid_from||hojeIso())),active:liberar}});
+      if(error)throw new Error(error.message);
+      if(data?.error)throw new Error(data.error);
+      await listarUsuarios();
+      mensagemAdmin(liberar?'Acesso liberado de '+dataBr(inicio)+' a '+dataBr(fim)+'.':'Acesso bloqueado.',true);
+    }catch(x){mensagemAdmin(x.message||'Não foi possível atualizar o cadastro.');b.disabled=false}
+  });
+
   const abrirAdmin=async()=>{adminAba.hidden=false;mensagemAdmin('');try{await listarUsuarios()}catch(x){mensagemAdmin(x.message||'Não foi possível listar os usuários.')}};
   window.classificadorAbrirAdministracaoV235=abrirAdmin;
 
   const iniciarUsuario=async usuario=>{
     if(!usuario?.email_confirmed_at){await client?.auth.signOut();aplicar('nao_autenticado');throw new Error('Confirme o e-mail recebido antes de entrar.')}
+    const recusar=async texto=>{await client?.auth.signOut();aplicar('nao_autenticado');throw new Error(texto)};
     const {data,error}=await client.rpc('visitor_consultation_status');
-    if(error)throw error;
+    if(error){if(/ACCESS_BLOCKED/.test(error.message||''))await recusar(MSG_PENDENTE);throw error}
     const s=data?.[0]||{};
     const email=usuario.email||'';
     const admin=email==='carlos.bella@taxadvice.com.br'||s.is_admin;
-    aplicar(admin?'admin':'visitante',{used:s.used,remaining:s.remaining,email,nome:usuario.user_metadata?.full_name||''});
+    /* V257 — usuário comum só entra com cadastro liberado e período vigente. */
+    let acesso=null;
+    if(!admin){try{const r=await client.rpc('classificador_access_status');if(!r.error)acesso=r.data?.[0]||null}catch(x){}}
+    if(!admin&&acesso&&!acesso.allowed)await recusar(acesso.blocked?MSG_PENDENTE:MSG_VENCIDO);
+    aplicar(admin?'admin':acesso?.allowed?'usuario':'visitante',{used:s.used,remaining:s.remaining,email,nome:usuario.user_metadata?.full_name||'',validoAte:acesso?.valid_until||''});
     document.getElementById('v235-admin-link')?.remove();
     if(admin){
       const botaoAdmin=document.createElement('button');botaoAdmin.id='v235-admin-link';botaoAdmin.className='v229-logout';botaoAdmin.type='button';botaoAdmin.textContent='Administração';
@@ -107,7 +162,7 @@
   };
 
   auth.querySelectorAll('[data-v229-tab]').forEach(botao=>botao.onclick=()=>{auth.querySelectorAll('[data-v229-tab]').forEach(x=>x.classList.toggle('active',x===botao));document.getElementById('v229-cadastro').hidden=botao.dataset.v229Tab!=='cadastro';document.getElementById('v229-entrar').hidden=botao.dataset.v229Tab!=='entrar';mensagem('')});
-  document.getElementById('v229-cadastro').onsubmit=async e=>{e.preventDefault();const botao=e.submitter||e.currentTarget?.querySelector('[type=submit]')||e.target?.querySelector('[type=submit]'),nome=document.getElementById('v229-nome').value.trim(),email=document.getElementById('v229-email').value.trim(),senha=document.getElementById('v229-senha').value;try{if(nome.length<2)throw new Error('Informe seu nome.');if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))throw new Error('Informe um e-mail válido.');if(senha.length<8)throw new Error('A senha deve ter pelo menos 8 caracteres.');botao.disabled=true;mensagem('Criando cadastro…',true);const c=await conectar(),{data,error}=await c.auth.signUp({email,password:senha,options:{data:{full_name:nome},emailRedirectTo:location.origin+location.pathname}});if(error)throw error;if(data.session){await c.auth.signOut();throw new Error('A confirmação de e-mail precisa ser ativada no Supabase antes da liberação pública.')}mensagem('Cadastro criado. Abra o e-mail de confirmação e depois entre com sua senha.',true)}catch(x){mensagem(x.message||'Não foi possível criar o cadastro.')}finally{botao.disabled=false}};
+  document.getElementById('v229-cadastro').onsubmit=async e=>{e.preventDefault();const botao=e.submitter||e.currentTarget?.querySelector('[type=submit]')||e.target?.querySelector('[type=submit]'),nome=document.getElementById('v229-nome').value.trim(),email=document.getElementById('v229-email').value.trim(),senha=document.getElementById('v229-senha').value;try{if(nome.length<2)throw new Error('Informe seu nome.');if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))throw new Error('Informe um e-mail válido.');if(senha.length<8)throw new Error('A senha deve ter pelo menos 8 caracteres.');botao.disabled=true;mensagem('Criando cadastro…',true);const c=await conectar(),{data,error}=await c.auth.signUp({email,password:senha,options:{data:{full_name:nome},emailRedirectTo:location.origin+location.pathname}});if(error)throw error;if(data.session){await c.auth.signOut();throw new Error('A confirmação de e-mail precisa ser ativada no Supabase antes da liberação pública.')}mensagem('Cadastro criado. Confirme o e-mail recebido e aguarde a liberação do administrador para entrar.',true)}catch(x){mensagem(x.message||'Não foi possível criar o cadastro.')}finally{botao.disabled=false}};
   document.getElementById('v229-entrar').onsubmit=async e=>{e.preventDefault();const botao=e.submitter||e.currentTarget?.querySelector('[type=submit]')||e.target?.querySelector('[type=submit]'),email=document.getElementById('v229-login-email').value.trim(),password=document.getElementById('v229-login-senha').value;try{botao.disabled=true;mensagem('Validando acesso…',true);const c=await conectar(),{data,error}=await c.auth.signInWithPassword({email,password});if(error)throw error;await iniciarUsuario(data.user)}catch(x){mensagem(x.message||'E-mail ou senha inválidos.')}finally{botao.disabled=false}};
   document.getElementById('v229-recuperar').onclick=async e=>{e.preventDefault();try{const email=document.getElementById('v229-login-email').value.trim();if(!email)throw new Error('Informe seu e-mail para recuperar a senha.');const c=await conectar(),{error}=await c.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});if(error)throw error;mensagem('Enviamos as instruções de recuperação para seu e-mail.',true)}catch(x){mensagem(x.message||'Não foi possível enviar a recuperação.')}};
   const mostrarNovaSenha=()=>{auth.hidden=false;auth.querySelector('.v229-tabs').hidden=true;document.getElementById('v229-cadastro').hidden=true;document.getElementById('v229-entrar').hidden=true;document.getElementById('v229-nova-senha').hidden=false};
@@ -118,10 +173,10 @@
   document.addEventListener('click',e=>{
     if(bypass)return;
     const menu=e.target.closest('#v123-sidebar .v123-link,#v140-audit-tool');
-    if(menu&&estado.modo!=='admin'&&!permitido(menu)){e.preventDefault();e.stopImmediatePropagation();window.classificadorExibirLimiteEsgotado(true);return}
+    if(menu&&!pleno()&&!permitido(menu)){e.preventDefault();e.stopImmediatePropagation();window.classificadorExibirLimiteEsgotado(true);return}
     const botao=e.target.closest('[data-v123-consulta]');
     if(!botao)return;
-    if(estado.modo==='admin')return;
+    if(pleno())return;
     const tipo=botao.dataset.v123Consulta,termo=document.getElementById('v123-'+tipo)?.value.trim();
     if(!termo)return;
     if(estado.modo==='nao_autenticado'){
@@ -137,6 +192,9 @@
     (async()=>{try{const c=await conectar(),{data,error}=await c.rpc('consume_visitor_consultation',{p_type:tipo,p_query_term:termo});if(error)throw error;const s=data?.[0];if(!s?.allowed){aplicar('visitante',{used:s?.used??20,remaining:0});window.classificadorExibirLimiteEsgotado();return}aplicar('visitante',{used:s.used,remaining:s.remaining});bypass=true;botao.click();bypass=false}catch(x){mensagem(x.message||'Não foi possível contabilizar a consulta.');auth.hidden=false}finally{bypass=false;processando=false;botao.disabled=false}})();
   },true);
 
+  const cssV257=document.createElement('style');cssV257.id='v257-liberacao-style';cssV257.textContent='.v257-lista td{white-space:normal}.v257-lista input[type=date]{width:100%;padding:3px 4px;border:1px solid #c5d3df;border-radius:4px;font:inherit;font-size:11px}.v257-lista button{padding:4px 8px;border:1px solid #2456C8;border-radius:4px;background:#2456C8;color:#fff;font:inherit;font-size:11px;font-weight:700;cursor:pointer}.v257-lista button.v257-bloquear{background:#fff;color:#B91C1C;border-color:#B91C1C}.v257-lista button:disabled{opacity:.5}.v257-sit{padding:2px 7px;border-radius:999px;font-weight:700;font-size:10px}.v257-pendente{background:#fff3da;color:#8a5a06}.v257-vencido,.v257-bloqueado{background:#fde3e3;color:#8c1f1f}.v257-ativo{background:#e2f4e2;color:#1c6b1c}.v257-agendado{background:#e6eefc;color:#1f3f8f}.v257-aviso{margin:8px 0 0;padding:7px 9px;border-radius:5px;background:#fff3da;color:#6b4705;font-size:12px}';
+  document.head.appendChild(cssV257);
+  window.classificadorV257={situacao:situacaoV257,dataBr,MSG_PENDENTE,MSG_VENCIDO};
   aplicar('nao_autenticado');
   if(!configurado){mensagem('Configure o Supabase para ativar cadastro, confirmação de e-mail e contagem segura.');return}
   conectar().then(async c=>{const {data}=await c.auth.getSession();if(data.session?.user)await iniciarUsuario(data.session.user);c.auth.onAuthStateChange((evento,sessao)=>{if(evento==='PASSWORD_RECOVERY')mostrarNovaSenha();else if(evento==='SIGNED_OUT')aplicar('nao_autenticado');else if(sessao?.user)setTimeout(()=>iniciarUsuario(sessao.user).catch(x=>mensagem(x.message)),0)})}).catch(x=>mensagem(x.message||'Não foi possível conectar ao serviço de acesso.'));
