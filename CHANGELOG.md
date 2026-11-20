@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V255 — 2026-11-20
+
+- Novo padrao visual institucional aprovado: menu lateral azul-marinho, cores do Motor, cartoes claros com borda fina, tabelas densas com numerais tabulares, valores a direita e opcao de linha compacta. Nenhuma alteracao de dados ou calculos
+
 ## V254 — 2026-11-20
 
 - Alinhamento com o Motor de Calculo: CBS de referencia de 11,30% de 2027 a 2033 (pacote publicado no Motor em 29/10/2026) e 539 NCMs com anexos diferentes entre Motor e Classificador exibidos com os dois enquadramentos, revisao obrigatoria e sem reducao aplicada

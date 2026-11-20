@@ -35,5 +35,5 @@ await teste('NCM sem divergência mantém o enquadramento e a redução da V252'
  const e=w.v253Efeito('NCM','34011190');assert.equal(e.ref.reducao,60);assert.equal(e.revisao,false)});
 await teste('painel V253: NCM divergente fica em revisão, com os dois anexos e alíquota cheia',()=>{const e=w.v253Efeito('NCM','30021211');assert.equal(e.revisao,true);assert.equal(e.ref.reducao,null);assert.match(e.ref.anexo,/Motor: Anexo XIV/);assert.match(e.texto,/revisão obrigatória, sem redução aplicada/)});
 await teste('NFS-e não é afetada pela base de NCM',()=>{const r={tipo_documento:'NFS-e',ncm:'30021211',dados_nfse:{codigo_servico:'01.01'}};assert.equal(dados(r).divergenciaMotor,undefined)});
-await teste('build: selo e módulo V254 presentes',()=>{const dist=fs.readFileSync(path.join(root,'dist','index.html'),'utf8');assert.match(dist,/class="build">VERSÃO 254/);assert.match(dist,/V254_CARREGADO/);assert.match(dist,/<title>Auditoria Reforma Tributária — V254<\/title>/)});
+await teste('build: selo e módulo V254 presentes',()=>{const dist=fs.readFileSync(path.join(root,'dist','index.html'),'utf8');assert.match(dist,/class="build">VERSÃO \d+/);assert.match(dist,/V254_CARREGADO/);assert.match(dist,/<title>Auditoria Reforma Tributária — V\d+<\/title>/)});
 w.close();console.log(`${ok} testes focados V254 OK`);
