@@ -31,7 +31,9 @@
     const desconto=aliquota*reducao/100,valor=aliquota-desconto;
     return {valor,texto:reducao>0?pct(aliquota)+' − '+fmt(desconto)+' p.p. (redução '+pct(reducao)+') = '+pct(valor):pct(valor)+' (sem redução)'};
   }
-  function dados(r){
+  /* V254 — NCM com anexos diferentes no Motor e no Classificador: exibe os dois e exige revisão, sem redução. */
+  function dados(r){const d=dadosBase(r);return typeof window.classificadorV254Divergencia==='function'?window.classificadorV254Divergencia(r,d):d}
+  function dadosBase(r){
     r=r||{};const d=window.classificadorDadosEnquadramento(r),refs=referencias(r,d),aliquotas=parametros();
     /* A apresentação não conserva a mensagem fixa de 2026 quando o ano é alterado. */
     d.mensagem=String(d.mensagem||'').replace(/ Parâmetros de 2026:.*$/,'')+' Alíquotas-base do cronograma de '+aliquotas.ano+'; não equivalem aos impostos da nota.';
@@ -54,7 +56,7 @@
   window.classificadorV252CelulasAliquotas=()=>taxas(parametros());
   const tratamento=d=>'<td><b>'+esc(d.status)+'</b><small>'+esc(d.mensagem)+'</small></td>';
   const calculos=d=>'<td class="v252-efetivas">'+[['IBS Municipal','ibsMunicipal'],['IBS Estadual','ibsEstadual'],['CBS','cbs']].map(([nome,k])=>'<div><b>'+nome+':</b> '+esc(d.efetivas[k].texto)+'</div>').join('')+'</td>';
-  const anexos=d=>'<td class="v252-anexos">'+(d.legais.length?[...new Set(d.legais.map(x=>x.anexo+' · cClassTrib '+x.classe))].map(esc).join('<br>'):'Anexo não identificado — confirmar NCM/NBS')+'</td>';
+  const anexos=d=>'<td class="v252-anexos">'+(d.legais.length?[...new Set(d.legais.map(x=>x.anexo+' · cClassTrib '+x.classe))].map(esc).join('<br>'):'Anexo não identificado — confirmar NCM/NBS')+(d.divergenciaMotor?'<br><b>Motor:</b> '+esc(d.divergenciaMotor.motorTexto)+'<br><b>Revisão obrigatória</b>':'')+'</td>';
   const leis=d=>'<td class="v252-base-legal">'+(d.legais.length?d.legais.map(x=>(x.url?'<a href="'+esc(x.url)+'" target="_blank" rel="noopener">LC 214/2025 — art. '+esc(x.artigo)+' · cClassTrib '+esc(x.classe)+'</a>':'Artigo não identificado na referência')+'<small>'+esc(x.descricao)+(x.condicao?' · '+esc(x.condicao):'')+'</small>').join('<br>'):'Base legal não documentada — confirmar o enquadramento')+'</td>';
   const finaisCab=taxasCab+'<th>Redução IBS / CBS</th><th>Alíquota final IBS / CBS</th><th>Anexo da LC 214/2025</th><th>Base legal</th>';
   const finais=d=>taxas(d.aliquotas)+'<td>'+esc(d.reducao)+'</td>'+calculos(d)+anexos(d)+leis(d);

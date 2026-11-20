@@ -18,8 +18,8 @@
   document.head.appendChild(style);
 
   const schedule = [
-    /* V216 — CBS de referência alterada para 11,30% em 2027, conforme orientação atual. */
-    ['CBS', '0,90%', '11,30%', '8,40%', '8,50%', '8,50%', '8,50%', '8,50%', '8,50%'], 
+    /* V254 — CBS de referência de 11,30% de 2027 a 2033, igual ao pacote publicado no Motor. */
+    ['CBS', '0,90%', '11,30%', '11,30%', '11,30%', '11,30%', '11,30%', '11,30%', '11,30%'], 
     ['IBS estadual', '0,10%', '0,05%', '0,05%', '1,60%', '3,20%', '4,80%', '6,48%', '16,20%'],
     ['IBS municipal', '0,00%', '0,05%', '0,05%', '0,25%', '0,50%', '0,75%', '1,00%', '2,50%']
   ];

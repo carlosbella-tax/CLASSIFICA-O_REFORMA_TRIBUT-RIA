@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V254 — 2026-11-20
+
+- Alinhamento com o Motor de Calculo: CBS de referencia de 11,30% de 2027 a 2033 (pacote publicado no Motor em 29/10/2026) e 539 NCMs com anexos diferentes entre Motor e Classificador exibidos com os dois enquadramentos, revisao obrigatoria e sem reducao aplicada
+
 ## V253 — 2026-11-20
 
 - Painel de Fornecedores e Impacto da Reforma: leitura de SPED EFD (ICMS/IPI e Contribuicoes), DANFE em PDF, movimentacao por CNPJ com regime inferido e consulta BrasilAPI, analise por NCM/NBS com anexo, efeito, cronograma 2026-2033 e semaforo com alerta de RAD

@@ -22,8 +22,8 @@
   const codigoPortal=(tipo,v)=>String(v||'').replace(/\D/g,'').padStart(tipo==='NCM'?8:9,'0');
   const numero=v=>{const n=Number(String(v??'').replace('%','').replace(',','.'));return Number.isFinite(n)?n:null};
   const percentual=v=>v===null?'A confirmar':v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+'%';
-  const cronogramaPadrao={/* V216 — A validação em lote acompanha a CBS de referência de 11,30% em 2027. */
-  'CBS (%)':[0.9,11.3,8.4,8.5,8.5,8.5,8.5,8.5],'IBS Estadual (%)':[0.1,0.05,0.05,1.6,3.2,4.8,6.48,16.2],'IBS Municipal (%)':[0,0.05,0.05,0.25,0.5,0.75,1,2.5]};
+  const cronogramaPadrao={/* V254 — A validação em lote acompanha a CBS de referência de 11,30% de 2027 a 2033. */
+  'CBS (%)':[0.9,11.3,11.3,11.3,11.3,11.3,11.3,11.3],'IBS Estadual (%)':[0.1,0.05,0.05,1.6,3.2,4.8,6.48,16.2],'IBS Municipal (%)':[0,0.05,0.05,0.25,0.5,0.75,1,2.5]};
   function aliquotasReferencia(){const anos=[2026,2027,2028,2029,2030,2031,2032,2033];const ano=Number(document.getElementById('anoPeriodo')?.value);const indice=Math.max(0,anos.indexOf(anos.includes(ano)?ano:2026));let tabela=cronogramaPadrao;try{const salva=JSON.parse(localStorage.getItem('classificador.v168.cronograma')||'null');if(salva?.tabela)tabela=salva.tabela}catch(_){}return {ano:anos[indice],ibs_estadual:Number(tabela['IBS Estadual (%)']?.[indice]??0),ibs_municipal:Number(tabela['IBS Municipal (%)']?.[indice]??0),cbs:Number(tabela['CBS (%)']?.[indice]??0)}}
   const taxaFinal=(aliquota,reducao)=>reducao===null?'A confirmar':percentual(aliquota*Math.max(0,1-reducao/100));
   const textoCandidatos=(itens,valor)=>itens.map(x=>{const r=valor(x);return itens.length>1?'cClassTrib '+x.classe+': '+r:r}).join(' | ');

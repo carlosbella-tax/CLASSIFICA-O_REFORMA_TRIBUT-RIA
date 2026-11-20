@@ -37,7 +37,7 @@ const COD_MUN_UF_V253 = {'11':'RO','12':'AC','13':'AM','14':'RR','15':'PA','16':
 /* ---------- cronograma 2026–2033 (mesmos valores do cronograma padrão da V252) ---------- */
 const V253 = {
   ANOS: [2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033],
-  CRONO: {cbs: [0.9, 11.3, 8.4, 8.5, 8.5, 8.5, 8.5, 8.5], ibsE: [0.1, 0.05, 0.05, 1.6, 3.2, 4.8, 6.48, 16.2], ibsM: [0, 0.05, 0.05, 0.25, 0.5, 0.75, 1, 2.5]}
+  CRONO: {cbs: [0.9, 11.3, 11.3, 11.3, 11.3, 11.3, 11.3, 11.3], ibsE: [0.1, 0.05, 0.05, 1.6, 3.2, 4.8, 6.48, 16.2], ibsM: [0, 0.05, 0.05, 0.25, 0.5, 0.75, 1, 2.5]}
 };
 (function carregarCronogramaV253(){
   try{
@@ -89,12 +89,13 @@ function efeitoV253(tipo, codigo, linhaOrigem){
         const legal = d.legais && d.legais[0];
         const numRed = d.reducao ? Number(String(d.reducao).replace('%', '').replace(',', '.')) : null;
         let texto;
-        if (d.status === 'REVISÃO NECESSÁRIA') texto = 'Hipóteses distintas na base oficial: revisão obrigatória antes de aplicar alíquota efetiva (V252).';
+        if (d.divergenciaMotor) texto = 'Motor e Classificador apontam anexos diferentes (' + d.divergenciaMotor.texto + '): revisão obrigatória, sem redução aplicada (V254).';
+        else if (d.status === 'REVISÃO NECESSÁRIA') texto = 'Hipóteses distintas na base oficial: revisão obrigatória antes de aplicar alíquota efetiva (V252).';
         else if (numRed && numRed > 0) texto = 'Redução única de ' + d.reducao + ' aplicada a IBS e CBS: alíquota efetiva = alíquota × (1 − ' + d.reducao + '/100).';
         else if (numRed === 100) texto = 'Cesta de consumo — alíquota zero na LC 214/2025.';
         else texto = 'Tributação integral: sem redução identificada para este código na base embarcada (V252).';
         return {ref: {tipo, codigo: String(codigo || ''), classe: d.classe || '000001', cst: d.cst || '000', reducao: d.status === 'REVISÃO NECESSÁRIA' ? null : numRed,
-          anexo: legal ? (legal.anexo + (legal.artigo ? ' — art. ' + legal.artigo : '')) : '', fonte: d.fonte || ''}, texto, revisao: d.status === 'REVISÃO NECESSÁRIA'};
+          anexo: d.divergenciaMotor ? d.divergenciaMotor.texto : (legal ? (legal.anexo + (legal.artigo ? ' — art. ' + legal.artigo : '')) : ''), fonte: d.fonte || ''}, texto, revisao: d.status === 'REVISÃO NECESSÁRIA'};
       }
     }
   }catch(e){}

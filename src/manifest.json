@@ -151,6 +151,8 @@
     "src/js/modulos/123-v251-nfse-enquadramento-servico.js",
     "src/js/modulos/124-v252-aliquotas-anexos-legais.js",
     "src/js/modulos/125-v253-painel-fornecedores-impacto.js",
+    "src/js/dados/v254-divergencias-motor-ncm.js",
+    "src/js/modulos/126-v254-divergencias-motor.js",
     "src/js/modulos/123-v249-drop-reforcado.js",
     "src/js/modulos/99-fechamento.js",
     "src/90-rodape.html"
