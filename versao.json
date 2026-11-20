@@ -1,5 +1,5 @@
 {
-  "versao": 252,
-  "data": "2026-11-17",
-  "descricao": "Enquadramento: aliquotas IBS municipal/estadual/CBS, reducao unica, aliquota efetiva e vinculos legais por artigo"
+  "versao": 253,
+  "data": "2026-11-20",
+  "descricao": "Painel de Fornecedores e Impacto da Reforma: leitura de SPED EFD (ICMS/IPI e Contribuicoes), DANFE em PDF, movimentacao por CNPJ com regime inferido e consulta BrasilAPI, analise por NCM/NBS com anexo, efeito, cronograma 2026-2033 e semaforo com alerta de RAD"
 }

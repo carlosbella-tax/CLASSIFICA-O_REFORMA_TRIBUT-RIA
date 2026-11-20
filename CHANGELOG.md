@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V253 — 2026-11-20
+
+- Painel de Fornecedores e Impacto da Reforma: leitura de SPED EFD (ICMS/IPI e Contribuicoes), DANFE em PDF, movimentacao por CNPJ com regime inferido e consulta BrasilAPI, analise por NCM/NBS com anexo, efeito, cronograma 2026-2033 e semaforo com alerta de RAD
+
 ## V252 — 2026-11-17
 
 - Removida a coluna Validação do Enquadramento recomendado; avisos de hipótese/condição permanecem no Tratamento IBS/CBS.
