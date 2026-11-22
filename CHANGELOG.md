@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V260 — 2026-11-22
+
+- Layout: menu lateral recolhivel em faixa de icones (escolha gravada no navegador), menu disponivel em janelas estreitas e indicadores no topo das telas de analise
+
 ## V259 — 2026-11-22
 
 - Corrige o retorno indevido para a Consulta: a revalidacao do login nao tira mais o usuario da tela em que esta (Apuracao, Analise por NCM e demais); titulos das telas Analise por NCM e Fornecedores

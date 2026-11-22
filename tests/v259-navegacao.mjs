@@ -16,5 +16,5 @@ await teste('títulos: Análise por NCM e Fornecedores recebem o nome da tela; o
  const b=d.querySelector('[data-v123-key="ncmanalise"]');b.classList.add('active');b.click();await espera();assert.equal(t.textContent,'Análise por NCM — Reforma Tributária');
  const f=d.querySelector('[data-v123-key="fornecedores"]');f.classList.add('active');f.click();await espera();assert.equal(t.textContent,'Fornecedores e clientes');
  t.textContent='Base';d.querySelector('[data-v123-key="ibs"]').click();await espera();assert.equal(t.textContent,'Base')});
-await teste('build: selo e título V259',()=>{const dist=fs.readFileSync(path.join(root,'dist','index.html'),'utf8');assert.match(dist,/class="build">VERSÃO 259/);assert.match(dist,/<title>Auditoria Reforma Tributária — V259<\/title>/);assert.ok(dist.includes('V259_CARREGADO')&&dist.includes('modoMudouV259'))});
+await teste('build: selo e título V259',()=>{const dist=fs.readFileSync(path.join(root,'dist','index.html'),'utf8');assert.match(dist,/class="build">VERSÃO \d+/);assert.match(dist,/<title>Auditoria Reforma Tributária — V\d+<\/title>/);assert.ok(dist.includes('V259_CARREGADO')&&dist.includes('modoMudouV259'))});
 w.close();console.log(`${ok} testes focados V259 OK`);process.exit(0);

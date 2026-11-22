@@ -1,5 +1,5 @@
 {
-  "versao": 259,
+  "versao": 260,
   "data": "2026-11-22",
-  "descricao": "Corrige o retorno indevido para a Consulta: a revalidacao do login nao tira mais o usuario da tela em que esta (Apuracao, Analise por NCM e demais); titulos das telas Analise por NCM e Fornecedores"
+  "descricao": "Layout: menu lateral recolhivel em faixa de icones (escolha gravada no navegador), menu disponivel em janelas estreitas e indicadores no topo das telas de analise"
 }
