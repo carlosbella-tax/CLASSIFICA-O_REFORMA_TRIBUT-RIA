@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V264 — 2026-11-22
+
+- Apuracao assistida da CBS: quadro Apuracao com montante dos debitos, montante dos creditos e valor apurado, por periodo ou no total
+
 ## V263 — 2026-11-22
 
 - SPED Fiscal e EFD Contribuicoes com tela de carga propria (arquivo ou pasta), sem o quadro Carregar XML/PDF; tela de XML sem os quadros do SPED
