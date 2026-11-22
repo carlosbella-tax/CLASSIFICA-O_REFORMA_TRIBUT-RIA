@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V268 — 2026-11-22
+
+- Design Carbon + TaxAdvice nas telas de analise: cantos retos, tabelas densas, cabecalho cinza, faixa nos indicadores e laranja no item ativo
+
 ## V267 — 2026-11-22
 
 - Impressao limpa do Dashboard e das telas de analise: so o conteudo, sem menu, sem cabecalho, sem espacos em branco e com margem minima

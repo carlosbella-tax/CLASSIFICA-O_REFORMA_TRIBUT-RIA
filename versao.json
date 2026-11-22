@@ -1,5 +1,5 @@
 {
-  "versao": 267,
+  "versao": 268,
   "data": "2026-11-22",
-  "descricao": "Impressao limpa do Dashboard e das telas de analise: so o conteudo, sem menu, sem cabecalho, sem espacos em branco e com margem minima"
+  "descricao": "Design Carbon + TaxAdvice nas telas de analise: cantos retos, tabelas densas, cabecalho cinza, faixa nos indicadores e laranja no item ativo"
 }
