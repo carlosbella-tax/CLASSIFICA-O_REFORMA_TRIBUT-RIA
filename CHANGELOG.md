@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V263 — 2026-11-22
+
+- SPED Fiscal e EFD Contribuicoes com tela de carga propria (arquivo ou pasta), sem o quadro Carregar XML/PDF; tela de XML sem os quadros do SPED
+
 ## V262 — 2026-11-22
 
 - Relogio do tempo de processamento movel: pode ser arrastado para qualquer ponto da tela, posicao gravada no navegador
