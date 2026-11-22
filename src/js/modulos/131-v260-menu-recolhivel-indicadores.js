@@ -8,6 +8,7 @@
   const P={consulta:'M11 4a7 7 0 105.2 11.7L20 20M11 8v6M8 11h6',documentos:'M12 16V4m0 0l-4 4m4-4l4 4M4 20h16',nfe:'M6 3h9l4 4v14H6zM9 12h7M9 16h7',nfse:'M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6',
     cte:'M3 7h11v9H3zM14 10h4l3 3v3h-7M7 19a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM17 19a1.5 1.5 0 100-3 1.5 1.5 0 000 3z',ibs:'M4 20V10m6 10V4m6 16v-7m4 7H2',ncmanalise:'M4 6h16M4 12h16M4 18h10',
     apuracaocbs:'M5 4h14v16H5zM9 9h6M9 13h2m3 0h1M9 16h2m3 0h1',fornecedores:'M3 20V9l6-4v15m0 0h12V11l-6-3M13 14h4m-4 3h4',cnae:'M5 12l4 4L19 6',enquadramento:'M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z',
+    spedfiscal:'M6 3h9l4 4v14H6zM9 11h6M9 14h6M9 17h3',efdcontrib:'M6 3h9l4 4v14H6zM9.5 16.5l5-5M10 12h.01M14 16h.01',
     dashboard:'M4 13h7V4H4zm9 7h7v-9h-7zM4 20h7v-4H4zm9-13h7V4h-7z',padrao:'M12 8v5m0 3h.01M12 3a9 9 0 100 18 9 9 0 000-18z'};
   const icone=k=>'<svg class="v260-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="'+(P[k]||P.padrao)+'"/></svg>';
   const st=document.createElement('style');st.id='v260-layout-style';st.textContent=`

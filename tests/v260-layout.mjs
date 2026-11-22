@@ -32,5 +32,5 @@ await teste('faixa de indicadores: só nas telas de análise e com arquivos carr
  w.state.items=[];w.classificadorV260.atualizar();assert.equal(k.hidden,true)});
 await teste('sem NCM divergente o indicador fica verde',()=>{w.state.items=[itens[1]];w.classificadorV260.atualizar();const k=d.getElementById('v260-kpis');assert.equal(k.hidden,false);assert.ok(k.querySelector('.v260-kpi.ok'));assert.match(k.textContent,/nenhuma divergência com o Motor/)});
 await teste('não altera dados: sem rede e sem escrita no estado',()=>{assert.doesNotMatch(src,/fetch\(|XMLHttpRequest|state\.items\s*=|state\.items\.push|\.splice\(/)});
-await teste('build: selo e título V260 e módulo presente',()=>{const dist=fs.readFileSync(path.join(root,'dist','index.html'),'utf8');assert.match(dist,/class="build">VERSÃO 260/);assert.match(dist,/<title>Auditoria Reforma Tributária — V260<\/title>/);assert.ok(dist.includes('V260_CARREGADO'))});
+await teste('build: selo e título V260 e módulo presente',()=>{const dist=fs.readFileSync(path.join(root,'dist','index.html'),'utf8');assert.match(dist,/class="build">VERSÃO \d+/);assert.match(dist,/<title>Auditoria Reforma Tributária — V\d+<\/title>/);assert.ok(dist.includes('V260_CARREGADO'))});
 w.close();console.log(`${ok} testes focados V260 OK`);process.exit(0);

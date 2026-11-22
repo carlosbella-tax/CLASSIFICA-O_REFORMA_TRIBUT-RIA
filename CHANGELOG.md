@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V261 — 2026-11-22
+
+- Menu Documentos: opcoes SPED Fiscal (EFD ICMS/IPI) e EFD Contribuicoes, com botoes proprios de carga no painel Carregar e contagem de documentos
+
 ## V260 — 2026-11-22
 
 - Layout: menu lateral recolhivel em faixa de icones (escolha gravada no navegador), menu disponivel em janelas estreitas e indicadores no topo das telas de analise
