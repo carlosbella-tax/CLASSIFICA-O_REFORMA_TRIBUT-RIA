@@ -34,5 +34,5 @@ await teste('contagem por tipo: documentos distintos de cada escrituração',()=
 await teste('o leitor da V253 continua reconhecendo os dois arquivos pelo conteúdo',()=>{
  const m=fs.readFileSync(path.join(root,'src/js/modulos/125-v253-painel-fornecedores-impacto.js'),'utf8');assert.ok(m.includes("startsWith('|0000|')"));assert.ok(m.includes("'SPED EFD Contribuições' : 'SPED EFD ICMS/IPI'"))});
 await teste('build: selo e título V261, módulo e ícones presentes',()=>{
- const dist=fs.readFileSync(path.join(root,'dist','index.html'),'utf8');assert.match(dist,/class="build">VERSÃO 261/);assert.match(dist,/<title>Auditoria Reforma Tributária — V261<\/title>/);assert.ok(dist.includes('V261_CARREGADO')&&dist.includes("spedfiscal:'M6"))});
+ const dist=fs.readFileSync(path.join(root,'dist','index.html'),'utf8');assert.match(dist,/class="build">VERSÃO \d+/);assert.match(dist,/<title>Auditoria Reforma Tributária — V\d+<\/title>/);assert.ok(dist.includes('V261_CARREGADO')&&dist.includes("spedfiscal:'M6"))});
 w.close();console.log(`${ok} testes focados V261 OK`);process.exit(0);

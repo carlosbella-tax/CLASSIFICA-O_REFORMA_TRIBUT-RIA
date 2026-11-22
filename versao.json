@@ -1,5 +1,5 @@
 {
-  "versao": 261,
+  "versao": 262,
   "data": "2026-11-22",
-  "descricao": "Menu Documentos: opcoes SPED Fiscal (EFD ICMS/IPI) e EFD Contribuicoes, com botoes proprios de carga no painel Carregar e contagem de documentos"
+  "descricao": "Relogio do tempo de processamento movel: pode ser arrastado para qualquer ponto da tela, posicao gravada no navegador"
 }

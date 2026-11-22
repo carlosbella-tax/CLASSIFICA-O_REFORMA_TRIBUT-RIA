@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V262 — 2026-11-22
+
+- Relogio do tempo de processamento movel: pode ser arrastado para qualquer ponto da tela, posicao gravada no navegador
+
 ## V261 — 2026-11-22
 
 - Menu Documentos: opcoes SPED Fiscal (EFD ICMS/IPI) e EFD Contribuicoes, com botoes proprios de carga no painel Carregar e contagem de documentos
