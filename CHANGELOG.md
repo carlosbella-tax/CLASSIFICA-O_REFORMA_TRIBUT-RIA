@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V267 — 2026-11-22
+
+- Impressao limpa do Dashboard e das telas de analise: so o conteudo, sem menu, sem cabecalho, sem espacos em branco e com margem minima
+
 ## V266 — 2026-11-22
 
 - Barra de rolagem horizontal flutuante: fica visivel na borda inferior da janela quando a barra da tabela esta fora da tela
