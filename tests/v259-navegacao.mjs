@@ -1,0 +1,20 @@
+/* V259 — Regressão: revalidar o login não devolve o usuário para a Consulta; títulos das telas da V253. */
+import fs from 'node:fs';import path from 'node:path';import {fileURLToPath} from 'node:url';import assert from 'node:assert/strict';import {JSDOM} from 'jsdom';
+const root=path.join(path.dirname(fileURLToPath(import.meta.url)),'..');
+const dom=new JSDOM('<html><head></head><body><aside id="v123-sidebar"><button class="v123-link" data-v123-key="consulta">Consulta</button><button class="v123-link" data-v123-key="ncmanalise">NCM</button><button class="v123-link" data-v123-key="fornecedores">Forn</button><button class="v123-link" data-v123-key="ibs">Base</button><div class="v123-status"></div></aside><div id="v123-topbar"></div><div id="v123-title">x</div></body></html>',{runScripts:'dangerously',url:'https://teste.invalid/'}),w=dom.window,d=w.document;
+w.eval('window.__abriu=0;window.classificadorAbrirConsultaInicial=()=>{window.__abriu++}');
+w.eval(fs.readFileSync(path.join(root,'src/js/modulos/119-v229-acesso-visitante-20-consultas.js'),'utf8'));
+w.eval(fs.readFileSync(path.join(root,'src/js/modulos/130-v259-titulos-navegacao.js'),'utf8'));
+let ok=0;const teste=async(n,f)=>{await f();ok++;console.log('OK V259: '+n)};const A=w.classificadorAplicarAcessoV229;const espera=()=>new Promise(r=>setTimeout(r,15));
+await teste('sem login: não abre a Consulta sozinho',()=>{assert.equal(w.__abriu,0)});
+await teste('entrada do administrador: abre a Consulta uma vez',()=>{A('admin',{email:'a@b'});assert.equal(w.__abriu,1)});
+await teste('revalidação do mesmo acesso (foco da janela, renovação de sessão): permanece na tela atual',()=>{for(let i=0;i<5;i++)A('admin',{email:'a@b'});assert.equal(w.__abriu,1)});
+await teste('usuário liberado: abre na entrada e não volta nas revalidações',()=>{A('nao_autenticado');A('usuario',{validoAte:'2026-12-31'});assert.equal(w.__abriu,2);A('usuario',{validoAte:'2026-12-31'});A('usuario',{validoAte:'2026-12-31'});assert.equal(w.__abriu,2)});
+await teste('visitante: contagem de consultas atualiza sem sair da tela',()=>{A('nao_autenticado');A('visitante',{used:1,remaining:19});const n=w.__abriu;A('visitante',{used:2,remaining:18});assert.equal(w.__abriu,n);assert.match(d.getElementById('v229-counter').textContent,/2\/20/)});
+await teste('carga de arquivos em andamento continua sem redirecionar na entrada',()=>{A('nao_autenticado');w.v242ManterCargaAtiva=true;const n=w.__abriu;A('admin');assert.equal(w.__abriu,n);w.v242ManterCargaAtiva=false});
+await teste('títulos: Análise por NCM e Fornecedores recebem o nome da tela; outras telas não são alteradas',async()=>{const t=d.getElementById('v123-title');
+ const b=d.querySelector('[data-v123-key="ncmanalise"]');b.classList.add('active');b.click();await espera();assert.equal(t.textContent,'Análise por NCM — Reforma Tributária');
+ const f=d.querySelector('[data-v123-key="fornecedores"]');f.classList.add('active');f.click();await espera();assert.equal(t.textContent,'Fornecedores e clientes');
+ t.textContent='Base';d.querySelector('[data-v123-key="ibs"]').click();await espera();assert.equal(t.textContent,'Base')});
+await teste('build: selo e título V259',()=>{const dist=fs.readFileSync(path.join(root,'dist','index.html'),'utf8');assert.match(dist,/class="build">VERSÃO 259/);assert.match(dist,/<title>Auditoria Reforma Tributária — V259<\/title>/);assert.ok(dist.includes('V259_CARREGADO')&&dist.includes('modoMudouV259'))});
+w.close();console.log(`${ok} testes focados V259 OK`);process.exit(0);

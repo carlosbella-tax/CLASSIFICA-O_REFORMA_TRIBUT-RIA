@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V259 — 2026-11-22
+
+- Corrige o retorno indevido para a Consulta: a revalidacao do login nao tira mais o usuario da tela em que esta (Apuracao, Analise por NCM e demais); titulos das telas Analise por NCM e Fornecedores
+
 ## V258 — 2026-11-20
 
 - Credito fixo do desenvolvedor (Carlos Bella, +55 11 99479-7347) no menu, na tela de acesso e na Administracao; sem tela ou permissao para alterar ou remover, e recolocado automaticamente se apagado

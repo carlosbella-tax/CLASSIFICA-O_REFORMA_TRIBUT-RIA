@@ -15,7 +15,7 @@
   if(!side||!top)return;
   const LIMITE_ANON=2,WHATS_ESPECIALISTA='https://wa.me/5511970749434?text='+encodeURIComponent('Olá! Gostaria de falar com um especialista da TaxAdvice sobre a Consulta NCM e NBS.');
   const CHAVE_ANON='v235-anonimo-uso';
-  let client=null,bypass=false,processando=false,usuariosV257=[];
+  let client=null,bypass=false,processando=false,usuariosV257=[],modoMudouV259=true;
   const estado={modo:'nao_autenticado',usadas:0,restantes:LIMITE_ANON,email:'',nome:''};
 
   const css=document.createElement('style');css.id='v235-acesso-style';css.textContent=`
@@ -71,9 +71,10 @@
     else if(estado.modo==='usuario'){counter.innerHTML='<b>Acesso completo</b><br>Liberado até '+dataBr(estado.validoAte)}
     else{counter.innerHTML='<b>Acesso administrativo</b><br>Consultas ilimitadas'}
     auth.hidden=estado.modo!=='nao_autenticado';
-    if((visitante||pleno())&&!window.v242ManterCargaAtiva)window.classificadorAbrirConsultaInicial?.();
+    /* V259 — só abre a Consulta quando o acesso muda (entrada); revalidar o login não tira o usuário da tela atual. */
+    if(modoMudouV259&&(visitante||pleno())&&!window.v242ManterCargaAtiva)window.classificadorAbrirConsultaInicial?.();
   };
-  const aplicar=(modo,dados={})=>{estado.modo=modo;estado.usadas=Number(dados.used??dados.usadas??0);estado.validoAte=dados.validoAte||'';estado.restantes=(modo==='admin'||modo==='usuario')?20:Number(dados.remaining??dados.restantes??Math.max(0,20-estado.usadas));estado.email=dados.email||estado.email;estado.nome=dados.nome||estado.nome;atualizar()};
+  const aplicar=(modo,dados={})=>{modoMudouV259=estado.modo!==modo;estado.modo=modo;estado.usadas=Number(dados.used??dados.usadas??0);estado.validoAte=dados.validoAte||'';estado.restantes=(modo==='admin'||modo==='usuario')?20:Number(dados.remaining??dados.restantes??Math.max(0,20-estado.usadas));estado.email=dados.email||estado.email;estado.nome=dados.nome||estado.nome;atualizar()};
   window.classificadorAplicarAcessoV229=aplicar;
   window.classificadorLimiteVisitante=20;
   window.classificadorLimiteAnonimoV235=LIMITE_ANON;
