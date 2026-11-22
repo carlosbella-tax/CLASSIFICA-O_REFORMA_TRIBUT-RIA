@@ -1,5 +1,5 @@
 {
-  "versao": 265,
+  "versao": 266,
   "data": "2026-11-22",
-  "descricao": "Fornecedores: pesquisa cadastral por CNPJ com varias bases e nova tentativa; campo Pesquisa da empresa traz as informacoes, sem links de fontes"
+  "descricao": "Barra de rolagem horizontal flutuante: fica visivel na borda inferior da janela quando a barra da tabela esta fora da tela"
 }

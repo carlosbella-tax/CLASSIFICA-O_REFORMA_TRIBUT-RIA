@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V266 — 2026-11-22
+
+- Barra de rolagem horizontal flutuante: fica visivel na borda inferior da janela quando a barra da tabela esta fora da tela
+
 ## V265 — 2026-11-22
 
 - Fornecedores: pesquisa cadastral por CNPJ com varias bases e nova tentativa; campo Pesquisa da empresa traz as informacoes, sem links de fontes
