@@ -10,7 +10,7 @@
      única, cronograma IBS estadual/municipal/CBS 2026–2033 e semáforo
      de impacto com alerta de aplicação do RAD.
    - Processamento 100% local; consulta de CNPJ é a única chamada
-     externa (BrasilAPI), disparada ao abrir a aba Fornecedores.
+     externa (cadastro público de CNPJ, V265), disparada ao abrir a aba Fornecedores.
    - Leituras usadas: Guia Prático EFD-Contribuições (RFB) e leiaute
      EFD ICMS/IPI — C100/C170/A100/A170/F100/0150/0200/0000/0110.
    ===================================================================== */
@@ -351,46 +351,41 @@ window.parse = function(file, txt){
   return parseAntesV253(file, txt);
 };
 
-/* ---------- BrasilAPI: consulta pública de CNPJ ---------- */
+/* ---------- consulta pública de CNPJ (V265: várias bases, com nova tentativa) ---------- */
 const CACHE_CNPJ_V253 = new Map();
 let consultandoV253 = false;
 async function consultarCnpjV253(cnpj){
   const d = soDigV253(cnpj);
   if (d.length !== 14) return null;
-  if (CACHE_CNPJ_V253.has(d)) return CACHE_CNPJ_V253.get(d);
-  if (typeof fetch !== 'function'){
-    const out = {razao: '', fantasia: '', situacao: 'Consulta indisponível neste ambiente (sem fetch)', porte: '', cnae: '', data: ''};
-    CACHE_CNPJ_V253.set(d, out);
-    return out;
-  }
+  const ant = CACHE_CNPJ_V253.get(d);
+  if (ant && !ant.falha) return ant;
   CACHE_CNPJ_V253.set(d, {em_consulta: true});
-  try{
-    const r = await fetch('https://brasilapi.com.br/api/cnpj/v1/' + d);
-    if (!r.ok) throw Error('HTTP ' + r.status);
-    const j = await r.json();
-    const out = {razao: j.razao_social || '', fantasia: j.nome_fantasia || '', situacao: j.descricao_situacao_cadastral || '', porte: (j.porte && j.porte.descricao) || '', cnae: j.cnae_fiscal_descricao || '', data: j.data_situacao_cadastral || ''};
-    CACHE_CNPJ_V253.set(d, out);
-    return out;
-  }catch(e){
-    const out = {razao: '', fantasia: '', situacao: 'Consulta indisponível (sem internet ou limite da API)', porte: '', cnae: '', data: ''};
-    CACHE_CNPJ_V253.set(d, out);
-    return out;
-  }
+  let out;
+  try{ out = await window.classificadorV265.consultar(d); }
+  catch(e){ out = {razao: '', fantasia: '', situacao: 'Consulta não concluída — a ferramenta tenta de novo', falha: true}; }
+  out = out || {razao: '', fantasia: '', situacao: ''};
+  out.tentativas = ((ant && ant.tentativas) || 0) + 1;
+  CACHE_CNPJ_V253.set(d, out);
+  return out;
 }
 async function consultarTodosV253(){
   if (consultandoV253) return;
   consultandoV253 = true;
+  const redesenhar = () => { const ativo = document.querySelector('.tab.active'); if (ativo && ativo.dataset.tab === 'fornecedores') renderFornecedoresV253(); };
   try{
-    const pendentes = [];
-    fornecedoresCacheV253.forEach(x => { const d = soDigV253(x.cnpj); if (d.length === 14 && !CACHE_CNPJ_V253.has(d) && !pendentes.includes(d)) pendentes.push(d); });
-    const fila = pendentes.slice(0, 60);
-    for (const d of fila){
-      await consultarCnpjV253(d);
-      const ativo = document.querySelector('.tab.active');
-      if (ativo && ativo.dataset.tab === 'fornecedores') renderFornecedoresV253();
-      await new Promise(r => setTimeout(r, 250));
+    /* até 3 passadas: a 2ª e a 3ª repetem só o que falhou por rede ou por limite de consultas */
+    for (let passada = 0; passada < 3; passada++){
+      const pendentes = [];
+      fornecedoresCacheV253.forEach(x => { const d = soDigV253(x.cnpj), c = CACHE_CNPJ_V253.get(d); if (d.length === 14 && (!c || (c.falha && (c.tentativas || 0) < 3)) && !pendentes.includes(d)) pendentes.push(d); });
+      if (!pendentes.length) break;
+      if (passada) await new Promise(r => setTimeout(r, 4000));
+      for (const d of pendentes.slice(0, 400)){
+        const out = await consultarCnpjV253(d);
+        redesenhar();
+        if (!out || !out.guardado) await new Promise(r => setTimeout(r, 350));
+      }
     }
-  } finally { consultandoV253 = false; }
+  } finally { consultandoV253 = false; redesenhar(); }
 }
 
 /* ---------- regime tributário inferido ---------- */
@@ -446,7 +441,8 @@ function linhasFornecedoresV253(){
       nome_fantasia: c && c.fantasia ? c.fantasia : '',
       situacao: c && c.situacao ? c.situacao : (emConsulta ? 'consultando…' : ''),
       porte: c && c.porte ? c.porte : '', cnae: c && c.cnae ? c.cnae : '',
-      regime: [...x.regimes].join(' | ') || 'Não identificado nos documentos',
+      pesquisa: window.classificadorV265 ? window.classificadorV265.resumo(c).join(' | ') : '',
+      regime: [...x.regimes].join(' | ') || (window.classificadorV265 && window.classificadorV265.regime(c)) || 'Não identificado nos documentos',
       uf: x.uf || '', municipio: x.muni || '',
       notas: x.docs.size, itens: x.itens, valor_total: x.valor, participacao: total ? x.valor / total * 100 : 0,
       pis: x.pis, cofins: x.cofins, ipi: x.ipi, icms: x.icms, ibs: x.ibs, cbs: x.cbs
@@ -518,10 +514,10 @@ function criarAbaV253(){
     + '<button class="tab" data-tab="ncm2">Análise por NCM <span class="pill" id="ncmBadge2"></span></button>');
   secIcms.insertAdjacentHTML('beforebegin',
     '<section id="fornecedores" class="panel"><div class="card"><div class="actions"><b style="font-size:17px;color:var(--blue)">Movimentação de fornecedores e clientes (V253)</b>'
-    + '<span class="hint">Consolidação por CNPJ de todas as fontes carregadas (XML, PDF, SPED EFD). Regime tributário inferido de opSimpNac/CRT/CSOSN e do registro 0110 do SPED. Consulta cadastral pública via BrasilAPI (executada ao abrir esta aba).</span></div>'
+    + '<span class="hint">Consolidação por CNPJ de todas as fontes carregadas (XML, PDF, SPED EFD). Regime tributário inferido de opSimpNac/CRT/CSOSN e do registro 0110 do SPED. A pesquisa cadastral de cada CNPJ é feita ao abrir esta aba e traz situação, razão social e os dados da empresa; o que falhar por internet ou limite é repetido automaticamente.</span></div>'
     + '<div class="v253-filtros"><input type="search" id="v253FornBusca" placeholder="Pesquisar nome ou CNPJ"><select id="v253FornPapel"><option value="">Papel: todos</option><option value="Fornecedor">Fornecedores</option><option value="Cliente">Clientes</option></select>'
     + '<select id="v253FornRegime"><option value="">Regime: todos</option></select>'
-    + '<button type="button" id="v253FornConsultar">Consultar CNPJs (BrasilAPI)</button>'
+    + '<button type="button" id="v253FornConsultar">Pesquisar empresas pelo CNPJ</button>'
     + '<button type="button" id="v253FornExportar" class="secondary">⬇ Exportar Excel</button></div>'
     + '<div id="v253FornInfo" class="hint" style="margin-top:6px">Nenhum documento processado.</div></div>'
     + '<div class="card" style="padding:0"><div class="table-wrap" style="max-height:560px"><table id="v253FornTable"><thead></thead><tbody><tr><td class="empty">Processe arquivos para ver a movimentação de fornecedores.</td></tr></tbody></table></div></div></section>'
@@ -548,7 +544,7 @@ function criarAbaV253(){
   tN.onclick = () => ativa(tN);
   ['v253FornBusca', 'v253FornPapel', 'v253FornRegime'].forEach(id => { const el = $id(id); if (el) el.addEventListener('input', renderFornecedoresV253); });
   ['v253NcmBusca', 'v253NcmSemaforo'].forEach(id => { const el = $id(id); if (el) el.addEventListener('input', renderNcmV253); });
-  const bc = $id('v253FornConsultar'); if (bc) bc.onclick = () => { CACHE_CNPJ_V253.clear(); consultarTodosV253(); };
+  const bc = $id('v253FornConsultar'); if (bc) bc.onclick = () => { CACHE_CNPJ_V253.clear(); if (window.classificadorV265) window.classificadorV265.limparCache(); renderFornecedoresV253(); consultarTodosV253(); };
   const ef = $id('v253FornExportar'); if (ef) ef.onclick = () => {
     const rows = fornecedoresCacheV253.map(x => Object.assign({}, x));
     if (!rows.length) return alert('Não há fornecedores para exportar.');
@@ -578,10 +574,10 @@ function renderFornecedoresV253(){
     (!papelF || r.papel.startsWith(papelF)) && (!regimeF || r.regime === regimeF) &&
     (!busca || (r.nome_documento + ' ' + r.razao_social + ' ' + r.nome_fantasia + ' ' + r.cnpj).toLowerCase().includes(busca)));
   const h = $id('v253FornTable').querySelector('thead'), b = $id('v253FornTable').querySelector('tbody');
-  h.innerHTML = '<tr class="excel-header"><th>Papel</th><th>CNPJ</th><th>Nome no documento</th><th>Razão social (BrasilAPI)</th><th>Nome fantasia</th><th>Situação cadastral</th><th>Regime tributário (inferido)</th><th>UF</th><th>Município</th><th>Notas</th><th>Itens</th><th>Valor total</th><th>Participação</th><th>PIS</th><th>COFINS</th><th>IPI</th><th>ICMS</th><th>IBS</th><th>CBS</th><th>Pesquisas</th></tr>';
+  h.innerHTML = '<tr class="excel-header"><th>Papel</th><th>CNPJ</th><th>Nome no documento</th><th>Razão social (cadastro)</th><th>Nome fantasia</th><th>Situação cadastral</th><th>Regime tributário (inferido)</th><th>UF</th><th>Município</th><th>Notas</th><th>Itens</th><th>Valor total</th><th>Participação</th><th>PIS</th><th>COFINS</th><th>IPI</th><th>ICMS</th><th>IBS</th><th>CBS</th><th>Pesquisa da empresa</th></tr>';
   b.innerHTML = vis.slice(0, 400).map(r => {
     const q = encodeURIComponent((r.razao_social || r.nome_documento || r.cnpj) + ' ' + r.cnpj);
-    return '<tr><td>' + escV253(r.papel) + '</td><td><b>' + escV253(r.cnpj) + '</b></td><td>' + escV253(r.nome_documento) + '</td><td>' + escV253(r.razao_social) + '</td><td>' + escV253(r.nome_fantasia) + '</td><td>' + escV253(r.situacao) + '</td><td>' + escV253(r.regime) + '</td><td>' + escV253(r.uf) + '</td><td>' + escV253(r.municipio) + '</td><td>' + r.notas + '</td><td>' + r.itens + '</td><td><b>' + brl(r.valor_total) + '</b></td><td>' + pctV253(r.participacao) + '</td><td>' + brl(r.pis) + '</td><td>' + brl(r.cofins) + '</td><td>' + brl(r.ipi) + '</td><td>' + brl(r.icms) + '</td><td>' + brl(r.ibs) + '</td><td>' + brl(r.cbs) + '</td><td><span class="v253-links"><a class="v253-chip" href="https://www.google.com/search?q=' + q + '" target="_blank" rel="noopener">Pesquisar</a><a class="v253-chip" href="https://www.google.com/search?q=' + encodeURIComponent(q + ' instagram') + '" target="_blank" rel="noopener">Instagram</a></span></td></tr>';
+    return '<tr><td>' + escV253(r.papel) + '</td><td><b>' + escV253(r.cnpj) + '</b></td><td>' + escV253(r.nome_documento) + '</td><td>' + escV253(r.razao_social) + '</td><td>' + escV253(r.nome_fantasia) + '</td><td>' + escV253(r.situacao) + '</td><td>' + escV253(r.regime) + '</td><td>' + escV253(r.uf) + '</td><td>' + escV253(r.municipio) + '</td><td>' + r.notas + '</td><td>' + r.itens + '</td><td><b>' + brl(r.valor_total) + '</b></td><td>' + pctV253(r.participacao) + '</td><td>' + brl(r.pis) + '</td><td>' + brl(r.cofins) + '</td><td>' + brl(r.ipi) + '</td><td>' + brl(r.icms) + '</td><td>' + brl(r.ibs) + '</td><td>' + brl(r.cbs) + '</td><td class="v265-pesq">' + String(r.pesquisa || '').split(' | ').filter(Boolean).map(escV253).join('<br>') + '</td></tr>';
   }).join('') || '<tr><td class="empty" colspan="20">Nenhum fornecedor/cliente para os filtros selecionados.</td></tr>';
   $id('v253FornInfo').textContent = rows.length ? 'CNPJs distintos: ' + new Set(rows.map(r => r.cnpj)).size + '; vínculos: ' + rows.length + '; valor movimentado: ' + brl(rows.reduce((a, r) => a + r.valor_total, 0)) + '.' : 'Nenhum documento processado.';
   const badge = $id('fornBadge'); if (badge) badge.textContent = rows.length ? new Set(rows.map(r => r.cnpj)).size : '';
@@ -646,6 +642,7 @@ style.textContent = [
   '.v253-filtros input[type=search]{flex:1;min-width:180px;padding:8px 10px;border:1px solid #c5d3df;border-radius:8px;font:inherit}',
   '.v253-filtros select{padding:8px;border:1px solid #c5d3df;border-radius:8px;font:inherit;max-width:340px}',
   '.v253-links{display:flex;gap:6px}',
+  '.v265-pesq{min-width:340px;max-width:460px;white-space:normal!important;font-size:12px;line-height:1.5;color:#33475B}',
   '.v253-chip{padding:3px 9px;border-radius:999px;background:#e8f1f8;color:#164c78;font-size:11px;font-weight:700;text-decoration:none;border:1px solid #c5d3df;white-space:nowrap}',
   '.v253-chip:hover{background:#d4e6f3}',
   '.v253-rad{display:flex;gap:14px;align-items:center;padding:14px 18px;border-radius:10px;margin:0 0 12px;font-size:13px;flex-wrap:wrap}',
