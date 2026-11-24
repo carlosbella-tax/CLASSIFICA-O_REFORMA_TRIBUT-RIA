@@ -1,0 +1,20 @@
+/* V269 — Regressão: o cronômetro reinicia a cada novo processamento e o relógio tem alça de arrastar. */
+import fs from 'node:fs';import path from 'node:path';import {fileURLToPath} from 'node:url';import assert from 'node:assert/strict';import {JSDOM} from 'jsdom';
+const root=path.join(path.dirname(fileURLToPath(import.meta.url)),'..');
+const m155=fs.readFileSync(path.join(root,'src/js/modulos/94-v155-uploads-cronometro-flutuante.js'),'utf8');
+const m269=fs.readFileSync(path.join(root,'src/js/modulos/139-v269-relogio-flutuante-reinicio.js'),'utf8');
+const dom=new JSDOM('<html><head></head><body><button id="process"></button></body></html>',{runScripts:'dangerously',pretendToBeVisual:true}),w=dom.window,d=w.document;
+w.eval('window.V14x={rodando:false,t0:0};(function(){const V14=window.V14x;try{'+m155+'}catch(e){window.erro155=String(e)}})();');
+w.eval(m269);
+const V14=w.V14x,clock=d.getElementById('v155-timer'),esperar=ms=>new Promise(r=>setTimeout(r,ms));
+const tempo=()=>clock.querySelector('strong').textContent,texto=()=>clock.querySelector('span').textContent;
+let ok=0;const teste=async(n,f)=>{await f();ok++;console.log('OK V269: '+n)};
+await teste('relógio criado, com a alça "arraste para mover" e sem atrapalhar o texto do estado',()=>{assert.ok(clock,w.erro155);assert.equal(d.getElementById('v269-alca').textContent,'arraste para mover');assert.equal(d.querySelectorAll('#v269-alca span').length,0);assert.equal(texto(),'Aguardando processamento')});
+await teste('primeiro processamento: aparece, conta o tempo e mostra a conclusão',async()=>{V14.t0=w.performance.now();V14.rodando=true;await esperar(1400);assert.equal(clock.hidden,false);assert.ok(clock.classList.contains('running'));assert.equal(tempo(),'00:00:01');assert.equal(texto(),'Processando arquivos…');
+ V14.rodando=false;await esperar(500);assert.equal(texto(),'Processamento concluído');assert.equal(clock.classList.contains('running'),false);assert.equal(tempo(),'00:00:01')});
+await teste('segundo processamento, iniciado sem clique: o cronômetro volta a 00:00:00 e conta de novo',async()=>{await esperar(1200);V14.t0=w.performance.now();V14.rodando=true;await esperar(450);assert.equal(tempo(),'00:00:00');assert.ok(clock.classList.contains('running'));assert.equal(texto(),'Processando arquivos…');
+ await esperar(800);assert.equal(tempo(),'00:00:01');V14.rodando=false;await esperar(500);assert.equal(texto(),'Processamento concluído')});
+await teste('terceiro processamento, iniciado pelo botão: também reinicia',async()=>{await esperar(1100);d.getElementById('process').dispatchEvent(new w.MouseEvent('click',{bubbles:true}));V14.t0=w.performance.now();V14.rodando=true;await esperar(450);assert.equal(tempo(),'00:00:00');assert.ok(clock.classList.contains('running'));V14.rodando=false;await esperar(500)});
+await teste('relógio flutuante acima das demais camadas; build com a versão',()=>{assert.match(m269,/#v155-timer\{z-index:2147483000!important/);
+ const dist=fs.readFileSync(path.join(root,'dist','index.html'),'utf8');assert.match(dist,/<title>Auditoria Reforma Tributária — V\d+<\/title>/);assert.ok(dist.includes('V269_CARREGADO'))});
+w.close();console.log(`${ok} testes focados V269 OK`);process.exit(0);

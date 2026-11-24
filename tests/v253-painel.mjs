@@ -62,4 +62,12 @@ await teste('análise por NCM: linha do tempo 2026–2033 com as fases da transi
  const tl=w.document.querySelector('.v253-timeline-tr');assert.ok(tl);assert.equal(tl.querySelectorAll('.v253-timeline tbody tr').length,8);assert.match(tl.textContent,/Fase de teste/);assert.match(tl.textContent,/Extinção PIS\/COFINS|Transição/);
  assert.match(w.document.querySelector('#v253Rad').textContent,/RAD|Sem exposição/)});
 await teste('exportação respeita as linhas analisadas e a versão fica no selo do build',()=>{const dist=fs.readFileSync(path.join(root,'dist','index.html'),'utf8');assert.match(dist,/class="build">VERSÃO \d+/);assert.match(dist,/V253_CARREGADO/);assert.match(fs.readFileSync(path.join(root,'versao.json'),'utf8'),/"versao": \d+/)});
+await teste('V270 — resumo por semáforo: códigos e valores somados por cor, com total e participação',()=>{const R=w.v253ResumoSemaforo([
+ {semaforo:'NEGATIVO',valor_total:1000,carga_atual:50,novo_2033:300,diferenca:250},{semaforo:'NEGATIVO',valor_total:500,carga_atual:0,novo_2033:150,diferenca:150},
+ {semaforo:'FAVORÁVEL',valor_total:2000,carga_atual:400,novo_2033:240,diferenca:-160},{semaforo:'NEUTRO',valor_total:500,carga_atual:100,novo_2033:101,diferenca:1}]);
+ assert.equal(R.linhas.map(x=>x.semaforo).join(','),'NEGATIVO,NEUTRO,FAVORÁVEL,SEM COMPARAÇÃO');const n=R.linhas[0];assert.equal(n.codigos,2);assert.equal(n.valor_total,1500);assert.equal(n.carga_atual,50);assert.equal(n.novo_2033,450);assert.equal(n.diferenca,400);assert.equal(n.participacao,37.5);
+ assert.equal(R.linhas[3].codigos,0);assert.equal(R.total.codigos,4);assert.equal(R.total.valor_total,4000);assert.equal(R.total.diferenca,241);assert.equal(R.total.participacao,100);
+ const box=w.document.getElementById('v253NcmResumo');assert.ok(box);assert.equal(box.hidden,false);assert.equal(box.previousElementSibling.querySelector('#v253NcmTable')!==null,true);
+ const trs=box.querySelectorAll('tbody tr');assert.equal(trs.length,5);assert.match(trs[4].textContent,/^TOTAL/);assert.match(box.textContent,/Resumo por semáforo/);assert.match(trs[0].textContent,/R\$/);
+ const z=w.v253ResumoSemaforo([]);assert.equal(z.total.codigos,0);assert.equal(z.total.participacao,0)});
 w.close();console.log(`${ok} testes focados V253 OK`);

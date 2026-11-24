@@ -1,5 +1,5 @@
 {
-  "versao": 268,
-  "data": "2026-11-22",
-  "descricao": "Design Carbon + TaxAdvice nas telas de analise: cantos retos, tabelas densas, cabecalho cinza, faixa nos indicadores e laranja no item ativo"
+  "versao": 270,
+  "data": "2026-11-23",
+  "descricao": "Analise de credito de IBS e CBS por fornecedor (melhores e impacto negativo); relogio com alca de arrastar e reinicio do cronometro"
 }

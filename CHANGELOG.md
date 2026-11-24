@@ -5,6 +5,14 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V270 — 2026-11-23
+
+- Analise de credito de IBS e CBS por fornecedor (melhores e impacto negativo); relogio com alca de arrastar e reinicio do cronometro
+
+## V269 — 2026-11-23
+
+- Relogio do processamento com alca de arrastar e reinicio do cronometro a cada novo processamento
+
 ## V268 — 2026-11-22
 
 - Design Carbon + TaxAdvice nas telas de analise: cantos retos, tabelas densas, cabecalho cinza, faixa nos indicadores e laranja no item ativo

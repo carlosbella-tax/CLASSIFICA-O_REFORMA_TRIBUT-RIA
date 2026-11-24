@@ -1,12 +1,12 @@
 {
   "name": "auditoria-reforma-tributaria",
-  "version": "268.0.0",
+  "version": "270.0.0",
   "private": true,
   "description": "Auditoria Reforma Tributária (Tax Advice) — leitura de XML de NF-e/CT-e/NFS-e, validações de ICMS, ICMS ST, IPI, PIS/COFINS, IBS/CBS e apresentação em PowerPoint",
   "type": "module",
   "scripts": {
     "build": "node tools/build.mjs",
-    "test": "node tools/build.mjs && node tests/testar.mjs && node tests/v251-servicos.mjs && node tests/v252-enquadramento.mjs && node tests/v253-painel.mjs && node tests/v254-motor.mjs && node tests/v255-design.mjs && node tests/v256-apuracao-cbs.mjs && node tests/v257-liberacao-cadastro.mjs && node tests/v258-desenvolvedor.mjs && node tests/v259-navegacao.mjs && node tests/v260-layout.mjs && node tests/v261-carga-sped.mjs && node tests/v262-relogio-movel.mjs && node tests/v264-quadro-apuracao.mjs && node tests/v265-pesquisa-cnpj.mjs && node tests/v266-rolagem-flutuante.mjs && node tests/v267-impressao-limpa.mjs && node tests/v268-design-carbon.mjs",
+    "test": "node tools/build.mjs && node tests/testar.mjs && node tests/v251-servicos.mjs && node tests/v252-enquadramento.mjs && node tests/v253-painel.mjs && node tests/v254-motor.mjs && node tests/v255-design.mjs && node tests/v256-apuracao-cbs.mjs && node tests/v257-liberacao-cadastro.mjs && node tests/v258-desenvolvedor.mjs && node tests/v259-navegacao.mjs && node tests/v260-layout.mjs && node tests/v261-carga-sped.mjs && node tests/v262-relogio-movel.mjs && node tests/v264-quadro-apuracao.mjs && node tests/v265-pesquisa-cnpj.mjs && node tests/v266-rolagem-flutuante.mjs && node tests/v267-impressao-limpa.mjs && node tests/v268-design-carbon.mjs && node tests/v269-relogio-reinicio.mjs && node tests/v270-credito-fornecedores.mjs",
     "nova-versao": "node tools/nova-versao.mjs",
     "drive": "node tools/build.mjs --drive"
   },

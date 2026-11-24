@@ -409,6 +409,7 @@ function regimeDoItemV253(r){
 let fornecedoresCacheV253 = [];
 function linhasFornecedoresV253(){
   const m = new Map, emp = soDigV253($id('cnpjEmpresa') ? $id('cnpjEmpresa').value : '');
+  const reducoesV270 = new Map, i2033 = idxAnoV253(2033);
   state.items.forEach(r => {
     if (!r) return;
     const e = soDigV253(r.emitente_cnpj_cpf), d = soDigV253(r.destinatario_cnpj_cpf);
@@ -421,12 +422,23 @@ function linhasFornecedoresV253(){
     else return;
     if (!cnpj) return;
     const k = cnpj + '|' + papel;
-    const x = m.get(k) || {cnpj, nome, papel, docs: new Set, itens: 0, valor: 0, pis: 0, cofins: 0, ipi: 0, icms: 0, ibs: 0, cbs: 0, regimes: new Set, uf, muni};
+    const x = m.get(k) || {cnpj, nome, papel, docs: new Set, itens: 0, valor: 0, credito: 0, semCredito: 0, pis: 0, cofins: 0, ipi: 0, icms: 0, ibs: 0, cbs: 0, regimes: new Set, uf, muni};
     x.docs.add(r.chave_documento || r.numero_documento || r.arquivo_origem);
     x.itens++; x.valor += num(r.valor_item);
     x.pis += valorGrupo(r, 'PIS', 'vPIS'); x.cofins += valorGrupo(r, 'COFINS', 'vCOFINS');
     x.ipi += valorGrupo(r, 'IPI', 'vIPI'); x.icms += valorIcms(r, 'vICMS');
     x.ibs += valorGrupo(r, 'IBS', 'vIBS'); x.cbs += valorGrupo(r, 'CBS', 'vCBS');
+    /* V270 — IBS/CBS de 2033 sobre o item, com a redução do enquadramento do NCM/NBS: base do crédito potencial */
+    { const ncmI = soDigV253(r.ncm); let tp = '', cd = '';
+      if (ncmI.length === 8){ tp = 'NCM'; cd = ncmI; }
+      else if (/NFS/i.test(String(r.tipo_documento || ''))){
+        const nbsI = r.dados_nfse && r.dados_nfse.nbs ? String(r.dados_nfse.nbs).replace(/\D/g, '') : '';
+        if (nbsI.length >= 7){ tp = 'NBS'; cd = nbsI.padStart(9, '0'); } else if (r.codigo_item){ tp = 'SERVIÇO'; cd = String(r.codigo_item); }
+      }
+      let red = null;
+      if (tp){ const kk = tp + cd; if (!reducoesV270.has(kk)) reducoesV270.set(kk, efeitoV253(tp, cd).ref.reducao); red = reducoesV270.get(kk); }
+      const t = taxasAnoV253(i2033, red), vi = num(r.valor_item);
+      x.credito += vi * (t.cbs + t.ibsE + t.ibsM) / 100; if (red !== null && red >= 100) x.semCredito += vi; }
     const reg = regimeDoItemV253(r); if (reg) x.regimes.add(reg);
     if (!x.uf && (r.emitente_uf || r.destinatario_uf)){ x.uf = uf; x.muni = muni; }
     m.set(k, x);
@@ -445,7 +457,8 @@ function linhasFornecedoresV253(){
       regime: [...x.regimes].join(' | ') || (window.classificadorV265 && window.classificadorV265.regime(c)) || 'Não identificado nos documentos',
       uf: x.uf || '', municipio: x.muni || '',
       notas: x.docs.size, itens: x.itens, valor_total: x.valor, participacao: total ? x.valor / total * 100 : 0,
-      pis: x.pis, cofins: x.cofins, ipi: x.ipi, icms: x.icms, ibs: x.ibs, cbs: x.cbs
+      pis: x.pis, cofins: x.cofins, ipi: x.ipi, icms: x.icms, ibs: x.ibs, cbs: x.cbs,
+      ibs_cbs_2033: x.credito, valor_aliquota_zero: x.semCredito
     };
   }).sort((a, b) => b.valor_total - a.valor_total);
   return fornecedoresCacheV253;
@@ -526,7 +539,8 @@ function criarAbaV253(){
     + '<div class="v253-filtros"><input type="search" id="v253NcmBusca" placeholder="Pesquisar NCM, descrição ou anexo"><select id="v253NcmSemaforo"><option value="">Semáforo: todos</option><option value="NEGATIVO">Somente impacto negativo</option><option value="FAVORÁVEL">Somente favoráveis</option><option value="NEUTRO">Somente neutros</option></select>'
     + '<button type="button" id="v253NcmExportar" class="secondary">⬇ Exportar Excel</button></div>'
     + '<div id="v253NcmInfo" class="hint" style="margin-top:6px">Nenhum documento processado.</div></div>'
-    + '<div class="card" style="padding:0"><div class="table-wrap" style="max-height:600px" id="v253NcmWrap"><table id="v253NcmTable"><thead></thead><tbody><tr><td class="empty">Processe arquivos para ver a análise por NCM.</td></tr></tbody></table></div></div></section>');
+    + '<div class="card" style="padding:0"><div class="table-wrap" style="max-height:600px" id="v253NcmWrap"><table id="v253NcmTable"><thead></thead><tbody><tr><td class="empty">Processe arquivos para ver a análise por NCM.</td></tr></tbody></table></div></div>'
+    + '<div class="card" id="v253NcmResumo" hidden></div></section>');
   const tF = document.querySelector('.tab[data-tab="fornecedores"]'), tN = document.querySelector('.tab[data-tab="ncm2"]');
   /* entradas no menu lateral V123 (mesmo padrão das abas de análise) */
   const side = $id('v123-sidebar');
@@ -554,7 +568,9 @@ function criarAbaV253(){
     const cols = ['chave', 'descricao', 'anexo', 'efeito', 'cclasstrib', 'cst', 'qtd', 'valor_total', 'notas', 'fornecedores', 'carga_atual', 'aliq_cbs_ef', 'aliq_ibsE_ef', 'aliq_ibsM_ef', 'novo_2033', 'diferenca', 'semaforo'];
     const rows = ncmCacheV253.map(x => { const y = {}; cols.forEach(c => y[c] = x[c]); return y; });
     if (!rows.length) return alert('Não há análise de NCM para exportar.');
-    gerarXlsx('ANALISE_NCM_V253_' + (new Date()).toISOString().slice(0, 10) + '.xlsx', [['Análise por NCM', rows]]);
+    const rs = resumoSemaforoV253(ncmCacheV253);
+    const resumo = rs.linhas.concat([rs.total]).map(x => ({semaforo: x.semaforo, leitura: x.leitura, codigos: x.codigos, valor_movimentado: x.valor_total, participacao: x.participacao, carga_atual: x.carga_atual, ibs_cbs_2033: x.novo_2033, diferenca_2033: x.diferenca}));
+    gerarXlsx('ANALISE_NCM_V253_' + (new Date()).toISOString().slice(0, 10) + '.xlsx', [['Análise por NCM', rows], ['Resumo por semáforo', resumo]]);
   };
 }
 
@@ -581,8 +597,34 @@ function renderFornecedoresV253(){
   }).join('') || '<tr><td class="empty" colspan="20">Nenhum fornecedor/cliente para os filtros selecionados.</td></tr>';
   $id('v253FornInfo').textContent = rows.length ? 'CNPJs distintos: ' + new Set(rows.map(r => r.cnpj)).size + '; vínculos: ' + rows.length + '; valor movimentado: ' + brl(rows.reduce((a, r) => a + r.valor_total, 0)) + '.' : 'Nenhum documento processado.';
   const badge = $id('fornBadge'); if (badge) badge.textContent = rows.length ? new Set(rows.map(r => r.cnpj)).size : '';
+  if (window.classificadorV270) try{ window.classificadorV270.render(rows); }catch(e){}
 }
 
+/* V270 — resumo por semáforo: quantidade de códigos e valores somados de cada cor, com o total geral */
+const ORDEM_SEMAFORO_V253 = [['NEGATIVO', 'vermelho', 'Carga de 2033 acima da atual'], ['NEUTRO', 'amarelo', 'Diferença dentro de ±2%'], ['FAVORÁVEL', 'verde', 'Carga de 2033 abaixo da atual'], ['—', 'cinza', 'Sem carga para comparar']];
+function resumoSemaforoV253(rows){
+  const total = {semaforo: 'TOTAL', cls: '', leitura: '', codigos: 0, valor_total: 0, carga_atual: 0, novo_2033: 0, diferenca: 0, participacao: 0};
+  const linhas = ORDEM_SEMAFORO_V253.map(([rot, cls, leitura]) => {
+    const g = (rows || []).filter(r => r.semaforo === rot);
+    const x = {semaforo: rot === '—' ? 'SEM COMPARAÇÃO' : rot, cls, leitura, codigos: g.length, valor_total: 0, carga_atual: 0, novo_2033: 0, diferenca: 0, participacao: 0};
+    g.forEach(r => { x.valor_total += Number(r.valor_total) || 0; x.carga_atual += Number(r.carga_atual) || 0; x.novo_2033 += Number(r.novo_2033) || 0; x.diferenca += Number(r.diferenca) || 0; });
+    total.codigos += x.codigos; total.valor_total += x.valor_total; total.carga_atual += x.carga_atual; total.novo_2033 += x.novo_2033; total.diferenca += x.diferenca;
+    return x;
+  });
+  linhas.forEach(x => { x.participacao = total.valor_total ? x.valor_total / total.valor_total * 100 : 0; });
+  total.participacao = total.valor_total ? 100 : 0;
+  return {linhas, total};
+}
+function renderResumoSemaforoV253(rows){
+  const box = $id('v253NcmResumo'); if (!box) return;
+  if (!rows.length){ box.hidden = true; box.innerHTML = ''; return; }
+  const r = resumoSemaforoV253(rows);
+  const tr = (x, t) => '<tr' + (t ? ' class="v253-resumo-total"' : '') + '><td>' + (t ? '<b>TOTAL</b>' : '<span class="v253-semaforo ' + x.cls + '">' + x.semaforo + '</span>') + '</td><td>' + escV253(x.leitura) + '</td><td class="v253-num">' + x.codigos + '</td><td class="v253-num">' + brl(x.valor_total) + '</td><td class="v253-num">' + pctV253(x.participacao) + '</td><td class="v253-num">' + brl(x.carga_atual) + '</td><td class="v253-num">' + brl(x.novo_2033) + '</td><td class="v253-num ' + (x.diferenca > 0 ? 'v253-neg' : 'v253-pos') + '"><b>' + brl(x.diferenca) + '</b></td></tr>';
+  box.hidden = false;
+  box.innerHTML = '<b style="font-size:15px;color:var(--blue)">Resumo por semáforo</b><span class="hint" style="display:block;margin:2px 0 8px">Soma de todos os códigos analisados, sem os filtros da pesquisa. Diferença 2033 = IBS + CBS de 2033 menos a carga atual de PIS, COFINS e IPI destacados.</span>'
+    + '<div class="table-wrap"><table id="v253NcmResumoTable"><thead><tr class="excel-header"><th>Semáforo</th><th>Leitura</th><th>Códigos</th><th>Valor movimentado</th><th>Participação</th><th>Carga atual (PIS+COFINS+IPI)</th><th>IBS+CBS 2033 estimado</th><th>Diferença 2033</th></tr></thead><tbody>'
+    + r.linhas.map(x => tr(x, false)).join('') + tr(r.total, true) + '</tbody></table></div>';
+}
 function renderNcmV253(){
   if (!state.items.length){ const i = $id('v253NcmInfo'); if (i) i.textContent = 'Nenhum documento processado.'; return; }
   const rows = linhasNcmV253();
@@ -596,6 +638,7 @@ function renderNcmV253(){
     rad.innerHTML = neg.length ? '<div class="v253-rad v253-rad-ativo"><b>Aplicação do RAD recomendada</b><span>' + neg.length + ' item(ns) com impacto negativo estimado — perda total de <b>' + brl(perda) + '</b> por período comparável (carga 2033 × carga atual destacada). Recomenda-se aplicar o RAD da Reforma Tributária.</span></div>'
       : rows.length ? '<div class="v253-rad v253-rad-ok"><b>Sem exposição negativa relevante</b><span>Nenhum item com impacto negativo acima da margem de ±2%. O RAD não é requerido por esta análise.</span></div>' : '';
   }
+  renderResumoSemaforoV253(rows);
   const h = $id('v253NcmTable').querySelector('thead'), b = $id('v253NcmTable').querySelector('tbody');
   h.innerHTML = '<tr class="excel-header"><th>Código</th><th>Descrição (TIPI/base)</th><th>Anexo LC 214/2025</th><th>Efeito na reforma</th><th>cClassTrib ref.</th><th>CST ref.</th><th>Qtd.</th><th>Valor movimentado</th><th>Notas</th><th>Fornecedores</th><th>Carga atual (PIS+COFINS+IPI)</th><th>Alíq. CBS ef. 2033</th><th>Alíq. IBS Est. ef. 2033</th><th>Alíq. IBS Mun. ef. 2033</th><th>IBS+CBS 2033 estimado</th><th>Diferença 2033</th><th>Semáforo</th></tr>';
   b.innerHTML = vis.slice(0, 500).map(r =>
@@ -662,6 +705,7 @@ style.textContent = [
   '.v253-timeline thead th{background:#eaf1f7;color:#123d60}',
   '.v253-obs{font-size:11px;color:#54636f}',
   '.v253-neg{color:#a32020}.v253-pos{color:#1c6b1c}',
+  '#v253NcmResumoTable td.v253-num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}#v253NcmResumoTable td{font-size:12px}#v253NcmResumoTable tr.v253-resumo-total td{font-weight:700;border-top:2px solid #8d8d8d;background:#f4f4f4}',
   '#v253FornTable td,#v253NcmTable td{font-size:12px}',
   '#v253FornTable td:nth-child(12),#v253NcmTable td:nth-child(8){white-space:nowrap}'
 ].join('');
@@ -670,6 +714,7 @@ document.head.appendChild(style);
 criarAbaV253();
 /* exposição para testes focados e uso avançado */
 window.v253Semaforo = semaforoV253;
+window.v253ResumoSemaforo = resumoSemaforoV253;
 window.v253TaxasAno = taxasAnoV253;
 window.v253Efeito = efeitoV253;
 })();
