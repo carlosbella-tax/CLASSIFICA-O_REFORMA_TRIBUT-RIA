@@ -3,7 +3,9 @@
       (NF-e, NFS-e, CT-e) — a aba é o "tipo de documento".
    2) Botão "Voltar" ao lado de "Processar" retorna ao passo anterior.
    3) Permanece na aba de carga após o processamento (não volta para a primeira tela).
-   4) Após processar, preenche automaticamente emitente e tomador (nome, CNPJ e município). */
+   4) Após processar, preenche automaticamente emitente e tomador (nome, CNPJ e município).
+   V275 — A empresa informada na primeira tela (nome, CNPJ e regime) nunca é trocada pelos dados dos documentos.
+   Só o nome em branco é completado, e apenas com a razão social do próprio CNPJ informado. */
 (function(){
   const load=document.getElementById('load');
   if(!load)return;
@@ -67,6 +69,21 @@
     st.call(el,valor);
     el.dispatchEvent(new Event('input',{bubbles:true}));
   };
+  /* V275 — nome da empresa informada: só completa quando está em branco e o CNPJ informado aparece nos documentos */
+  const soDig=function(v){return String(v||'').replace(/\D/g,'')};
+  const nomeDoCnpjInformado=function(docs){
+    const campoNome=document.getElementById('empresa'),campoCnpj=document.getElementById('cnpjEmpresa');
+    if(!campoNome||!campoCnpj||String(campoNome.value||'').trim())return '';
+    const cnpj=soDig(campoCnpj.value);
+    if(!cnpj)return '';
+    for(const doc of docs||[]){
+      if(soDig(doc.emitente_cnpj_cpf)===cnpj&&doc.emitente_razao_social)return String(doc.emitente_razao_social).trim();
+      if(soDig(doc.destinatario_cnpj_cpf)===cnpj&&doc.destinatario_razao_social)return String(doc.destinatario_razao_social).trim();
+    }
+    return '';
+  };
+  window.classificadorV275NomeDoCnpjInformado=nomeDoCnpjInformado;
+  window.V275_CARREGADO=true;
   const limpaMunicipio=function(m){return String(m||'').replace(/\s+UF$/i,'').trim()};
 
   document.addEventListener('click',function(e){
@@ -86,8 +103,7 @@
             const nomeDes=doc.destinatario_razao_social||'';
             const cnpjDes=doc.destinatario_cnpj_cpf||'';
             const munDes=limpaMunicipio(doc.destinatario_municipio||'');
-            preencher('empresa',(nomeEmi||nomeDes)+(munEmi?' — '+munEmi:(munDes?' — '+munDes:'')));
-            preencher('cnpjEmpresa',cnpjEmi||cnpjDes);
+            preencher('empresa',nomeDoCnpjInformado(docs));
             preencher('v89-emitente-nome',nomeEmi);
             preencher('v89-emitente-cnpj',cnpjEmi);
             preencher('v89-emitente-municipio',munEmi);

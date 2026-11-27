@@ -1,5 +1,5 @@
 {
-  "versao": 274,
+  "versao": 275,
   "data": "2026-11-27",
-  "descricao": "Validacao NCM/NBS passa a usar a Tabela IT 2025.002 v.1.71: CST (coluna A), Descricao CST-IBS/CBS (coluna B) e cClassTrib (coluna C); descricao do CST exibida e exportada; cClassTrib nao aceito no tipo de documento e apontado"
+  "descricao": "Carregar documentos: nome, CNPJ e regime tributario informados na primeira tela nunca sao trocados pelos dados dos documentos; nome em branco so e completado com a razao social do proprio CNPJ informado"
 }

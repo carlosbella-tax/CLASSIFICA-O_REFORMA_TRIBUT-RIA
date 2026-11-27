@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V275 — 2026-11-27
+
+- Carregar documentos: nome, CNPJ e regime tributario informados na primeira tela nunca sao trocados pelos dados dos documentos; nome em branco so e completado com a razao social do proprio CNPJ informado
+
 ## V274 — 2026-11-27
 
 - Validacao NCM/NBS passa a usar a Tabela IT 2025.002 v.1.71: CST (coluna A), Descricao CST-IBS/CBS (coluna B) e cClassTrib (coluna C); descricao do CST exibida e exportada; cClassTrib nao aceito no tipo de documento e apontado
