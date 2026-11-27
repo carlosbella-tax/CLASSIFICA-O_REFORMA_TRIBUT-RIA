@@ -705,7 +705,7 @@ style.textContent = [
   '.v253-timeline thead th{background:#eaf1f7;color:#123d60}',
   '.v253-obs{font-size:11px;color:#54636f}',
   '.v253-neg{color:#a32020}.v253-pos{color:#1c6b1c}',
-  '#v253NcmResumoTable td.v253-num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}#v253NcmResumoTable td{font-size:12px}#v253NcmResumoTable tr.v253-resumo-total td{font-weight:700;border-top:2px solid #8d8d8d;background:#f4f4f4}',
+  '#v253NcmResumo .table-wrap{height:auto!important;min-height:0!important;max-height:none!important}#v253NcmResumoTable{width:100%}#v253NcmResumoTable th{white-space:normal!important}#v253NcmResumoTable td.v253-num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}#v253NcmResumoTable td{font-size:12px}#v253NcmResumoTable tr.v253-resumo-total td{font-weight:700;border-top:2px solid #8d8d8d;background:#f4f4f4}',
   '#v253FornTable td,#v253NcmTable td{font-size:12px}',
   '#v253FornTable td:nth-child(12),#v253NcmTable td:nth-child(8){white-space:nowrap}'
 ].join('');

@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V271 — 2026-11-27
+
+- Botao Imprimir apuracao em PDF na Apuracao assistida da CBS; ajuste do quadro Resumo por semaforo
+
 ## V270 — 2026-11-23
 
 - Analise de credito de IBS e CBS por fornecedor (melhores e impacto negativo); relogio com alca de arrastar e reinicio do cronometro

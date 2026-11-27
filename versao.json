@@ -1,5 +1,5 @@
 {
-  "versao": 270,
-  "data": "2026-11-23",
-  "descricao": "Analise de credito de IBS e CBS por fornecedor (melhores e impacto negativo); relogio com alca de arrastar e reinicio do cronometro"
+  "versao": 271,
+  "data": "2026-11-27",
+  "descricao": "Botao Imprimir apuracao em PDF na Apuracao assistida da CBS; ajuste do quadro Resumo por semaforo"
 }
