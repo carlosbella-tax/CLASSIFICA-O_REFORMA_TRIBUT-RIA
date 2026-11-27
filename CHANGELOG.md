@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V276 — 2026-11-27
+
+- Analise por NCM: Resumo por semaforo mais explicativo, com a conclusao em numeros, o significado e a acao de cada cor, como ler cada coluna, exemplo de calculo e avisos de interpretacao; exportacao com a aba Como ler o resumo
+
 ## V275 — 2026-11-27
 
 - Carregar documentos: nome, CNPJ e regime tributario informados na primeira tela nunca sao trocados pelos dados dos documentos; nome em branco so e completado com a razao social do proprio CNPJ informado

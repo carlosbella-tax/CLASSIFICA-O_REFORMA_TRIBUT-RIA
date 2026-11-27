@@ -578,8 +578,11 @@ function criarAbaV253(){
     const rows = ncmCacheV253.map(x => { const y = {}; cols.forEach(c => y[c] = x[c]); return y; });
     if (!rows.length) return alert('Não há análise de NCM para exportar.');
     const rs = resumoSemaforoV253(ncmCacheV253);
-    const resumo = rs.linhas.concat([rs.total]).map(x => ({semaforo: x.semaforo, leitura: x.leitura, codigos: x.codigos, valor_movimentado: x.valor_total, participacao: x.participacao, carga_atual: x.carga_atual, ibs_cbs_2033: x.novo_2033, diferenca_2033: x.diferenca}));
-    gerarXlsx('ANALISE_NCM_V253_' + (new Date()).toISOString().slice(0, 10) + '.xlsx', [['Análise por NCM', formatarExportV253(rows)], ['Resumo por semáforo', formatarExportV253(resumo)]]);
+    const ex = explicacaoSemaforoV253(ncmCacheV253, rs);
+    const comoLer = ex.geral.map(x => ({assunto: 'O que o resultado mostra', explicacao: x})).concat(ex.cores.map(x => ({assunto: x.semaforo, explicacao: x.texto})),
+      ex.colunas.map(c => ({assunto: 'Coluna: ' + c[0], explicacao: c[1]})), ex.exemplo ? [{assunto: 'Exemplo de cálculo', explicacao: ex.exemplo}] : [], ex.avisos.map(x => ({assunto: 'Atenção ao interpretar', explicacao: x})));
+    const resumo = rs.linhas.concat([rs.total]).map(x => ({semaforo: x.semaforo, o_que_significa: x.leitura, o_que_fazer: x.acao || '', codigos: x.codigos, valor_movimentado: x.valor_total, participacao: x.participacao, carga_atual: x.carga_atual, ibs_cbs_2033: x.novo_2033, diferenca_2033: x.diferenca}));
+    gerarXlsx('ANALISE_NCM_V253_' + (new Date()).toISOString().slice(0, 10) + '.xlsx', [['Análise por NCM', formatarExportV253(rows)], ['Resumo por semáforo', formatarExportV253(resumo)], ['Como ler o resumo', comoLer]]);
   };
 }
 
@@ -610,12 +613,17 @@ function renderFornecedoresV253(){
 }
 
 /* V270 — resumo por semáforo: quantidade de códigos e valores somados de cada cor, com o total geral */
-const ORDEM_SEMAFORO_V253 = [['NEGATIVO', 'vermelho', 'Carga de 2033 acima da atual'], ['NEUTRO', 'amarelo', 'Diferença dentro de ±2%'], ['FAVORÁVEL', 'verde', 'Carga de 2033 abaixo da atual'], ['—', 'cinza', 'Sem carga para comparar']];
+/* V276 — cada cor traz o que significa e o que fazer, em linguagem direta */
+const ORDEM_SEMAFORO_V253 = [
+  ['NEGATIVO', 'vermelho', 'A carga estimada de 2033 fica mais de 2% acima da atual, ou o item hoje não tem PIS, COFINS nem IPI destacados e passa a ter IBS e CBS.', 'Rever preço, margem e contratos e conferir se o código tem redução ou benefício aplicável.'],
+  ['NEUTRO', 'amarelo', 'A carga estimada de 2033 fica até 2% acima ou abaixo da atual.', 'Acompanhar; sem ação imediata.'],
+  ['FAVORÁVEL', 'verde', 'A carga estimada de 2033 fica mais de 2% abaixo da atual.', 'Confirmar o enquadramento que dá a redução antes de contar com o ganho.'],
+  ['—', 'cinza', 'O item não tem PIS, COFINS nem IPI destacados e também não tem IBS e CBS calculados (alíquota zero, por exemplo).', 'Conferir o enquadramento do código.']];
 function resumoSemaforoV253(rows){
   const total = {semaforo: 'TOTAL', cls: '', leitura: '', codigos: 0, valor_total: 0, carga_atual: 0, novo_2033: 0, diferenca: 0, participacao: 0};
-  const linhas = ORDEM_SEMAFORO_V253.map(([rot, cls, leitura]) => {
+  const linhas = ORDEM_SEMAFORO_V253.map(([rot, cls, leitura, acao]) => {
     const g = (rows || []).filter(r => r.semaforo === rot);
-    const x = {semaforo: rot === '—' ? 'SEM COMPARAÇÃO' : rot, cls, leitura, codigos: g.length, valor_total: 0, carga_atual: 0, novo_2033: 0, diferenca: 0, participacao: 0};
+    const x = {semaforo: rot === '—' ? 'SEM COMPARAÇÃO' : rot, cls, leitura, acao, codigos: g.length, valor_total: 0, carga_atual: 0, novo_2033: 0, diferenca: 0, participacao: 0};
     g.forEach(r => { x.valor_total += Number(r.valor_total) || 0; x.carga_atual += Number(r.carga_atual) || 0; x.novo_2033 += Number(r.novo_2033) || 0; x.diferenca += Number(r.diferenca) || 0; });
     total.codigos += x.codigos; total.valor_total += x.valor_total; total.carga_atual += x.carga_atual; total.novo_2033 += x.novo_2033; total.diferenca += x.diferenca;
     return x;
@@ -624,15 +632,58 @@ function resumoSemaforoV253(rows){
   total.participacao = total.valor_total ? 100 : 0;
   return {linhas, total};
 }
+/* V276 — explicação do resumo: conclusão com os números da carga, exemplo de cálculo, significado das colunas e avisos */
+function explicacaoSemaforoV253(rows, r){
+  r = r || resumoSemaforoV253(rows);
+  const t = r.total, i = idxAnoV253(2033), cbs = V253.CRONO.cbs[i], ibsE = V253.CRONO.ibsE[i], ibsM = V253.CRONO.ibsM[i], cheia = cbs + ibsE + ibsM;
+  const sentido = t.diferenca > 0 ? 'aumento' : t.diferenca < 0 ? 'redução' : '';
+  const geral = ['Foram analisados ' + t.codigos + ' código(s), com ' + brl(t.valor_total) + ' movimentados nos documentos carregados (entradas e saídas somadas).',
+    'Hoje esses itens têm ' + brl(t.carga_atual) + ' de PIS, COFINS e IPI destacados. Em 2033 teriam ' + brl(t.novo_2033) + ' de IBS e CBS estimados: '
+      + (sentido ? sentido + ' de ' + brl(Math.abs(t.diferenca)) + (t.carga_atual ? ' (' + pctV253(Math.abs(t.diferenca) / t.carga_atual * 100) + ')' : '') : 'sem diferença') + '.'];
+  const cores = r.linhas.filter(x => x.codigos).map(x => {
+    const base = x.codigos + ' código(s), ' + brl(x.valor_total) + ' movimentados (' + pctV253(x.participacao) + ' do total): ';
+    const fim = x.semaforo === 'NEGATIVO' ? 'a carga estimada sobe ' + brl(Math.abs(x.diferenca)) + '.'
+      : x.semaforo === 'FAVORÁVEL' ? 'a carga estimada cai ' + brl(Math.abs(x.diferenca)) + '.'
+      : x.semaforo === 'NEUTRO' ? 'a carga praticamente não muda (diferença de ' + brl(x.diferenca) + ').'
+      : 'sem tributo destacado hoje e sem IBS e CBS calculados.';
+    return {semaforo: x.semaforo, cls: x.cls, texto: base + fim};
+  });
+  const comValor = (rows || []).filter(x => x.valor_total > 0 && x.novo_2033 > 0);
+  const m = comValor.filter(x => x.semaforo === 'NEGATIVO')[0] || comValor[0];
+  let exemplo = '';
+  if (m){
+    const ef = m.aliq_cbs_ef + m.aliq_ibsE_ef + m.aliq_ibsM_ef;
+    exemplo = m.chave + ': ' + brl(m.valor_total) + ' movimentados × ' + pctV253(ef) + (m.reducao ? ' (alíquota de 2033 já com a redução de ' + pctV253(m.reducao) + ')' : ' (alíquota de 2033, sem redução)')
+      + ' = ' + brl(m.novo_2033) + ' de IBS e CBS. Carga atual destacada: ' + brl(m.carga_atual) + '. Diferença: ' + brl(m.diferenca) + ', por isso o código está em ' + m.semaforo + '.';
+  }
+  const colunas = [
+    ['Códigos', 'Quantidade de NCM, NBS ou serviços diferentes em cada cor.'],
+    ['Valor movimentado', 'Soma do valor dos itens desses códigos, entradas e saídas juntas.'],
+    ['Participação', 'Quanto esse valor representa do total movimentado.'],
+    ['Carga atual (PIS+COFINS+IPI)', 'PIS, COFINS e IPI destacados nos documentos. ICMS e ISS não entram nesta conta.'],
+    ['IBS+CBS 2033 estimado', 'Valor movimentado × alíquota de 2033 (CBS ' + pctV253(cbs) + ' + IBS estadual ' + pctV253(ibsE) + ' + IBS municipal ' + pctV253(ibsM) + ' = ' + pctV253(cheia) + '), já com a redução do enquadramento de cada código. Código em revisão entra sem redução.'],
+    ['Diferença 2033', 'IBS+CBS 2033 estimado menos a carga atual. Valor positivo (vermelho) é carga maior; valor negativo (verde) é carga menor.']];
+  const avisos = [
+    'O IBS substitui o ICMS e o ISS, e esses dois tributos não estão na carga atual deste quadro. Por isso o aumento tende a aparecer maior do que o efeito real: para comparar a carga completa, some o ICMS e o ISS de hoje.',
+    'É uma estimativa sobre o valor dos documentos carregados, sem descontar os créditos de IBS e CBS das compras. Não é apuração nem valor a recolher.',
+    'Os totais consideram todos os códigos analisados; os filtros da pesquisa da tabela acima não mudam este quadro.'];
+  return {geral, cores, exemplo, colunas, avisos};
+}
 function renderResumoSemaforoV253(rows){
   const box = $id('v253NcmResumo'); if (!box) return;
   if (!rows.length){ box.hidden = true; box.innerHTML = ''; return; }
-  const r = resumoSemaforoV253(rows);
-  const tr = (x, t) => '<tr' + (t ? ' class="v253-resumo-total"' : '') + '><td>' + (t ? '<b>TOTAL</b>' : '<span class="v253-semaforo ' + x.cls + '">' + x.semaforo + '</span>') + '</td><td>' + escV253(x.leitura) + '</td><td class="v253-num">' + x.codigos + '</td><td class="v253-num">' + brl(x.valor_total) + '</td><td class="v253-num">' + pctV253(x.participacao) + '</td><td class="v253-num">' + brl(x.carga_atual) + '</td><td class="v253-num">' + brl(x.novo_2033) + '</td><td class="v253-num ' + (x.diferenca > 0 ? 'v253-neg' : 'v253-pos') + '"><b>' + brl(x.diferenca) + '</b></td></tr>';
+  const r = resumoSemaforoV253(rows), e = explicacaoSemaforoV253(rows, r);
+  const tr = (x, t) => '<tr' + (t ? ' class="v253-resumo-total"' : '') + '><td>' + (t ? '<b>TOTAL</b>' : '<span class="v253-semaforo ' + x.cls + '">' + x.semaforo + '</span>') + '</td><td class="v276-leitura">' + (t ? '' : escV253(x.leitura) + '<small><b>O que fazer:</b> ' + escV253(x.acao) + '</small>') + '</td><td class="v253-num">' + x.codigos + '</td><td class="v253-num">' + brl(x.valor_total) + '</td><td class="v253-num">' + pctV253(x.participacao) + '</td><td class="v253-num">' + brl(x.carga_atual) + '</td><td class="v253-num">' + brl(x.novo_2033) + '</td><td class="v253-num ' + (x.diferenca > 0 ? 'v253-neg' : 'v253-pos') + '"><b>' + brl(x.diferenca) + '</b></td></tr>';
   box.hidden = false;
-  box.innerHTML = '<b style="font-size:15px;color:var(--blue)">Resumo por semáforo</b><span class="hint" style="display:block;margin:2px 0 8px">Soma de todos os códigos analisados, sem os filtros da pesquisa. Diferença 2033 = IBS + CBS de 2033 menos a carga atual de PIS, COFINS e IPI destacados.</span>'
-    + '<div class="table-wrap"><table id="v253NcmResumoTable"><thead><tr class="excel-header"><th>Semáforo</th><th>Leitura</th><th>Códigos</th><th>Valor movimentado</th><th>Participação</th><th>Carga atual (PIS+COFINS+IPI)</th><th>IBS+CBS 2033 estimado</th><th>Diferença 2033</th></tr></thead><tbody>'
-    + r.linhas.map(x => tr(x, false)).join('') + tr(r.total, true) + '</tbody></table></div>';
+  box.innerHTML = '<b style="font-size:15px;color:var(--blue)">Resumo por semáforo</b>'
+    + '<p class="v276-intro">Este quadro soma, por cor do semáforo, todos os códigos dos documentos carregados e compara o tributo que eles carregam hoje com o que carregariam em 2033, quando a Reforma Tributária estiver completa.</p>'
+    + '<div class="v276-conclusao"><b>O que o resultado mostra</b>' + e.geral.map(x => '<p>' + escV253(x) + '</p>').join('')
+    + '<ul>' + e.cores.map(x => '<li><span class="v253-semaforo ' + x.cls + '">' + x.semaforo + '</span> ' + escV253(x.texto) + '</li>').join('') + '</ul></div>'
+    + '<div class="table-wrap"><table id="v253NcmResumoTable"><thead><tr class="excel-header"><th>Semáforo</th><th>O que significa</th><th>Códigos</th><th>Valor movimentado</th><th>Participação</th><th>Carga atual (PIS+COFINS+IPI)</th><th>IBS+CBS 2033 estimado</th><th>Diferença 2033</th></tr></thead><tbody>'
+    + r.linhas.map(x => tr(x, false)).join('') + tr(r.total, true) + '</tbody></table></div>'
+    + '<div class="v276-ajuda"><div><b>Como ler cada coluna</b><dl>' + e.colunas.map(c => '<dt>' + escV253(c[0]) + '</dt><dd>' + escV253(c[1]) + '</dd>').join('') + '</dl>'
+    + (e.exemplo ? '<p class="v276-exemplo"><b>Exemplo de cálculo.</b> ' + escV253(e.exemplo) + '</p>' : '') + '</div>'
+    + '<div class="v276-avisos"><b>Atenção ao interpretar</b><ul>' + e.avisos.map(x => '<li>' + escV253(x) + '</li>').join('') + '</ul></div></div>';
 }
 function renderNcmV253(){
   if (!state.items.length){ const i = $id('v253NcmInfo'); if (i) i.textContent = 'Nenhum documento processado.'; return; }
@@ -715,6 +766,14 @@ style.textContent = [
   '.v253-obs{font-size:11px;color:#54636f}',
   '.v253-neg{color:#a32020}.v253-pos{color:#1c6b1c}',
   '#v253NcmResumo .table-wrap{height:auto!important;min-height:0!important;max-height:none!important}#v253NcmResumoTable{width:100%}#v253NcmResumoTable th{white-space:normal!important}#v253NcmResumoTable td.v253-num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}#v253NcmResumoTable td{font-size:12px}#v253NcmResumoTable tr.v253-resumo-total td{font-weight:700;border-top:2px solid #8d8d8d;background:#f4f4f4}',
+  '.v276-intro{margin:4px 0 10px;font-size:13px;line-height:1.5;color:#33475B}',
+  '.v276-conclusao{margin:0 0 12px;padding:12px 14px;border:1px solid #C6C6C6;border-left:4px solid #123D60;background:#F4F7FA;font-size:13px;line-height:1.55;color:#182936}',
+  '.v276-conclusao>b{display:block;margin-bottom:4px;color:#123D60}.v276-conclusao p{margin:0 0 4px}.v276-conclusao ul{margin:8px 0 0;padding:0;list-style:none}.v276-conclusao li{margin:5px 0}',
+  '#v253NcmResumoTable{table-layout:auto!important;min-width:0!important;width:100%!important}#v253NcmResumoTable th,#v253NcmResumoTable td{padding-left:8px!important;padding-right:8px!important;min-width:0!important;width:auto!important}#v253NcmResumoTable th:nth-child(n+3){text-align:right!important}#v253NcmResumoTable td.v276-leitura{white-space:normal!important;min-width:230px;line-height:1.45}#v253NcmResumoTable td.v276-leitura small{display:block;margin-top:4px;font-size:11px;color:#54636f}',
+  '.v276-ajuda{display:grid;grid-template-columns:1.4fr 1fr;gap:14px;margin-top:12px;font-size:12px;line-height:1.5;color:#33475B}.v276-ajuda>div{border:1px solid #C6C6C6;padding:12px 14px;background:#fff}.v276-ajuda b{color:#123D60}',
+  '.v276-ajuda dl{margin:6px 0 0;display:grid;grid-template-columns:minmax(150px,auto) 1fr;gap:5px 12px}.v276-ajuda dt{font-weight:700;color:#182936}.v276-ajuda dd{margin:0}',
+  '.v276-exemplo{margin:10px 0 0;padding-top:8px;border-top:1px solid #E0E0E0}.v276-avisos{border-left:4px solid #F1C21B!important}.v276-avisos ul{margin:6px 0 0;padding-left:18px}.v276-avisos li{margin:5px 0}',
+  '@media(max-width:1100px){.v276-ajuda{grid-template-columns:1fr}}',
   '#v253FornTable td,#v253NcmTable td{font-size:12px}',
   '#v253FornTable td:nth-child(12),#v253NcmTable td:nth-child(8){white-space:nowrap}'
 ].join('');
@@ -724,6 +783,8 @@ criarAbaV253();
 /* exposição para testes focados e uso avançado */
 window.v253Semaforo = semaforoV253;
 window.v253ResumoSemaforo = resumoSemaforoV253;
+window.v276ExplicacaoSemaforo = explicacaoSemaforoV253;
+window.V276_CARREGADO = true;
 window.v253FormatarExport = formatarExportV253;
 window.v253TaxasAno = taxasAnoV253;
 window.v253Efeito = efeitoV253;
