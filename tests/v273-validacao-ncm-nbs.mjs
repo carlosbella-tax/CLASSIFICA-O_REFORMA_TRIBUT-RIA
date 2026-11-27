@@ -45,7 +45,7 @@ teste('tela: quadro acima da tabela, quatro situações e duas colunas novas em 
  assert.equal(c.querySelector('.v273-tile.ok b').textContent,'3');assert.match(c.querySelector('.v273-tile.ok small').textContent,/R\$\s1\.750,50/);assert.equal(c.querySelectorAll('#v273Tabela tbody tr').length,5);
  const tb=d.querySelector('#observacoes .v180-enquadramento .v180-scroll table'),ths=[...tb.tHead.rows[0].cells].map(x=>x.textContent);
  assert.equal(ths[5],'CST / cClassTrib no documento');assert.equal(ths[6],'Validação NCM/NBS');
- const linhas=[...tb.tBodies[0].rows];assert.equal(linhas.length,6);assert.equal(linhas[0].cells[5].textContent,'200 / 200035');assert.match(linhas[0].cells[6].textContent,/^CORRETO/);assert.match(linhas[2].cells[6].textContent,/^ATUALIZAR/);assert.equal(linhas[4].cells[5].textContent,'não informado');
+ const linhas=[...tb.tBodies[0].rows];assert.equal(linhas.length,6);assert.match(linhas[0].cells[5].textContent,/^200 \/ 200035/);assert.match(linhas[0].cells[6].textContent,/^CORRETO/);assert.match(linhas[2].cells[6].textContent,/^ATUALIZAR/);assert.equal(linhas[4].cells[5].textContent,'não informado');
  V.render();assert.equal([...tb.tHead.rows[0].cells].filter(x=>x.textContent==='Validação NCM/NBS').length,1)});
 teste('filtro por situação e exportação em Excel com três planilhas',()=>{d.querySelector('[data-v273-filtro="ATUALIZAR"]').click();
  assert.equal(d.querySelectorAll('#v273Tabela tbody tr').length,1);assert.ok(d.querySelector('.v273-tile.ruim.ativo'));d.querySelector('[data-v273-filtro="ATUALIZAR"]').click();assert.equal(d.querySelectorAll('#v273Tabela tbody tr').length,5);

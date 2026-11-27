@@ -25,10 +25,23 @@
     const cst=dig(campo(r,'CST')||r.cst_ibs_cbs||n.cst_ibs_cbs),cc=dig(campo(r,'cClassTrib')||r.cclasstrib||n.cclasstrib);
     return {cst:cst?cst.padStart(3,'0'):'',cc:cc?cc.padStart(6,'0'):''};
   }
+  /* V274 — CST (coluna A), Descrição CST-IBS/CBS (coluna B) e cClassTrib (coluna C) vêm da Tabela IT 2025.002;
+     o Portal CST/cClassTrib só é usado se o código não estiver na tabela carregada. */
+  const ROTULO_DFE={NFeABI:'NF-e ABI',NFe:'NF-e',NFCe:'NFC-e',CTe:'CT-e',CTeOS:'CT-e OS',BPe:'BP-e',BPeTA:'BP-e TA',BPeTM:'BP-e TM',NF3e:'NF3-e',NFSe:'NFS-e',NFSeVia:'NFS-e Via',NFCom:'NFCom',NFAg:'NFAg',NFGas:'NFGas',DERE:'DERE',DIR:'DIR',DUIMP:'DUIMP'};
+  const fonteIt=()=>window.IT_2025_002?'Tabela IT 2025.002 v.'+window.IT_2025_002.versao:'';
+  const nomeCst=cst=>cst?String(window.IT_2025_002?.csts?.[cst]?.nome||''):'';
   function classeOficial(cc){
+    const it=window.classificadorIt2025002?.(cc);
+    if(it)return {cst:it.cst,descCst:it.descCst||it.nomeCst,nome:String(it.nome||it.descricao||'').trim(),encerrado:!!it.fim&&it.fim<hoje(),fim:it.fim,red:Number(it.redIbs)||0,docs:it.docs||[],nfse:(it.docs||[]).includes('NFSe')};
     const cl=window.classificadorReferenciaClasse?.(cc)?.classificacao;if(!cl)return null;
-    const fim=String(cl.DthFimVig||'').slice(0,10);
-    return {cst:String(cl.Cst||cc.slice(0,3)),nome:String(cl.NomeReduzido||cl.NomeClassTrib||'').trim(),encerrado:!!fim&&fim<hoje(),fim,red:Number(cl.PercRedIbs)||0,nfse:cl.IndNfse};
+    const fim=String(cl.DthFimVig||'').slice(0,10),cst=String(cl.Cst||cc.slice(0,3));
+    return {cst,descCst:nomeCst(cst),nome:String(cl.NomeReduzido||cl.NomeClassTrib||'').trim(),encerrado:!!fim&&fim<hoje(),fim,red:Number(cl.PercRedIbs)||0,docs:null,nfse:cl.IndNfse};
+  }
+  /* documento fiscal do item, na sigla da tabela; vazio quando o modelo não é conhecido (não confere) */
+  function tipoDfe(r,servico){
+    if(servico)return 'NFSe';
+    const m=dig(r.modelo||r.modelo_documento);
+    return m==='55'?'NFe':m==='65'?'NFCe':m==='57'?'CTe':m==='67'?'CTeOS':'';
   }
   const vigente=x=>{const h=hoje(),i=String(x?.DthIniVig||'').slice(0,10),f=String(x?.DthFimVig||'').slice(0,10);return(!i||i<=h)&&(!f||f>=h)};
   /* vínculos oficiais vigentes do NCM (Portal CST/cClassTrib) — usados só para confirmar ou alertar */
@@ -38,14 +51,15 @@
   }
   const nomeClasse=cc=>{const o=classeOficial(cc);return o&&o.nome?cc+' ('+o.nome+')':cc};
   /* conferências que não dependem da relação: existência, vigência e CST do cClassTrib informado */
-  function conferirOficial(doc,servico){
+  function conferirOficial(doc,servico,dfe){
     if(!doc.cc)return 'Documento informa o CST '+doc.cst+' sem o cClassTrib; informar o cClassTrib.';
     const of=classeOficial(doc.cc);
     if(!of)return 'cClassTrib '+doc.cc+' não existe na tabela oficial de classificação tributária; corrigir.';
     if(of.encerrado)return 'cClassTrib '+doc.cc+' está com a vigência encerrada na tabela oficial desde '+of.fim.split('-').reverse().join('/')+'; substituir.';
     if(!doc.cst)return 'Documento informa o cClassTrib '+doc.cc+' sem o CST; informar o CST '+of.cst+'.';
     if(doc.cst!==of.cst)return 'CST do documento é '+doc.cst+', mas o cClassTrib '+doc.cc+' pertence ao CST '+of.cst+'; corrigir o CST.';
-    if(servico&&of.nfse===false)return 'cClassTrib '+doc.cc+' não é aceito em NFS-e na tabela oficial; substituir.';
+    if(servico&&of.nfse===false)return 'cClassTrib '+doc.cc+' não é aceito em NFS-e na tabela oficial'+(of.docs&&of.docs.length?' (aceito em: '+of.docs.map(d=>ROTULO_DFE[d]||d).join(', ')+')':'')+'; substituir.';
+    if(!servico&&dfe&&of.docs&&!of.docs.includes(dfe))return 'cClassTrib '+nomeClasse(doc.cc)+' não é aceito em '+ROTULO_DFE[dfe]+' na tabela oficial'+(of.docs.length?' (aceito em: '+of.docs.map(d=>ROTULO_DFE[d]||d).join(', ')+')':'')+'; substituir.';
     return '';
   }
   const saida=(base,status,acao)=>({...base,status,acao});
@@ -61,7 +75,7 @@
     Object.assign(base,{descricao:ref.descricao,relClasse:esperados.join(' / '),relCst:unicos(esperados.map(c=>classeOficial(c)?.cst||c.slice(0,3))).join(' / '),anexo});
     const pelaRelacao='CST '+base.relCst+' · cClassTrib '+base.relClasse;
     if(!doc.cst&&!doc.cc)return saida(base,STATUS.SEM,'Ao emitir, usar pela relação: '+pelaRelacao+(cands.length?' (candidatos do capítulo; confirmar o item no anexo).':'.'));
-    const erro=conferirOficial(doc,false);if(erro)return saida(base,STATUS.ATUALIZAR,erro);
+    const erro=conferirOficial(doc,false,tipoDfe(r,false));if(erro)return saida(base,STATUS.ATUALIZAR,erro);
     const oficiais=vinculosNcm(ncm),of=classeOficial(doc.cc),noPortal=oficiais.find(x=>x.cc===doc.cc);
     const divergeMotor=window.V254_DIVERGENCIAS_MOTOR_NCM&&Object.prototype.hasOwnProperty.call(window.V254_DIVERGENCIAS_MOTOR_NCM,ncm);
     const emRevisao=' NCM com enquadramento em revisão (Motor × Classificador).';
@@ -109,7 +123,10 @@
   function validar(r){
     r=r||{};const servico=!!window.classificadorV251EhNfse?.(r);
     const v=servico?validarServico(r):validarNcm(r);
-    return {...v,valor:num(r.valor_item||r.dados_nfse?.valor_servico)};
+    const of=v.docClasse?classeOficial(v.docClasse):null;
+    const docDescCst=of&&(!v.docCst||v.docCst===of.cst)?of.descCst:nomeCst(v.docCst);
+    const relDescCst=unicos((String(v.relClasse||'').match(/\d{6}/g)||[]).map(c=>classeOficial(c)?.descCst||'')).join(' / ');
+    return {...v,docDescCst:docDescCst||'',relDescCst,valor:num(r.valor_item||r.dados_nfse?.valor_servico)};
   }
   /* agrupa por código + o que o documento informa + situação; a ordem põe primeiro o que exige ação */
   function resumir(itens){
@@ -154,6 +171,8 @@
 .v273-tag{display:inline-block;padding:2px 7px;font:700 10.5px system-ui;white-space:nowrap}
 .v273-tag.ok{background:#DEFBE6;color:#0E6027}.v273-tag.ruim{background:#FFD7D9;color:#A2191F}.v273-tag.conf{background:#FCF4D6;color:#684E00}.v273-tag.sem{background:#E0E0E0;color:#393939}
 td.v273-col small{display:block;margin-top:4px;white-space:normal;min-width:260px;line-height:1.4;color:#42566B}
+td.v273-col:nth-of-type(6) small{min-width:150px}
+small.v274-desc{display:block;margin-top:4px;white-space:normal;min-width:120px;line-height:1.4;color:#42566B}
 @media print{.v273-wrap{max-height:none!important;overflow:visible!important}.v273-barra{display:none!important}}`;
   document.head.appendChild(st);
 
@@ -165,11 +184,11 @@ td.v273-col small{display:block;margin-top:4px;white-space:normal;min-width:260p
     const tiles=ORDEM.map(s=>{const t=res.totais[s];return '<button type="button" class="v273-tile '+CLS[s]+(filtro===s?' ativo':'')+'" data-v273-filtro="'+esc(s)+'" title="Mostrar só esta situação"><span>'+esc(s)+'</span><b>'+t.itens+'</b><small>'+t.codigos+' código(s) · '+real(t.valor)+'<br>'+esc(LEITURA[s])+'</small></button>'}).join('');
     const linhas=res.grupos.filter(g=>!filtro||g.status===filtro);
     return '<h2>Validação do CST e do cClassTrib — NCM e NBS</h2>'
-      +'<p class="v273-sub">Compara o CST e o cClassTrib de IBS/CBS de cada item do documento com a relação de NCM (TIPI - Base Completa) e com a relação de NBS × código de serviço. '+res.total+' item(ns) analisado(s). A relação de NCM é por capítulo: indica candidatos, e o item precisa constar no anexo.</p>'
+      +'<p class="v273-sub">Compara o CST e o cClassTrib de IBS/CBS de cada item do documento com a relação de NCM (TIPI - Base Completa) e com a relação de NBS × código de serviço. '+res.total+' item(ns) analisado(s). A relação de NCM é por capítulo: indica candidatos, e o item precisa constar no anexo.'+(fonteIt()?' CST, descrição do CST, vigência e documentos aceitos de cada cClassTrib: '+esc(fonteIt())+'.':'')+'</p>'
       +'<div class="v273-tiles">'+tiles+'</div>'
       +'<div class="v273-barra"><span>'+(filtro?'Mostrando: <b>'+esc(filtro)+'</b> · '+linhas.length+' linha(s). Clique de novo no quadro para ver todas.':linhas.length+' linha(s), uma por código e situação; primeiro o que exige ação.')+'</span><button type="button" class="secondary" id="v273-exportar">⬇ Exportar validação em Excel</button></div>'
-      +'<div class="v273-wrap"><table id="v273Tabela"><thead><tr><th>Situação</th><th>NCM ou NBS</th><th>Descrição</th><th>Itens</th><th>Valor</th><th>No documento<br>CST / cClassTrib</th><th>Na relação<br>CST / cClassTrib</th><th>O que fazer</th></tr></thead><tbody>'
-      +(linhas.length?linhas.map(g=>'<tr><td class="s">'+tag(g.status)+'</td><td class="c"><b>'+esc(g.tipo)+'</b> '+esc(g.codigo)+(g.servico?'<small>Serviço '+esc(g.servico)+'</small>':'')+'</td><td class="d">'+esc(g.descricao||'—')+'</td><td class="n">'+g.itens+'</td><td class="n">'+real(g.valor)+'</td><td class="c">'+esc(docTxt(g))+'</td><td>'+esc(relTxt(g))+(g.anexo?'<small>'+esc(g.anexo)+'</small>':'')+'</td><td class="a">'+esc(g.acao)+'</td></tr>').join(''):'<tr><td colspan="8">Nenhuma linha nesta situação.</td></tr>')
+      +'<div class="v273-wrap"><table id="v273Tabela"><thead><tr><th>Situação</th><th>NCM ou NBS</th><th>Descrição</th><th>Itens</th><th>Valor</th><th>No documento<br>CST / cClassTrib<br>Descrição do CST</th><th>Na relação<br>CST / cClassTrib<br>Descrição do CST</th><th>O que fazer</th></tr></thead><tbody>'
+      +(linhas.length?linhas.map(g=>'<tr><td class="s">'+tag(g.status)+'</td><td class="c"><b>'+esc(g.tipo)+'</b> '+esc(g.codigo)+(g.servico?'<small>Serviço '+esc(g.servico)+'</small>':'')+'</td><td class="d">'+esc(g.descricao||'—')+'</td><td class="n">'+g.itens+'</td><td class="n">'+real(g.valor)+'</td><td>'+esc(docTxt(g))+(g.docDescCst?'<small>'+esc(g.docDescCst)+'</small>':'')+'</td><td>'+esc(relTxt(g))+(g.relDescCst?'<small><b>'+esc(g.relDescCst)+'</b></small>':'')+(g.anexo?'<small>'+esc(g.anexo)+'</small>':'')+'</td><td class="a">'+esc(g.acao)+'</td></tr>').join(''):'<tr><td colspan="8">Nenhuma linha nesta situação.</td></tr>')
       +'</tbody></table></div>';
   }
   let ultimo=null;
@@ -177,10 +196,12 @@ td.v273-col small{display:block;margin-top:4px;white-space:normal;min-width:260p
     const tb=sec.querySelector('.v180-enquadramento .v180-scroll table');if(!tb||tb.dataset.v273)return;
     tb.dataset.v273='1';   /* marca antes: evita remontar em laço se as linhas não baterem */
     const trs=tb.tBodies[0]?[...tb.tBodies[0].rows]:[];if(trs.length!==res.porItem.length)return;
+    /* descrição do CST (Tabela IT 2025.002) abaixo da CST recomendada, quando há cClassTrib recomendado */
+    trs.forEach(tr=>{const c=tr.cells[3],k=tr.cells[4];if(!c||!k)return;const d=unicos((k.textContent.match(/\d{6}/g)||[]).map(x=>classeOficial(x)?.descCst||''));if(d.length)c.insertAdjacentHTML('beforeend','<small class="v274-desc">'+esc(d.join(' / '))+'</small>')});
     const ths=tb.tHead.rows[0].cells,ref=ths[4];
     ref.insertAdjacentHTML('afterend','<th>CST / cClassTrib no documento</th><th>Validação NCM/NBS</th>');
     trs.forEach((tr,i)=>{const v=res.porItem[i],c=tr.cells[4];if(!c)return;
-      c.insertAdjacentHTML('afterend','<td class="v273-col">'+esc(docTxt(v))+'</td><td class="v273-col">'+tag(v.status)+'<small>'+esc(v.acao)+'</small></td>')});
+      c.insertAdjacentHTML('afterend','<td class="v273-col">'+esc(docTxt(v))+(v.docDescCst?'<small>'+esc(v.docDescCst)+'</small>':'')+'</td><td class="v273-col">'+tag(v.status)+'<small>'+esc(v.acao)+'</small></td>')});
   }
   function render(){
     const sec=document.getElementById('observacoes');if(!sec)return;
@@ -197,7 +218,7 @@ td.v273-col small{display:block;margin-top:4px;white-space:normal;min-width:260p
   function exportar(){
     if(!ultimo||typeof gerarXlsx!=='function')return;
     const itens=typeof state!=='undefined'&&state.items||[],f=l=>typeof window.v253FormatarExport==='function'?window.v253FormatarExport(l):l;
-    const linha=v=>({situacao:v.status,tipo:v.tipo,codigo:v.codigo,servico:v.servico,descricao:v.descricao,cst_documento:v.docCst,cclasstrib_documento:v.docClasse,cst_relacao:v.relCst,cclasstrib_relacao:v.relClasse,anexo_relacao:v.anexo,o_que_fazer:v.acao});
+    const linha=v=>({situacao:v.status,tipo:v.tipo,codigo:v.codigo,servico:v.servico,descricao:v.descricao,cst_documento:v.docCst,descricao_cst_documento:v.docDescCst,cclasstrib_documento:v.docClasse,cst_relacao:v.relCst,descricao_cst_relacao:v.relDescCst,cclasstrib_relacao:v.relClasse,anexo_relacao:v.anexo,o_que_fazer:v.acao});
     const resumo=ORDEM.map(s=>({situacao:s,leitura:LEITURA[s],itens:ultimo.totais[s].itens,codigos:ultimo.totais[s].codigos,valor:ultimo.totais[s].valor}));
     const porCodigo=ultimo.grupos.map(g=>({...linha(g),itens:g.itens,valor:g.valor}));
     const porItem=ultimo.porItem.map((v,i)=>{const r=itens[i]||{};return {documento:r.numero_documento||'',chave:r.chave_documento||r.chave_nota_fiscal||'',codigo_item:r.codigo_produto||r.cProd||'',descricao_item:r.descricao_item||r.descricao_produto||r.dados_nfse?.descricao_servico||'',...linha(v),valor:v.valor}});
@@ -218,6 +239,6 @@ td.v273-col small{display:block;margin-top:4px;white-space:normal;min-width:260p
       if(a&&(!document.getElementById('v273-validacao')||(tb&&!tb.dataset.v273))){pendente=true;setTimeout(()=>{pendente=false;render()},0)}
     }).observe(sec,{childList:true,subtree:true});
   }
-  window.classificadorV273={validar,validarNcm,validarServico,resumir,render,exportar,STATUS};
+  window.classificadorV273={classeOficial,tipoDfe,validar,validarNcm,validarServico,resumir,render,exportar,STATUS};
   window.V273_CARREGADO=true;
 })();

@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V274 — 2026-11-27
+
+- Validacao NCM/NBS passa a usar a Tabela IT 2025.002 v.1.71: CST (coluna A), Descricao CST-IBS/CBS (coluna B) e cClassTrib (coluna C); descricao do CST exibida e exportada; cClassTrib nao aceito no tipo de documento e apontado
+
 ## V273 — 2026-11-27
 
 - Enquadramento recomendado: validacao do CST e do cClassTrib de cada item contra a relacao de NCM (TIPI - Base Completa) e de NBS x servico; relacao NBS atualizada pela planilha de 27/11/2026
