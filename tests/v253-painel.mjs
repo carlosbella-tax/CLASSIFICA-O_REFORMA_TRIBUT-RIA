@@ -70,4 +70,7 @@ await teste('V270 — resumo por semáforo: códigos e valores somados por cor, 
  const box=w.document.getElementById('v253NcmResumo');assert.ok(box);assert.equal(box.hidden,false);assert.equal(box.previousElementSibling.querySelector('#v253NcmTable')!==null,true);
  const trs=box.querySelectorAll('tbody tr');assert.equal(trs.length,5);assert.match(trs[4].textContent,/^TOTAL/);assert.match(box.textContent,/Resumo por semáforo/);assert.match(trs[0].textContent,/R\$/);
  const z=w.v253ResumoSemaforo([]);assert.equal(z.total.codigos,0);assert.equal(z.total.participacao,0)});
+await teste('V272 — exportação: valores com duas casas no padrão 0.000,00, percentual com %, contagens inteiras e textos intactos',()=>{const r=w.v253FormatarExport([{cnpj:'00.000.000/0001-91',notas:3,itens:12,valor_total:85000,participacao:35.8634,pis:1402.5,cofins:0,ibs_cbs_2033:34925.950000000004,aliq_cbs_ef:11.3,compras:1234567.891,regime:'Simples'}])[0];
+ assert.equal(r.valor_total,'85.000,00');assert.equal(r.participacao,'35,86%');assert.equal(r.pis,'1.402,50');assert.equal(r.cofins,'0,00');assert.equal(r.ibs_cbs_2033,'34.925,95');assert.equal(r.aliq_cbs_ef,'11,30%');assert.equal(r.compras,'1.234.567,89');
+ assert.equal(r.notas,3);assert.equal(r.itens,12);assert.equal(r.cnpj,'00.000.000/0001-91');assert.equal(r.regime,'Simples');assert.equal(w.v253FormatarExport([]).length,0)});
 w.close();console.log(`${ok} testes focados V253 OK`);

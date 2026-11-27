@@ -91,7 +91,7 @@
   document.addEventListener('click',e=>{
     if(!e.target.closest('#v270-exportar')||!ultima)return;
     const l=linhasExcel(ultima);if(!l.length)return;
-    if(typeof gerarXlsx==='function')gerarXlsx('ANALISE_CREDITO_FORNECEDORES_'+new Date().toISOString().slice(0,10)+'.xlsx',[['Crédito por fornecedor',l]]);
+    if(typeof gerarXlsx==='function')gerarXlsx('ANALISE_CREDITO_FORNECEDORES_'+new Date().toISOString().slice(0,10)+'.xlsx',[['Crédito por fornecedor',typeof window.v253FormatarExport==='function'?window.v253FormatarExport(l):l]]);
   });
   window.classificadorV270={tipoRegime,classificar,analisar,render,linhasExcel};
   window.V270_CARREGADO=true;

@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V272 — 2026-11-27
+
+- Exportacoes de Fornecedores, credito e Analise por NCM com valores em duas casas decimais (0.000,00)
+
 ## V271 — 2026-11-27
 
 - Botao Imprimir apuracao em PDF na Apuracao assistida da CBS; ajuste do quadro Resumo por semaforo
