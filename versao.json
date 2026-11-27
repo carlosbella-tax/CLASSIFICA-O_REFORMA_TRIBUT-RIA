@@ -1,5 +1,5 @@
 {
-  "versao": 272,
+  "versao": 273,
   "data": "2026-11-27",
-  "descricao": "Exportacoes de Fornecedores, credito e Analise por NCM com valores em duas casas decimais (0.000,00)"
+  "descricao": "Enquadramento recomendado: validacao do CST e do cClassTrib de cada item contra a relacao de NCM (TIPI - Base Completa) e de NBS x servico; relacao NBS atualizada pela planilha de 27/11/2026"
 }

@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V273 — 2026-11-27
+
+- Enquadramento recomendado: validacao do CST e do cClassTrib de cada item contra a relacao de NCM (TIPI - Base Completa) e de NBS x servico; relacao NBS atualizada pela planilha de 27/11/2026
+
 ## V272 — 2026-11-27
 
 - Exportacoes de Fornecedores, credito e Analise por NCM com valores em duas casas decimais (0.000,00)
