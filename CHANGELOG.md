@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V277 — 2026-11-27
+
+- Nova tela Calculo 2026 a 2033 por item, no menu depois de Base de IBS/CBS: por item (NCM ou NBS) os tributos de hoje (ICMS, ISS, IPI, PIS, COFINS), a base de IBS/CBS (valor do item - ICMS - ISS - PIS - COFINS) e a projecao de CBS, IBS estadual e IBS municipal de 2026 a 2033 pelo cronograma, conforme CST e cClassTrib; resumo por ano e exportacao
+
 ## V276 — 2026-11-27
 
 - Analise por NCM: Resumo por semaforo mais explicativo, com a conclusao em numeros, o significado e a acao de cada cor, como ler cada coluna, exemplo de calculo e avisos de interpretacao; exportacao com a aba Como ler o resumo
