@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V280 — 2026-11-28
+
+- Relogio do tempo de processamento anda sozinho pela tela: desliza devagar e rebate nas bordas enquanto esta visivel; arrastar continua valendo e o relogio segue andando de onde foi solto; duplo clique para no canto e outro duplo clique solta
+
 ## V279 — 2026-11-28
 
 - Calculo 2026 a 2033 por item: PIS e COFINS calculados pelo regime tributario informado (Lucro Real 1,65% e 7,60%; Lucro Presumido 0,65% e 3,00%) para chegar ao novo valor do item (valor - ICMS - ISS - PIS - COFINS), base do IBS e da CBS; indicador, filtro e colunas dos itens com reducao de aliquota de IBS e CBS
