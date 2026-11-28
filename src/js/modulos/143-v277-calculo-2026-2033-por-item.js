@@ -7,6 +7,11 @@
      2027; ICMS e ISS reduzidos de 2029 a 2032 e extintos em 2033.
    CST e cClassTrib vêm do documento quando ele informa um código válido (Tabela IT 2025.002); senão, da
    relação de NCM (TIPI) ou de NBS e serviços, pelo mesmo motor das telas Análise por NCM e Apuração.
+   V279 — PIS e COFINS pelo regime tributário informado na primeira tela (Lucro Real 1,65% e 7,60%;
+   Lucro Presumido 0,65% e 3,00%), aplicados sobre o valor do item, para chegar ao novo valor do item
+   (valor − ICMS − ISS − PIS − COFINS), que é a base do IBS e da CBS. Sem regime informado, ou no Simples
+   Nacional, valem o PIS e a COFINS destacados no documento. Indicador, filtro e colunas para os itens
+   com redução de alíquota de IBS e CBS.
    Somente leitura: não altera os itens, os impostos da nota nem o enquadramento. */
 (function(){
   if (window.V277_CARREGADO) return;
@@ -51,6 +56,17 @@
     return i===1?'CBS integral; PIS e COFINS extintos; IPI com alíquota zero':'CBS integral; IBS ainda em teste';
   }
 
+  /* ---------- regime tributário informado: alíquotas de PIS e COFINS usadas no novo valor do item ---------- */
+  const REGIMES={'Lucro Real':{pis:1.65,cofins:7.6},'Lucro Presumido':{pis:0.65,cofins:3}};
+  function regime(nome){
+    nome=String(nome===undefined?(($('regimeEmpresa')||{}).value||''):nome).trim();
+    const a=REGIMES[nome]||null;
+    return {nome,aplica:!!a,pis:a?a.pis:0,cofins:a?a.cofins:0,
+      texto:a?nome+': PIS de '+pct(a.pis)+' e COFINS de '+pct(a.cofins)+' calculados sobre o valor do item'
+        :nome?nome+': sem alíquota própria de PIS e COFINS; valem os valores destacados nos documentos'
+        :'Regime tributário não informado: valem o PIS e a COFINS destacados nos documentos'};
+  }
+
   /* ---------- identificação do item: NCM, NBS ou código de serviço ---------- */
   const ehNfse=r=>typeof window.classificadorV251EhNfse==='function'?!!window.classificadorV251EhNfse(r):/NFS/i.test(String(r.tipo_documento||''));
   function codigoDe(r){
@@ -67,6 +83,8 @@
   const tabelaIt=cc=>typeof window.classificadorIt2025002==='function'?window.classificadorIt2025002(cc):null;
   const nomeCst=cst=>String((window.IT_2025_002&&window.IT_2025_002.csts&&window.IT_2025_002.csts[cst]||{}).nome||'');
   const cacheRelacao=new Map;
+  /* maior redução prevista na Tabela IT entre os cClassTrib listados (hipóteses ainda não confirmadas) */
+  const maiorReducao=codigos=>Math.max(0,...[...new Set(String(codigos||'').match(/\d{6}/g)||[])].map(x=>{const t=tabelaIt(x);return t?Math.max(Number(t.redIbs)||0,Number(t.redCbs)||0):0}));
   /* pela relação de NCM (TIPI) ou de NBS e serviços: mesmo motor da Análise por NCM e da Apuração */
   function pelaRelacao(r,c){
     const k=c.tipo+'|'+c.codigo+'|'+c.servico;
@@ -80,11 +98,12 @@
     const red=ref.reducao===null||ref.reducao===undefined?0:(Number(ref.reducao)||0);
     const it=cc?tabelaIt(cc):null;
     const e={origem:c.tipo==='NCM'?'Relação de NCM (TIPI)':c.tipo?'Relação de NBS e serviços':'Sem NCM ou NBS',
-      cst:cst||(it?it.cst:'—'),cc:cc||lista.join(' / ')||'—',descCst:(it&&it.descCst)||nomeCst(cst),redIbs:red,redCbs:red,situacao:S.CALC,obs:'',calcula:true,zero:false};
+      cst:cst||(it?it.cst:'—'),cc:cc||lista.join(' / ')||'—',descCst:(it&&it.descCst)||nomeCst(cst),redIbs:red,redCbs:red,situacao:S.CALC,obs:'',calcula:true,zero:false,possivel:0};
+    const talvez=Math.max(red,maiorReducao(lista.join(' ')));
     if(!c.tipo){e.situacao=S.CONF;e.obs='Item sem NCM de 8 dígitos e sem NBS; calculado com tributação integral.'}
-    else if(revisao){e.situacao=S.CONF;e.redIbs=e.redCbs=0;e.revisao=true;if(!lista.length)e.descCst='Em revisão';e.obs='Enquadramento em revisão'+(lista.length>1?' (hipóteses: '+lista.join(' / ')+')':'')+'; calculado sem redução.'}
-    else if(!cc){e.situacao=S.CONF;e.redIbs=e.redCbs=0;e.obs='Mais de uma hipótese de cClassTrib ('+lista.join(' / ')+'); calculado sem redução.'}
-    else if(cc!=='000001'&&!(red>0)){e.situacao=S.CONF;e.obs='cClassTrib '+cc+(it&&Number(it.redIbs)>0?' (redução de '+pct(Number(it.redIbs))+' na tabela)':'')+' indicado pela relação, sem confirmação de que se aplica ao item; calculado sem redução.'}
+    else if(revisao){e.situacao=S.CONF;e.redIbs=e.redCbs=0;e.possivel=talvez;e.revisao=true;if(!lista.length)e.descCst='Em revisão';e.obs='Enquadramento em revisão'+(lista.length>1?' (hipóteses: '+lista.join(' / ')+')':'')+'; calculado sem redução.'}
+    else if(!cc){e.situacao=S.CONF;e.redIbs=e.redCbs=0;e.possivel=talvez;e.obs='Mais de uma hipótese de cClassTrib ('+lista.join(' / ')+'); calculado sem redução.'}
+    else if(cc!=='000001'&&!(red>0)){e.situacao=S.CONF;e.possivel=talvez;e.obs='cClassTrib '+cc+(it&&Number(it.redIbs)>0?' (redução de '+pct(Number(it.redIbs))+' na tabela)':'')+' indicado pela relação, sem confirmação de que se aplica ao item; calculado sem redução.'}
     cacheRelacao.set(k,e);
     return {...e};
   }
@@ -111,18 +130,20 @@
     const doc=v?peloDocumento(v):null;if(doc)return doc;
     const e=pelaRelacao(r,c);
     /* em revisão e sem hipótese no motor: mostra os códigos que a relação de NCM/NBS lista para o item */
-    if(e.revisao&&e.cc==='—'&&v&&v.relClasse){e.cc=v.relClasse;e.cst=v.relCst||'—';e.descCst=v.relDescCst||'Em revisão';e.obs='Enquadramento em revisão (a relação lista '+v.relClasse+'); calculado sem redução.'}
+    if(e.revisao&&e.cc==='—'&&v&&v.relClasse){e.possivel=Math.max(e.possivel||0,maiorReducao(v.relClasse));e.cc=v.relClasse;e.cst=v.relCst||'—';e.descCst=v.relDescCst||'Em revisão';e.obs='Enquadramento em revisão (a relação lista '+v.relClasse+'); calculado sem redução.'}
     if(v&&(v.docClasse||v.docCst))e.obs='Documento informa '+[v.docCst&&'CST '+v.docCst,v.docClasse&&'cClassTrib '+v.docClasse].filter(Boolean).join(' e ')+', que precisa de ajuste (ver Enquadramento recomendado); projeção feita pela relação.'+(e.obs?' '+e.obs:'');
     return e;
   }
 
   /* ---------- cálculo de um item ---------- */
-  function calcular(r,cr){
-    r=r||{};cr=cr||cronograma();
+  function calcular(r,cr,reg){
+    r=r||{};cr=cr||cronograma();reg=reg||regime();
     const c=codigoDe(r),e=enquadrar(r,c),n=r.dados_nfse||{};
     const valor=n2(numero(r.valor_item||n.valor_servico));
     const icms=n2(typeof valorIcms==='function'?valorIcms(r,'vICMS'):0),iss=n2(grupo(r,'ISSQN','vISSQN')||numero(n.valor_iss));
-    const ipi=n2(grupo(r,'IPI','vIPI')),pis=n2(grupo(r,'PIS','vPIS')),cofins=n2(grupo(r,'COFINS','vCOFINS'));
+    const ipi=n2(grupo(r,'IPI','vIPI')),pisDoc=n2(grupo(r,'PIS','vPIS')),cofinsDoc=n2(grupo(r,'COFINS','vCOFINS'));
+    /* PIS e COFINS: pelo regime informado (alíquota × valor do item); sem regime, os destacados no documento */
+    const pis=reg.aplica?n2(valor*reg.pis/100):pisDoc,cofins=reg.aplica?n2(valor*reg.cofins/100):cofinsDoc;
     const hojeT=n2(icms+iss+ipi+pis+cofins),base=n2(Math.max(0,valor-icms-iss-pis-cofins));
     const fIbs=!e.calcula||e.zero?0:Math.max(0,1-e.redIbs/100),fCbs=!e.calcula||e.zero?0:Math.max(0,1-e.redCbs/100);
     const anos=ANOS.map((ano,i)=>{
@@ -133,21 +154,27 @@
       const carga=n2(icmsA+issA+ipiA+pisA+cofinsA+(i?ibscbs:0));
       return {ano,aliqCbs,aliqIbsE,aliqIbsM,cbs,ibsE,ibsM,ibscbs,icms:icmsA,iss:issA,ipi:ipiA,pis:pisA,cofins:cofinsA,carga,diferenca:n2(carga-hojeT)};
     });
+    /* redução de alíquota: aplicada, a conferir (hipótese ainda não confirmada), sem IBS/CBS ou tributação integral */
+    const comRed=e.calcula&&!e.zero&&(e.redIbs>0||e.redCbs>0),possivel=e.calcula&&!e.zero&&!comRed?(Number(e.possivel)||0):0;
+    const reducao=!e.calcula?'NAO':e.zero?'SEM_ALIQ':comRed?'COM':possivel>0?'POSSIVEL':'SEM';
+    const economia33=comRed?n2(base*(cr.cbs[7]*(1-fCbs)+(cr.ibsE[7]+cr.ibsM[7])*(1-fIbs))/100):0;
+    const itCc=/^\d{6}$/.test(String(e.cc))?tabelaIt(e.cc):null;
     const op=String((typeof tipoOperacao==='function'?tipoOperacao(r):r.tipo_operacao)||'').toUpperCase();
     return {documento:String(r.numero_documento||''),emissao:dataBr(r.data_emissao),operacao:/^SA/.test(op)?'Saída':'Entrada',item:String(r.numero_item??''),
       emitente:String(r.emitente_razao_social||''),destinatario:String(r.destinatario_razao_social||''),chave:dig(r.chave_documento)||String(r.numero_documento||'')+'|'+dig(r.emitente_cnpj_cpf),
       tipo:c.tipo,codigo:c.codigo,rotulo:c.rotulo,servico:c.servico,descricao:String(r.descricao_item||n.descricao_servico||'').trim(),cfop:String(r.cfop||''),
       cst:e.cst,descCst:e.descCst,cc:e.cc,redIbs:e.redIbs,redCbs:e.redCbs,semAliquota:e.zero,origem:e.origem,situacao:e.situacao,obs:e.obs,calculado:e.calcula,
+      reducao,possivel,economia33,hipotese:String((itCc&&itCc.nome)||''),pisDoc,cofinsDoc,pisCofinsRegime:reg.aplica,
       valor,icms,iss,ipi,pis,cofins,hoje:hojeT,base,anos,itens:1,documentos:1};
   }
-  function projetar(itens,cr){cr=cr||cronograma();return (itens||[]).filter(Boolean).map(r=>calcular(r,cr))}
+  function projetar(itens,cr,reg){cr=cr||cronograma();reg=reg||regime();return (itens||[]).filter(Boolean).map(r=>calcular(r,cr,reg))}
 
   /* soma os itens de mesmo código e mesmo enquadramento (visão por NCM/NBS) */
-  const CAMPOS=['valor','icms','iss','ipi','pis','cofins','hoje','base'],CAMPOS_ANO=['cbs','ibsE','ibsM','ibscbs','icms','iss','ipi','pis','cofins','carga','diferenca'];
+  const CAMPOS=['valor','icms','iss','ipi','pis','cofins','hoje','base','pisDoc','cofinsDoc','economia33'],CAMPOS_ANO=['cbs','ibsE','ibsM','ibscbs','icms','iss','ipi','pis','cofins','carga','diferenca'];
   function agrupar(linhas){
     const m=new Map;
     for(const l of linhas||[]){
-      const k=[l.tipo,l.codigo,l.servico,l.cst,l.cc,l.redIbs,l.redCbs,l.origem,l.situacao].join('|');
+      const k=[l.tipo,l.codigo,l.servico,l.cst,l.cc,l.redIbs,l.redCbs,l.origem,l.situacao,l.reducao,l.possivel].join('|');
       let g=m.get(k);
       if(!g){g={...l,anos:l.anos.map(a=>({...a})),itens:0,docs:new Set,operacoes:new Set};for(const f of CAMPOS)g[f]=0;for(const a of g.anos)for(const f of CAMPOS_ANO)a[f]=0;m.set(k,g)}
       g.itens++;g.docs.add(l.chave);g.operacoes.add(l.operacao);
@@ -160,29 +187,33 @@
   }
   /* totais dos itens calculados; os de alíquota própria ficam fora, para a comparação não ficar incompleta */
   function totalizar(linhas){
-    const T={itens:0,codigos:0,fora:{itens:0,valor:0},anos:ANOS.map(ano=>({ano}))},cods=new Set;
+    const T={itens:0,codigos:0,fora:{itens:0,valor:0},red:{itens:0,valor:0,economia:0},conferir:{itens:0,valor:0},anos:ANOS.map(ano=>({ano}))},cods=new Set;
     for(const f of CAMPOS)T[f]=0;for(const a of T.anos)for(const f of CAMPOS_ANO)a[f]=0;
     for(const l of linhas||[]){
       if(!l.calculado){T.fora.itens+=l.itens;T.fora.valor+=l.valor;continue}
       T.itens+=l.itens;if(l.codigo)cods.add(l.tipo+l.codigo);
+      if(l.reducao==='COM'){T.red.itens+=l.itens;T.red.valor+=l.valor;T.red.economia+=l.economia33}
+      else if(l.reducao==='POSSIVEL'){T.conferir.itens+=l.itens;T.conferir.valor+=l.valor}
       for(const f of CAMPOS)T[f]+=l[f];
       l.anos.forEach((a,i)=>{for(const f of CAMPOS_ANO)T.anos[i][f]+=a[f]});
     }
     for(const f of CAMPOS)T[f]=n2(T[f]);for(const a of T.anos)for(const f of CAMPOS_ANO)a[f]=n2(a[f]);
-    T.fora.valor=n2(T.fora.valor);T.codigos=cods.size;
+    T.fora.valor=n2(T.fora.valor);T.red.valor=n2(T.red.valor);T.red.economia=n2(T.red.economia);T.conferir.valor=n2(T.conferir.valor);T.codigos=cods.size;
     return T;
   }
 
   /* ---------- textos de apoio ---------- */
-  function explicacao(cr){
-    cr=cr||cronograma();
+  function explicacao(cr,reg){
+    cr=cr||cronograma();reg=reg||regime();
     const trans=ANOS.map((a,i)=>cr.redAnt[i]>0&&cr.redAnt[i]<100?a+' ('+pct(cr.redAnt[i])+')':'').filter(Boolean);
     const fim=ANOS[cr.redAnt.findIndex(x=>x>=100)]||2033;
     const passos=[
-      ['Tributos de hoje','ICMS, ISS, IPI, PIS e COFINS destacados em cada item dos documentos carregados. Nenhum valor do documento é recalculado.'],
-      ['Base de IBS e CBS','Valor do item − ICMS − ISS − PIS − COFINS. Nas notas de serviço, o ISS ocupa o lugar do ICMS. A mesma base é usada de 2026 a 2033.'],
+      ['Tributos de hoje','ICMS, ISS e IPI destacados em cada item dos documentos carregados. '+(reg.aplica?'PIS e COFINS calculados pelo regime tributário informado.':'PIS e COFINS destacados nos documentos.')+' Nenhum valor do documento é alterado.'],
+      ['PIS e COFINS do regime',reg.aplica?reg.texto+', conforme o regime tributário informado na primeira tela.':reg.texto+'. Informe Lucro Real (1,65% e 7,60%) ou Lucro Presumido (0,65% e 3,00%) na primeira tela para calcular pelas alíquotas do regime.'],
+      ['Novo valor do item','Valor do item − ICMS − ISS − PIS − COFINS. Nas notas de serviço, o ISS ocupa o lugar do ICMS. É a base do IBS e da CBS, usada de 2026 a 2033.'],
+      ['Redução de alíquota','Cada NCM ou NBS é consultado na relação de NCM (TIPI) ou de NBS e serviços e na Tabela IT 2025.002. Quando o cClassTrib do item tem redução, a alíquota de IBS e CBS do ano é reduzida nesse percentual.'],
       ['IBS e CBS de cada ano','Base × alíquota do ano no cronograma (CBS, IBS estadual e IBS municipal), com a redução do cClassTrib do item.'],
-      ['PIS e COFINS','Extintos em 2027: aparecem somente em 2026.'],
+      ['PIS e COFINS de 2027 em diante','Extintos em 2027: aparecem somente em 2026.'],
       ['IPI','Alíquota zero a partir de 2027, exceto para produtos com industrialização incentivada na Zona Franca de Manaus.'],
       ['ICMS e ISS','Integrais até '+(ANOS[cr.redAnt.findIndex(x=>x>0)]-1||2028)+', reduzidos em '+(trans.join(', ')||'—')+' e extintos em '+fim+'.'],
       ['2026','Ano de teste: o IBS ('+pct(cr.ibsE[0]+cr.ibsM[0])+') e a CBS ('+pct(cr.cbs[0])+') são compensados com PIS e COFINS, por isso não somam à carga do ano.'],
@@ -192,18 +223,20 @@
       'CST e cClassTrib vêm do documento quando ele informa um código válido; senão, da relação de NCM (TIPI) ou de NBS e serviços. A coluna Origem do enquadramento mostra qual foi usado.',
       'Itens em CONFERIR trazem o motivo na coluna Observação. Quando há mais de uma hipótese de enquadramento, o cálculo é feito sem redução.',
       'Os totais somam entradas e saídas. Use o filtro Operação para ver só as saídas (débitos) ou só as entradas (compras).',
-      'Notas de serviço não trazem PIS e COFINS destacados; nesses itens a base desconta somente o ISS.',
+      reg.aplica?'PIS e COFINS do regime são aplicados sobre o valor cheio de cada item, inclusive nas compras e nos itens em que o documento não destaca esses tributos (alíquota zero, monofásico, isenção). As colunas PIS no documento e COFINS no documento da planilha Excel permitem comparar.'
+        :'Notas de serviço não trazem PIS e COFINS destacados; nesses itens a base desconta somente o ISS.',
+      'Quando há redução a conferir, a coluna Redução IBS/CBS mostra o maior percentual entre as hipóteses listadas; o cálculo só aplica a redução depois de confirmado o enquadramento.',
       'CT-e fica fora do cálculo: o valor do frete e o ICMS do transporte não são lidos por item.',
       'ICMS-ST, DIFAL, frete, seguro, descontos e Imposto Seletivo não entram nesta projeção.'];
     return {passos,avisos};
   }
 
   /* ---------- tela ---------- */
-  let linhas=[],visiveis=[],pagina=0,assinatura='',crono=cronograma();
+  let linhas=[],visiveis=[],pagina=0,assinatura='',crono=cronograma(),reg=regime();
   const filtro=id=>($(id)?$(id).value:'');
   function filtrar(){
-    const busca=filtro('v277Busca').trim().toLowerCase(),bd=dig(busca),op=filtro('v277Operacao'),tp=filtro('v277Tipo'),sit=filtro('v277Situacao'),ord=filtro('v277Ordem');
-    let l=linhas.filter(x=>(!op||x.operacao===op)&&(!sit||x.situacao===sit)&&(!tp||(tp==='NCM'?x.tipo==='NCM':tp==='SERV'?(x.tipo==='NBS'||x.tipo==='SERVIÇO'):!x.tipo))
+    const busca=filtro('v277Busca').trim().toLowerCase(),bd=dig(busca),op=filtro('v277Operacao'),tp=filtro('v277Tipo'),sit=filtro('v277Situacao'),red=filtro('v279Reducao'),ord=filtro('v277Ordem');
+    let l=linhas.filter(x=>(!op||x.operacao===op)&&(!sit||x.situacao===sit)&&(!red||x.reducao===red)&&(!tp||(tp==='NCM'?x.tipo==='NCM':tp==='SERV'?(x.tipo==='NBS'||x.tipo==='SERVIÇO'):!x.tipo))
       &&(!busca||(x.rotulo+' '+x.descricao+' '+x.documento+' '+x.cc+' '+x.cst+' '+x.servico+' '+x.origem).toLowerCase().includes(busca)||(bd.length>=2&&x.codigo.includes(bd))));
     if(filtro('v277Visao')==='codigo')l=agrupar(l);
     const dif=x=>x.calculado?x.anos[7].diferenca:null;
@@ -212,13 +245,14 @@
     else if(ord==='valor')l=[...l].sort((a,b)=>b.valor-a.valor);
     return l;
   }
-  const reducaoTxt=l=>!l.calculado?'—':l.semAliquota?'Sem alíquota':l.redIbs===l.redCbs?(l.redIbs>0?pct(l.redIbs):'Sem redução'):'IBS '+pct(l.redIbs)+' · CBS '+pct(l.redCbs);
+  const reducaoTxt=l=>!l.calculado?'—':l.semAliquota?'Sem alíquota':l.reducao==='POSSIVEL'?'A conferir (até '+pct(l.possivel)+')':l.redIbs===l.redCbs?(l.redIbs>0?pct(l.redIbs):'Sem redução'):'IBS '+pct(l.redIbs)+' · CBS '+pct(l.redCbs);
+  const ROT_RED={COM:'Sim',POSSIVEL:'A conferir',SEM:'Não',SEM_ALIQ:'Sem IBS/CBS',NAO:'—'};
   const sinal=v=>v>0?'v253-neg':v<0?'v253-pos':'';
   function cabecalho(agr){
     const id=agr?['Código','Itens','Documentos','Operação']:['Documento','Emissão','Operação','Item','Código'];
     return '<tr class="excel-header">'+id.map(t=>'<th>'+t+'</th>').join('')+'<th>Descrição</th><th class="v277-h-enq">CST</th><th class="v277-h-enq">Descrição do CST</th><th class="v277-h-enq">cClassTrib</th><th class="v277-h-enq">Redução IBS/CBS</th><th class="v277-h-enq">Origem do enquadramento</th>'
       +'<th class="v277-h-hoje">Valor do item</th><th class="v277-h-hoje">ICMS hoje</th><th class="v277-h-hoje">ISS hoje</th><th class="v277-h-hoje">IPI hoje</th><th class="v277-h-hoje">PIS hoje</th><th class="v277-h-hoje">COFINS hoje</th><th class="v277-h-hoje">Tributos hoje</th>'
-      +'<th class="v277-h-base">Base IBS/CBS</th>'+ANOS.map((a,i)=>'<th class="v277-h-ano">IBS+CBS '+a+(i?'':' (teste)')+'</th>').join('')
+      +'<th class="v277-h-base">Novo valor do item (base IBS/CBS)</th>'+ANOS.map((a,i)=>'<th class="v277-h-ano">IBS+CBS '+a+(i?'':' (teste)')+'</th>').join('')
       +'<th class="v277-h-ano">Carga em 2033</th><th class="v277-h-ano">Diferença 2033 × hoje</th><th>Situação</th><th>Observação</th></tr>';
   }
   function linhaHtml(l,i,agr){
@@ -235,8 +269,12 @@
     const corpo=l.anos.map(a=>'<tr><td><b>'+a.ano+'</b></td><td>'+(c?pct(a.aliqCbs):'—')+'</td><td>'+real(c?a.cbs:null)+'</td><td>'+(c?pct(a.aliqIbsE):'—')+'</td><td>'+real(c?a.ibsE:null)+'</td><td>'+(c?pct(a.aliqIbsM):'—')+'</td><td>'+real(c?a.ibsM:null)+'</td><td><b>'+real(c?a.ibscbs:null)+'</b></td>'
       +'<td>'+real(a.icms)+'</td><td>'+real(a.iss)+'</td><td>'+real(a.ipi)+'</td><td>'+real(n2(a.pis+a.cofins))+'</td><td><b>'+real(c?a.carga:null)+'</b></td><td class="'+(c?sinal(a.diferenca):'')+'"><b>'+real(c?a.diferenca:null)+'</b></td></tr>').join('');
     return '<div class="v277-det"><b>'+esc(agr?l.rotulo+' — '+inteiro(l.itens)+' item(ns) em '+inteiro(l.documentos)+' documento(s)':'Item '+(l.item||'—')+' do documento '+(l.documento||'—')+' — '+l.rotulo)+'</b>'
-      +'<p><b>Base de IBS e CBS</b> = valor do item '+real(l.valor)+' − ICMS '+real(l.icms)+' − ISS '+real(l.iss)+' − PIS '+real(l.pis)+' − COFINS '+real(l.cofins)+' = <b>'+real(l.base)+'</b></p>'
+      +'<p><b>Novo valor do item (base de IBS e CBS)</b> = valor do item '+real(l.valor)+' − ICMS '+real(l.icms)+' − ISS '+real(l.iss)+' − PIS '+real(l.pis)+' − COFINS '+real(l.cofins)+' = <b>'+real(l.base)+'</b></p>'
+      +'<p><b>PIS e COFINS:</b> '+esc(l.pisCofinsRegime?reg.texto+'. No documento: PIS '+real(l.pisDoc)+' e COFINS '+real(l.cofinsDoc)+'.':reg.texto+'.')+'</p>'
       +'<p><b>Enquadramento:</b> CST '+esc(l.cst)+(l.descCst?' — '+esc(l.descCst):'')+' · cClassTrib '+esc(l.cc)+' · '+esc(reducaoTxt(l)).toLowerCase()+' · origem: '+esc(l.origem)+'</p>'
+      +(l.hipotese?'<p><b>Hipótese do cClassTrib:</b> '+esc(l.hipotese)+'</p>':'')
+      +(l.reducao==='COM'?'<p><b>Redução de alíquota:</b> aplicada; em 2033 o IBS + CBS '+(agr?'destes itens':'deste item')+' fica '+real(l.economia33)+' menor do que sem a redução.</p>'
+        :l.reducao==='POSSIVEL'?'<p><b>Redução de alíquota:</b> a conferir, até '+pct(l.possivel)+' entre as hipóteses listadas; calculado sem redução até a confirmação do enquadramento.</p>':'')
       +(l.obs?'<p><b>Observação:</b> '+esc(l.obs)+'</p>':'')
       +'<table class="v277-ano"><thead><tr><th>Ano</th><th>Alíq. CBS</th><th>CBS</th><th>Alíq. IBS estadual</th><th>IBS estadual</th><th>Alíq. IBS municipal</th><th>IBS municipal</th><th>IBS + CBS</th><th>ICMS</th><th>ISS</th><th>IPI</th><th>PIS + COFINS</th><th>Carga do ano</th><th>Diferença contra hoje</th></tr></thead><tbody>'+corpo+'</tbody></table>'
       +'<p class="v277-nota">Tributos de hoje neste item: '+real(l.hoje)+'. Em 2026, o IBS e a CBS de teste não somam à carga do ano.</p></div>';
@@ -246,7 +284,8 @@
     return k('Itens no cálculo',inteiro(T.itens),inteiro(T.codigos)+' código(s) NCM/NBS')
       +k('Valor dos itens',real(T.valor),'itens selecionados pelos filtros')
       +k('Tributos de hoje',real(T.hoje),'ICMS '+real(T.icms)+' · ISS '+real(T.iss)+' · IPI '+real(T.ipi)+' · PIS '+real(T.pis)+' · COFINS '+real(T.cofins))
-      +k('Base de IBS e CBS',real(T.base),'valor − ICMS − ISS − PIS − COFINS')
+      +k('Novo valor dos itens (base de IBS e CBS)',real(T.base),'valor − ICMS − ISS − PIS − COFINS')
+      +k('Itens com redução de alíquota',inteiro(T.red.itens),real(T.red.valor)+' em itens · IBS + CBS de 2033 '+real(T.red.economia)+' menor'+(T.conferir.itens?' · '+inteiro(T.conferir.itens)+' item(ns) com redução a conferir':''))
       +k('IBS + CBS em 2027',real(a27.ibscbs),'CBS '+real(a27.cbs)+' · IBS '+real(n2(a27.ibsE+a27.ibsM)))
       +k('IBS + CBS em 2033',real(a33.ibscbs),'CBS '+real(a33.cbs)+' · IBS '+real(n2(a33.ibsE+a33.ibsM)))
       +k('Carga em 2033 × hoje',real(d),(T.hoje?pct(Math.abs(d)/T.hoje*100)+' ':'')+(d>0?'a mais que hoje':d<0?'a menos que hoje':'sem diferença'),d>0?'alerta':'ok');
@@ -261,7 +300,7 @@
         +'<td class="v277-n '+sinal(x.diferenca)+'"><b>'+real(x.diferenca)+'</b></td><td class="v277-n '+sinal(x.diferenca)+'">'+(x.variacao===null?'—':pct(x.variacao))+'</td><td class="v277-fase">'+esc(x.fase)+'</td></tr>').join('')+'</tbody></table>';
   }
   function comoHtml(){
-    const e=explicacao(crono);
+    const e=explicacao(crono,reg);
     return '<div class="v277-como"><div><b>Como o cálculo é feito</b><dl>'+e.passos.map(p=>'<dt>'+esc(p[0])+'</dt><dd>'+esc(p[1])+'</dd>').join('')+'</dl></div>'
       +'<div class="v277-avisos"><b>Atenção ao interpretar</b><ul>'+e.avisos.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div></div>';
   }
@@ -270,10 +309,12 @@
     const s=(typeof state!=='undefined'&&state)||{};
     t.textContent='Cálculo 2026 a 2033 por item — Documentos: '+inteiro((s.docs||[]).length)+' · itens: '+inteiro(itensCarga().length)+' · todos os itens dos XMLs, em páginas.';
   }
+  const assinar=()=>itensCarga().length+'|'+((typeof state!=='undefined'&&state&&state.runId)||0)+'|'+regime().nome;
   function render(recalcular){
     const sec=$('calculo2033');if(!sec)return;
-    const itens=itensCarga(),ass=itens.length+'|'+((typeof state!=='undefined'&&state&&state.runId)||0);
-    if(recalcular||ass!==assinatura){crono=cronograma();linhas=projetar(itens,crono);assinatura=ass;pagina=0}
+    const itens=itensCarga(),ass=assinar();
+    if(recalcular||ass!==assinatura){crono=cronograma();reg=regime();linhas=projetar(itens,crono,reg);assinatura=ass;pagina=0}
+    const av=$('v279Regime');if(av){av.textContent=(reg.aplica?'PIS e COFINS — ':'')+reg.texto+'.'+(reg.aplica?'':' Informe Lucro Real ou Lucro Presumido na primeira tela para calcular pelas alíquotas do regime.');av.classList.toggle('alerta',!reg.aplica)}
     const vazio=!itens.length,agr=filtro('v277Visao')==='codigo';
     visiveis=vazio?[]:filtrar();
     const T=totalizar(visiveis),paginas=Math.max(1,Math.ceil(visiveis.length/PAGINA));pagina=Math.min(Math.max(0,pagina),paginas-1);
@@ -300,8 +341,8 @@
       const c=l.calculado,o=agr?{'Código':l.rotulo,'Itens':l.itens,'Documentos':l.documentos,'Operação':l.operacao}
         :{'Documento':l.documento,'Emissão':l.emissao,'Operação':l.operacao,'Item':l.item,'Emitente':l.emitente,'Destinatário':l.destinatario,'Código':l.rotulo};
       Object.assign(o,{'Código do serviço':l.servico,'Descrição':l.descricao,'CFOP':agr?'':l.cfop,'CST':l.cst,'Descrição do CST':l.descCst,'cClassTrib':l.cc,
-        'Redução IBS (%)':c&&!l.semAliquota?v(l.redIbs):'','Redução CBS (%)':c&&!l.semAliquota?v(l.redCbs):'','Origem do enquadramento':l.origem,'Situação':l.situacao,'Observação':l.obs,
-        'Valor do item':v(l.valor),'ICMS hoje':v(l.icms),'ISS hoje':v(l.iss),'IPI hoje':v(l.ipi),'PIS hoje':v(l.pis),'COFINS hoje':v(l.cofins),'Tributos hoje':v(l.hoje),'Base IBS/CBS':v(l.base)});
+        'Hipótese do cClassTrib':l.hipotese,'Redução de alíquota':ROT_RED[l.reducao]||'','Redução IBS (%)':c&&!l.semAliquota?v(l.redIbs):'','Redução CBS (%)':c&&!l.semAliquota?v(l.redCbs):'','Redução a conferir (até %)':l.reducao==='POSSIVEL'?v(l.possivel):'','Origem do enquadramento':l.origem,'Situação':l.situacao,'Observação':l.obs,
+        'Valor do item':v(l.valor),'ICMS hoje':v(l.icms),'ISS hoje':v(l.iss),'IPI hoje':v(l.ipi),'PIS hoje':v(l.pis),'COFINS hoje':v(l.cofins),'PIS no documento':v(l.pisDoc),'COFINS no documento':v(l.cofinsDoc),'Tributos hoje':v(l.hoje),'Novo valor do item (base IBS/CBS)':v(l.base)});
       for(const a of l.anos){o['CBS '+a.ano]=v(c?a.cbs:null);o['IBS estadual '+a.ano]=v(c?a.ibsE:null);o['IBS municipal '+a.ano]=v(c?a.ibsM:null);o['IBS+CBS '+a.ano]=v(c?a.ibscbs:null);
         o['ICMS+ISS '+a.ano]=v(n2(a.icms+a.iss));o['Carga '+a.ano]=v(c?a.carga:null)}
       o['Diferença 2033 × hoje']=v(c?l.anos[7].diferenca:null);
@@ -310,7 +351,7 @@
   /* as planilhas do Excel; a impressão em PDF (V278) usa as mesmas */
   function planilhas(){
     if(!visiveis.length)return [];
-    const agr=filtro('v277Visao')==='codigo',T=totalizar(visiveis),e=explicacao(crono),v=x=>fmt(x);
+    const agr=filtro('v277Visao')==='codigo',T=totalizar(visiveis),e=explicacao(crono,reg),v=x=>fmt(x);
     const resumo=resumoLinhas(T).map(x=>({'Ano':String(x.ano),'PIS + COFINS':v(x.pisCofins),'IPI':v(x.ipi),'ICMS + ISS':v(x.icmsIss),'CBS':v(x.cbs),'IBS estadual':v(x.ibsE),'IBS municipal':v(x.ibsM),'IBS + CBS':v(x.ibscbs),
       'Carga do ano':v(x.carga),'Diferença contra hoje':v(x.diferenca),'Variação':x.variacao===null?'':pct(x.variacao),'Fase':x.fase}));
     const cron=ANOS.map((a,i)=>({'Ano':String(a),'CBS':pct(crono.cbs[i]),'IBS estadual':pct(crono.ibsE[i]),'IBS municipal':pct(crono.ibsM[i]),'Redução do ICMS e do ISS':pct(crono.redAnt[i])}));
@@ -330,12 +371,14 @@
     const op=(v,t)=>'<option value="'+v+'">'+t+'</option>';
     sec.insertAdjacentHTML('beforebegin','<section id="calculo2033" class="panel">'
       +'<div class="card"><div class="actions"><b class="v277-t" style="font-size:17px">Cálculo 2026 a 2033 por item</b>'
-      +'<span class="hint">Para cada item (NCM ou NBS): o que é tributado hoje por ICMS, ISS, IPI, PIS e COFINS e a projeção de IBS e CBS de 2026 a 2033 pelo cronograma de alíquotas, conforme o CST e o cClassTrib do item. Base de IBS e CBS = valor do item − ICMS − ISS − PIS − COFINS.</span></div>'
+      +'<span class="hint">Para cada item (NCM ou NBS): o que é tributado hoje por ICMS, ISS, IPI, PIS e COFINS e a projeção de IBS e CBS de 2026 a 2033 pelo cronograma de alíquotas, conforme o CST e o cClassTrib do item. Novo valor do item (base de IBS e CBS) = valor do item − ICMS − ISS − PIS − COFINS.</span></div>'
+      +'<div id="v279Regime" class="v279-regime"></div>'
       +'<div class="v253-filtros"><input type="search" id="v277Busca" placeholder="Pesquisar NCM, NBS, descrição, documento ou cClassTrib">'
       +'<select id="v277Visao">'+op('item','Ver por: item do documento')+op('codigo','Ver por: código NCM/NBS (somado)')+'</select>'
       +'<select id="v277Operacao">'+op('','Operação: todas')+op('Entrada','Entradas')+op('Saída','Saídas')+'</select>'
       +'<select id="v277Tipo">'+op('','Tipo: todos')+op('NCM','Mercadorias (NCM)')+op('SERV','Serviços (NBS)')+op('SEM','Sem NCM ou NBS')+'</select>'
       +'<select id="v277Situacao">'+op('','Situação: todas')+Object.values(S).map(s=>op(s,s)).join('')+'</select>'
+      +'<select id="v279Reducao">'+op('','Redução de alíquota: todos')+op('COM','Com redução de alíquota')+op('POSSIVEL','Redução a conferir')+op('SEM','Sem redução (tributação integral)')+op('SEM_ALIQ','Sem IBS/CBS')+'</select>'
       +'<select id="v277Ordem">'+op('','Ordem: dos documentos')+op('aumento','Maior aumento em 2033')+op('reducao','Maior redução em 2033')+op('valor','Maior valor do item')+'</select>'
       +'<button type="button" id="v277Exportar" class="secondary">⬇ Exportar Excel</button></div>'
       +'<div id="v277Info" class="hint" style="margin-top:6px">Nenhum documento processado.</div></div>'
@@ -358,6 +401,7 @@
       '#v277ResumoCard .table-wrap{height:auto!important;min-height:0!important;max-height:none!important;margin-top:8px}#v277ResumoTabela{table-layout:auto!important;min-width:0!important;width:100%!important}#v277ResumoTabela th,#v277ResumoTabela td{padding-left:8px!important;padding-right:8px!important;min-width:0!important;width:auto!important;font-size:12px}#v277ResumoTabela th{white-space:normal!important}',
       '.v277-como{display:grid;grid-template-columns:1.4fr 1fr;gap:14px;font-size:12px;line-height:1.5;color:#33475B}.v277-como>div{border:1px solid #C6C6C6;padding:12px 14px;background:#fff}.v277-como b{color:#123D60}',
       '.v277-como dl{margin:6px 0 0;display:grid;grid-template-columns:minmax(130px,auto) 1fr;gap:5px 12px}.v277-como dt{font-weight:700;color:#182936}.v277-como dd{margin:0}.v277-avisos{border-left:4px solid #F1C21B!important}.v277-avisos ul{margin:6px 0 0;padding-left:18px}.v277-avisos li{margin:5px 0}',
+      '.v279-regime{margin:8px 0 10px;padding:8px 12px;border-left:4px solid #24A148;background:#F1F8F3;font-size:12.5px;color:#182936}.v279-regime.alerta{border-left-color:#F1C21B;background:#FFF9E5}.v279-regime:empty{display:none}',
       '@media(max-width:1100px){.v277-como{grid-template-columns:1fr}}@media print{.v277-pag,#calculo2033 .v253-filtros{display:none!important}}'
     ].join('');document.head.appendChild(st);
     const tab=document.querySelector('.tab[data-tab="calculo2033"]');
@@ -368,8 +412,10 @@
       b.innerHTML='Cálculo 2026 a 2033 por item<small data-v123-count="calculoitem">0</small>';
       const r=side.querySelector('[data-v123-key="ibs"]');if(r)r.after(b);else side.appendChild(b);
     }
-    for(const id of ['v277Busca','v277Visao','v277Operacao','v277Tipo','v277Situacao','v277Ordem'])$(id).addEventListener('input',()=>{pagina=0;render(false)});
+    for(const id of ['v277Busca','v277Visao','v277Operacao','v277Tipo','v277Situacao','v279Reducao','v277Ordem'])$(id).addEventListener('input',()=>{pagina=0;render(false)});
     $('v277Exportar').onclick=exportar;
+    /* trocar o regime na primeira tela recalcula a projeção quando a tela está aberta */
+    const rg=$('regimeEmpresa');if(rg)rg.addEventListener('change',()=>{const a=$('calculo2033');if(a&&a.classList.contains('active'))render(true)});
     $('v277Pag').addEventListener('click',ev=>{const b=ev.target.closest('[data-v277-pag]');if(!b||b.disabled)return;pagina+=Number(b.dataset.v277Pag);render(false);const w=$('v277Wrap');if(w)w.scrollTop=0});
     $('v277Tabela').addEventListener('click',ev=>{
       const tr=ev.target.closest('tr.v277-linha');if(!tr)return;
@@ -387,8 +433,8 @@
   /* contador do menu e tela aberta acompanham a carga */
   setInterval(()=>{
     const n=itensCarga().length,c=document.querySelector('[data-v123-count="calculoitem"]');if(c&&c.textContent!==String(n))c.textContent=String(n);
-    const sec=$('calculo2033');if(sec&&sec.classList.contains('active')&&n+'|'+((typeof state!=='undefined'&&state&&state.runId)||0)!==assinatura)render(true);
+    const sec=$('calculo2033');if(sec&&sec.classList.contains('active')&&assinar()!==assinatura)render(true);
   },2000);
-  window.classificadorV277={calcular,projetar,agrupar,totalizar,cronograma,explicacao,render,exportar,planilhas,linhasExport,ANOS,SITUACAO:S};
+  window.classificadorV277={calcular,projetar,agrupar,totalizar,cronograma,explicacao,render,exportar,planilhas,linhasExport,regime,REGIMES,ANOS,SITUACAO:S};
   window.V277_CARREGADO=true;
 })();

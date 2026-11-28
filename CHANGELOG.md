@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V279 — 2026-11-28
+
+- Calculo 2026 a 2033 por item: PIS e COFINS calculados pelo regime tributario informado (Lucro Real 1,65% e 7,60%; Lucro Presumido 0,65% e 3,00%) para chegar ao novo valor do item (valor - ICMS - ISS - PIS - COFINS), base do IBS e da CBS; indicador, filtro e colunas dos itens com reducao de aliquota de IBS e CBS
+
 ## V278 — 2026-11-27
 
 - Excel e PDF em todas as telas do menu: botoes Exportar Excel e Imprimir / PDF nas telas que nao tinham (Carregar XML/PDF, SPED Fiscal, EFD Contribuicoes, NF-e, CT-e, NFS-e, Calculo 2026 a 2033 por item, Analise por NCM, Fornecedores e clientes, Validacao de atividades, cronograma e Consulta NCM e NBS); o PDF sai em folha propria, em paisagem, com a empresa informada e todas as linhas; Base de IBS/CBS volta a exportar e imprimir todas as linhas; Ctrl+P deixa de sair em branco ou cortado nessas telas; Consulta NCM e NBS sem segunda pagina em branco

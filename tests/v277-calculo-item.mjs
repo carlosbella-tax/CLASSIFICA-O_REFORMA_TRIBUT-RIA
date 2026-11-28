@@ -111,19 +111,19 @@ await teste('tela com carga: título, contador, colunas de hoje, base e 2026 a 2
   assert.equal(d.getElementById('v123-title').textContent,'Cálculo 2026 a 2033 por item — Documentos: 4 · itens: 4 · todos os itens dos XMLs, em páginas.');
   assert.equal(d.querySelector('[data-v123-count="calculoitem"]').textContent,'4');
   const th=[...d.querySelectorAll('#v277Tabela thead th')].map(x=>x.textContent);
-  for(const t of ['Código','CST','Descrição do CST','cClassTrib','Redução IBS/CBS','Valor do item','ICMS hoje','ISS hoje','IPI hoje','PIS hoje','COFINS hoje','Tributos hoje','Base IBS/CBS','IBS+CBS 2026 (teste)','IBS+CBS 2027','IBS+CBS 2033','Carga em 2033','Diferença 2033 × hoje','Situação','Observação'])assert.ok(th.includes(t),t);
+  for(const t of ['Código','CST','Descrição do CST','cClassTrib','Redução IBS/CBS','Valor do item','ICMS hoje','ISS hoje','IPI hoje','PIS hoje','COFINS hoje','Tributos hoje','Novo valor do item (base IBS/CBS)','IBS+CBS 2026 (teste)','IBS+CBS 2027','IBS+CBS 2033','Carga em 2033','Diferença 2033 × hoje','Situação','Observação'])assert.ok(th.includes(t),t);
   const tr=linhasTela();assert.equal(tr.length,4);const c=[...tr[0].cells].map(x=>x.textContent),v=t=>c[th.indexOf(t)];
-  assert.equal(v('Base IBS/CBS'),'R$ 700,00');assert.equal(v('IBS+CBS 2027'),'R$ 79,80');assert.equal(v('IBS+CBS 2033'),'R$ 210,00');assert.equal(v('Diferença 2033 × hoje'),'-R$ 140,00');
+  assert.equal(v('Novo valor do item (base IBS/CBS)'),'R$ 700,00');assert.equal(v('IBS+CBS 2027'),'R$ 79,80');assert.equal(v('IBS+CBS 2033'),'R$ 210,00');assert.equal(v('Diferença 2033 × hoje'),'-R$ 140,00');
   assert.equal(v('Tributos hoje'),'R$ 350,00');assert.equal(v('Situação'),'CALCULADO')});
 await teste('indicadores e resumo por ano somam os itens exibidos',()=>{
-  const k=d.getElementById('v277Kpis').textContent;assert.match(k,/Base de IBS e CBS\s*R\$ 3\.050,00/);assert.match(k,/IBS \+ CBS em 2033\s*R\$ 789,00/);
+  const k=d.getElementById('v277Kpis').textContent;assert.match(k,/Novo valor dos itens \(base de IBS e CBS\)\s*R\$ 3\.050,00/);assert.match(k,/IBS \+ CBS em 2033\s*R\$ 789,00/);
   const r=[...d.querySelectorAll('#v277ResumoTabela tbody tr')].map(t=>[...t.cells].map(x=>x.textContent));assert.equal(r.length,8);
   assert.deepEqual(r.map(x=>x[0]),['2026','2027','2028','2029','2030','2031','2032','2033']);
   assert.equal(r[0][1],'R$ 360,00');assert.equal(r[1][1],'R$ 0,00');assert.equal(r[1][2],'R$ 0,00');assert.equal(r[7][3],'R$ 0,00');assert.equal(r[7][7],'R$ 789,00');assert.equal(r[0][9],'R$ 0,00');
   assert.match(r[1][11],/PIS e COFINS extintos/);assert.match(r[7][11],/ICMS e ISS extintos/)});
 await teste('clicar na linha abre o cálculo ano a ano com alíquotas e a conta da base; clicar de novo fecha',()=>{
   linhasTela()[1].click();const det=d.querySelector('#v277Tabela .v277-det');assert.ok(det);const t=det.textContent.replace(/\s+/g,' ');
-  assert.match(t,/Base de IBS e CBS = valor do item R\$ 1\.000,00 − ICMS R\$ 180,00 − ISS R\$ 0,00 − PIS R\$ 20,00 − COFINS R\$ 100,00 = R\$ 700,00/);assert.match(t,/CST 200 — Alíquota reduzida em 60% · cClassTrib 200035 · 60,00% · origem: Documento/);
+  assert.match(t,/Novo valor do item \(base de IBS e CBS\) = valor do item R\$ 1\.000,00 − ICMS R\$ 180,00 − ISS R\$ 0,00 − PIS R\$ 20,00 − COFINS R\$ 100,00 = R\$ 700,00/);assert.match(t,/CST 200 — Alíquota reduzida em 60% · cClassTrib 200035 · 60,00% · origem: Documento/);
   const l=[...det.querySelectorAll('.v277-ano tbody tr')];assert.equal(l.length,8);assert.equal(l[7].cells[1].textContent,'4,52%');assert.equal(l[7].cells[3].textContent,'6,48%');assert.equal(l[7].cells[5].textContent,'1,00%');assert.equal(l[7].cells[7].textContent,'R$ 84,00');
   linhasTela()[1].click();assert.equal(d.querySelector('#v277Tabela .v277-det'),null)});
 await teste('filtros: operação, tipo, situação, pesquisa e visão por código',()=>{
@@ -139,7 +139,7 @@ await teste('ordem por maior aumento em 2033 põe primeiro o item que mais sobe;
 await teste('exportação: planilhas do cálculo, resumo por ano, cronograma usado e como é calculado, em 0.000,00',()=>{
   w.__xlsx.length=0;d.getElementById('v277Exportar').click();assert.equal(w.__xlsx.length,1);const x=w.__xlsx[0];assert.match(x.nome,/^CALCULO_2026_2033_POR_ITEM_\d{4}-\d{2}-\d{2}\.xlsx$/);
   assert.deepEqual(puro(x.abas.map(a=>a[0])),['Cálculo por item','Resumo por ano','Cronograma usado','Como é calculado']);
-  const l=x.abas[0][1][0];assert.equal(l['Base IBS/CBS'],'700,00');assert.equal(l['Valor do item'],'1.000,00');assert.equal(l['CBS 2027'],'79,10');assert.equal(l['IBS estadual 2033'],'113,40');assert.equal(l['IBS municipal 2033'],'17,50');
+  const l=x.abas[0][1][0];assert.equal(l['Novo valor do item (base IBS/CBS)'],'700,00');assert.equal(l['Valor do item'],'1.000,00');assert.equal(l['CBS 2027'],'79,10');assert.equal(l['IBS estadual 2033'],'113,40');assert.equal(l['IBS municipal 2033'],'17,50');
   assert.equal(l['IBS+CBS 2033'],'210,00');assert.equal(l['Carga 2033'],'210,00');assert.equal(l['Diferença 2033 × hoje'],'-140,00');assert.equal(l['cClassTrib'],'000001');assert.equal(l['Descrição do CST'],'Tributação integral');
   assert.equal(x.abas[1][1].length,8);assert.equal(x.abas[2][1][1]['CBS'],'11,30%');assert.equal(x.abas[2][1][7]['IBS estadual'],'16,20%');assert.equal(x.abas[2][1][3]['Redução do ICMS e do ISS'],'10,00%');
   assert.ok(x.abas[3][1].some(r=>/valor do item − ICMS − ISS − PIS − COFINS/i.test(r.explicacao)))});
