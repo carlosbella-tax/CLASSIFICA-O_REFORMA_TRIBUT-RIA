@@ -18,7 +18,8 @@
   /* outro módulo (arrastar, setas, volta ao canto) mudou o lugar: segue a partir de onde o relógio está */
   function sincronizar(){const r=relogio.getBoundingClientRect();x=r.left;y=r.top}
   function escrever(){ultL=x.toFixed(1)+'px';ultT=y.toFixed(1)+'px';relogio.classList.add('v262-movido');relogio.style.left=ultL;relogio.style.top=ultT}
-  const livre=()=>!relogio.hidden&&!parado&&!relogio.classList.contains('v262-arrastando');
+  /* não anda enquanto é arrastado nem enquanto está recolhido na barra do título (V281, tela rolada) */
+  const livre=()=>!relogio.hidden&&!parado&&!relogio.classList.contains('v262-arrastando')&&!relogio.classList.contains('v281-recolhido');
   /* um passo do movimento, com o tempo decorrido em segundos; devolve false quando o relógio não deve andar */
   function passo(dt){
     if(!livre())return false;

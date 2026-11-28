@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V281 — 2026-11-28
+
+- Relogio do tempo de processamento nao fica na frente do conteudo ao rolar a tela: recolhe-se, compacto, na barra do titulo (fixa no topo, com espaco reservado) e volta a andar pela tela quando a pagina retorna ao topo
+
 ## V280 — 2026-11-28
 
 - Relogio do tempo de processamento anda sozinho pela tela: desliza devagar e rebate nas bordas enquanto esta visivel; arrastar continua valendo e o relogio segue andando de onde foi solto; duplo clique para no canto e outro duplo clique solta
