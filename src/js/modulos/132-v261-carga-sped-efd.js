@@ -91,7 +91,8 @@
   /* qualquer outro caminho para a tela de carga (menu Carregar XML/PDF, botões "Carregar mais XMLs") volta ao modo XML */
   document.addEventListener('click',e=>{
     const alvo=e.target&&e.target.closest?e.target:null;if(!alvo)return;
-    if(alvo.closest('[data-v261]')||alvo.closest('#load'))return;
+    /* V278 — o clique automático do link de download (Excel, diagnóstico) não é troca de tela */
+    if(alvo.closest('[data-v261]')||alvo.closest('#load')||alvo.closest('a[download]'))return;
     modo('xml');
   },true);
 

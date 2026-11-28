@@ -569,21 +569,32 @@ function criarAbaV253(){
   ['v253NcmBusca', 'v253NcmSemaforo'].forEach(id => { const el = $id(id); if (el) el.addEventListener('input', renderNcmV253); });
   const bc = $id('v253FornConsultar'); if (bc) bc.onclick = () => { CACHE_CNPJ_V253.clear(); if (window.classificadorV265) window.classificadorV265.limparCache(); renderFornecedoresV253(); consultarTodosV253(); };
   const ef = $id('v253FornExportar'); if (ef) ef.onclick = () => {
-    const rows = fornecedoresCacheV253.map(x => Object.assign({}, x));
-    if (!rows.length) return alert('Não há fornecedores para exportar.');
-    gerarXlsx('FORNECEDORES_V253_' + (new Date()).toISOString().slice(0, 10) + '.xlsx', [['Fornecedores', formatarExportV253(rows)]]);
+    const p = planilhasFornV253();
+    if (!p.length) return alert('Não há fornecedores para exportar.');
+    gerarXlsx('FORNECEDORES_V253_' + (new Date()).toISOString().slice(0, 10) + '.xlsx', p);
   };
   const en = $id('v253NcmExportar'); if (en) en.onclick = () => {
-    const cols = ['chave', 'descricao', 'anexo', 'efeito', 'cclasstrib', 'cst', 'qtd', 'valor_total', 'notas', 'fornecedores', 'carga_atual', 'aliq_cbs_ef', 'aliq_ibsE_ef', 'aliq_ibsM_ef', 'novo_2033', 'diferenca', 'semaforo'];
-    const rows = ncmCacheV253.map(x => { const y = {}; cols.forEach(c => y[c] = x[c]); return y; });
-    if (!rows.length) return alert('Não há análise de NCM para exportar.');
-    const rs = resumoSemaforoV253(ncmCacheV253);
-    const ex = explicacaoSemaforoV253(ncmCacheV253, rs);
-    const comoLer = ex.geral.map(x => ({assunto: 'O que o resultado mostra', explicacao: x})).concat(ex.cores.map(x => ({assunto: x.semaforo, explicacao: x.texto})),
-      ex.colunas.map(c => ({assunto: 'Coluna: ' + c[0], explicacao: c[1]})), ex.exemplo ? [{assunto: 'Exemplo de cálculo', explicacao: ex.exemplo}] : [], ex.avisos.map(x => ({assunto: 'Atenção ao interpretar', explicacao: x})));
-    const resumo = rs.linhas.concat([rs.total]).map(x => ({semaforo: x.semaforo, o_que_significa: x.leitura, o_que_fazer: x.acao || '', codigos: x.codigos, valor_movimentado: x.valor_total, participacao: x.participacao, carga_atual: x.carga_atual, ibs_cbs_2033: x.novo_2033, diferenca_2033: x.diferenca}));
-    gerarXlsx('ANALISE_NCM_V253_' + (new Date()).toISOString().slice(0, 10) + '.xlsx', [['Análise por NCM', formatarExportV253(rows)], ['Resumo por semáforo', formatarExportV253(resumo)], ['Como ler o resumo', comoLer]]);
+    const p = planilhasNcmV253();
+    if (!p.length) return alert('Não há análise de NCM para exportar.');
+    gerarXlsx('ANALISE_NCM_V253_' + (new Date()).toISOString().slice(0, 10) + '.xlsx', p);
   };
+}
+
+/* V278 — as planilhas do Excel; a impressão em PDF usa as mesmas */
+function planilhasFornV253(){
+  const rows = fornecedoresCacheV253.map(x => Object.assign({}, x));
+  return rows.length ? [['Fornecedores', formatarExportV253(rows)]] : [];
+}
+function planilhasNcmV253(){
+  const cols = ['chave', 'descricao', 'anexo', 'efeito', 'cclasstrib', 'cst', 'qtd', 'valor_total', 'notas', 'fornecedores', 'carga_atual', 'aliq_cbs_ef', 'aliq_ibsE_ef', 'aliq_ibsM_ef', 'novo_2033', 'diferenca', 'semaforo'];
+  const rows = ncmCacheV253.map(x => { const y = {}; cols.forEach(c => y[c] = x[c]); return y; });
+  if (!rows.length) return [];
+  const rs = resumoSemaforoV253(ncmCacheV253);
+  const ex = explicacaoSemaforoV253(ncmCacheV253, rs);
+  const comoLer = ex.geral.map(x => ({assunto: 'O que o resultado mostra', explicacao: x})).concat(ex.cores.map(x => ({assunto: x.semaforo, explicacao: x.texto})),
+    ex.colunas.map(c => ({assunto: 'Coluna: ' + c[0], explicacao: c[1]})), ex.exemplo ? [{assunto: 'Exemplo de cálculo', explicacao: ex.exemplo}] : [], ex.avisos.map(x => ({assunto: 'Atenção ao interpretar', explicacao: x})));
+  const resumo = rs.linhas.concat([rs.total]).map(x => ({semaforo: x.semaforo, o_que_significa: x.leitura, o_que_fazer: x.acao || '', codigos: x.codigos, valor_movimentado: x.valor_total, participacao: x.participacao, carga_atual: x.carga_atual, ibs_cbs_2033: x.novo_2033, diferenca_2033: x.diferenca}));
+  return [['Análise por NCM', formatarExportV253(rows)], ['Resumo por semáforo', formatarExportV253(resumo)], ['Como ler o resumo', comoLer]];
 }
 
 function renderFornecedoresV253(){
@@ -786,6 +797,7 @@ window.v253ResumoSemaforo = resumoSemaforoV253;
 window.v276ExplicacaoSemaforo = explicacaoSemaforoV253;
 window.V276_CARREGADO = true;
 window.v253FormatarExport = formatarExportV253;
+window.v253Planilhas = {ncm: planilhasNcmV253, fornecedores: planilhasFornV253, linhasFornecedores: () => fornecedoresCacheV253};
 window.v253TaxasAno = taxasAnoV253;
 window.v253Efeito = efeitoV253;
 })();

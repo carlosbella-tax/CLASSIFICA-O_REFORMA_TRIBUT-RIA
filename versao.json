@@ -1,5 +1,5 @@
 {
-  "versao": 277,
+  "versao": 278,
   "data": "2026-11-27",
-  "descricao": "Nova tela Calculo 2026 a 2033 por item, no menu depois de Base de IBS/CBS: por item (NCM ou NBS) os tributos de hoje (ICMS, ISS, IPI, PIS, COFINS), a base de IBS/CBS (valor do item - ICMS - ISS - PIS - COFINS) e a projecao de CBS, IBS estadual e IBS municipal de 2026 a 2033 pelo cronograma, conforme CST e cClassTrib; resumo por ano e exportacao"
+  "descricao": "Excel e PDF em todas as telas do menu: botoes Exportar Excel e Imprimir / PDF nas telas que nao tinham (Carregar XML/PDF, SPED Fiscal, EFD Contribuicoes, NF-e, CT-e, NFS-e, Calculo 2026 a 2033 por item, Analise por NCM, Fornecedores e clientes, Validacao de atividades, cronograma e Consulta NCM e NBS); o PDF sai em folha propria, em paisagem, com a empresa informada e todas as linhas; Base de IBS/CBS volta a exportar e imprimir todas as linhas; Ctrl+P deixa de sair em branco ou cortado nessas telas; Consulta NCM e NBS sem segunda pagina em branco"
 }

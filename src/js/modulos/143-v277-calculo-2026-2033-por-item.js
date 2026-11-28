@@ -307,15 +307,19 @@
       o['Diferença 2033 × hoje']=v(c?l.anos[7].diferenca:null);
       return o});
   }
-  function exportar(){
-    if(!visiveis.length)return alert('Não há itens para exportar.');
+  /* as planilhas do Excel; a impressão em PDF (V278) usa as mesmas */
+  function planilhas(){
+    if(!visiveis.length)return [];
     const agr=filtro('v277Visao')==='codigo',T=totalizar(visiveis),e=explicacao(crono),v=x=>fmt(x);
     const resumo=resumoLinhas(T).map(x=>({'Ano':String(x.ano),'PIS + COFINS':v(x.pisCofins),'IPI':v(x.ipi),'ICMS + ISS':v(x.icmsIss),'CBS':v(x.cbs),'IBS estadual':v(x.ibsE),'IBS municipal':v(x.ibsM),'IBS + CBS':v(x.ibscbs),
       'Carga do ano':v(x.carga),'Diferença contra hoje':v(x.diferenca),'Variação':x.variacao===null?'':pct(x.variacao),'Fase':x.fase}));
     const cron=ANOS.map((a,i)=>({'Ano':String(a),'CBS':pct(crono.cbs[i]),'IBS estadual':pct(crono.ibsE[i]),'IBS municipal':pct(crono.ibsM[i]),'Redução do ICMS e do ISS':pct(crono.redAnt[i])}));
     const como=e.passos.map(p=>({assunto:p[0],explicacao:p[1]})).concat(e.avisos.map(x=>({assunto:'Atenção ao interpretar',explicacao:x})));
-    if(typeof gerarXlsx==='function')gerarXlsx('CALCULO_2026_2033_POR_ITEM_'+new Date().toISOString().slice(0,10)+'.xlsx',
-      [[agr?'Cálculo por código':'Cálculo por item',linhasExport(visiveis,agr)],['Resumo por ano',resumo],['Cronograma usado',cron],['Como é calculado',como]]);
+    return [[agr?'Cálculo por código':'Cálculo por item',linhasExport(visiveis,agr)],['Resumo por ano',resumo],['Cronograma usado',cron],['Como é calculado',como]];
+  }
+  function exportar(){
+    const p=planilhas();if(!p.length)return alert('Não há itens para exportar.');
+    if(typeof gerarXlsx==='function')gerarXlsx('CALCULO_2026_2033_POR_ITEM_'+new Date().toISOString().slice(0,10)+'.xlsx',p);
   }
 
   /* ---------- montagem da tela e do menu ---------- */
@@ -385,6 +389,6 @@
     const n=itensCarga().length,c=document.querySelector('[data-v123-count="calculoitem"]');if(c&&c.textContent!==String(n))c.textContent=String(n);
     const sec=$('calculo2033');if(sec&&sec.classList.contains('active')&&n+'|'+((typeof state!=='undefined'&&state&&state.runId)||0)!==assinatura)render(true);
   },2000);
-  window.classificadorV277={calcular,projetar,agrupar,totalizar,cronograma,explicacao,render,exportar,linhasExport,ANOS,SITUACAO:S};
+  window.classificadorV277={calcular,projetar,agrupar,totalizar,cronograma,explicacao,render,exportar,planilhas,linhasExport,ANOS,SITUACAO:S};
   window.V277_CARREGADO=true;
 })();
