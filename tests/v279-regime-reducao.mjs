@@ -138,12 +138,12 @@ await teste('detalhe do item: conta do novo valor, PIS e COFINS do regime e do d
 
 await teste('exportação (Excel e PDF usam as mesmas planilhas): colunas do regime e da redução, em 0.000,00',()=>{
   w.__xlsx.length=0;d.getElementById('v277Exportar').click();const x=w.__xlsx[0],l=x.abas[0][1];
-  assert.deepEqual(puro(x.abas.map(a=>a[0])),['Cálculo por item','Resumo por ano','Cronograma usado','Como é calculado']);
+  assert.deepEqual(puro(x.abas.map(a=>a[0])),['Cálculo por item','Resumo por ano','Entradas e saídas por ano','Cronograma usado','Como é calculado']);
   assert.equal(l[0]['PIS hoje'],'16,50');assert.equal(l[0]['COFINS hoje'],'76,00');assert.equal(l[0]['PIS no documento'],'20,00');assert.equal(l[0]['COFINS no documento'],'100,00');
   assert.equal(l[0]['Novo valor do item (base IBS/CBS)'],'727,50');assert.equal(l[0]['Redução de alíquota'],'Não');assert.equal('Base IBS/CBS' in l[0],false);
   assert.equal(l[1]['Redução de alíquota'],'Sim');assert.equal(l[1]['Redução IBS (%)'],'60,00');assert.equal(l[1]['Redução CBS (%)'],'60,00');assert.equal(l[1]['IBS+CBS 2033'],'87,30');
   assert.match(l[1]['Hipótese do cClassTrib'],/Anexo VIII/);assert.equal(l[2]['Redução de alíquota'],'A conferir');assert.match(l[2]['Redução a conferir (até %)'],/^\d+,\d{2}$/);
-  const como=x.abas[3][1].map(r=>r.assunto+': '+r.explicacao).join(' | ');
+  const como=x.abas[4][1].map(r=>r.assunto+': '+r.explicacao).join(' | ');
   assert.match(como,/PIS e COFINS do regime: Lucro Real: PIS de 1,65% e COFINS de 7,60%/);assert.match(como,/Novo valor do item: Valor do item − ICMS − ISS − PIS − COFINS/);
   assert.match(como,/Redução de alíquota: Cada NCM ou NBS é consultado/);assert.match(como,/aplicados sobre o valor cheio de cada item, inclusive nas compras/);
   assert.deepEqual(puro(V.planilhas().map(a=>a[0])),puro(x.abas.map(a=>a[0])))});

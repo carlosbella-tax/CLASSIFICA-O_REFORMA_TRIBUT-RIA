@@ -138,11 +138,11 @@ await teste('ordem por maior aumento em 2033 põe primeiro o item que mais sobe;
   set('v277Ordem','aumento');assert.match(linhasTela()[0].textContent,/NBS 1\.1401\.11\.00/);set('v277Ordem','reducao');assert.match(linhasTela()[0].textContent,/4818\.10\.00/);set('v277Ordem','')});
 await teste('exportação: planilhas do cálculo, resumo por ano, cronograma usado e como é calculado, em 0.000,00',()=>{
   w.__xlsx.length=0;d.getElementById('v277Exportar').click();assert.equal(w.__xlsx.length,1);const x=w.__xlsx[0];assert.match(x.nome,/^CALCULO_2026_2033_POR_ITEM_\d{4}-\d{2}-\d{2}\.xlsx$/);
-  assert.deepEqual(puro(x.abas.map(a=>a[0])),['Cálculo por item','Resumo por ano','Cronograma usado','Como é calculado']);
+  assert.deepEqual(puro(x.abas.map(a=>a[0])),['Cálculo por item','Resumo por ano','Entradas e saídas por ano','Cronograma usado','Como é calculado']);
   const l=x.abas[0][1][0];assert.equal(l['Novo valor do item (base IBS/CBS)'],'700,00');assert.equal(l['Valor do item'],'1.000,00');assert.equal(l['CBS 2027'],'79,10');assert.equal(l['IBS estadual 2033'],'113,40');assert.equal(l['IBS municipal 2033'],'17,50');
   assert.equal(l['IBS+CBS 2033'],'210,00');assert.equal(l['Carga 2033'],'210,00');assert.equal(l['Diferença 2033 × hoje'],'-140,00');assert.equal(l['cClassTrib'],'000001');assert.equal(l['Descrição do CST'],'Tributação integral');
-  assert.equal(x.abas[1][1].length,8);assert.equal(x.abas[2][1][1]['CBS'],'11,30%');assert.equal(x.abas[2][1][7]['IBS estadual'],'16,20%');assert.equal(x.abas[2][1][3]['Redução do ICMS e do ISS'],'10,00%');
-  assert.ok(x.abas[3][1].some(r=>/valor do item − ICMS − ISS − PIS − COFINS/i.test(r.explicacao)))});
+  assert.equal(x.abas[1][1].length,8);assert.equal(x.abas[3][1][1]['CBS'],'11,30%');assert.equal(x.abas[3][1][7]['IBS estadual'],'16,20%');assert.equal(x.abas[3][1][3]['Redução do ICMS e do ISS'],'10,00%');
+  assert.ok(x.abas[4][1].some(r=>/valor do item − ICMS − ISS − PIS − COFINS/i.test(r.explicacao)))});
 await teste('paginação: 100 itens por página, com Anterior e Próxima',()=>{
   w.state.items=Array.from({length:230},()=>merc('84145990'));w.state.runId++;abrir();assert.equal(linhasTela().length,100);assert.match(d.getElementById('v277Pag').textContent,/Página 1 de 3/);
   d.querySelector('[data-v277-pag="1"]').click();d.querySelector('[data-v277-pag="1"]').click();assert.equal(linhasTela().length,30);assert.match(d.getElementById('v277Pag').textContent,/Página 3 de 3/);

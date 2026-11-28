@@ -202,6 +202,13 @@
     return T;
   }
 
+  /* V282 — totais separados em saídas e entradas. Parte sempre dos itens: a visão por código junta, na mesma linha,
+     as entradas e as saídas de um mesmo código. */
+  function porOperacao(itens){
+    const l=(itens||[]).filter(Boolean);
+    return {saida:totalizar(l.filter(x=>x.operacao==='Saída')),entrada:totalizar(l.filter(x=>x.operacao==='Entrada'))};
+  }
+
   /* ---------- textos de apoio ---------- */
   function explicacao(cr,reg){
     cr=cr||cronograma();reg=reg||regime();
@@ -222,7 +229,8 @@
       'É uma projeção sobre os valores dos documentos carregados. Não desconta os créditos de IBS e CBS das compras e não é apuração nem valor a recolher.',
       'CST e cClassTrib vêm do documento quando ele informa um código válido; senão, da relação de NCM (TIPI) ou de NBS e serviços. A coluna Origem do enquadramento mostra qual foi usado.',
       'Itens em CONFERIR trazem o motivo na coluna Observação. Quando há mais de uma hipótese de enquadramento, o cálculo é feito sem redução.',
-      'Os totais somam entradas e saídas. Use o filtro Operação para ver só as saídas (débitos) ou só as entradas (compras).',
+      'Os totais somam entradas e saídas. Os indicadores IBS + CBS em 2027, IBS + CBS em 2033 e Carga em 2033 × hoje mostram cada parte em separado, e a planilha Entradas e saídas por ano traz os oito anos. A projeção não compensa as entradas com as saídas.',
+      'Saída é o item em que o emitente do documento é a empresa informada na primeira tela (CNPJ) ou em que a operação foi marcada como saída; os demais itens são entradas (compras). Use o filtro Operação para listar só uma delas.',
       reg.aplica?'PIS e COFINS do regime são aplicados sobre o valor cheio de cada item, inclusive nas compras e nos itens em que o documento não destaca esses tributos (alíquota zero, monofásico, isenção). As colunas PIS no documento e COFINS no documento da planilha Excel permitem comparar.'
         :'Notas de serviço não trazem PIS e COFINS destacados; nesses itens a base desconta somente o ISS.',
       'Quando há redução a conferir, a coluna Redução IBS/CBS mostra o maior percentual entre as hipóteses listadas; o cálculo só aplica a redução depois de confirmado o enquadramento.',
@@ -232,12 +240,13 @@
   }
 
   /* ---------- tela ---------- */
-  let linhas=[],visiveis=[],pagina=0,assinatura='',crono=cronograma(),reg=regime();
+  let linhas=[],visiveis=[],visiveisItens=[],pagina=0,assinatura='',crono=cronograma(),reg=regime();
   const filtro=id=>($(id)?$(id).value:'');
   function filtrar(){
     const busca=filtro('v277Busca').trim().toLowerCase(),bd=dig(busca),op=filtro('v277Operacao'),tp=filtro('v277Tipo'),sit=filtro('v277Situacao'),red=filtro('v279Reducao'),ord=filtro('v277Ordem');
     let l=linhas.filter(x=>(!op||x.operacao===op)&&(!sit||x.situacao===sit)&&(!red||x.reducao===red)&&(!tp||(tp==='NCM'?x.tipo==='NCM':tp==='SERV'?(x.tipo==='NBS'||x.tipo==='SERVIÇO'):!x.tipo))
       &&(!busca||(x.rotulo+' '+x.descricao+' '+x.documento+' '+x.cc+' '+x.cst+' '+x.servico+' '+x.origem).toLowerCase().includes(busca)||(bd.length>=2&&x.codigo.includes(bd))));
+    visiveisItens=l;
     if(filtro('v277Visao')==='codigo')l=agrupar(l);
     const dif=x=>x.calculado?x.anos[7].diferenca:null;
     if(ord==='aumento')l=[...l].sort((a,b)=>(dif(b)??-Infinity)-(dif(a)??-Infinity));
@@ -279,16 +288,33 @@
       +'<table class="v277-ano"><thead><tr><th>Ano</th><th>Alíq. CBS</th><th>CBS</th><th>Alíq. IBS estadual</th><th>IBS estadual</th><th>Alíq. IBS municipal</th><th>IBS municipal</th><th>IBS + CBS</th><th>ICMS</th><th>ISS</th><th>IPI</th><th>PIS + COFINS</th><th>Carga do ano</th><th>Diferença contra hoje</th></tr></thead><tbody>'+corpo+'</tbody></table>'
       +'<p class="v277-nota">Tributos de hoje neste item: '+real(l.hoje)+'. Em 2026, o IBS e a CBS de teste não somam à carga do ano.</p></div>';
   }
-  function kpisHtml(T){
-    const k=(rot,val,sub,cls)=>'<div class="v260-kpi'+(cls?' '+cls:'')+'"><label>'+rot+'</label><b>'+val+'</b><small>'+sub+'</small></div>',a27=T.anos[1],a33=T.anos[7],d=a33.diferenca;
+  const difTxt=(d,hoje)=>(hoje?pct(Math.abs(d)/hoje*100)+' ':'')+(d>0?'a mais que hoje':d<0?'a menos que hoje':'sem diferença');
+  function kpisHtml(T,P){
+    const k=(rot,val,sub,cls,mais)=>'<div class="v260-kpi'+(cls?' '+cls:'')+'"><label>'+rot+'</label><b>'+val+'</b><small>'+sub+'</small>'+(mais||'')+'</div>',a27=T.anos[1],a33=T.anos[7],d=a33.diferenca;
+    /* saídas e entradas de cada indicador; f devolve [valor, detalhe] a partir dos totais de um lado */
+    const lado=(rot,t,f)=>{const x=t.itens?f(t):null;return '<span class="v282-lado"><i>'+rot+'</i>'+(x?'<span class="v282-v">'+x[0]+'</span><em>'+x[1]+'</em>':'<em>sem itens na seleção</em>')+'</span>'};
+    const es=f=>P?'<span class="v282-es">'+lado('Saídas',P.saida,f)+lado('Entradas',P.entrada,f)+'</span>':'';
+    const ano=i=>t=>[real(t.anos[i].ibscbs),'CBS '+real(t.anos[i].cbs)+' · IBS '+real(n2(t.anos[i].ibsE+t.anos[i].ibsM))];
     return k('Itens no cálculo',inteiro(T.itens),inteiro(T.codigos)+' código(s) NCM/NBS')
       +k('Valor dos itens',real(T.valor),'itens selecionados pelos filtros')
       +k('Tributos de hoje',real(T.hoje),'ICMS '+real(T.icms)+' · ISS '+real(T.iss)+' · IPI '+real(T.ipi)+' · PIS '+real(T.pis)+' · COFINS '+real(T.cofins))
       +k('Novo valor dos itens (base de IBS e CBS)',real(T.base),'valor − ICMS − ISS − PIS − COFINS')
       +k('Itens com redução de alíquota',inteiro(T.red.itens),real(T.red.valor)+' em itens · IBS + CBS de 2033 '+real(T.red.economia)+' menor'+(T.conferir.itens?' · '+inteiro(T.conferir.itens)+' item(ns) com redução a conferir':''))
-      +k('IBS + CBS em 2027',real(a27.ibscbs),'CBS '+real(a27.cbs)+' · IBS '+real(n2(a27.ibsE+a27.ibsM)))
-      +k('IBS + CBS em 2033',real(a33.ibscbs),'CBS '+real(a33.cbs)+' · IBS '+real(n2(a33.ibsE+a33.ibsM)))
-      +k('Carga em 2033 × hoje',real(d),(T.hoje?pct(Math.abs(d)/T.hoje*100)+' ':'')+(d>0?'a mais que hoje':d<0?'a menos que hoje':'sem diferença'),d>0?'alerta':'ok');
+      +k('IBS + CBS em 2027',real(a27.ibscbs),'CBS '+real(a27.cbs)+' · IBS '+real(n2(a27.ibsE+a27.ibsM)),'',es(ano(1)))
+      +k('IBS + CBS em 2033',real(a33.ibscbs),'CBS '+real(a33.cbs)+' · IBS '+real(n2(a33.ibsE+a33.ibsM)),'',es(ano(7)))
+      +k('Carga em 2033 × hoje',real(d),difTxt(d,T.hoje),d>0?'alerta':'ok',es(t=>{const x=t.anos[7].diferenca;return [real(x),x?(t.hoje?pct(Math.abs(x)/t.hoje*100)+' ':'')+(x>0?'a mais':'a menos')+' que os '+real(t.hoje)+' de hoje':'sem diferença sobre os '+real(t.hoje)+' de hoje']}));
+  }
+  /* planilha Entradas e saídas por ano: os oito anos, com as saídas, as entradas e o total de cada um */
+  function operacaoLinhas(T,P){
+    const v=x=>fmt(x),l=[];
+    T.anos.forEach((a,i)=>{
+      for(const [rot,t] of [['Saídas',P.saida],['Entradas',P.entrada],['Total',T]]){
+        const x=t.anos[i];
+        l.push({'Ano':String(a.ano),'Operação':rot,'Itens':t.itens,'Valor dos itens':v(t.valor),'Tributos de hoje':v(t.hoje),'CBS':v(x.cbs),'IBS estadual':v(x.ibsE),'IBS municipal':v(x.ibsM),'IBS + CBS':v(x.ibscbs),
+          'Carga do ano':v(x.carga),'Diferença contra hoje':v(x.diferenca),'Variação':t.hoje?pct(x.diferenca/t.hoje*100):''});
+      }
+    });
+    return l;
   }
   function resumoLinhas(T){
     return T.anos.map((a,i)=>({ano:a.ano,pisCofins:n2(a.pis+a.cofins),ipi:a.ipi,icmsIss:n2(a.icms+a.iss),cbs:a.cbs,ibsE:a.ibsE,ibsM:a.ibsM,ibscbs:a.ibscbs,carga:a.carga,diferenca:a.diferenca,
@@ -316,11 +342,17 @@
     if(recalcular||ass!==assinatura){crono=cronograma();reg=regime();linhas=projetar(itens,crono,reg);assinatura=ass;pagina=0}
     const av=$('v279Regime');if(av){av.textContent=(reg.aplica?'PIS e COFINS — ':'')+reg.texto+'.'+(reg.aplica?'':' Informe Lucro Real ou Lucro Presumido na primeira tela para calcular pelas alíquotas do regime.');av.classList.toggle('alerta',!reg.aplica)}
     const vazio=!itens.length,agr=filtro('v277Visao')==='codigo';
+    if(vazio)visiveisItens=[];
     visiveis=vazio?[]:filtrar();
     const T=totalizar(visiveis),paginas=Math.max(1,Math.ceil(visiveis.length/PAGINA));pagina=Math.min(Math.max(0,pagina),paginas-1);
     const ini=pagina*PAGINA,pag=visiveis.slice(ini,ini+PAGINA);
     $('v277Kpis').hidden=vazio;$('v277ResumoCard').hidden=vazio;
-    $('v277Kpis').innerHTML=vazio?'':kpisHtml(T);
+    const P=porOperacao(visiveisItens);
+    $('v277Kpis').innerHTML=vazio?'':kpisHtml(T,P);
+    /* sem o CNPJ da empresa não há como reconhecer as saídas: tudo entra como entrada */
+    const semCnpj=!dig($('cnpjEmpresa')?$('cnpjEmpresa').value:''),soEntradas=!vazio&&!filtro('v277Operacao')&&P.entrada.itens>0&&!P.saida.itens,avOp=$('v282Aviso');
+    if(avOp){avOp.hidden=!soEntradas;avOp.textContent=soEntradas?(semCnpj?'CNPJ da empresa não informado na primeira tela: sem ele as saídas não são reconhecidas e todos os itens aparecem como entradas.'
+      :'Nenhum item foi reconhecido como saída: em nenhum documento o emitente é o CNPJ informado na primeira tela. Confira o CNPJ da empresa ou a coluna Operação dos documentos.'):''}
     $('v277Resumo').innerHTML=vazio?'':resumoHtml(T);
     $('v277Fora').textContent=T.fora.itens?inteiro(T.fora.itens)+' item(ns), '+real(T.fora.valor)+', não foram calculados (situação NÃO CALCULADO; o motivo está na coluna Observação) e ficaram fora destes totais.':'';
     $('v277Como').innerHTML=comoHtml();
@@ -356,7 +388,7 @@
       'Carga do ano':v(x.carga),'Diferença contra hoje':v(x.diferenca),'Variação':x.variacao===null?'':pct(x.variacao),'Fase':x.fase}));
     const cron=ANOS.map((a,i)=>({'Ano':String(a),'CBS':pct(crono.cbs[i]),'IBS estadual':pct(crono.ibsE[i]),'IBS municipal':pct(crono.ibsM[i]),'Redução do ICMS e do ISS':pct(crono.redAnt[i])}));
     const como=e.passos.map(p=>({assunto:p[0],explicacao:p[1]})).concat(e.avisos.map(x=>({assunto:'Atenção ao interpretar',explicacao:x})));
-    return [[agr?'Cálculo por código':'Cálculo por item',linhasExport(visiveis,agr)],['Resumo por ano',resumo],['Cronograma usado',cron],['Como é calculado',como]];
+    return [[agr?'Cálculo por código':'Cálculo por item',linhasExport(visiveis,agr)],['Resumo por ano',resumo],['Entradas e saídas por ano',operacaoLinhas(T,porOperacao(visiveisItens))],['Cronograma usado',cron],['Como é calculado',como]];
   }
   function exportar(){
     const p=planilhas();if(!p.length)return alert('Não há itens para exportar.');
@@ -383,6 +415,7 @@
       +'<button type="button" id="v277Exportar" class="secondary">⬇ Exportar Excel</button></div>'
       +'<div id="v277Info" class="hint" style="margin-top:6px">Nenhum documento processado.</div></div>'
       +'<div id="v277Kpis" class="v277-kpis" hidden></div>'
+      +'<div id="v282Aviso" class="v279-regime alerta" hidden></div>'
       +'<div class="card" style="padding:0"><div class="v277-pag" id="v277Pag"></div><div class="table-wrap" id="v277Wrap"><table id="v277Tabela"><thead></thead><tbody></tbody></table></div></div>'
       +'<div class="card" id="v277ResumoCard" hidden><b class="v277-t">Resumo por ano</b><span class="hint">Soma dos itens selecionados pelos filtros acima. A carga do ano é o IBS + CBS mais o que ainda resta de ICMS, ISS, IPI, PIS e COFINS.</span><div class="table-wrap" id="v277Resumo"></div><div id="v277Fora" class="hint"></div></div>'
       +'<div class="card" id="v277Como"></div></section>');
@@ -401,7 +434,8 @@
       '#v277ResumoCard .table-wrap{height:auto!important;min-height:0!important;max-height:none!important;margin-top:8px}#v277ResumoTabela{table-layout:auto!important;min-width:0!important;width:100%!important}#v277ResumoTabela th,#v277ResumoTabela td{padding-left:8px!important;padding-right:8px!important;min-width:0!important;width:auto!important;font-size:12px}#v277ResumoTabela th{white-space:normal!important}',
       '.v277-como{display:grid;grid-template-columns:1.4fr 1fr;gap:14px;font-size:12px;line-height:1.5;color:#33475B}.v277-como>div{border:1px solid #C6C6C6;padding:12px 14px;background:#fff}.v277-como b{color:#123D60}',
       '.v277-como dl{margin:6px 0 0;display:grid;grid-template-columns:minmax(130px,auto) 1fr;gap:5px 12px}.v277-como dt{font-weight:700;color:#182936}.v277-como dd{margin:0}.v277-avisos{border-left:4px solid #F1C21B!important}.v277-avisos ul{margin:6px 0 0;padding-left:18px}.v277-avisos li{margin:5px 0}',
-      '.v279-regime{margin:8px 0 10px;padding:8px 12px;border-left:4px solid #24A148;background:#F1F8F3;font-size:12.5px;color:#182936}.v279-regime.alerta{border-left-color:#F1C21B;background:#FFF9E5}.v279-regime:empty{display:none}',
+      '.v282-es{display:block;margin-top:7px;padding-top:6px;border-top:1px solid #E0E0E0}.v282-lado{display:grid;grid-template-columns:auto 1fr;column-gap:8px;align-items:baseline;font:11px/1.35 system-ui;color:#5B6B7C}.v282-lado+.v282-lado{margin-top:5px}.v282-lado i{font-style:normal;font-weight:700;color:#0F2A4A}.v282-lado .v282-v{font-weight:700;color:#0F2A4A;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}.v282-lado em{grid-column:1/-1;font-style:normal}',
+      '.v279-regime{margin:8px 0 10px;padding:8px 12px;border-left:4px solid #24A148;background:#F1F8F3;font-size:12.5px;color:#182936}.v279-regime.alerta{border-left-color:#F1C21B;background:#FFF9E5}.v279-regime:empty{display:none}.v279-regime[hidden]{display:none!important}',
       '@media(max-width:1100px){.v277-como{grid-template-columns:1fr}}@media print{.v277-pag,#calculo2033 .v253-filtros{display:none!important}}'
     ].join('');document.head.appendChild(st);
     const tab=document.querySelector('.tab[data-tab="calculo2033"]');
@@ -435,6 +469,6 @@
     const n=itensCarga().length,c=document.querySelector('[data-v123-count="calculoitem"]');if(c&&c.textContent!==String(n))c.textContent=String(n);
     const sec=$('calculo2033');if(sec&&sec.classList.contains('active')&&assinar()!==assinatura)render(true);
   },2000);
-  window.classificadorV277={calcular,projetar,agrupar,totalizar,cronograma,explicacao,render,exportar,planilhas,linhasExport,regime,REGIMES,ANOS,SITUACAO:S};
+  window.classificadorV277={calcular,projetar,agrupar,totalizar,porOperacao,cronograma,explicacao,render,exportar,planilhas,linhasExport,regime,REGIMES,ANOS,SITUACAO:S};
   window.V277_CARREGADO=true;
 })();

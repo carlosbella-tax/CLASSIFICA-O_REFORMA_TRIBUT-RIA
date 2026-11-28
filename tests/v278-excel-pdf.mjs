@@ -113,11 +113,11 @@ await teste('Base de IBS/CBS: o Excel volta a trazer as linhas e o PDF passa das
 await teste('Cálculo 2026 a 2033 por item: PDF com as mesmas planilhas do Excel',async()=>{
   await menu('calculoitem');const p=d.querySelector('[data-v278-pdf="calculoitem"]');assert.ok(p);assert.equal(p.previousElementSibling.id,'v277Exportar');
   const pl=await excel(d.getElementById('v277Exportar'));
-  assert.deepEqual(pl.map(x=>x.nome),['Cálculo por item','Resumo por ano','Cronograma usado','Como é calculado']);
+  assert.deepEqual(pl.map(x=>x.nome),['Cálculo por item','Resumo por ano','Entradas e saídas por ano','Cronograma usado','Como é calculado']);
   const s=V.secoes('calculoitem');assert.deepEqual(puro(s.map(x=>x.titulo+':'+x.linhas.length)),pl.map(x=>x.nome+':'+x.linhas));
   assert.ok(s[0].linhas.length>200);
   V.preparar('calculoitem');const t=texto();for(const a of [2026,2027,2033])assert.ok(t.includes(String(a)));
-  assert.equal(folha().querySelectorAll('section.v278-sec').length,4);V.limpar()});
+  assert.equal(folha().querySelectorAll('section.v278-sec').length,5);assert.ok(t.includes('Entradas e saídas por ano'));V.limpar()});
 
 await teste('Análise por NCM: PDF com a análise, o resumo por semáforo e a explicação',async()=>{
   await menu('ncmanalise');const p=d.querySelector('[data-v278-pdf="ncmanalise"]');assert.ok(p);assert.equal(p.previousElementSibling.id,'v253NcmExportar');

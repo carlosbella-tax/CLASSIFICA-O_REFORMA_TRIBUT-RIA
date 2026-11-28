@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V282 — 2026-11-28
+
+- Calculo 2026 a 2033 por item: indicadores IBS + CBS em 2027, IBS + CBS em 2033 e Carga em 2033 x hoje com a separacao de saidas e entradas; planilha Entradas e saidas por ano no Excel e no PDF
+
 ## V281 — 2026-11-28
 
 - Relogio do tempo de processamento nao fica na frente do conteudo ao rolar a tela: recolhe-se, compacto, na barra do titulo (fixa no topo, com espaco reservado) e volta a andar pela tela quando a pagina retorna ao topo
