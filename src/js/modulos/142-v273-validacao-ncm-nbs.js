@@ -18,6 +18,47 @@
   const CLS={[STATUS.CORRETO]:'ok',[STATUS.ATUALIZAR]:'ruim',[STATUS.CONFERIR]:'conf',[STATUS.SEM]:'sem'};
   const LEITURA={[STATUS.CORRETO]:'CST e cClassTrib do documento batem com a relação',[STATUS.ATUALIZAR]:'Documento ou cadastro diverge da relação',
     [STATUS.CONFERIR]:'Depende da operação ou de confirmação do item',[STATUS.SEM]:'Documento sem CST e cClassTrib de IBS/CBS'};
+  /* V283 — Legenda das situações da tela: o que cada uma representa, quando aparece e o que fazer.
+     Dois grupos: a validação do que o documento informa (V273) e o tratamento recomendado por item (V180/V252). */
+  const TRATAMENTO={REFERENCIA:'REFERÊNCIA DOCUMENTAL',REVISAO:'REVISÃO NECESSÁRIA',ANALISE:'ANÁLISE NECESSÁRIA'};
+  const LEGENDA=[
+    {grupo:'Situação',onde:'quadros coloridos, coluna Situação da tabela de validação e coluna Validação NCM/NBS da tabela de itens',
+     explica:'Compara o CST e o cClassTrib de IBS/CBS que o documento informa com a relação de NCM (TIPI - Base Completa) e com a relação de NBS × código de serviço.',
+     itens:[
+      {situacao:STATUS.ATUALIZAR,
+       representa:'Há um erro ou uma falta no NCM, na NBS, no CST ou no cClassTrib do item, e é preciso corrigir.',
+       quando:'NCM sem 8 dígitos ou que não consta na TIPI; cClassTrib que não existe na tabela oficial, com vigência encerrada, de outro CST ou não aceito no tipo de documento; CST sem cClassTrib, ou o contrário; cClassTrib de alíquota reduzida que a relação não prevê para o NCM; cClassTrib de tributação integral ou de alíquota reduzida que a relação não prevê para o serviço; nota de serviço sem NBS ou sem código de serviço e NBS, ou com NBS e código de serviço que não constam na relação ou não se correspondem.',
+       fazer:'Corrigir o cadastro do item ou a emissão do documento. A coluna O que fazer traz o motivo e, quando há, o CST e o cClassTrib indicados pela relação.'},
+      {situacao:STATUS.CONFERIR,
+       representa:'A relação sozinha não decide o enquadramento: ele depende da operação ou de confirmar o item no anexo da lei.',
+       quando:'cClassTrib que depende da operação, e não do NCM ou da NBS; redução que bate com a relação, feita por capítulo, sem o NCM constar no vínculo oficial do cClassTrib; tributação integral em NCM que consta no vínculo oficial de outro cClassTrib listado na relação; NCM com enquadramento em revisão (Motor × Classificador); cClassTrib previsto no vínculo oficial e ausente da relação TIPI - Base Completa.',
+       fazer:'Confirmar a hipótese com a operação e com o anexo da LC 214/2025 antes de manter ou trocar o código.'},
+      {situacao:STATUS.SEM,
+       representa:'O documento não informa CST nem cClassTrib de IBS/CBS, então não há o que comparar. Não indica acerto nem erro.',
+       quando:'Item com NCM ou NBS válido, em documento sem os campos de IBS/CBS preenchidos. Se o NCM ou a NBS tiver problema, o item aparece em ATUALIZAR.',
+       fazer:'Usar na emissão o CST e o cClassTrib indicados pela relação, mostrados na coluna O que fazer. Com mais de uma hipótese, confirmar a operação.'},
+      {situacao:STATUS.CORRETO,
+       representa:'O CST e o cClassTrib do documento batem com a relação e passam nas conferências da tabela oficial.',
+       quando:'cClassTrib previsto na relação para o NCM, ou para a NBS e o código de serviço; código existente, vigente, do mesmo CST informado e aceito no tipo de documento. Inclui a tributação integral (000001) quando não há redução confirmada para o NCM.',
+       fazer:'Nenhum ajuste. Se a relação admitir outro cClassTrib para o mesmo código, a coluna O que fazer pede para confirmar a hipótese.'}]},
+    {grupo:'Tratamento IBS/CBS',onde:'coluna Tratamento IBS/CBS da tabela Enquadramento recomendado, item a item',
+     explica:'Mostra se o sistema conseguiu recomendar um CST e um cClassTrib pelo NCM, pela NBS ou pelo código de serviço. Não depende do que o documento informa.',
+     itens:[
+      {situacao:TRATAMENTO.REFERENCIA,
+       representa:'Há uma única hipótese vigente e não vedada para o código. O sistema recomenda o CST e o cClassTrib e, nos CST 000 e 200, calcula a alíquota final.',
+       quando:'NCM, NBS ou código de serviço com um só enquadramento aplicável na referência de CST e cClassTrib.',
+       fazer:'Confirmar condição, exceção, operação e vigência antes do enquadramento definitivo.'},
+      {situacao:TRATAMENTO.REVISAO,
+       representa:'Há mais de uma hipótese possível, ou a hipótese encontrada tem restrição. O sistema não escolhe por conta própria.',
+       quando:'Código com mais de um enquadramento aplicável; serviço com hipótese vedada ou fora de vigência; NCM em que o Motor e o Classificador apontam anexos diferentes.',
+       fazer:'Definir a hipótese pela operação e pelo anexo. Até lá, a alíquota final aparece como A confirmar.'},
+      {situacao:TRATAMENTO.ANALISE,
+       representa:'O sistema não encontrou enquadramento documentado para o item; não há CST nem cClassTrib recomendados.',
+       quando:'Item sem NCM, NBS ou código de serviço, ou código sem vínculo vigente na referência consultada.',
+       fazer:'Conferir o código do item e analisar o enquadramento na LC 214/2025.'}]}];
+  const LEGENDA_NOTA='A validação é somente leitura: não altera os documentos, os impostos da nota nem o enquadramento recomendado.';
+  /* a mesma legenda, em linhas, para as planilhas do Excel */
+  const legendaLinhas=()=>LEGENDA.flatMap(g=>g.itens.map(i=>({'Onde aparece':g.grupo+' — '+g.onde,'Situação':i.situacao,'O que representa':i.representa,'Quando aparece':i.quando,'O que fazer':i.fazer})));
 
   const campo=(r,sufixo)=>typeof campoGrupo==='function'?campoGrupo(r,'IBS',sufixo):'';
   function doDocumento(r){
@@ -173,11 +214,40 @@
 td.v273-col small{display:block;margin-top:4px;white-space:normal;min-width:260px;line-height:1.4;color:#42566B}
 td.v273-col:nth-of-type(6) small{min-width:150px}
 small.v274-desc{display:block;margin-top:4px;white-space:normal;min-width:120px;line-height:1.4;color:#42566B}
-@media print{.v273-wrap{max-height:none!important;overflow:visible!important}.v273-barra{display:none!important}}`;
+.v283-legenda{margin:0 0 12px;border:1px solid #C6C6C6;border-left:4px solid #0F2A4A;background:#fff}
+.v283-cab{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:8px 12px;background:#F4F4F4}
+.v283-cab b{font:700 13.5px system-ui;color:#0F2A4A}
+.v283-cab span{flex:1 1 320px;font:12px/1.45 system-ui;color:#42566B}
+.v283-cab button{margin-left:auto;padding:5px 10px;font-size:12px}
+.v283-corpo{padding:4px 12px 10px}
+.v283-legenda.fechada .v283-corpo{display:none}
+.v283-grupo{margin:8px 0 5px;font:12.5px/1.5 system-ui;color:#42566B}
+.v283-grupo b{color:#0F2A4A}
+table.v283-t{width:100%!important;min-width:0!important;table-layout:fixed!important;border-collapse:collapse!important;font-size:12px}
+table.v283-t th,table.v283-t td{position:static!important;border:1px solid #E0E0E0!important;padding:6px 9px!important;text-align:left!important;vertical-align:top!important;white-space:normal!important;overflow-wrap:break-word;line-height:1.45!important;color:#161616!important;max-width:none!important;min-width:0!important}
+table.v283-t th{background:#E0E0E0!important;border-color:#C6C6C6!important;font-weight:700}
+table.v283-t td{background:#fff!important}
+table.v283-t th:nth-child(1){width:15%}table.v283-t th:nth-child(2){width:24%}table.v283-t th:nth-child(3){width:37%}table.v283-t th:nth-child(4){width:24%}
+table.v283-t td:first-child b{font:700 11.5px system-ui;color:#0F2A4A}
+table.v283-t .v273-tag{white-space:normal;line-height:1.3}
+@media(max-width:900px){table.v283-t,table.v283-t tbody,table.v283-t tr,table.v283-t td{display:block!important;width:auto!important}table.v283-t thead{display:none!important}table.v283-t tr{border:1px solid #C6C6C6;margin-bottom:6px}table.v283-t td{border:0!important;padding:4px 9px!important}table.v283-t td[data-v283-rot]:before{content:attr(data-v283-rot) ": ";font-weight:700;color:#0F2A4A}}
+@media print{.v273-wrap{max-height:none!important;overflow:visible!important}.v273-barra,.v283-cab button{display:none!important}.v283-legenda.fechada .v283-corpo{display:block!important}.v283-legenda,table.v283-t tr{break-inside:avoid;page-break-inside:avoid}
+/* a impressão antiga força 7px em todas as tabelas; a legenda precisa ser lida no papel */
+table.v283-t th,table.v283-t td{font-size:9.5px!important;line-height:1.35!important;padding:3px 6px!important}table.v283-t .v273-tag{font-size:8.5px!important}
+.v283-grupo{font-size:10px!important;margin:5px 0 3px!important}.v283-cab{padding:4px 8px!important}.v283-cab b{font-size:11.5px!important}.v283-cab span{font-size:9.5px!important}.v283-corpo{padding:2px 8px 6px!important}}`;
   document.head.appendChild(st);
 
-  let filtro='';
+  let filtro='',legendaAberta=true;
   const tag=s=>'<span class="v273-tag '+CLS[s]+'">'+esc(s)+'</span>';
+  function htmlLegenda(){
+    const cel=(rot,t)=>'<td data-v283-rot="'+rot+'">'+esc(t)+'</td>';
+    return '<div class="v283-legenda'+(legendaAberta?'':' fechada')+'" id="v283-legenda"><div class="v283-cab"><b>Legenda das situações</b><span>O que cada situação desta tela representa, quando aparece e o que fazer. '+esc(LEGENDA_NOTA)+'</span>'
+      +'<button type="button" class="secondary" data-v283-alternar aria-expanded="'+legendaAberta+'" aria-controls="v283-corpo">'+(legendaAberta?'Ocultar legenda':'Mostrar legenda')+'</button></div>'
+      +'<div class="v283-corpo" id="v283-corpo">'+LEGENDA.map(g=>'<p class="v283-grupo"><b>'+esc(g.grupo)+'</b> — '+esc(g.onde)+'. '+esc(g.explica)+'</p>'
+        +'<table class="v283-t"><thead><tr><th>Situação</th><th>O que representa</th><th>Quando aparece</th><th>O que fazer</th></tr></thead><tbody>'
+        +g.itens.map(i=>'<tr><td>'+(CLS[i.situacao]?tag(i.situacao):'<b>'+esc(i.situacao)+'</b>')+'</td>'+cel('O que representa',i.representa)+cel('Quando aparece',i.quando)+cel('O que fazer',i.fazer)+'</tr>').join('')
+        +'</tbody></table>').join('')+'</div></div>';
+  }
   const docTxt=v=>v.docCst||v.docClasse?(v.docCst||'—')+' / '+(v.docClasse||'—'):'não informado';
   const relTxt=v=>v.relCst||v.relClasse?(v.relCst||'—')+' / '+(v.relClasse||'—'):'—';
   function htmlCartao(res){
@@ -186,6 +256,7 @@ small.v274-desc{display:block;margin-top:4px;white-space:normal;min-width:120px;
     return '<h2>Validação do CST e do cClassTrib — NCM e NBS</h2>'
       +'<p class="v273-sub">Compara o CST e o cClassTrib de IBS/CBS de cada item do documento com a relação de NCM (TIPI - Base Completa) e com a relação de NBS × código de serviço. '+res.total+' item(ns) analisado(s). A relação de NCM é por capítulo: indica candidatos, e o item precisa constar no anexo.'+(fonteIt()?' CST, descrição do CST, vigência e documentos aceitos de cada cClassTrib: '+esc(fonteIt())+'.':'')+'</p>'
       +'<div class="v273-tiles">'+tiles+'</div>'
+      +htmlLegenda()
       +'<div class="v273-barra"><span>'+(filtro?'Mostrando: <b>'+esc(filtro)+'</b> · '+linhas.length+' linha(s). Clique de novo no quadro para ver todas.':linhas.length+' linha(s), uma por código e situação; primeiro o que exige ação.')+'</span><button type="button" class="secondary" id="v273-exportar">⬇ Exportar validação em Excel</button></div>'
       +'<div class="v273-wrap"><table id="v273Tabela"><thead><tr><th>Situação</th><th>NCM ou NBS</th><th>Descrição</th><th>Itens</th><th>Valor</th><th>No documento<br>CST / cClassTrib<br>Descrição do CST</th><th>Na relação<br>CST / cClassTrib<br>Descrição do CST</th><th>O que fazer</th></tr></thead><tbody>'
       +(linhas.length?linhas.map(g=>'<tr><td class="s">'+tag(g.status)+'</td><td class="c"><b>'+esc(g.tipo)+'</b> '+esc(g.codigo)+(g.servico?'<small>Serviço '+esc(g.servico)+'</small>':'')+'</td><td class="d">'+esc(g.descricao||'—')+'</td><td class="n">'+g.itens+'</td><td class="n">'+real(g.valor)+'</td><td>'+esc(docTxt(g))+(g.docDescCst?'<small>'+esc(g.docDescCst)+'</small>':'')+'</td><td>'+esc(relTxt(g))+(g.relDescCst?'<small><b>'+esc(g.relDescCst)+'</b></small>':'')+(g.anexo?'<small>'+esc(g.anexo)+'</small>':'')+'</td><td class="a">'+esc(g.acao)+'</td></tr>').join(''):'<tr><td colspan="8">Nenhuma linha nesta situação.</td></tr>')
@@ -222,12 +293,13 @@ small.v274-desc{display:block;margin-top:4px;white-space:normal;min-width:120px;
     const resumo=ORDEM.map(s=>({situacao:s,leitura:LEITURA[s],itens:ultimo.totais[s].itens,codigos:ultimo.totais[s].codigos,valor:ultimo.totais[s].valor}));
     const porCodigo=ultimo.grupos.map(g=>({...linha(g),itens:g.itens,valor:g.valor}));
     const porItem=ultimo.porItem.map((v,i)=>{const r=itens[i]||{};return {documento:r.numero_documento||'',chave:r.chave_documento||r.chave_nota_fiscal||'',codigo_item:r.codigo_produto||r.cProd||'',descricao_item:r.descricao_item||r.descricao_produto||r.dados_nfse?.descricao_servico||'',...linha(v),valor:v.valor}});
-    gerarXlsx('VALIDACAO_NCM_NBS_'+new Date().toISOString().slice(0,10)+'.xlsx',[['Resumo da validação',f(resumo)],['Validação por código',f(porCodigo)],['Validação por item',f(porItem)]]);
+    gerarXlsx('VALIDACAO_NCM_NBS_'+new Date().toISOString().slice(0,10)+'.xlsx',[['Resumo da validação',f(resumo)],['Validação por código',f(porCodigo)],['Validação por item',f(porItem)],['Legenda das situações',legendaLinhas()]]);
   }
   document.addEventListener('click',e=>{
     const t=e.target.closest&&e.target.closest('[data-v273-filtro]');
     if(t){filtro=filtro===t.dataset.v273Filtro?'':t.dataset.v273Filtro;const c=document.getElementById('v273-validacao');if(c&&ultimo)c.innerHTML=htmlCartao(ultimo);return}
     if(e.target.id==='v273-exportar')exportar();
+    if(e.target.closest&&e.target.closest('[data-v283-alternar]')){legendaAberta=!legendaAberta;const c=document.getElementById('v273-validacao');if(c&&ultimo)c.innerHTML=htmlCartao(ultimo)}
   });
   /* a aba é remontada por inteiro a cada abertura ou troca de ano; a validação é recolocada quando isso acontece */
   const sec=document.getElementById('observacoes');
@@ -239,6 +311,6 @@ small.v274-desc{display:block;margin-top:4px;white-space:normal;min-width:120px;
       if(a&&(!document.getElementById('v273-validacao')||(tb&&!tb.dataset.v273))){pendente=true;setTimeout(()=>{pendente=false;render()},0)}
     }).observe(sec,{childList:true,subtree:true});
   }
-  window.classificadorV273={classeOficial,tipoDfe,validar,validarNcm,validarServico,resumir,render,exportar,STATUS};
+  window.classificadorV273={classeOficial,tipoDfe,validar,validarNcm,validarServico,resumir,render,exportar,STATUS,TRATAMENTO,LEGENDA,LEGENDA_NOTA,legendaLinhas};
   window.V273_CARREGADO=true;
 })();

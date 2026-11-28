@@ -5,6 +5,10 @@ Para abrir uma versão nova: `npm run nova-versao -- N "descrição"` (atualiza 
 
 <!-- novas versões abaixo desta linha -->
 
+## V283 — 2026-11-28
+
+- Enquadramento recomendado: legenda das situacoes (ATUALIZAR, CONFERIR, SEM IBS/CBS NO DOCUMENTO, CORRETO e as tres do Tratamento IBS/CBS), com o que representa, quando aparece e o que fazer; legenda tambem no Excel e na impressao
+
 ## V282 — 2026-11-28
 
 - Calculo 2026 a 2033 por item: indicadores IBS + CBS em 2027, IBS + CBS em 2033 e Carga em 2033 x hoje com a separacao de saidas e entradas; planilha Entradas e saidas por ano no Excel e no PDF

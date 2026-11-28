@@ -47,9 +47,9 @@ teste('tela: quadro acima da tabela, quatro situações e duas colunas novas em 
  assert.equal(ths[5],'CST / cClassTrib no documento');assert.equal(ths[6],'Validação NCM/NBS');
  const linhas=[...tb.tBodies[0].rows];assert.equal(linhas.length,6);assert.match(linhas[0].cells[5].textContent,/^200 \/ 200035/);assert.match(linhas[0].cells[6].textContent,/^CORRETO/);assert.match(linhas[2].cells[6].textContent,/^ATUALIZAR/);assert.equal(linhas[4].cells[5].textContent,'não informado');
  V.render();assert.equal([...tb.tHead.rows[0].cells].filter(x=>x.textContent==='Validação NCM/NBS').length,1)});
-teste('filtro por situação e exportação em Excel com três planilhas',()=>{d.querySelector('[data-v273-filtro="ATUALIZAR"]').click();
+teste('filtro por situação e exportação em Excel com as planilhas da validação e a legenda',()=>{d.querySelector('[data-v273-filtro="ATUALIZAR"]').click();
  assert.equal(d.querySelectorAll('#v273Tabela tbody tr').length,1);assert.ok(d.querySelector('.v273-tile.ruim.ativo'));d.querySelector('[data-v273-filtro="ATUALIZAR"]').click();assert.equal(d.querySelectorAll('#v273Tabela tbody tr').length,5);
- w.eval('window.__cap=null;var gerarXlsx=function(n,f){window.__cap={n:n,f:f}};');d.getElementById('v273-exportar').click();const cap=w.__cap;assert.ok(cap);assert.match(cap.n,/^VALIDACAO_NCM_NBS_/);assert.equal(cap.f.map(x=>x[0]).join('|'),'Resumo da validação|Validação por código|Validação por item');
+ w.eval('window.__cap=null;var gerarXlsx=function(n,f){window.__cap={n:n,f:f}};');d.getElementById('v273-exportar').click();const cap=w.__cap;assert.ok(cap);assert.match(cap.n,/^VALIDACAO_NCM_NBS_/);assert.equal(cap.f.map(x=>x[0]).join('|'),'Resumo da validação|Validação por código|Validação por item|Legenda das situações');
  assert.equal(cap.f[2][1].length,6);assert.equal(cap.f[2][1][0].valor,500);assert.equal(cap.f[2][1][0].situacao,'CORRETO');assert.equal(cap.f[1][1][0].situacao,'ATUALIZAR');assert.equal(cap.f[0][1].length,4)});
 teste('somente leitura: itens não são alterados; build com a versão e o módulo',()=>{const antes=JSON.stringify(carga);V.resumir(carga);assert.equal(JSON.stringify(carga),antes);
  const src=fs.readFileSync(path.join(root,'src/js/modulos/142-v273-validacao-ncm-nbs.js'),'utf8');assert.doesNotMatch(src,/state\.items\s*=|fetch\(|localStorage/);
